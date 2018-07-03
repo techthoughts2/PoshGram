@@ -9,10 +9,11 @@ image: Visual Studio 2017 Preview
 skip_commits:
   message: /updated readme.*/
 
-install:
-  - cinst pester
+environment:
+  ModuleName: PoshGram
 
-build: false
+build_script:
+  -pwsh: . .\test\BuildScript.ps1
 
 test_script:
 # Test with PS 6
