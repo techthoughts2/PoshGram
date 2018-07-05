@@ -1,4 +1,4 @@
-## PoshGram
+# PoshGram
 
 [![PowerShell Gallery][psgallery-img]][psgallery-site]
 [![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -7,11 +7,13 @@
 [psgallery-site]:  https://www.powershellgallery.com/packages/PoshGram
 [psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram/0.8.1
 
-### Synopsis
+## Synopsis
 
 PoshGram is a PowerShell module that enables you to send messages via the Telegram Bot API
 
-### Description
+![PoshGram Gif Demo](media\PoshGram.gif "PoshGram in action")
+
+## Description
 
 PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
@@ -28,7 +30,7 @@ PoshGram provides the following functions:
 * [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
 * [Send-TelegramURLAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md)
 
-### Why?
+## Why
 
 The Telegram Bot API requires very specific formatting criteria for Bot messaging. The goal of this project to abstract that complexity away in favor of simple and direct PowerShell functions.
 
@@ -39,30 +41,30 @@ PoshGram also opens up several programmatic use cases:
 * Enable script to provide Telegram notifications
 * In a ForEach you could easily message multipe chat groups that your bot is a member of
 
-### Installation
+## Installation
 
-#### Prerequisites
+### Prerequisites
 
 * [PowerShell 6.1.0](https://github.com/PowerShell/PowerShell)
 * [Telegram Bot created](https://core.telegram.org/bots)
 * Chat ID number
 * Bot must be a member of the specified chat
 
-#### Installing PoshGram via PowerShell Gallery
+### Installing PoshGram via PowerShell Gallery
 
 ```powershell
 #from an administrative 6.1.0+ PowerShell session
 Install-Module -Name "PoshGram"
 ```
 
-#### Installing PoshGram direct from GitHub
+### Installing PoshGram direct from GitHub
 
 1. Create the following directory: ```C:\Program Files\WindowsPowerShell\Modules\PoshGram```
 2. Download Zip from GitHub
 3. Extract files
 4. Copy the extracted files into the created directory
 
-### Quick start
+## Quick start
 
 ```powershell
 #import the PoshGram module
@@ -100,21 +102,21 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 #--------------------------------------------------------------------------
 ```
 
-### Author
+## Author
 
 [Jake Morrison](https://twitter.com/JakeMorrison) - http://techthoughts.info
 
-### Contributors
+## Contributors
 
 [Justin Saylor](https://twitter.com/XJustinSaylorX) - Logo
 
-### Notes
+## Notes
 
 * *Why is PowerShell 6.1.0 required? - Why can't I use 5.1?*
   * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilties. Functions that reference a URL, or that only use messenging (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out seperately if you are absolutely set on using 5.1
 
 * *I don't want to use PowerShell 6.1.0 because I primarily use 5.1 or lower*
-  * Good news - PowerShell 6.1.0 installs to a completely seperate folder, has a completely different exe (pwsh.exe), and references different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
+  * Good news - PowerShell 6.1.0 installs to a completely seperate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
   * To learn how to create and set up a bot:
@@ -125,8 +127,8 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 * *I've got a bot setup, and I have a token, but how do I determine my channel ID?*
   * Forward a message from your channel to the getidsbot https://telegram.me/getidsbot
   * Use the Telegram web client and copy the channel ID in your browser's address bar
-     * *Don't forget to include the (-) before the channel number*
-       * Ex ```"-#########"```
+    * *Don't forget to include the (-) before the channel number*
+      * Ex ```"-#########"```
 
 * *Are there any restrictions when using PoshGram?*
   * Bots can currently send files of up to 50 MB in size
