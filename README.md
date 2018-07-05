@@ -11,7 +11,7 @@
 
 PoshGram is a PowerShell module that enables you to send messages via the Telegram Bot API
 
-![PoshGram Gif Demo](media\PoshGram.gif "PoshGram in action")
+![PoshGram Gif Demo](media/PoshGram.gif "PoshGram in action")
 
 ## Description
 
