@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.8.3'
+    ModuleVersion     = '0.8.4'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -115,7 +115,7 @@
             ProjectUri = 'https://github.com/techthoughts2/PoshGram'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'Initial beta release.'
