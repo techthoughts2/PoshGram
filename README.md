@@ -15,7 +15,7 @@ PoshGram is a PowerShell module that enables you to send messages via the Telegr
 
 ## Description
 
-PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
+PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
 PoshGram provides the following functions:
 
@@ -39,7 +39,7 @@ PoshGram also opens up several programmatic use cases:
 * Custom scripts tied to task scheduler could alert you to potential system conditions
   * *Test-LowDisk.ps1 tied to task scheduler --> leverages PoshGram to alert you if low disk condition found*
 * Enable script to provide Telegram notifications
-* In a ForEach you could easily message multipe chat groups that your bot is a member of
+* In a ForEach you could easily message multiple chat groups that your bot is a member of
 
 ## Installation
 
@@ -104,7 +104,7 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
 ## Author
 
-[Jake Morrison](https://twitter.com/JakeMorrison) - http://techthoughts.info
+[Jake Morrison](https://twitter.com/JakeMorrison) - [http://techthoughts.info/](http://techthoughts.info/)
 
 ## Contributors
 
@@ -113,10 +113,10 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 ## Notes
 
 * *Why is PowerShell 6.1.0 required? - Why can't I use 5.1?*
-  * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilties. Functions that reference a URL, or that only use messenging (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out seperately if you are absolutely set on using 5.1
+  * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilities. Functions that reference a URL, or that only use messaging  (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out separately if you are absolutely set on using 5.1
 
 * *I don't want to use PowerShell 6.1.0 because I primarily use 5.1 or lower*
-  * Good news - PowerShell 6.1.0 installs to a completely seperate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
+  * Good news - PowerShell 6.1.0 installs to a completely separate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
   * To learn how to create and set up a bot:
@@ -125,7 +125,7 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
     * [BotFather](https://t.me/BotFather)
 
 * *I've got a bot setup, and I have a token, but how do I determine my channel ID?*
-  * Forward a message from your channel to the getidsbot https://telegram.me/getidsbot
+  * Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
   * Use the Telegram web client and copy the channel ID in your browser's address bar
     * *Don't forget to include the (-) before the channel number*
       * Ex ```"-#########"```
@@ -134,4 +134,4 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
   * Bots can currently send files of up to 50 MB in size
   * Certain functions are limited to certain file extensions, see each function's documentation for more information
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
