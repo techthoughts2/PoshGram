@@ -117,6 +117,12 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
 * *I don't want to use PowerShell 6.1.0 because I primarily use 5.1 or lower*
   * Good news - PowerShell 6.1.0 installs to a completely separate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
+  * Here is an example of how you can call PS 6.1 and use PoshGram from older versions of PowerShell:
+
+    ```powershell
+    #here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram
+    & '.\Program Files\PowerShell\6-preview\pwsh.exe' -command Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat  = "-#########";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram"
+    ```
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
   * To learn how to create and set up a bot:
