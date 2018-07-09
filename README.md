@@ -112,6 +112,9 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
 ## Notes
 
+* [PoshGram Video Demo](https://youtu.be/OfyRVl7YThw)
+* [PoshGram Blog Write-up](http://techthoughts.info/poshgram-powershell-module-for-telegram/)
+
 * *Why is PowerShell 6.1.0 required? - Why can't I use 5.1?*
   * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilities. Functions that reference a URL, or that only use messaging  (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out separately if you are absolutely set on using 5.1
 
@@ -126,6 +129,7 @@ Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
   * To learn how to create and set up a bot:
+    * [TechThoughts video on how to make a Telgram Bot](https://youtu.be/UhZtrhV7t3U)
     * [Introduction to Bots](https://core.telegram.org/bots)
     * [Bot FAQ](https://core.telegram.org/bots/faq)
     * [BotFather](https://t.me/BotFather)
