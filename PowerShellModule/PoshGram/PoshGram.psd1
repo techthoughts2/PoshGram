@@ -30,7 +30,7 @@
     Copyright         = '(c) 2018 Jake Morrison. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.'
+    Description       = 'PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '6.1.0'
@@ -83,13 +83,13 @@
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport   = '*'
+    #CmdletsToExport   = '*'
 
     # Variables to export from this module
-    VariablesToExport = '*'
+    #VariablesToExport = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport   = '*'
+    #AliasesToExport   = '*'
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -106,16 +106,25 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @("telegram","telegram-bot-api","powershell","powershell-module","PSModule","Messenger","Notification","Notify")
+            Tags         = @(
+                'telegram',
+                'telegram-bot-api',
+                'powershell',
+                'powershell-module',
+                'PSModule',
+                'Messenger',
+                'Notification',
+                'Notify'
+            )
 
             # A URL to the license for this module.
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/techthoughts2/PoshGram'
+            ProjectUri   = 'https://github.com/techthoughts2/PoshGram'
 
             # A URL to an icon representing this module.
-            IconUri = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
+            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'Initial beta release.'

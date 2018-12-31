@@ -2,13 +2,23 @@
 #if the module is already in memory, remove it
 Get-Module PoshGram | Remove-Module -Force
 #-------------------------------------------------------------------------
-$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$moduleName = 'PoshGram.psd1'
-$moduleNamePath = "$script:moduleRoot\$moduleName"
+Set-Location -Path $PSScriptRoot
+
+$ModuleName = 'PoshGram'
+$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+
+if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
+    Remove-Module -Name $ModuleName -Force
+}
+Import-Module $PathToManifest -Force
+#-------------------------------------------------------------------------
+#$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+#$moduleName = 'PoshGram.psd1'
+#$moduleNamePath = "$script:moduleRoot\$moduleName"
 #-------------------------------------------------------------------------
 $WarningPreference = "SilentlyContinue"
 #-------------------------------------------------------------------------
-Import-Module $moduleNamePath -Force
+#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
