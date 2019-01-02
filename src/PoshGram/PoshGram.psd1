@@ -27,7 +27,7 @@
     CompanyName       = 'Tech Thoughts'
 
     # Copyright statement for this module
-    Copyright         = '(c) 2018 Jake Morrison. All rights reserved.'
+    Copyright         = '(c) 2019 Jake Morrison. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description       = 'PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.'
@@ -111,12 +111,14 @@
             # Tags applied to this module. These help with module discovery in online galleries.
             Tags         = @(
                 'telegram',
+                'telegramx',
                 'telegram-bot-api',
                 'powershell',
                 'powershell-module',
                 'PSModule',
                 'Messenger',
                 'Notification',
+                'Notifications',
                 'Notify',
                 'Messaging'
             )
