@@ -49,7 +49,6 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    https://core.telegram.org/bots/api#sendphoto
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     photo                   InputFile or string     Yes         Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended),
@@ -96,7 +95,7 @@ function Send-TelegramURLPhoto {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying URL leads to supported photo extension..."
-    $fileTypeEval = Test-PhotoURLExtension -URL $PhotoURL
+    $fileTypeEval = Test-URLExtension -URL $PhotoURL -Type Photo
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results

@@ -128,7 +128,7 @@ function Send-TelegramLocalAudio {
     }#if_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
-    $fileTypeEval = Test-AudioExtension -AudioPath $Audio
+    $fileTypeEval = Test-FileExtension -FilePath $Audio -Type Audio
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results

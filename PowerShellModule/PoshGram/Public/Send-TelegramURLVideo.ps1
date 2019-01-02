@@ -131,7 +131,7 @@ function Send-TelegramURLVideo {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying URL leads to supported document extension..."
-    $fileTypeEval = Test-VideoURLExtension -URL $VideoURL
+    $fileTypeEval = Test-URLExtension -URL $VideoURL -Type Video
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results

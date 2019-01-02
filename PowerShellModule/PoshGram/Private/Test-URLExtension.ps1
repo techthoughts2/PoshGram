@@ -1,24 +1,38 @@
 <#
 .Synopsis
-    Verifies that specified URL path contains a supported Telegram document type
+    Verifies that specified URL path contains a supported Telegram extension type
 .DESCRIPTION
-    Evaluates the specified URL path to determine if the URL leads to a supported document type
+    Evaluates the specified URL path to determine if the URL leads to a supported extension type
 .EXAMPLE
-    Test-URLExtension -URL $URL
+    Test-URLExtension -URL $URL -Type Photo
+
+    Verifies if the URL path specified is a supported photo extension type
+.EXAMPLE
+    Test-URLExtension -URL $PhotoURL -Type Photo -Verbose
+
+    Verifies if the URL path specified is a supported photo extension type with Verbose output
+.EXAMPLE
+    Test-URLExtension -URL $VideoURL -Type Video
+
+    Verifies if the URL path specified is a supported video extension type
+.EXAMPLE
+    Test-URLExtension -URL $AudioURL -Type Audio
+
+    Verifies if the URL path specified is a supported audio extension type
+.EXAMPLE
+    Test-URLExtension -URL $AnimationURL -Type Animation
+
+    Verifies if the URL path specified is a supported animation extension type
+.EXAMPLE
+    Test-URLExtension -URL $DocumentURL -Type Document
 
     Verifies if the URL path specified is a supported document extension type
-.EXAMPLE
-    Test-URLExtension -URL $URL -Verbose
-
-    Verifies if the URL specified in $URL is a supported document extension type with verbose output
 .PARAMETER URL
-    The URL string to the specified online document
+    The URL string to the specified online file
 .OUTPUTS
     System.Boolean
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    https://core.telegram.org/bots/api#senddocument
-    GIF, PDF, ZIP
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 #>
@@ -30,20 +44,76 @@ function Test-URLExtension {
             HelpMessage = 'URL string of document')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
-        [string]$URL
+        [string]$URL,
+        [Parameter(Mandatory = $true,
+            HelpMessage = 'Telegram message type')]
+        [ValidateSet('Photo','Video','Audio','Animation','Document')]
+            [string]$Type
     )
+    #------------------------------------------------------------
+    $supportedPhotoExtensions = @(
+        'JPG',
+        'JPEG',
+        'PNG',
+        'GIF',
+        'BMP',
+        'WEBP',
+        'SVG',
+        'TIFF'
+    )
+    $supportedVideoExtensions = @(
+        'MP4'
+    )
+    $supportedAudioExtensions = @(
+        'MP3'
+    )
+    $supportedAnimationExtensions = @(
+        'GIF'
+    )
+    $supportedDocumentExtensions = @(
+        'PDF',
+        'GIF',
+        'ZIP'
+    )
+    switch ($Type) {
+        Photo { $extType = $supportedPhotoExtensions}
+        Video { $extType = $supportedVideoExtensions}
+        Audio { $extType = $supportedAudioExtensions}
+        Animation { $extType = $supportedAnimationExtensions}
+        Document { $extType = $supportedDocumentExtensions}
+    }#switch_Type
+    Write-Verbose -Message "Validating type: $Type"
+    #------------------------------------------------------------
     [bool]$results = $true #assume the best.
+    #------------------------------------------------------------
+    Write-Verbose -Message "Testing provided URL"
+    $urlEval = Confirm-URL -Uri $URL
+    if ($urlEval -ne $true) {
+        Write-Verbose -Message 'URL Confirmation did not return true.'
+        $results = $false
+        return $results
+    }#if_urlEval
+    #------------------------------------------------------------
+    Write-Verbose -Message "Resolving potential shortlink..."
+    $slEval = Resolve-ShortLink -Uri $URL
+    if ($slEval) {
+        $URL = $slEval
+    }#if_slEval
+    #------------------------------------------------------------
     Write-Verbose -Message "Processing $URL ..."
     $divide = $URL.Split(".")
     $rawExtension = $divide[$divide.Length - 1]
-    $extension = $rawExtension.ToLower()
+    $extension = $rawExtension.ToUpper()
     Write-Verbose "Verifying discovered extension: $extension"
-    if ($extension -eq "gif" -or $extension -eq "pdf" -or $extension -eq "zip") {
-        Write-Verbose -Message "Extension verified."
-    }#if_supportedExtensions
-    else {
-        Write-Warning -Message "The specified URL does not contain supported document extension."
-        $results = $false
-    }#else_supportedExtensions
+    switch($extension) {
+        {$extType -contains $_} {
+            Write-Verbose -Message "Extension verified."
+        }
+        default {
+            Write-Warning -Message "The specified file is not a supported $Type extension."
+            $results = $false
+        }#default
+    }#switch_extension
+    #------------------------------------------------------------
     return $results
 }#function_Test-URLExtension

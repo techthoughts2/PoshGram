@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------
+
 #if the module is already in memory, remove it
 Get-Module PoshGram | Remove-Module -Force
 #-------------------------------------------------------------------------
@@ -29,6 +29,7 @@ InModuleScope PoshGram {
     $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
     $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
     $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
     #-------------------------------------------------------------------------
     $supportedPhotoExtensions = @(
         'JPG',
@@ -51,92 +52,128 @@ InModuleScope PoshGram {
     $supportedAudioExtensions = @(
         'mp3'
     )
+    $supportedAnimationExtensions = @(
+        'GIF'
+    )
     #-------------------------------------------------------------------------
     Describe 'PoshGram Supporting Function Tests' -Tag Unit {
-        Context 'Test-PhotoExtension' {
-            foreach ($extension in $supportedPhotoExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-PhotoExtension -ImagePath c:\fakepath\fakefile.$extension `
-                        | Should -Be $true
-                }#it
-            }#foreach
+        Context 'Test-FileExtension' {
             It 'should return false when a non-supported extension is provided' {
-                Test-PhotoExtension -ImagePath c:\fakepath\fakefile.txt `
-                    | Should -Be $false
+                Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
+                    -Type Photo | Should -Be $false
+                Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
+                    -Type Video | Should -Be $false
+                Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
+                    -Type Audio | Should -Be $false
+                Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
+                    -Type Animation | Should -Be $false
             }#it
-        }#context_Test-PhotoExtension
+            Context 'Photo' {
+                foreach ($extension in $supportedPhotoExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `
+                            -Type Photo | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Photo
+            Context 'Video' {
+                foreach ($extension in $supportedVideoExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `
+                            -Type Video | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Video
+            Context 'Audio' {
+                foreach ($extension in $supportedAudioExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `
+                            -Type Audio | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Audio
+            Context 'Animation' {
+                foreach ($extension in $supportedAnimationExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `
+                            -Type Animation | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Animation
+        }#context_Test-FileExtension
         Context 'Test-URLExtension' {
-            foreach ($extension in $supportedDocumentExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
-                        | Should -Be $true
-                }#it
-            }#foreach
+            Mock Confirm-Url -MockWith {
+                $true
+            }#endmock
+            Mock Resolve-ShortLink {}
             It 'should return false when a non-supported extension is provided' {
                 Test-URLExtension -URL "http://techthoughts.info/file.xml" `
-                    | Should -Be $false
+                    -Type Photo | Should -Be $false
+                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                    -Type Video | Should -Be $false
+                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                    -Type Audio | Should -Be $false
+                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                    -Type Animation | Should -Be $false
             }#it
+            Context 'Photo' {
+                foreach ($extension in $supportedPhotoExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                            -Type Photo | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Photo
+            Context 'Video' {
+                foreach ($extension in $supportedVideoExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                            -Type Video | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Video
+            Context 'Audio' {
+                foreach ($extension in $supportedAudioExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                            -Type Audio | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Audio
+            Context 'Animation' {
+                foreach ($extension in $supportedAnimationExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                            -Type Animation | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Animation
+            Context 'Document' {
+                foreach ($extension in $supportedDocumentExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                            -Type Document | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Animation
+            It 'should properly resolve an extension after a shortlink is resolved' {
+                Mock Confirm-Url -MockWith {
+                    $true
+                }#endmock
+                Mock Resolve-ShortLink -MockWith {
+                    $animationURL
+                }
+                Test-URLExtension -URL "http://bit.ly/fakeaddress" `
+                            -Type Animation | Should -Be $true
+            }#it
+            It 'should return false if the URL cannot be reached' {
+                Mock Confirm-Url -MockWith {
+                    $false
+                }#endmock
+                Test-URLExtension -URL "http://bit.ly/fakeaddress" `
+                            -Type Animation | Should -Be $false
+            }
         }#context_Test-URLExtension
-        Context 'Test-PhotoURLExtension' {
-            foreach ($extension in $supportedPhotoExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-PhotoURLExtension -URL "http://techthoughts.info/file.$extension" `
-                        | Should -Be $true
-                }#it
-            }#foreach
-            It 'should return false when a non-supported extension is provided' {
-                Test-PhotoURLExtension -URL "http://techthoughts.info/file.xml" `
-                    | Should -Be $false
-            }#it
-        }#context_Test-PhotoURLExtension
-        Context 'Test-VideoExtension' {
-            foreach ($extension in $supportedVideoExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-VideoExtension -VideoPath c:\fakepath\fakefile.$extension `
-                        | Should -Be $true
-                }#it
-            }#foreach
-            It 'should return false when a non-supported extension is provided' {
-                Test-VideoExtension -VideoPath c:\fakepath\fakefile.txt `
-                    | Should -Be $false
-            }#it
-        }#context_Test-VideoExtension
-        Context 'Test-VideoURLExtension' {
-            foreach ($extension in $supportedVideoExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-VideoURLExtension -URL "http://techthoughts.info/file.$extension" `
-                        | Should -Be $true
-                }#it
-            }#foreach
-            It 'should return false when a non-supported extension is provided' {
-                Test-VideoURLExtension -URL "http://techthoughts.info/file.xml" `
-                    | Should -Be $false
-            }#it
-        }#context_Test-VideoURLExtension
-        Context 'Test-AudioExtension' {
-            foreach ($extension in $supportedAudioExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-AudioExtension -AudioPath c:\fakepath\fakefile.$extension `
-                        | Should -Be $true
-                }#it
-            }#foreach
-            It 'should return false when a non-supported extension is provided' {
-                Test-AudioExtension -AudioPath c:\fakepath\fakefile.txt `
-                    | Should -Be $false
-            }#it
-        }#context_Test-AudioExtension
-        Context 'Test-AudioURLExtension' {
-            foreach ($extension in $supportedAudioExtensions) {
-                It "should return true when $extension extension is provided" {
-                    Test-AudioURLExtension -URL "http://techthoughts.info/file.$extension" `
-                        | Should -Be $true
-                }#it
-            }#foreach
-            It 'should return false when a non-supported extension is provided' {
-                Test-AudioURLExtension -URL "http://techthoughts.info/file.xml" `
-                    | Should -Be $false
-            }#it
-        }#context_Test-AudioURLExtension
         Context 'Test-FileSize' {
             It 'Should return true when the file is at or below 50MB' {
                 mock Get-ChildItem -MockWith {
@@ -201,6 +238,84 @@ InModuleScope PoshGram {
                 Test-URLFileSize -URL $fileURL | Should -Be $false
             }
         }#context_Test-URLFileSize
+        Context 'Confirm-URL' {
+            It 'should return false if the website can not be reached' {
+                Mock Invoke-WebRequest -MockWith {
+                    [System.Exception]$exception = 'No such host is known'
+                    [System.String]$errorId = 'InvalidOperation$'
+                    [Management.Automation.ErrorCategory]$errorCategory = [Management.Automation.ErrorCategory]::InvalidOperation
+                    [System.Object]$target = 'Whatevs'
+                    $errorRecord = New-Object Management.Automation.ErrorRecord ($exception, $errorID,$errorCategory, $target)
+                    [System.Management.Automation.ErrorDetails]$errorDetails = '{"message":"No such host is known"}'
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                }#endMock
+                Confirm-URL -Uri 'https://bssite.is/2nlyzm4' | Should -Be $false
+            }#it
+            It 'should return true when a website can be reached' {
+                mock Invoke-WebRequest -MockWith {
+                    [PSCustomObject]@{
+                        StatusCode        = "200"
+                        StatusDescription = "OK"
+                        Content           = "{137, 80, 78, 71...}"
+                        RawContent        = "HTTP/1.1 200 OK"
+                        Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
+                        RawContentLength  = "119136"
+                    }
+                }#endMock
+                Confirm-URL -Uri 'https://gph.is/2nlyzm4' |  Should -Be $true
+            }#it
+        }#Confirm-URL
+        Context 'Resolve-ShortLink' {
+            #I haven't figured out at this time how to properly mock Invoke-WebRequest errors that indicate a re-direction condition.
+            #as such, there is no test coverage for this function at this time
+            <#
+            it 'should return the redirected URL if a Moved header is found' {
+
+                Mock Invoke-WebRequest -MockWith {
+
+                    [Microsoft.PowerShell.Commands.HttpResponseException]$Exception = @{
+
+                    }
+                }
+
+                Mock Invoke-WebRequest -MockWith {
+                    [System.Exception]$exception = 'Operation is not valid due to the current state of the object.'
+                    [System.String]$errorId = 'WebCmdletWebResponseException$'
+                    [Management.Automation.ErrorCategory]$errorCategory = [Management.Automation.ErrorCategory]::InvalidOperation
+                    [System.Object]$target = 'Whatevs'
+                    $errorRecord = New-Object Management.Automation.ErrorRecord ($exception, $errorID,$errorCategory, $target)
+                    [System.Management.Automation.ErrorDetails]$errorDetails = '{"message":"The maximum redirection count has been exceeded. To increase the number of redirections allowed
+                    , supply a higher value to the -MaximumRedirection parameter."}'
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                }#endMock
+                Resolve-ShortLink -Uri 'https://gph.is/2nlyzm4' | Should
+
+                }#it
+                $hi = [System.Net.Http.HttpResponseMessage]::new()
+                $hi.Headers = [System.Net.Http.Headers.HttpResponseHeaders]::Equals()
+                [System.Net.Http.HttpResponseMessage] = @(
+                    Headers = [System.Net.Http.Headers.HttpResponseHeaders] = @(
+                        Location = @ {
+                            AbsoluteUri = 'https://giphy.com/gifs/cbs-star-trek-3o7WIxTr05mKzBTFUk'
+                        }
+                    )
+                )
+
+                mock Invoke-WebRequest -MockWith {
+                    [PSCustomObject]@{
+                        StatusCode        = "200"
+                        StatusDescription = "OK"
+                        Content           = "{137, 80, 78, 71...}"
+                        RawContent        = "HTTP/1.1 200 OK"
+                        Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
+                        RawContentLength  = "119136"
+                    }
+                }#endMock
+            }#it
+            #>
+        }#context_Resolve-ShortLink
     }#describe_SupportingFunctions
     Describe 'PoshGram Test Function Tests' -Tag Unit {
         Context 'Test-BotToken' {
@@ -272,7 +387,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the photo extension is not supported' {
                 mock Test-Path { $true }
-                mock Test-PhotoExtension { $false }
+                mock Test-FileExtension { $false }
                 Send-TelegramLocalPhoto `
                     -BotToken $token `
                     -ChatID $chat `
@@ -280,7 +395,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the photo is too large' {
                 mock Test-Path { $true }
-                mock Test-PhotoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $false }
                 Send-TelegramLocalPhoto `
                     -BotToken $token `
@@ -289,7 +404,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Test-Path { $true }
-                mock Test-PhotoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     Throw 'Bullshit Error'
@@ -301,7 +416,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Test-Path { $true }
-                mock Test-PhotoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -322,7 +437,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return a custom PSCustomObject if successful' {
                 mock Test-Path { $true }
-                mock Test-PhotoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -355,7 +470,7 @@ InModuleScope PoshGram {
         }#context_Send-TelegramLocalPhoto
         Context 'Send-TelegramURLPhoto' {
             It 'should return false if the photo extension is not supported' {
-                mock Test-PhotoURLExtension { $false }
+                mock Test-URLExtension { $false }
                 Send-TelegramURLPhoto `
                     -BotToken $token `
                     -ChatID $chat `
@@ -366,7 +481,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
-                mock Test-PhotoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $false }
                 Send-TelegramURLPhoto `
                     -BotToken $token `
@@ -378,7 +493,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
-                mock Test-PhotoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
@@ -393,7 +508,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return a custom PSCustomObject if successful' {
-                mock Test-PhotoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
@@ -567,7 +682,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the video extension is not supported' {
                 mock Test-Path { $true }
-                mock Test-VideoExtension { $false }
+                mock Test-FileExtension { $false }
                 Send-TelegramLocalVideo `
                     -BotToken $token `
                     -ChatID $chat `
@@ -575,7 +690,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the video is too large' {
                 mock Test-Path { $true }
-                mock Test-VideoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $false }
                 Send-TelegramLocalVideo `
                     -BotToken $token `
@@ -584,7 +699,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Test-Path { $true }
-                mock Test-VideoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     Throw 'Bullshit Error'
@@ -596,7 +711,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Test-Path { $true }
-                mock Test-VideoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -617,7 +732,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return a custom PSCustomObject if successful' {
                 mock Test-Path { $true }
-                mock Test-VideoExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -650,7 +765,7 @@ InModuleScope PoshGram {
         }#context_Send-TelegramLocalVideo
         Context 'Send-TelegramURLVideo' {
             It 'should return false if the video extension is not supported' {
-                mock Test-VideoURLExtension { $false }
+                mock Test-URLExtension { $false }
                 Send-TelegramURLVideo `
                     -BotToken $token `
                     -ChatID $chat `
@@ -664,7 +779,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
-                mock Test-VideoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $false }
                 Send-TelegramURLVideo `
                     -BotToken $token `
@@ -679,7 +794,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
-                mock Test-VideoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
@@ -697,7 +812,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return a custom PSCustomObject if successful' {
-                mock Test-VideoURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
@@ -736,7 +851,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the audio extension is not supported' {
                 mock Test-Path { $true }
-                mock Test-AudioExtension { $false }
+                mock Test-FileExtension { $false }
                 Send-TelegramLocalAudio `
                     -BotToken $token `
                     -ChatID $chat `
@@ -744,7 +859,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if the audio is too large' {
                 mock Test-Path { $true }
-                mock Test-AudioExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $false }
                 Send-TelegramLocalAudio `
                     -BotToken $token `
@@ -753,7 +868,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Test-Path { $true }
-                mock Test-AudioExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     Throw 'Bullshit Error'
@@ -765,7 +880,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Test-Path { $true }
-                mock Test-AudioExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -786,7 +901,7 @@ InModuleScope PoshGram {
             }#it
             It 'should return a custom PSCustomObject if successful' {
                 mock Test-Path { $true }
-                mock Test-AudioExtension { $true }
+                mock Test-FileExtension { $true }
                 mock Test-FileSize { $true }
                 mock Get-Item {
                     [PSCustomObject]@{
@@ -819,7 +934,7 @@ InModuleScope PoshGram {
         }#context_Send-TelegramLocalAudio
         Context 'Send-TelegramURLAudio' {
             It 'should return false if the audio extension is not supported' {
-                mock Test-AudioURLExtension { $false }
+                mock Test-URLExtension { $false }
                 Send-TelegramURLAudio `
                     -BotToken $token `
                     -ChatID $chat `
@@ -833,7 +948,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
-                mock Test-AudioURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $false }
                 Send-TelegramURLAudio `
                     -BotToken $token `
@@ -848,7 +963,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
-                mock Test-AudioURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
@@ -866,7 +981,7 @@ InModuleScope PoshGram {
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
             It 'should return a custom PSCustomObject if successful' {
-                mock Test-AudioURLExtension { $true }
+                mock Test-URLExtension { $true }
                 mock Test-URLFileSize { $true }
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
@@ -895,5 +1010,162 @@ InModuleScope PoshGram {
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_Send-TelegramURLAudio
+        Context 'Send-TelegramLocalAnimation' {
+            It 'should return false if the animation can not be found' {
+                mock Test-Path { $false }
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" | Should -Be $false
+            }#it
+            It 'should return false if the animation extension is not supported' {
+                mock Test-Path { $true }
+                mock Test-FileExtension { $false }
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" | Should -Be $false
+            }#it
+            It 'should return false if the animation is too large' {
+                mock Test-Path { $true }
+                mock Test-FileExtension { $true }
+                mock Test-FileSize { $false }
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" | Should -Be $false
+            }#it
+            It 'should return false if it cannot successfuly get the file' {
+                mock Test-Path { $true }
+                mock Test-FileExtension { $true }
+                mock Test-FileSize { $true }
+                mock Get-Item {
+                    Throw 'Bullshit Error'
+                }#endMock
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" | Should -Be $false
+            }#it
+            It 'should return false if an error is encountered sending the message' {
+                mock Test-Path { $true }
+                mock Test-FileExtension { $true }
+                mock Test-FileSize { $true }
+                mock Get-Item {
+                    [PSCustomObject]@{
+                        Mode          = "True"
+                        LastWriteTime = "06/17/16     00:19"
+                        Length        = "1902"
+                        Name          = "diagvresults.jpg"
+                    }
+                }#endMock
+                mock Invoke-RestMethod {
+                    Throw 'Bullshit Error'
+                }#endMock
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" `
+                    -ErrorAction SilentlyContinue | Should -Be $false
+            }#it
+            It 'should return a custom PSCustomObject if successful' {
+                mock Test-Path { $true }
+                mock Test-FileExtension { $true }
+                mock Test-FileSize { $true }
+                mock Get-Item {
+                    [PSCustomObject]@{
+                        Mode          = "True"
+                        LastWriteTime = "06/17/16     00:19"
+                        Length        = "1902"
+                        Name          = "diagvresults.jpg"
+                    }
+                }#endMock
+                mock Invoke-RestMethod -MockWith {
+                    [PSCustomObject]@{
+                        ok     = "True"
+                        result = @{
+                            message_id       = 2222
+                            from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
+                            chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
+                            date             = "1530157540"
+                            audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
+                            caption          = "Local Video Test"
+                            caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        }
+                    }
+                }#endMock
+                Send-TelegramLocalAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Animation "C:\bs\animation.gif" `
+                    | Should -BeOfType System.Management.Automation.PSCustomObject
+            }#it
+        }#context_Send-TelegramLocalAnimation
+        Context 'Send-TelegramURLAnimation' {
+            It 'should return false if the animation extension is not supported' {
+                mock Test-URLExtension { $false }
+                Send-TelegramURLAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -AnimationURL $animationURL `
+                    -Caption "Check out this animation" `
+                    -ParseMode Markdown `
+                    -DisableNotification $false `
+                    -ErrorAction SilentlyContinue | Should -Be $false
+            }#it
+            It 'should return false if the file is too large' {
+                mock Test-URLExtension { $true }
+                mock Test-URLFileSize { $false }
+                Send-TelegramURLAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -AnimationURL $animationURL `
+                    -Caption "Check out this animation" `
+                    -ParseMode Markdown `
+                    -DisableNotification $false `
+                    -ErrorAction SilentlyContinue | Should -Be $false
+            }#it
+            It 'should return false if an error is encountered' {
+                mock Test-URLExtension { $true }
+                mock Test-URLFileSize { $true }
+                Mock Invoke-RestMethod {
+                    Throw 'Bullshit Error'
+                }#endMock
+                Send-TelegramURLAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -AnimationURL $animationURL `
+                    -Caption "Check out this animation" `
+                    -ParseMode Markdown `
+                    -DisableNotification $false `
+                    -ErrorAction SilentlyContinue | Should -Be $false
+            }#it
+            It 'should return a custom PSCustomObject if successful' {
+                mock Test-URLExtension { $true }
+                mock Test-URLFileSize { $true }
+                mock Invoke-RestMethod -MockWith {
+                    [PSCustomObject]@{
+                        ok     = "True"
+                        result = @{
+                            message_id       = 2222
+                            from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
+                            chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
+                            date             = "1530157540"
+                            audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
+                            caption          = "Video URL test"
+                            caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        }
+                    }
+                }#endMock
+                Send-TelegramURLAnimation `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -AnimationURL $animationURL `
+                    -Caption "Check out this animation" `
+                    -ParseMode Markdown `
+                    -DisableNotification $false `
+                    | Should -BeOfType System.Management.Automation.PSCustomObject
+            }#it
+        }#context_Send-TelegramURLAnimation
     }#describe_Functions
 }#inModule

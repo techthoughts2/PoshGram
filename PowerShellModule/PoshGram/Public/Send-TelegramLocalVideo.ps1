@@ -139,7 +139,7 @@ function Send-TelegramLocalVideo {
     }#if_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
-    $fileTypeEval = Test-VideoExtension -VideoPath $Video
+    $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results

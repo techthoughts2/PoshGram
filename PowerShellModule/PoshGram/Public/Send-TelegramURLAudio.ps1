@@ -120,7 +120,7 @@ function Send-TelegramURLAudio {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying URL leads to supported audio extension..."
-    $fileTypeEval = Test-AudioURLExtension -URL $AudioURL
+    $fileTypeEval = Test-URLExtension -URL $AudioURL -Type Audio
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results

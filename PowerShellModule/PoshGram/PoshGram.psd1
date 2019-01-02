@@ -79,7 +79,9 @@
         'Send-TelegramLocalVideo',
         'Send-TelegramURLVideo',
         'Send-TelegramLocalAudio',
-        'Send-TelegramURLAudio'
+        'Send-TelegramURLAudio',
+        'Send-TelegramLocalAnimation',
+        'Send-TelegramURLAnimation'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -114,7 +116,8 @@
                 'PSModule',
                 'Messenger',
                 'Notification',
-                'Notify'
+                'Notify',
+                'Messaging'
             )
 
             # A URL to the license for this module.

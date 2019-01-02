@@ -170,7 +170,7 @@ task Test {
         assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
 
         # Ensure our builds fail until if below a minimum defined code test coverage threshold
-        $coverageThreshold = 75
+        $coverageThreshold = 95
         $coveragePercent = '{0:N2}' -f ($testResults.CodeCoverage.NumberOfCommandsExecuted / $testResults.CodeCoverage.NumberOfCommandsAnalyzed * 100)
 
         <#

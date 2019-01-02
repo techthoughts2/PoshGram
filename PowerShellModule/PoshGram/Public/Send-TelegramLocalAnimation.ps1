@@ -1,34 +1,34 @@
 <#
 .Synopsis
-    Sends Telegram photo message via Bot API from locally sourced photo image
+    Sends Telegram animation message via Bot API from locally sourced animation
 .DESCRIPTION
-    Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
+    Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
     $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-#########"
-    $photo = "C:\photos\aphoto.jpg"
-    Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
+    $animation = "C:\animation\animation.gif"
+    Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 
-    Sends photo message via Telegram API
+    Sends AnimationPath message via Telegram API
 .EXAMPLE
     $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-#########"
-    $photo = "C:\photos\aphoto.jpg"
-    Send-TelegramLocalPhoto `
+    $animation = "C:\animation\animation.gif"
+    Send-TelegramLocalAnimation `
         -BotToken $botToken `
         -ChatID $chat `
-        -PhotoPath $photo `
-        -Caption "Check out this photo" `
+        -AnimationPath $animation `
+        -Caption "Check out this animation" `
         -ParseMode Markdown `
         -DisableNotification $false `
         -Verbose
 
-    Sends photo message via Telegram API
+    Sends animation message via Telegram API
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
     Unique identifier for the target chat
-.PARAMETER PhotoPath
+.PARAMETER AnimationPath
     File path to local image
 .PARAMETER Caption
     Brief title or explanation for media
@@ -44,8 +44,8 @@
     Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
-    The following photo types are supported:
-    JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
+    The following animation types are supported:
+    GIF
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -55,17 +55,17 @@
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    photo                   InputFile or String     Yes         Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended),
-        pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files
-    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    animation               InputFile or String     Yes         Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended),
+        pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More info on Sending Files
+    caption                 String                  Optional    Animation caption (may also be used when resending animation by file_id), 0-1024 characters
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalPhoto.md
+    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md
 .LINK
-    https://core.telegram.org/bots/api#sendphoto
+    https://core.telegram.org/bots/api#sendanimation
 #>
-function Send-TelegramLocalPhoto {
+function Send-TelegramLocalAnimation {
     [CmdletBinding()]
     Param
     (
@@ -80,12 +80,12 @@ function Send-TelegramLocalPhoto {
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
         [Parameter(Mandatory = $true,
-            HelpMessage = 'File path to the photo you wish to send')]
+            HelpMessage = 'File path to the animation you wish to send')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
-        [string]$PhotoPath,
+        [string]$AnimationPath,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Photo caption')]
+            HelpMessage = 'Animation caption')]
         [string]$Caption = "", #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
@@ -98,46 +98,46 @@ function Send-TelegramLocalPhoto {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying presence of photo..."
-    if (!(Test-Path -Path $PhotoPath)) {
-        Write-Warning "The specified photo path: $PhotoPath was not found."
+    Write-Verbose -Message "Verifying presence of animation..."
+    if (!(Test-Path -Path $AnimationPath)) {
+        Write-Warning "The specified animation path: $AnimationPath was not found."
         $results = $false
         return $results
     }#if_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
-    $fileTypeEval = Test-FileExtension -FilePath $PhotoPath -Type Photo
+    $fileTypeEval = Test-FileExtension -FilePath $AnimationPath -Type Animation
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_photoExtension
+    }#if_animationExtension
     else {
         Write-Verbose -Message "Extension supported."
-    }#else_photoExtension
+    }#else_animationExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying file size..."
-    $fileSizeEval = Test-FileSize -Path $PhotoPath
+    $fileSizeEval = Test-FileSize -Path $AnimationPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_photoSize
+    }#if_animationSize
     else {
         Write-Verbose -Message "File size verified."
-    }#else_photoSize
+    }#else_animationSize
     #------------------------------------------------------------------------
     try {
-        $fileObject = Get-Item $PhotoPath -ErrorAction Stop
-    }#try_Get-ItemPhoto
+        $fileObject = Get-Item $AnimationPath -ErrorAction Stop
+    }#try_Get-ItemAnimation
     catch {
-        Write-Warning "The specified photo could not be interpreted properly."
+        Write-Warning "The specified animation could not be interpreted properly."
         $results = $false
         return $results
-    }#catch_Get-ItemPhoto
+    }#catch_Get-ItemAnimation
     #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/sendphoto"
+    $uri = "https://api.telegram.org/bot$BotToken/sendAnimation"
     $Form = @{
         chat_id              = $ChatID
-        photo                = $fileObject
+        animation            = $fileObject
         caption              = $Caption
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification
@@ -147,10 +147,10 @@ function Send-TelegramLocalPhoto {
         $results = Invoke-RestMethod -Uri $Uri -Method Post -Form $Form -ErrorAction Stop
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram photo message:"
+        Write-Warning "An error was encountered sending the Telegram animation message:"
         Write-Error $_
         $results = $false
     }#catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramLocalPhoto
+}#function_Send-TelegramLocalAnimation
