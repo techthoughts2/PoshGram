@@ -95,7 +95,7 @@ function Test-URLExtension {
     }#if_urlEval
     #------------------------------------------------------------
     Write-Verbose -Message "Resolving potential shortlink..."
-    $slEval = Resolve-ShortLink -Uri $URL
+    $slEval = Resolve-ShortLink -Uri $URL -ErrorAction SilentlyContinue
     if ($slEval) {
         $URL = $slEval
     }#if_slEval

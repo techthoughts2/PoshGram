@@ -27,13 +27,31 @@ InModuleScope PoshGram {
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #you MUST provide the following variables to complete infra tests
     <#
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $channel = "-#########"
+    #$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    #$channel = "-#########"
     $file = "C:\Test\Photos\Photo.jpg"
     $file2 = "C:\Test\Documents\customlog.txt"
     $file3 = "C:\Test\Videos\Intro.mp4"
     $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $file5 = "C:\Test\Animation\Cat.gif"
+    $file5 = "C:\Test\Animation\jean.gif"
+
+    $path = 'C:\Test\PhotoGroup'
+    $files = @(
+        "$path\picard.jpg",
+        "$path\riker.png",
+        "$path\data.jpg",
+        "$path\geordi.jpg",
+        "$path\troi.jpg",
+        "$path\beverly.jpg",
+        "$path\worf.jpg"
+    )
+
+    $vPath = 'C:\Test\VideoGroup'
+    $vFiles = @(
+        "$vPath\first_contact.mp4",
+        "$vPath\root_beer.mp4"
+    )
+
     #>
     $latitude = 37.621313
     $longitude = -122.378955
@@ -41,7 +59,7 @@ InModuleScope PoshGram {
     $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
     $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
     $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+    $animationURL = "https://media.giphy.com/media/8vRrxHIZlJT2xvo920/giphy.gif"
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
@@ -167,6 +185,24 @@ InModuleScope PoshGram {
                     -ChatID $channel `
                     -AnimationURL $animationURL `
                     -Caption "I am a Pester test for *Send-TelegramURLAnimation*"
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramURLAnimation
+        Context "Send-TelegramMediaGroup" {
+            It 'Should return with ok:true when a group of photos is successfully sent' {
+                $eval = Send-TelegramMediaGroup `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -MediaType Photo `
+                    -FilePaths $files
+                $eval.ok | Should -Be "True"
+            }#it
+            It 'Should return with ok:true when a group of videos is successfully sent' {
+                $eval = Send-TelegramMediaGroup `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -MediaType Video `
+                    -FilePaths $vFiles
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
