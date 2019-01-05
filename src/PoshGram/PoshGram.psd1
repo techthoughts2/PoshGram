@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.8.4'
+    ModuleVersion     = '0.9.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -110,18 +110,36 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags         = @(
+            Tags = @(
                 'telegram',
                 'telegramx',
+                'bot',
                 'telegram-bot-api',
                 'powershell',
                 'powershell-module',
                 'PSModule',
                 'Messenger',
+                'Message',
                 'Notification',
                 'Notifications',
                 'Notify',
-                'Messaging'
+                'Send',
+                'Messaging',
+                'Automation',
+                'Photo',
+                'Photos',
+                'Pictures',
+                'Video',
+                'Videos',
+                'Gif',
+                'Gifs',
+                'Animations',
+                'Location',
+                'Coordinates',
+                'Media',
+                'Documents',
+                'Audio',
+                'SMS'
             )
 
             # A URL to the license for this module.
@@ -134,7 +152,22 @@
             IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Initial beta release.'
+            ReleaseNotes = '
+0.9.0 :
+    Restructured module for CI/CD Workflow
+    Added Invoke-Build capabilities to module
+    Added Animation functionality:
+        Send-TelegramLocalAnimation
+        Send-TelegramURLAnimation
+    Added location functionality:
+        Send-TelegramLocation
+    Added multi-media functionality:
+        Send-TelegramMediaGroup
+    Consolidated private support functions
+    Code Logic improvements
+0.8.4 Added IconURI to manifest
+0.8.3 Initial beta release.
+'
 
         } # End of PSData hashtable
 

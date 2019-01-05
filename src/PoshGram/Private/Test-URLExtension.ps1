@@ -47,8 +47,8 @@ function Test-URLExtension {
         [string]$URL,
         [Parameter(Mandatory = $true,
             HelpMessage = 'Telegram message type')]
-        [ValidateSet('Photo','Video','Audio','Animation','Document')]
-            [string]$Type
+        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Document')]
+        [string]$Type
     )
     #------------------------------------------------------------
     $supportedPhotoExtensions = @(
@@ -76,11 +76,21 @@ function Test-URLExtension {
         'ZIP'
     )
     switch ($Type) {
-        Photo { $extType = $supportedPhotoExtensions}
-        Video { $extType = $supportedVideoExtensions}
-        Audio { $extType = $supportedAudioExtensions}
-        Animation { $extType = $supportedAnimationExtensions}
-        Document { $extType = $supportedDocumentExtensions}
+        Photo {
+            $extType = $supportedPhotoExtensions
+        }#photo
+        Video {
+            $extType = $supportedVideoExtensions
+        }#video
+        Audio {
+            $extType = $supportedAudioExtensions
+        }#audio
+        Animation {
+            $extType = $supportedAnimationExtensions
+        }#animation
+        Document {
+            $extType = $supportedDocumentExtensions
+        }#document
     }#switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------
@@ -105,7 +115,7 @@ function Test-URLExtension {
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
     Write-Verbose "Verifying discovered extension: $extension"
-    switch($extension) {
+    switch ($extension) {
         {$extType -contains $_} {
             Write-Verbose -Message "Extension verified."
         }

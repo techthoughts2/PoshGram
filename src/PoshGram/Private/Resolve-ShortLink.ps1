@@ -34,13 +34,13 @@ function Resolve-ShortLink {
     }#try_Invoke-WebRequest
     catch {
         #if($_.ErrorDetails.Message -like "*maximum redirection*"){
-        if($_.Exception.Message -like "*Moved*"){
+        if ($_.Exception.Message -like "*Moved*") {
             $a = $_
             Write-Verbose -Message 'Moved detected.'
             #$result = $a.Headers.Location
             $result = $a.Exception.Response.Headers.Location.AbsoluteUri
         }#if_Error_Moved
-        else{
+        else {
             Write-Warning -Message 'An Error was encountered resolving a potential shortlink:'
             Write-Error $_
         }#else_Error_Moved

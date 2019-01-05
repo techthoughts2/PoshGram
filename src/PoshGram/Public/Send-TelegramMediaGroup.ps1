@@ -68,12 +68,6 @@
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
-    #$practice += @{photo1 = $pic1 }
-    #$practice += @{photo2 = $pic2 }
-
-    #$json += '{"type":"photo","media":"attach://photo1"},'
-    #$json += '{"type":"photo","media":"attach://photo2"}'
-
     This was really hard to make.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram

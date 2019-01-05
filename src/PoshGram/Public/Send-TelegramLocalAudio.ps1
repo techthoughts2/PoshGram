@@ -52,7 +52,6 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
     Your audio must be in the .mp3 format.
@@ -126,6 +125,9 @@ function Send-TelegramLocalAudio {
         $results = $false
         return $results
     }#if_testPath
+    else{
+        Write-Verbose -Message "Path verified."
+    }#else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
     $fileTypeEval = Test-FileExtension -FilePath $Audio -Type Audio

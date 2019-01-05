@@ -41,7 +41,6 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
     The following animation types are supported:
@@ -50,6 +49,8 @@
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+
+    Get creative by sending Gifs with your bot!
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
@@ -104,6 +105,9 @@ function Send-TelegramLocalAnimation {
         $results = $false
         return $results
     }#if_testPath
+    else{
+        Write-Verbose -Message "Path verified."
+    }#else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
     $fileTypeEval = Test-FileExtension -FilePath $AnimationPath -Type Animation

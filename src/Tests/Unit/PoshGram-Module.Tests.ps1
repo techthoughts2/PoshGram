@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------
 Set-Location -Path $PSScriptRoot
-
+#-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
 $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
 $PathToModule = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psm1")

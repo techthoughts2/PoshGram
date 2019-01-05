@@ -107,7 +107,7 @@ task Analyze {
         $scriptAnalyzerResults | Format-Table
         throw 'One or more PSScriptAnalyzer errors/warnings where found.'
     }
-    else{
+    else {
         Write-Host -ForegroundColor Green '...Module Analyze Complete!'
     }
 }#Analyze
@@ -135,7 +135,7 @@ task AnalyzeTests -After Analyze {
             $scriptAnalyzerResults | Format-Table
             throw 'One or more PSScriptAnalyzer errors/warnings where found.'
         }
-        else{
+        else {
             Write-Host -ForegroundColor Green '...Test Analyze Complete!'
         }
     }

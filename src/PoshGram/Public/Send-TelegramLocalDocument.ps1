@@ -41,7 +41,6 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
     Bots can currently send files of up to 50 MB in size, this limit may be changed in the future.
@@ -102,6 +101,9 @@ function Send-TelegramLocalDocument {
         $results = $false
         return $results
     }#if_testPath
+    else {
+        Write-Verbose -Message "Path verified."
+    }#else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying file size..."
     $fileSizeEval = Test-FileSize -Path $File

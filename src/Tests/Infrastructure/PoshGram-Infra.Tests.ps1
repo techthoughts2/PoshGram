@@ -1,4 +1,4 @@
-
+#-------------------------------------------------------------------------
 #if the module is already in memory, remove it
 Get-Module PoshGram | Remove-Module -Force
 #-------------------------------------------------------------------------
@@ -12,13 +12,6 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-#$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-#$moduleName = 'PoshGram.psd1'
-#$moduleNamePath = "$script:moduleRoot\$moduleName"
-
-#Import-Module $moduleNamePath -Force
-
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
@@ -55,11 +48,11 @@ InModuleScope PoshGram {
     #>
     $latitude = 37.621313
     $longitude = -122.378955
-    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
-    $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-    $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
-    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $animationURL = "https://media.giphy.com/media/8vRrxHIZlJT2xvo920/giphy.gif"
+    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/techthoughts.png"
+    $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/LogExample.zip"
+    $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/Intro.mp4"
+    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/jean.gif"
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {

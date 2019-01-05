@@ -53,7 +53,6 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
@@ -137,6 +136,9 @@ function Send-TelegramLocalVideo {
         $results = $false
         return $results
     }#if_testPath
+    else{
+        Write-Verbose -Message "Path verified."
+    }#else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying extension type..."
     $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video

@@ -39,7 +39,6 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    Contributor: Mark Kraus - @markekraus - thanks for the form tip!
     This works with PowerShell Version: 6.1
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api

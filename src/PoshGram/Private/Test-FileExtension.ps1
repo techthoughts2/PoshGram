@@ -14,15 +14,19 @@
 .EXAMPLE
     $fileTypeEval = Test-FileExtension -FilePath $AnimationPath -Type Animation
 
+    Verifies if the path specified is a supported Animation extension type
 .EXAMPLE
     $fileTypeEval = Test-FileExtension -FilePath $Audio -Type Audio
 
+    Verifies if the path specified is a supported Audio extension type
 .EXAMPLE
     $fileTypeEval = Test-FileExtension -FilePath $PhotoPath -Type Photo
 
+    Verifies if the path specified is a supported photo extension type
 .EXAMPLE
     $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video
 
+    Verifies if the path specified is a supported Video extension type
 .PARAMETER FilePath
     Path to file that will be evaluated
 .PARAMETER Type
@@ -45,8 +49,8 @@ function Test-FileExtension {
         [string]$FilePath,
         [Parameter(Mandatory = $true,
             HelpMessage = 'Telegram message type')]
-        [ValidateSet('Photo','Video','Audio','Animation')]
-            [string]$Type
+        [ValidateSet('Photo', 'Video', 'Audio', 'Animation')]
+        [string]$Type
     )
     #------------------------------------------------------------
     $supportedPhotoExtensions = @(
@@ -69,10 +73,18 @@ function Test-FileExtension {
         'GIF'
     )
     switch ($Type) {
-        Photo { $extType = $supportedPhotoExtensions}
-        Video { $extType = $supportedVideoExtensions}
-        Audio { $extType = $supportedAudioExtensions}
-        Animation { $extType = $supportedAnimationExtensions}
+        Photo {
+            $extType = $supportedPhotoExtensions
+        }#photo
+        Video {
+            $extType = $supportedVideoExtensions
+        }#video
+        Audio {
+            $extType = $supportedAudioExtensions
+        }#audio
+        Animation {
+            $extType = $supportedAnimationExtensions
+        }#animation
     }#switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------
@@ -83,7 +95,7 @@ function Test-FileExtension {
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
     Write-Verbose "Verifying discovered extension: $extension"
-    switch($extension) {
+    switch ($extension) {
         {$extType -contains $_} {
             Write-Verbose -Message "Extension verified."
         }
