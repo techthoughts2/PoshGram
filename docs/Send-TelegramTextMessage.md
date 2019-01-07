@@ -26,24 +26,28 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
 $chat = "-#########"
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
-```
+
 Sends text message via Telegram API
 
 ### EXAMPLE 2
 ```
 $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-#########"
-Send-TelegramTextMessage `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -Message "Hello *chat* _channel_, check out this link: [TechThoughts](http://techthoughts.info/)" `
-    -ParseMode Markdown `
-    -Preview $false `
-    -DisableNotification $false `
-    -Verbose
 ```
+
+$chat = "-#########"
+Send-TelegramTextMessage \`
+    -BotToken $botToken \`
+    -ChatID $chat \`
+    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](http://techthoughts.info/)" \`
+    -ParseMode Markdown \`
+    -Preview $false \`
+    -DisableNotification $false \`
+    -Verbose
+
 Sends text message via Telegram API
 
 ## PARAMETERS
@@ -55,6 +59,7 @@ Use this token to access the HTTP API
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 1
 Default value: None
@@ -69,6 +74,7 @@ Unique identifier for the target chat
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 2
 Default value: None
@@ -83,6 +89,7 @@ Text of the message to be sent
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 3
 Default value: None
@@ -98,6 +105,7 @@ Default is Markdown.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 4
 Default value: Markdown
@@ -113,6 +121,7 @@ Default is $false
 Type: Boolean
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 5
 Default value: False
@@ -129,6 +138,7 @@ Default is $false
 Type: Boolean
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 6
 Default value: False
@@ -146,22 +156,18 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
-
 ## NOTES
-Author: Jake Morrison - [@jakemorrison](https://twitter.com/JakeMorrison) - http://techthoughts.info/
-
+Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
-
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
-
-* How do I get my channel ID?
-  * Use the getidsbot https://telegram.me/getidsbot
-  * Use the Telegram web client and copy the channel ID in the address
-* How do I set up a bot and get a token?
-  * Use the BotFather https://t.me/BotFather
+How do I get my channel ID?
+Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
+How do I set up a bot and get a token?
+Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
+

@@ -27,26 +27,30 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
 $chat = "-#########"
 $photo = "C:\photos\aphoto.jpg"
 Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
-```
+
 Sends photo message via Telegram API
 
 ### EXAMPLE 2
 ```
 $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
 $chat = "-#########"
 $photo = "C:\photos\aphoto.jpg"
-Send-TelegramLocalPhoto `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -PhotoPath $photo `
-    -Caption "Check out this photo" `
-    -ParseMode Markdown `
-    -DisableNotification $false `
+Send-TelegramLocalPhoto \`
+    -BotToken $botToken \`
+    -ChatID $chat \`
+    -PhotoPath $photo \`
+    -Caption "Check out this photo" \`
+    -ParseMode Markdown \`
+    -DisableNotification $false \`
     -Verbose
-```
+
 Sends photo message via Telegram API
 
 ## PARAMETERS
@@ -58,6 +62,7 @@ Use this token to access the HTTP API
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 1
 Default value: None
@@ -72,6 +77,7 @@ Unique identifier for the target chat
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 2
 Default value: None
@@ -86,6 +92,7 @@ File path to local image
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: 3
 Default value: None
@@ -100,6 +107,7 @@ Brief title or explanation for media
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 4
 Default value: None
@@ -115,6 +123,7 @@ Default is Markdown.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 5
 Default value: Markdown
@@ -131,6 +140,7 @@ Default is $false
 Type: Boolean
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: 6
 Default value: False
@@ -148,28 +158,22 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
-
 ## NOTES
-Author: Jake Morrison - [@jakemorrison](https://twitter.com/JakeMorrison) - http://techthoughts.info/
-
-Contributor: Mark Kraus - [@markekraus](https://twitter.com/markekraus) - thanks for the form tip!
-
+Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
 This works with PowerShell Version: 6.1
 
 The following photo types are supported:
-
-* JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
+JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
-
-* How do I get my channel ID?
-  * Use the getidsbot https://telegram.me/getidsbot
-  * Use the Telegram web client and copy the channel ID in the address
-* How do I set up a bot and get a token?
-  * Use the BotFather https://t.me/BotFather
+How do I get my channel ID?
+Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
+How do I set up a bot and get a token?
+Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalPhoto.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalPhoto.md)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
+
