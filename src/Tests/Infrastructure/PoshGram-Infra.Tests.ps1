@@ -57,15 +57,15 @@ InModuleScope PoshGram {
         $file3 = "C:\Test\Videos\Intro.mp4"
         $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
         $file5 = "C:\Test\Animation\jean.gif"
-        $path = 'C:\Test\PhotoGroup'
+        $pPath = 'C:\Test\PhotoGroup'
         $pFiles = @(
-            "$path\picard.jpg",
-            "$path\riker.png",
-            "$path\data.jpg",
-            "$path\geordi.jpg",
-            "$path\troi.jpg",
-            "$path\beverly.jpg",
-            "$path\worf.jpg"
+            "$pPath\picard.jpg",
+            "$pPath\riker.png",
+            "$pPath\data.jpg",
+            "$pPath\geordi.jpg",
+            "$pPath\troi.jpg",
+            "$pPath\beverly.jpg",
+            "$pPath\worf.jpg"
         )
 
         $vPath = 'C:\Test\VideoGroup'
@@ -80,15 +80,15 @@ InModuleScope PoshGram {
         $file3 = "/Test/Videos/Intro.mp4"
         $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
         $file5 = "/Test/Animation/jean.gif"
-        $path = '/Test/PhotoGroup'
+        $pPath = '/Test/PhotoGroup'
         $pFiles = @(
-            "$path/picard.jpg",
-            "$path/riker.png",
-            "$path/data.jpg",
-            "$path/geordi.jpg",
-            "$path/troi.jpg",
-            "$path/beverly.jpg",
-            "$path/worf.jpg"
+            "$pPath/picard.jpg",
+            "$pPath/riker.png",
+            "$pPath/data.jpg",
+            "$pPath/geordi.jpg",
+            "$pPath/troi.jpg",
+            "$pPath/beverly.jpg",
+            "$pPath/worf.jpg"
         )
 
         $vPath = '/Test/VideoGroup'
