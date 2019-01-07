@@ -58,7 +58,7 @@ InModuleScope PoshGram {
         $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
         $file5 = "C:\Test\Animation\jean.gif"
         $path = 'C:\Test\PhotoGroup'
-        $files = @(
+        $pFiles = @(
             "$path\picard.jpg",
             "$path\riker.png",
             "$path\data.jpg",
@@ -81,7 +81,7 @@ InModuleScope PoshGram {
         $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
         $file5 = "/Test/Animation/jean.gif"
         $path = '/Test/PhotoGroup'
-        $files = @(
+        $pFiles = @(
             "$path/picard.jpg",
             "$path/riker.png",
             "$path/data.jpg",
@@ -234,7 +234,7 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Photo `
-                    -FilePaths $files
+                    -FilePaths $pFiles
                 $eval.ok | Should -Be "True"
             }#it
             It 'Should return with ok:true when a group of videos is successfully sent' {

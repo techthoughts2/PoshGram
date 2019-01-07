@@ -20,7 +20,7 @@ phases:
       - powershell -command 'New-Item -Path C:\Test\PhotoGroup -ItemType Directory | Out-Null'
       - powershell -command 'New-Item -Path C:\Test\Photos -ItemType Directory | Out-Null'
       - powershell -command 'New-Item -Path C:\Test\VideoGroup -ItemType Directory | Out-Null'
-      - powershell -command 'New-Item -Path C:\Test\Videos -ItemType Directory | Out-Null
+      - powershell -command 'New-Item -Path C:\Test\Videos -ItemType Directory | Out-Null'
       - aws s3 cp s3://poshgram-test-files/jean.gif C:\Test\Animation\jean.gif --quiet
       - aws s3 cp s3://poshgram-test-files/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 --quiet
       - aws s3 cp s3://poshgram-test-files/customlog.txt C:\Test\Documents\customlog.txt --quiet
