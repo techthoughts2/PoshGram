@@ -55,6 +55,7 @@ Enter-Build {
 
     $script:TestsPath = Join-Path -Path $BuildRoot -ChildPath 'Tests'
     $script:UnitTestsPath = Join-Path -Path $script:TestsPath -ChildPath 'Unit'
+    $script:InfraTestsPath = Join-Path -Path $script:TestsPath -ChildPath 'Infrastructure'
 
     $script:ArtifactsPath = Join-Path -Path $BuildRoot -ChildPath 'Artifacts'
     $script:ArchivePath = Join-Path -Path $BuildRoot -ChildPath 'Archive'
@@ -65,7 +66,7 @@ Enter-Build {
 #Synopsis: Validate system requirements are met
 task ValidateRequirements {
     #running at least powershell 5?
-    assert ($PSVersionTable.PSVersion.Major.ToString() -ge '5') 'At least Powershell 5 is required for this build to function properly'
+    assert ($PSVersionTable.PSVersion.Major.ToString() -ge '6') 'At least Powershell 6 is required for this build to function properly'
 }#ValidateRequirements
 
 #Synopsis: Clean Artifacts Directory
@@ -143,6 +144,10 @@ task AnalyzeTests -After Analyze {
 
 #Synopsis: Invokes all Pester Unit Tests in the Tests\Unit folder (if it exists)
 task Test {
+    $codeCovPath = "$script:ArtifactsPath\ccReport\"
+    if (-not(Test-Path $codeCovPath)) {
+        New-Item -Path $codeCovPath -ItemType Directory | Out-Null
+    }
     if (Test-Path -Path $script:UnitTestsPath) {
         Write-Host -NoNewLine "      Performing Pester Unit Tests"
         $invokePesterParams = @{
@@ -152,6 +157,8 @@ task Test {
             Verbose      = $false
             EnableExit   = $false
             CodeCoverage = "$ModuleName\*\*.ps1"
+            CodeCoverageOutputFile = "$codeCovPath\codecoverage.xml"
+            CodeCoverageOutputFileFormat = 'JaCoCo'
         }
 
         # Publish Test Results as NUnitXml
@@ -184,8 +191,34 @@ task Test {
         }
         else {
             Write-Host "$('Covered {0}% of {1} analyzed commands in {2} files.' -f $coveragePercent,$testResults.CodeCoverage.NumberOfCommandsAnalyzed,$testResults.CodeCoverage.NumberOfFilesAnalyzed)"
-            Write-Host -ForegroundColor Green '...Pester Tests Complete!'
+            Write-Host -ForegroundColor Green '...Pester Unit Tests Complete!'
         }
+    }
+    if (Test-Path -Path $script:InfraTestsPath) {
+        Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
+        $invokePesterParams = @{
+            Path         = '..\..\Tests\Infrastructure'
+            Strict       = $true
+            PassThru     = $true
+            Verbose      = $false
+            EnableExit   = $false
+        }
+        Write-Host $invokePesterParams.path
+        # Publish Test Results as NUnitXml
+        $testResults = Invoke-Pester @invokePesterParams
+
+        # This will output a nice json for each failed test (if running in CodeBuild)
+        if ($env:CODEBUILD_BUILD_ARN) {
+            $testResults.TestResult | ForEach-Object {
+                if ($_.Result -ne 'Passed') {
+                    ConvertTo-Json -InputObject $_ -Compress
+                }
+            }
+        }
+
+        $numberFails = $testResults.FailedCount
+        assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
+        Write-Host -ForegroundColor Green '...Pester Infrastructure Tests Complete!'
     }
 }#Test
 

@@ -370,6 +370,25 @@ InModuleScope PoshGram {
                     -Message "Hi There Pester" `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
+            It 'should handle underscores and return a custom PSCustomObject if successful' {
+                mock Invoke-RestMethod -MockWith {
+                    [PSCustomObject]@{
+                        ok     = "True"
+                        result = @{
+                            message_id = 2222
+                            from       = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
+                            chat       = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
+                            date       = "1530157540"
+                            text       = "Diag-V is cool."
+                        }
+                    }
+                }#endMock
+                Send-TelegramTextMessage `
+                    -BotToken $token `
+                    -ChatID $chat `
+                    -Message "Hi_There_Pester" `
+                    | Should -BeOfType System.Management.Automation.PSCustomObject
+            }#it
         }#context_Send-TelegramTextMessage
         Context 'Send-TelegramLocalPhoto' {
             It 'should return false if the photo can not be found' {

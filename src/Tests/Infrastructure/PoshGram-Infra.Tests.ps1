@@ -18,42 +18,89 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     ###########################################################################
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #you MUST provide the following variables to complete infra tests
     <#
+         _______.___________.  ______   .______
+        /       |           | /  __  \  |   _  \
+       |   (----`---|  |----`|  |  |  | |  |_)  |
+        \   \       |  |     |  |  |  | |   ___/
+    .----)   |      |  |     |  `--'  | |  |
+    |_______/       |__|      \______/  | _|
+
+    #>
+    #these infra tests require pre-populated LOCAL files to run successfully
+    #you must also provide the bot token and chat id for these tests to run
     #$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    #$channel = "-#########"
-    $file = "C:\Test\Photos\Photo.jpg"
-    $file2 = "C:\Test\Documents\customlog.txt"
-    $file3 = "C:\Test\Videos\Intro.mp4"
-    $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $file5 = "C:\Test\Animation\jean.gif"
-
-    $path = 'C:\Test\PhotoGroup'
-    $files = @(
-        "$path\picard.jpg",
-        "$path\riker.png",
-        "$path\data.jpg",
-        "$path\geordi.jpg",
-        "$path\troi.jpg",
-        "$path\beverly.jpg",
-        "$path\worf.jpg"
-    )
-
-    $vPath = 'C:\Test\VideoGroup'
-    $vFiles = @(
-        "$vPath\first_contact.mp4",
-        "$vPath\root_beer.mp4"
-    )
-
+    #$chat = "-#########"
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ###########################################################################
     #>
     $latitude = 37.621313
     $longitude = -122.378955
-    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/techthoughts.png"
-    $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/LogExample.zip"
-    $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/Intro.mp4"
-    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/src/Tests/SourceFiles/jean.gif"
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
+    $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
+    $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
+    $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
+    #//////////////////////////////////////////////////////////////////////////
+    #AWS Secrets manager retrieval - for use in AWS Codebuild deployment
+    #this section will need to be commented out if you want to run locally
+    Import-Module AWSPowerShell.NetCore
+    $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+    $sObj = $s.SecretString | ConvertFrom-Json
+    $token = $sObj.PoshBotToken
+    $channel = $sObj.PoshChannel
+    #//////////////////////////////////////////////////////////////////////////
+    #referenced by AWS CodeBuild
+    if ($PSVersionTable.Platform -eq 'Win32NT') {
+        $file = "C:\Test\Photos\Photo.jpg"
+        $file2 = "C:\Test\Documents\customlog.txt"
+        $file3 = "C:\Test\Videos\Intro.mp4"
+        $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+        $file5 = "C:\Test\Animation\jean.gif"
+        $path = 'C:\Test\PhotoGroup'
+        $files = @(
+            "$path\picard.jpg",
+            "$path\riker.png",
+            "$path\data.jpg",
+            "$path\geordi.jpg",
+            "$path\troi.jpg",
+            "$path\beverly.jpg",
+            "$path\worf.jpg"
+        )
+
+        $vPath = 'C:\Test\VideoGroup'
+        $vFiles = @(
+            "$vPath\first_contact.mp4",
+            "$vPath\root_beer.mp4"
+        )
+    }#if_windows
+    elseif ($PSVersionTable.Platform -eq 'Unix') {
+        $file = "/Test/Photos/Photo.jpg"
+        $file2 = "/Test/Documents/customlog.txt"
+        $file3 = "/Test/Videos/Intro.mp4"
+        $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+        $file5 = "/Test/Animation/jean.gif"
+        $path = '/Test/PhotoGroup'
+        $files = @(
+            "$path/picard.jpg",
+            "$path/riker.png",
+            "$path/data.jpg",
+            "$path/geordi.jpg",
+            "$path/troi.jpg",
+            "$path/beverly.jpg",
+            "$path/worf.jpg"
+        )
+
+        $vPath = '/Test/VideoGroup'
+        $vFiles = @(
+            "$vPath/first_contact.mp4",
+            "$vPath/root_beer.mp4"
+        )
+    }#elseif_Linux
+    else{
+        throw
+    }#else
+    #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
         Context "Test-BotToken" {

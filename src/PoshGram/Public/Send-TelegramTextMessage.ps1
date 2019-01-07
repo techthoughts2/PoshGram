@@ -91,6 +91,11 @@ function Send-TelegramTextMessage {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
+    if ($Message -like "*_*") {
+        Write-Verbose -Message "Characters detected that must be sent as HTML"
+        $ParseMode = 'HTML'
+    }#if_
+    #------------------------------------------------------------------------
     $payload = @{
         "chat_id"                  = $ChatID
         "text"                     = $Message

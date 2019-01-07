@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.9.0'
+    ModuleVersion     = '1.0.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -153,6 +153,9 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
+1.0.0 :
+    Addressed bug in Send-TelegramTextMessage that wasnt handling underscores
+    Added code to support AWS Codebuild
 0.9.0 :
     Restructured module for CI/CD Workflow
     Added Invoke-Build capabilities to module
