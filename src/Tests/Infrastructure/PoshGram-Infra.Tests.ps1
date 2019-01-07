@@ -60,7 +60,7 @@ InModuleScope PoshGram {
         $pPath = 'C:\Test\PhotoGroup'
         $pFiles = @(
             "$pPath\picard.jpg",
-            "$pPath\riker.png",
+            "$pPath\riker.PNG",
             "$pPath\data.jpg",
             "$pPath\geordi.jpg",
             "$pPath\troi.jpg",
@@ -83,7 +83,7 @@ InModuleScope PoshGram {
         $pPath = '/Test/PhotoGroup'
         $pFiles = @(
             "$pPath/picard.jpg",
-            "$pPath/riker.png",
+            "$pPath/riker.PNG",
             "$pPath/data.jpg",
             "$pPath/geordi.jpg",
             "$pPath/troi.jpg",
