@@ -230,7 +230,7 @@ InModuleScope PoshGram {
         }#context_Send-TelegramURLAnimation
         Context "Send-TelegramMediaGroup" {
             It 'Should return with ok:true when a group of photos is successfully sent' {
-                $eval = Send-TelegramMediaGroup `
+                $eval = Send-TelegramMediaGroup -Verbose `
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Photo `
