@@ -222,6 +222,18 @@ task Test {
     }
 }#Test
 
+#Synopsis: Used primarily during active development to generate xml file to graphically display code coverage in VSCode
+task DevCC {
+    Write-Host -NoNewLine "      Generating code coverage report at root."
+    $invokePesterParams = @{
+        Path                   = 'Tests\Unit'
+        CodeCoverage           = "$ModuleName\*\*.ps1"
+        CodeCoverageOutputFile = '..\..\..\cov.xml'
+    }
+    Invoke-Pester @invokePesterParams
+    Write-Host -ForegroundColor Green '...Code Coverage report generated!'
+}#DevCC
+
 # Synopsis: Build help files for module
 task CreateHelp CreateMarkdownHelp, CreateExternalHelp, {
     Write-Host -NoNewLine '      Performing all help related actions.'
