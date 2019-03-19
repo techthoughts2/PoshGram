@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 1.0.1
+Help Version: 1.0.2
 Locale: en-US
 ---
 
