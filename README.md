@@ -57,6 +57,7 @@ PoshGram also opens up several programmatic use cases:
 ### Prerequisites
 
 * [PowerShell 6.1.0](https://github.com/PowerShell/PowerShell)
+* A Telegram Account
 * [Telegram Bot created](https://core.telegram.org/bots)
 * Chat ID number
 * Bot must be a member of the specified chat
@@ -119,18 +120,22 @@ Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
 #send a video message from a URL source
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videoURL
 #------------------------------------------------------------------------------------------------
-#send an audio message from a URL source
+#send an audio message from a local source
 Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
 #------------------------------------------------------------------------------------------------
-#send an audio message from a local source
+#send an audio message from a URL source
 Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 #------------------------------------------------------------------------------------------------
+#send a map point location using Latitude and Longitude
 Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
 #------------------------------------------------------------------------------------------------
+#send an animated gif from a local source
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 #------------------------------------------------------------------------------------------------
+#send an animated gif from a URL source
 Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 #------------------------------------------------------------------------------------------------
+#Sends a group of photos or videos as an album from a local source
 Send-TelegramMediaGroup -BotToken $botToken -ChatID $chat -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
 #------------------------------------------------------------------------------------------------
 ###########################################################################
@@ -164,6 +169,26 @@ $test = "I am a test"
 * [PoshGram Video Demo](https://youtu.be/OfyRVl7YThw)
 * [PoshGram Blog Write-up](http://techthoughts.info/poshgram-powershell-module-for-telegram/)
 
+For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
+
+## FAQ
+
+* *I want to start using this, but how do I create a Telegram Bot and get a token?*
+  * To learn how to create and set up a bot:
+    * [TechThoughts video on how to make a Telgram Bot](https://youtu.be/UhZtrhV7t3U)
+    * [Introduction to Bots](https://core.telegram.org/bots)
+    * [Bot FAQ](https://core.telegram.org/bots/faq)
+    * [BotFather](https://t.me/BotFather)
+
+* *I've got a bot setup, and I have a token, but how do I determine my chat ID number (also referred to as the channel ID)?*
+  * The easiest way is to login to the [Telegram Web Client](https://web.telegram.org/#/login) and find your channel on the left. When you select it the address in your URL bar will change. Copy the channel ID in your browser's address bar
+    * It will look something like this:
+      * ```#/im?p=g112345678```
+    * *Just copy the numbers after **g** and make sure to include the (-) before the channel number*
+      * Ex ```-#########```
+      * Ex from above would be: ```-112345678```
+  * Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
+
 * *Why is PowerShell 6.1.0 required? - Why can't I use 5.1?*
   * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilities. Functions that reference a URL, or that only use messaging  (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out separately if you are absolutely set on using 5.1
 
@@ -176,21 +201,6 @@ $test = "I am a test"
     & 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-#########";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
     ```
 
-* *I want to start using this, but how do I create a Telegram Bot and get a token?*
-  * To learn how to create and set up a bot:
-    * [TechThoughts video on how to make a Telgram Bot](https://youtu.be/UhZtrhV7t3U)
-    * [Introduction to Bots](https://core.telegram.org/bots)
-    * [Bot FAQ](https://core.telegram.org/bots/faq)
-    * [BotFather](https://t.me/BotFather)
-
-* *I've got a bot setup, and I have a token, but how do I determine my channel ID?*
-  * Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
-  * Use the Telegram web client and copy the channel ID in your browser's address bar
-    * *Don't forget to include the (-) before the channel number*
-      * Ex ```"-#########"```
-
 * *Are there any restrictions when using PoshGram?*
   * Bots can currently send files of up to 50 MB in size
   * Certain functions are limited to certain file extensions, see each function's documentation for more information
-
-For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)

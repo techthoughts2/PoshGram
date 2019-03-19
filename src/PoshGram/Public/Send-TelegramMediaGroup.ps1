@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Sends Telegram a group of photos or videos as an almbum via Bot API from locally sourced media
+    Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
 .DESCRIPTION
     Uses Telegram Bot API to send a group of photo or video as an album message to specified Telegram chat.
     The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video).
@@ -68,7 +68,7 @@
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
-    This was really hard to make.
+    ? This was really hard to make.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
@@ -191,9 +191,16 @@ function Send-TelegramMediaGroup {
     $Form.media = $json
     Write-Verbose -Message "JSON formation completed."
     #------------------------------------------------------------------------
+    $invokeRestMethodSplat = @{
+        Uri = $Uri
+        ErrorAction = 'Stop'
+        Form = $Form
+        Method = 'Post'
+    }
+    #------------------------------------------------------------------------
     Write-Verbose -Message "Sending media..."
     try {
-        $results = Invoke-RestMethod -Uri $Uri -Method Post -Form $Form -ErrorAction Stop
+        $results = Invoke-RestMethod @invokeRestMethodSplat
         Write-Verbose -Message "Media sent."
     }#try_messageSend
     catch {

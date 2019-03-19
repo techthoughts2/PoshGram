@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.0.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -153,6 +153,9 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
+1.0.2 :
+    Addressed bug where certain UTF-8 characters would fail to send properly in Send-TelegramTextMessage
+    Cosmetic code change for Invoke functions to use splat parameters
 1.0.0 :
     Addressed bug in Send-TelegramTextMessage that wasnt handling underscores
     Added code to support AWS Codebuild

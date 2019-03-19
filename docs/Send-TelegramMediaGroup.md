@@ -8,7 +8,7 @@ schema: 2.0.0
 # Send-TelegramMediaGroup
 
 ## SYNOPSIS
-Sends Telegram a group of photos or videos as an almbum via Bot API from locally sourced media
+Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
 
 ## SYNTAX
 
@@ -178,6 +178,7 @@ Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web clie
 How do I set up a bot and get a token?
 Use the BotFather https://t.me/BotFather
 
+?
 This was really hard to make.
 
 ## RELATED LINKS

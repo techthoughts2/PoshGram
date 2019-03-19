@@ -150,14 +150,17 @@ function Send-TelegramURLAudio {
         disable_notification = $DisableNotification
     }#payload
     #------------------------------------------------------------------------
+    $invokeRestMethodSplat = @{
+        Uri = ("https://api.telegram.org/bot{0}/sendAudio" -f $BotToken)
+        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        ErrorAction = 'Stop'
+        ContentType = "application/json"
+        Method = 'Post'
+    }
+    #------------------------------------------------------------------------
     try {
         Write-Verbose -Message "Sending message..."
-        $results = Invoke-RestMethod `
-            -Uri ("https://api.telegram.org/bot{0}/sendAudio" -f $BotToken) `
-            -Method Post `
-            -ContentType "application/json" `
-            -Body (ConvertTo-Json -Compress -InputObject $payload) `
-            -ErrorAction Stop
+        $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
         Write-Warning "An error was encountered sending the Telegram message:"
