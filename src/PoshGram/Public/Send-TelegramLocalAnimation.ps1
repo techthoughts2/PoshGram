@@ -147,8 +147,15 @@ function Send-TelegramLocalAnimation {
         disable_notification = $DisableNotification
     }#form
     #------------------------------------------------------------------------
+    $invokeRestMethodSplat = @{
+        Uri = $Uri
+        ErrorAction = 'Stop'
+        Form = $Form
+        Method = 'Post'
+    }
+    #------------------------------------------------------------------------
     try {
-        $results = Invoke-RestMethod -Uri $Uri -Method Post -Form $Form -ErrorAction Stop
+        $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
         Write-Warning "An error was encountered sending the Telegram animation message:"
