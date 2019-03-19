@@ -30,7 +30,7 @@ Sends Telegram video message via Bot API from locally sourced file
 Sends Telegram location to indicate point on map
 
 ### [Send-TelegramMediaGroup](Send-TelegramMediaGroup.md)
-Sends Telegram a group of photos or videos as an almbum via Bot API from locally sourced media
+Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
 
 ### [Send-TelegramTextMessage](Send-TelegramTextMessage.md)
 Sends Telegram text message via Bot API

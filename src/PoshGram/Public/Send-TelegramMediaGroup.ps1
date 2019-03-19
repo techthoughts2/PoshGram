@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Sends Telegram a group of photos or videos as an almbum via Bot API from locally sourced media
+    Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
 .DESCRIPTION
     Uses Telegram Bot API to send a group of photo or video as an album message to specified Telegram chat.
     The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video).
