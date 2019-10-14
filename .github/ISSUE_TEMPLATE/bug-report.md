@@ -1,6 +1,12 @@
 ---
+name: Bug Report
+about: Submit a bug to PoshGram project
+title: ''
 labels: bug
+assignees: ''
+
 ---
+
 <!--- Provide a general summary of the issue in the Title above -->
 
 ## Expected Behavior
