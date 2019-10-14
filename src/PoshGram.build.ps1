@@ -91,7 +91,6 @@ task Clean {
 
 #Synopsis: Invokes Script Analyzer against the Module source path
 task Analyze {
-    Import-Module PSScriptAnalyzer
     Write-Host -NoNewLine "      Performing Module ScriptAnalyzer checks"
     $scriptAnalyzerParams = @{
         Path        = $script:ModuleSourcePath
