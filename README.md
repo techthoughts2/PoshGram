@@ -1,6 +1,6 @@
 # PoshGram
 
-[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1-blue.svg)](https://github.com/PowerShell/PowerShell)
+[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell)
 [![PowerShell Gallery][psgallery-img]][psgallery-site]
 
 [psgallery-img]:   https://img.shields.io/powershellgallery/dt/PoshGram.svg
