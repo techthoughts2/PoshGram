@@ -18,7 +18,7 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
 }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
     ModuleName    = 'InvokeBuild'
-    ModuleVersion = '5.5.2'
+    ModuleVersion = '5.5.3'
     BucketName    = 'ps-invoke-modules'
     KeyPrefix     = ''
 }))
