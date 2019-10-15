@@ -14,7 +14,7 @@ Sends Telegram photo message via Bot API from URL sourced photo image
 
 ```
 Send-TelegramURLPhoto [-BotToken] <String> [-ChatID] <String> [-PhotoURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,7 +48,7 @@ Send-TelegramURLPhoto \`
     -PhotoURL $photourl \`
     -Caption "DSC is a great technology" \`
     -ParseMode Markdown \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
 
 Sends photo message via Telegram API
@@ -132,17 +132,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

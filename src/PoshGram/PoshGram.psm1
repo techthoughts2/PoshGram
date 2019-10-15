@@ -1,6 +1,6 @@
 #this psm1 is for locally testing and development use only
 # Sets the Script Path variable to the scripts invocation path.
-$paths = @('Private','Public')
+$paths = @('Private', 'Public')
 
 # dot source the parent import
 #. $PSScriptRoot\Imports.ps1

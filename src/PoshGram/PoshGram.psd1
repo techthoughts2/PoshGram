@@ -153,6 +153,10 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
+1.2.0:
+    DisableNotification and Streaming parameters changed from bool to switch on all functions
+    Send-TelegramTextMessage: Preview parameter renamed to DisablePreview and changed from bool to switch
+    Unit test and Inra test improvements
 1.0.2 :
     Addressed bug where certain UTF-8 characters would fail to send properly in Send-TelegramTextMessage
     Cosmetic code change for Invoke functions to use splat parameters

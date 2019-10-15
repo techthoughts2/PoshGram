@@ -14,7 +14,7 @@ Sends Telegram text message via Bot API
 
 ```
 Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <String> [[-ParseMode] <String>]
- [[-Preview] <Boolean>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisablePreview] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,8 +44,8 @@ Send-TelegramTextMessage \`
     -ChatID $chat \`
     -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](http://techthoughts.info/)" \`
     -ParseMode Markdown \`
-    -Preview $false \`
-    -DisableNotification $false \`
+    -DisablePreview \`
+    -DisableNotification \`
     -Verbose
 
 Sends text message via Telegram API
@@ -113,34 +113,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Preview
+### -DisablePreview
 Disables link previews for links in this message.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

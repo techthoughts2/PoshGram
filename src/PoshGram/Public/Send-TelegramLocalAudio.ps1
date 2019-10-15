@@ -23,7 +23,7 @@
         -Duration 495 `
         -Performer "Metallica" `
         -Title "Halo On Fire" `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends audio message via Telegram API
@@ -46,7 +46,7 @@
 .PARAMETER Title
     Track Name
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -113,8 +113,8 @@ function Send-TelegramLocalAudio {
             HelpMessage = 'TrackName')]
         [string]$Title,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -125,7 +125,7 @@ function Send-TelegramLocalAudio {
         $results = $false
         return $results
     }#if_testPath
-    else{
+    else {
         Write-Verbose -Message "Path verified."
     }#else_testPath
     #------------------------------------------------------------------------
@@ -167,14 +167,14 @@ function Send-TelegramLocalAudio {
         duration             = $Duration
         performer            = $Performer
         title                = $Title
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

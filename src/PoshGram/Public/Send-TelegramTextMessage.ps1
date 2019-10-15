@@ -17,8 +17,8 @@
         -ChatID $chat `
         -Message "Hello *chat* _channel_, check out this link: [TechThoughts](http://techthoughts.info/)" `
         -ParseMode Markdown `
-        -Preview $false `
-        -DisableNotification $false `
+        -DisablePreview `
+        -DisableNotification `
         -Verbose
 
     Sends text message via Telegram API
@@ -30,10 +30,10 @@
     Text of the message to be sent
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
-.PARAMETER Preview
-    Disables link previews for links in this message. Default is $false
+.PARAMETER DisablePreview
+    Disables link previews for links in this message.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -83,10 +83,10 @@ function Send-TelegramTextMessage {
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables link previews')]
-        [bool]$Preview = $false, #set to false by default
+        [switch]$DisablePreview, #set to false by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -96,20 +96,21 @@ function Send-TelegramTextMessage {
         $ParseMode = 'HTML'
     }#if_
     #------------------------------------------------------------------------
+    #return $DisableNotification
     $payload = @{
         "chat_id"                  = $ChatID
         "text"                     = $Message
         "parse_mode"               = $ParseMode
-        "disable_web_page_preview" = $Preview
-        "disable_notification"     = $DisableNotification
+        "disable_web_page_preview" = $DisablePreview.IsPresent
+        "disable_notification"     = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendMessage" -f $BotToken)
-        Body = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload)))
+        Uri         = ("https://api.telegram.org/bot{0}/sendMessage" -f $BotToken)
+        Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload)))
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

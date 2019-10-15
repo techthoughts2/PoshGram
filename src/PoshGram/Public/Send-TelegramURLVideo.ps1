@@ -23,8 +23,8 @@
         -Height 1080 `
         -Caption "Check out this video" `
         -ParseMode Markdown `
-        -Streaming $false `
-        -DisableNotification $false `
+        -Streaming `
+        -DisableNotification `
         -Verbose
 
     Sends video message via Telegram API
@@ -45,9 +45,9 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER Streaming
-    Pass True, if the uploaded video is suitable for streaming
+    Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -121,11 +121,11 @@ function Send-TelegramURLVideo {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Pass True, if the uploaded video is suitable for streaming')]
-        [bool]$Streaming, #set to Markdown by default
+            HelpMessage = 'Use if the uploaded video is suitable for streaming')]
+        [switch]$Streaming,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -159,15 +159,15 @@ function Send-TelegramURLVideo {
         caption              = $Caption
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendVideo" -f $BotToken)
-        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        Uri         = ("https://api.telegram.org/bot{0}/sendVideo" -f $BotToken)
+        Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

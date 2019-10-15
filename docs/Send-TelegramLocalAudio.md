@@ -15,7 +15,7 @@ Sends Telegram audio message via Bot API from locally sourced file
 ```
 Send-TelegramLocalAudio [-BotToken] <String> [-ChatID] <String> [-Audio] <String> [[-Caption] <String>]
  [[-ParseMode] <String>] [[-Duration] <Int32>] [[-Performer] <String>] [[-Title] <String>]
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,7 +53,7 @@ Send-TelegramLocalAudio \`
     -Duration 495 \`
     -Performer "Metallica" \`
     -Title "Halo On Fire" \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
 
 Sends audio message via Telegram API
@@ -182,17 +182,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

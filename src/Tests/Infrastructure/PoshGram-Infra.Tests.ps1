@@ -114,7 +114,8 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramTextMessage `
                     -BotToken $token `
                     -ChatID $channel `
-                    -Message "I am a Pester test for *Send-TelegramTextMessage*"
+                    -Message "I am a Pester test for *Send-TelegramTextMessage*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramTextMessage
@@ -124,7 +125,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -PhotoPath $file `
-                    -Caption "I am a Pester test for *Send-TelegramLocalPhoto*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalPhoto*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -134,7 +136,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -PhotoURL $photoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLPhoto*"
+                    -Caption "I am a Pester test for *Send-TelegramURLPhoto*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -144,7 +147,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -File $file2 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalDocument*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalDocument*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -154,7 +158,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -FileURL $fileURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLDocument*"
+                    -Caption "I am a Pester test for *Send-TelegramURLDocument*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLDocument
@@ -164,7 +169,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Video $file3 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalVideo*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalVideo*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalVideo
@@ -174,7 +180,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -VideoURL $videoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLVideo*"
+                    -Caption "I am a Pester test for *Send-TelegramURLVideo*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLVideo
@@ -184,7 +191,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Audio $file4 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAudio*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalAudio*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAudio
@@ -194,7 +202,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AudioURL $audioURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAudio*"
+                    -Caption "I am a Pester test for *Send-TelegramURLAudio*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAudio
@@ -204,7 +213,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Latitude $latitude `
-                    -Longitude $longitude
+                    -Longitude $longitude `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocation
@@ -214,7 +224,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AnimationPath $file5 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAnimation*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalAnimation*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAnimation
@@ -224,7 +235,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AnimationURL $animationURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAnimation*"
+                    -Caption "I am a Pester test for *Send-TelegramURLAnimation*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
@@ -234,7 +246,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Photo `
-                    -FilePaths $pFiles
+                    -FilePaths $pFiles `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
             It 'Should return with ok:true when a group of videos is successfully sent' {
@@ -242,7 +255,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Video `
-                    -FilePaths $vFiles
+                    -FilePaths $vFiles `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation

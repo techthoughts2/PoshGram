@@ -38,9 +38,10 @@
         -BotToken $botToken `
         -ChatID $chat `
         -MediaType Video `
-        -FilePaths $vFiles
+        -FilePaths $vFiles `
+        -DisableNotification
 
-    Uploads all provided video files as album via Telegram Bot API..
+    Uploads all provided video files as album via Telegram Bot API.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -50,7 +51,7 @@
 .PARAMETER FilePaths
     List of filepaths for media you want to send
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -105,8 +106,8 @@ function Send-TelegramMediaGroup {
         [ValidateNotNullOrEmpty()]
         [string[]]$FilePaths,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -158,7 +159,7 @@ function Send-TelegramMediaGroup {
     Write-Verbose -Message "Forming serialzied JSON for all media files..."
     $Form = @{
         chat_id              = $ChatID;
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
         media                = ''
     }
     $json = @'
@@ -192,10 +193,10 @@ function Send-TelegramMediaGroup {
     Write-Verbose -Message "JSON formation completed."
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     Write-Verbose -Message "Sending media..."

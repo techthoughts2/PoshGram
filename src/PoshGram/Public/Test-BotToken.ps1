@@ -49,9 +49,9 @@ function Test-BotToken {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/getMe" -f $BotToken)
+        Uri         = ("https://api.telegram.org/bot{0}/getMe" -f $BotToken)
         ErrorAction = 'Stop'
-        Method = 'Get'
+        Method      = 'Get'
     }
     #------------------------------------------------------------------------
     try {

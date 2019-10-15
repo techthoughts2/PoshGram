@@ -14,7 +14,7 @@ Sends Telegram location to indicate point on map
 
 ```
 Send-TelegramLocation [-BotToken] <String> [-ChatID] <String> [-Latitude] <Single> [-Longitude] <Single>
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,7 +46,7 @@ Send-TelegramLocation \`
     -ChatID $chat \`
     -Latitude $latitude \`
     -Longitude $longitude
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
 
 Sends location via Telegram API
@@ -114,17 +114,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

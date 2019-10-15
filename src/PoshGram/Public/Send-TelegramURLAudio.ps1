@@ -23,7 +23,7 @@
         -Duration 495 `
         -Performer "Metallica" `
         -Title "Halo On Fire" `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends audio message via Telegram API
@@ -46,7 +46,7 @@
 .PARAMETER Title
     Track Name
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -113,8 +113,8 @@ function Send-TelegramURLAudio {
             HelpMessage = 'TrackName')]
         [string]$Title,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -147,15 +147,15 @@ function Send-TelegramURLAudio {
         duration             = $Duration
         performer            = $Performer
         title                = $Title
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendAudio" -f $BotToken)
-        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        Uri         = ("https://api.telegram.org/bot{0}/sendAudio" -f $BotToken)
+        Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

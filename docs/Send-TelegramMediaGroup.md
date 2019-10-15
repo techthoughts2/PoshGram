@@ -14,7 +14,7 @@ Sends Telegram a group of photos or videos as an album via Bot API from locally 
 
 ```
 Send-TelegramMediaGroup [-BotToken] <String> [-ChatID] <String> [-MediaType] <String> [[-FilePaths] <String[]>]
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,9 +69,10 @@ Send-TelegramMediaGroup \`
     -BotToken $botToken \`
     -ChatID $chat \`
     -MediaType Video \`
-    -FilePaths $vFiles
+    -FilePaths $vFiles \`
+    -DisableNotification
 
-Uploads all provided video files as album via Telegram Bot API..
+Uploads all provided video files as album via Telegram Bot API.
 
 ## PARAMETERS
 
@@ -136,17 +137,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

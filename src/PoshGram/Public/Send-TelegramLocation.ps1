@@ -20,7 +20,7 @@
         -ChatID $chat `
         -Latitude $latitude `
         -Longitude $longitude
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends location via Telegram API
@@ -33,7 +33,7 @@
 .PARAMETER Longitude
     Longitude of the location
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
@@ -80,8 +80,8 @@ function Send-TelegramLocation {
         [ValidateRange(-180, 180)]
         [single]$Longitude,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -91,14 +91,14 @@ function Send-TelegramLocation {
         chat_id              = $ChatID
         latitude             = $Latitude
         longitude            = $Longitude
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
