@@ -194,32 +194,32 @@ task Test {
             Write-Host -ForegroundColor Green '...Pester Unit Tests Complete!'
         }
     }
-    # if (Test-Path -Path $script:InfraTestsPath) {
-    #     Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
-    #     $invokePesterParams = @{
-    #         Path       = '..\..\Tests\Infrastructure'
-    #         Strict     = $true
-    #         PassThru   = $true
-    #         Verbose    = $false
-    #         EnableExit = $false
-    #     }
-    #     Write-Host $invokePesterParams.path
-    #     # Publish Test Results as NUnitXml
-    #     $testResults = Invoke-Pester @invokePesterParams
+    if (Test-Path -Path $script:InfraTestsPath) {
+        Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
+        $invokePesterParams = @{
+            Path       = '..\..\Tests\Infrastructure'
+            Strict     = $true
+            PassThru   = $true
+            Verbose    = $false
+            EnableExit = $false
+        }
+        Write-Host $invokePesterParams.path
+        # Publish Test Results as NUnitXml
+        $testResults = Invoke-Pester @invokePesterParams
 
-    #     # This will output a nice json for each failed test (if running in CodeBuild)
-    #     if ($env:CODEBUILD_BUILD_ARN) {
-    #         $testResults.TestResult | ForEach-Object {
-    #             if ($_.Result -ne 'Passed') {
-    #                 ConvertTo-Json -InputObject $_ -Compress
-    #             }
-    #         }
-    #     }
+        # This will output a nice json for each failed test (if running in CodeBuild)
+        if ($env:CODEBUILD_BUILD_ARN) {
+            $testResults.TestResult | ForEach-Object {
+                if ($_.Result -ne 'Passed') {
+                    ConvertTo-Json -InputObject $_ -Compress
+                }
+            }
+        }
 
-    #     $numberFails = $testResults.FailedCount
-    #     assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
-    #     Write-Host -ForegroundColor Green '...Pester Infrastructure Tests Complete!'
-    # }
+        $numberFails = $testResults.FailedCount
+        assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
+        Write-Host -ForegroundColor Green '...Pester Infrastructure Tests Complete!'
+    }
 }#Test
 
 #Synopsis: Used primarily during active development to generate xml file to graphically display code coverage in VSCode
