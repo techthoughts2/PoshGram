@@ -30,10 +30,10 @@ $ModuleName = (Split-Path -Path $BuildFile -Leaf).Split('.')[0]
 . "./$ModuleName.Settings.ps1"
 
 #Default Build
-task . Clean, ValidateRequirements, Analyze, Test, CreateHelp, Build, Archive
+task . Clean, ValidateRequirements, Analyze, Test, InfraTest, CreateHelp, Build, Archive
 
 #Local testing build process
-task TestLocal Clean, Analyze, Test
+task TestLocal Clean, ValidateRequirements, Analyze, Test, CreateHelp, Build, Archive
 
 #Local help file creation process
 task HelpLocal CreateHelp, UpdateCBH
@@ -194,6 +194,9 @@ task Test {
             Write-Host -ForegroundColor Green '...Pester Unit Tests Complete!'
         }
     }
+}#Test
+
+task InfraTest {
     if (Test-Path -Path $script:InfraTestsPath) {
         Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
         $invokePesterParams = @{
@@ -220,7 +223,7 @@ task Test {
         assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
         Write-Host -ForegroundColor Green '...Pester Infrastructure Tests Complete!'
     }
-}#Test
+}
 
 #Synopsis: Used primarily during active development to generate xml file to graphically display code coverage in VSCode
 task DevCC {

@@ -2,6 +2,7 @@
 
 [![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell)
 [![PowerShell Gallery][psgallery-img]][psgallery-site]
+![Cross Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey)
 
 [psgallery-img]:   https://img.shields.io/powershellgallery/dt/PoshGram.svg
 [psgallery-site]:  https://www.powershellgallery.com/packages/PoshGram
@@ -24,6 +25,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 
 [PoshGram](https://github.com/techthoughts2/PoshGram/blob/master/docs/PoshGram.md) provides the following functions:
 
+* [Send-TelegramContact](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
 * [Send-TelegramLocalAnimation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md)
 * [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
 * [Send-TelegramLocalDocument](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md)
@@ -138,6 +140,9 @@ Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $Anima
 #Sends a group of photos or videos as an album from a local source
 Send-TelegramMediaGroup -BotToken $botToken -ChatID $chat -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
 #------------------------------------------------------------------------------------------------
+#send a contact's information
+Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+#------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell
 ###########################################################################
@@ -154,7 +159,7 @@ $test = "I am a test"
 
 ## Author
 
-[Jake Morrison](https://twitter.com/JakeMorrison) - [http://techthoughts.info/](http://techthoughts.info/)
+[Jake Morrison](https://twitter.com/JakeMorrison) - [https://techthoughts.info/](https://techthoughts.info/)
 
 ## Contributors
 
@@ -167,7 +172,7 @@ $test = "I am a test"
 ## Notes
 
 * [PoshGram Video Demo](https://youtu.be/OfyRVl7YThw)
-* [PoshGram Blog Write-up](http://techthoughts.info/poshgram-powershell-module-for-telegram/)
+* [PoshGram Blog Write-up](https://techthoughts.info/poshgram-powershell-module-for-telegram/)
 
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

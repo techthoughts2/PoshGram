@@ -40,7 +40,7 @@
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api

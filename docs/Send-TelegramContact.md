@@ -1,27 +1,24 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
+online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md
 schema: 2.0.0
 ---
 
-# Send-TelegramURLDocument
+# Send-TelegramContact
 
 ## SYNOPSIS
-Sends Telegram document message via Bot API from URL sourced file
+Sends Telegram phone contact message via BOT API.
 
 ## SYNTAX
 
 ```
-Send-TelegramURLDocument [-BotToken] <String> [-ChatID] <String> [-FileURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+Send-TelegramContact [-BotToken] <String> [-ChatID] <String> [-PhoneNumber] <String> [-FirstName] <String>
+ [[-LastName] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send document message to specified Telegram chat.
-The file will be sourced from the provided URL and sent to Telegram.
-Several options can be specified to adjust message parameters.
-Only works for gif, pdf and zip files.
+Uses Telegram Bot API to send contact information to specified Telegram chat.
 
 ## EXAMPLES
 
@@ -31,10 +28,11 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+$phone = '1-222-222-2222'
+$firstName = 'Jake'
+Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
 
-Sends document message via Telegram API
+Sends contact via Telegram API
 
 ### EXAMPLE 2
 ```
@@ -42,17 +40,19 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-Send-TelegramURLDocument \`
+$phone = '1-222-222-2222'
+$firstName = 'Jake'
+$lastName = 'Morrison'
+Send-TelegramContact \`
     -BotToken $botToken \`
     -ChatID $chat \`
-    -FileURL $fileURL \`
-    -Caption "Log Files" \`
-    -ParseMode Markdown \`
+    -PhoneNumber $phone \`
+    -FirstName $firstName \`
+    -LastName $lastName \`
     -DisableNotification \`
     -Verbose
 
-Sends document message via Telegram API
+Sends contact via Telegram API
 
 ## PARAMETERS
 
@@ -86,8 +86,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FileURL
-URL path to file
+### -PhoneNumber
+Contact phone number
 
 ```yaml
 Type: String
@@ -101,24 +101,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Caption
-Brief title or explanation for media
+### -FirstName
+Contact first name
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ParseMode
-Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+### -LastName
+Contact last name
 
 ```yaml
 Type: String
@@ -127,7 +126,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -160,9 +159,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
-
-In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
+This works with PowerShell Version: 6.1+
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
@@ -172,7 +169,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
+[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md)
 
-[https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+[https://core.telegram.org/bots/api#sendcontact](https://core.telegram.org/bots/api#sendcontact)
 

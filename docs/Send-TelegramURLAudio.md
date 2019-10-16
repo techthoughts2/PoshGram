@@ -208,7 +208,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
 
 Your audio must be in the .mp3 format.

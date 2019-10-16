@@ -16,7 +16,7 @@
 .OUTPUTS
     System.Boolean
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
     Telegram currently supports a 50MB file size for bots
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram

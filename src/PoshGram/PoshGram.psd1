@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.2.0'
+    ModuleVersion     = '1.3.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -70,20 +70,21 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Test-BotToken',
-        'Send-TelegramTextMessage',
-        'Send-TelegramLocalPhoto',
-        'Send-TelegramURLPhoto',
-        'Send-TelegramLocalDocument',
-        'Send-TelegramURLDocument',
-        'Send-TelegramLocalVideo',
-        'Send-TelegramURLVideo',
-        'Send-TelegramLocalAudio',
-        'Send-TelegramURLAudio',
+        'Send-TelegramContact',
         'Send-TelegramLocalAnimation',
-        'Send-TelegramURLAnimation',
+        'Send-TelegramLocalAudio',
+        'Send-TelegramLocalDocument',
+        'Send-TelegramLocalPhoto',
+        'Send-TelegramLocalVideo',
         'Send-TelegramLocation',
-        'Send-TelegramMediaGroup'
+        'Send-TelegramMediaGroup',
+        'Send-TelegramTextMessage',
+        'Send-TelegramURLAnimation',
+        'Send-TelegramURLAudio',
+        'Send-TelegramURLDocument',
+        'Send-TelegramURLPhoto',
+        'Send-TelegramURLVideo',
+        'Test-BotToken'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -111,35 +112,37 @@
 
             # Tags applied to this module. These help with module discovery in online galleries.
             Tags = @(
-                'telegram',
-                'telegramx',
+                'Animations',
+                'Audio',
+                'Automation',
                 'bot',
-                'telegram-bot-api',
-                'powershell',
-                'powershell-module',
-                'PSModule',
-                'Messenger',
+                'Contact',
+                'Contacts',
+                'Coordinates',
+                'Documents',
+                'Gif',
+                'Gifs',
+                'Location',
+                'Media',
                 'Message',
+                'Messaging',
+                'Messenger',
                 'Notification',
                 'Notifications',
                 'Notify',
-                'Send',
-                'Messaging',
-                'Automation',
                 'Photo',
                 'Photos',
                 'Pictures',
+                'powershell',
+                'powershell-module',
+                'PSModule',
+                'Send',
+                'SM',
+                'telegram',
+                'telegram-bot-api',
+                'telegramx',
                 'Video',
-                'Videos',
-                'Gif',
-                'Gifs',
-                'Animations',
-                'Location',
-                'Coordinates',
-                'Media',
-                'Documents',
-                'Audio',
-                'SMS'
+                'Videos'
             )
 
             # A URL to the license for this module.
@@ -153,7 +156,8 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
-1.2.0:
+1.3.0:
+    Added Send-TelegramContact
     DisableNotification and Streaming parameters changed from bool to switch on all functions
     Send-TelegramTextMessage: Preview parameter renamed to DisablePreview and changed from bool to switch
     Unit test and Inra test improvements

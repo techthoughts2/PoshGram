@@ -96,19 +96,19 @@ InModuleScope PoshGram {
             }#endmock
             Mock Resolve-ShortLink {}
             It 'should return false when a non-supported extension is provided' {
-                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
                     -Type Photo | Should -Be $false
-                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
                     -Type Video | Should -Be $false
-                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
                     -Type Audio | Should -Be $false
-                Test-URLExtension -URL "http://techthoughts.info/file.xml" `
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
                     -Type Animation | Should -Be $false
             }#it
             Context 'Photo' {
                 foreach ($extension in $supportedPhotoExtensions) {
                     It "should return true when $extension extension is provided" {
-                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
                             -Type Photo | Should -Be $true
                     }#it
                 }#foreach
@@ -116,7 +116,7 @@ InModuleScope PoshGram {
             Context 'Video' {
                 foreach ($extension in $supportedVideoExtensions) {
                     It "should return true when $extension extension is provided" {
-                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
                             -Type Video | Should -Be $true
                     }#it
                 }#foreach
@@ -124,7 +124,7 @@ InModuleScope PoshGram {
             Context 'Audio' {
                 foreach ($extension in $supportedAudioExtensions) {
                     It "should return true when $extension extension is provided" {
-                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
                             -Type Audio | Should -Be $true
                     }#it
                 }#foreach
@@ -132,7 +132,7 @@ InModuleScope PoshGram {
             Context 'Animation' {
                 foreach ($extension in $supportedAnimationExtensions) {
                     It "should return true when $extension extension is provided" {
-                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
                             -Type Animation | Should -Be $true
                     }#it
                 }#foreach
@@ -140,7 +140,7 @@ InModuleScope PoshGram {
             Context 'Document' {
                 foreach ($extension in $supportedDocumentExtensions) {
                     It "should return true when $extension extension is provided" {
-                        Test-URLExtension -URL "http://techthoughts.info/file.$extension" `
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
                             -Type Document | Should -Be $true
                     }#it
                 }#foreach

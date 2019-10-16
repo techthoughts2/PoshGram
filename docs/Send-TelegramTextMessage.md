@@ -42,7 +42,7 @@ $chat = "-#########"
 Send-TelegramTextMessage \`
     -BotToken $botToken \`
     -ChatID $chat \`
-    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](http://techthoughts.info/)" \`
+    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](https://techthoughts.info/)" \`
     -ParseMode Markdown \`
     -DisablePreview \`
     -DisableNotification \`
@@ -155,7 +155,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
