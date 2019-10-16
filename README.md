@@ -33,6 +33,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 * [Send-TelegramLocalVideo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md)
 * [Send-TelegramLocation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md)
 * [Send-TelegramMediaGroup](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md)
+* [Send-TelegramPoll](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
 * [Send-TelegramTextMessage](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
 * [Send-TelegramURLAnimation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md)
 * [Send-TelegramURLAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md)
@@ -146,6 +147,9 @@ Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -Firs
 #------------------------------------------------------------------------------------------------
 #send information about a venue
 Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+#------------------------------------------------------------------------------------------------
+#send a poll with a question and options
+Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 #------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell

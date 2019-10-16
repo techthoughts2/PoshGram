@@ -41,6 +41,17 @@ InModuleScope PoshGram {
     $lastName = 'Picard'
     $title = 'Star Fleet Headquarters'
     $address = 'San Francisco, CA 94128'
+    $question = 'What is your favorite Star Trek series?'
+    $opt = @(
+        'Star Trek: The Original Series',
+        'Star Trek: The Animated Series',
+        'Star Trek: The Next Generation',
+        'Star Trek: Deep Space Nine',
+        'Star Trek: Voyager',
+        'Star Trek: Enterprise',
+        'Star Trek: Discovery',
+        'Star Trek: Picard'
+    )
     $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
     $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
     $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
@@ -290,5 +301,16 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramVenue
+        Context "Send-TelegramPoll" {
+            It 'Should return with ok:true when a poll is successfully sent' {
+                $eval = Send-TelegramPoll `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -Question $question `
+                    -Options $opt `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramPoll
     }#describe_InfraTests
 }#scope_PoshGram

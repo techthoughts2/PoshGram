@@ -255,6 +255,51 @@ InModuleScope PoshGram {
                 Confirm-URL -Uri 'https://gph.is/2nlyzm4' |  Should -Be $true
             }#it
         }#Confirm-URL
+        Context 'Test-PollOptions' {
+            It 'should return false if the number of options is below 2' {
+                $opt = @(
+                    'One'
+                )
+                Test-PollOptions -PollOptions $opt | Should -Be $false
+            }#it
+            It 'should return false if the number of options is above 10' {
+                $opt = @(
+                    'One',
+                    'Two',
+                    'Three',
+                    'Four',
+                    'Five',
+                    'Six',
+                    'Seven',
+                    'Eight',
+                    'Nine',
+                    'Ten',
+                    'Eleven'
+                )
+                Test-PollOptions -PollOptions $opt | Should -Be $false
+            }#it
+            It 'should return false if an option has a character count above 100' {
+                $opt = @(
+                    'Three',
+                    'Four',
+                    'uhvfulonqhitqljlpyiziijocidwiljbjyezzkzmvcahymsppqpqrhxpcdqbaikjbkevsohjnjtdrmrvwoconbqeaemouzzpypeeg'
+                )
+                Test-PollOptions -PollOptions $opt | Should -Be $false
+            }#it
+            It 'should return true if a valid set of options is provided' {
+                $opt = @(
+                    'Star Trek: The Original Series',
+                    'Star Trek: The Animated Series',
+                    'Star Trek: The Next Generation',
+                    'Star Trek: Deep Space Nine',
+                    'Star Trek: Voyager',
+                    'Star Trek: Enterprise',
+                    'Star Trek: Discovery',
+                    'Star Trek: Picard'
+                )
+                Test-PollOptions -PollOptions $opt | Should -Be $true
+            }#it
+        }#Test-PollOptions
         Context 'Resolve-ShortLink' {
             #I haven't figured out at this time how to properly mock Invoke-WebRequest errors that indicate a re-direction condition.
             #as such, there is no test coverage for this function at this time

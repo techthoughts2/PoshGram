@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.4.0'
+    ModuleVersion     = '1.5.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -78,6 +78,7 @@
         'Send-TelegramLocalVideo',
         'Send-TelegramLocation',
         'Send-TelegramMediaGroup',
+        'Send-TelegramPoll',
         'Send-TelegramTextMessage',
         'Send-TelegramURLAnimation',
         'Send-TelegramURLAudio',
@@ -134,6 +135,7 @@
                 'Photo',
                 'Photos',
                 'Pictures',
+                'Poll',
                 'powershell',
                 'powershell-module',
                 'PSModule',
@@ -158,7 +160,8 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
-1.4.0:
+1.5.0:
+    Added Send-TelegramPoll
     Added Send-TelegramVenue
     Added Send-TelegramContact
     DisableNotification and Streaming parameters changed from bool to switch on all functions

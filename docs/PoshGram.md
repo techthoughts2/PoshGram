@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 1.4.0
+Help Version: 1.5.0
 Locale: en-US
 ---
 
@@ -34,6 +34,9 @@ Sends Telegram location to indicate point on map
 
 ### [Send-TelegramMediaGroup](Send-TelegramMediaGroup.md)
 Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
+
+### [Send-TelegramPoll](Send-TelegramPoll.md)
+Sends Telegram native poll.
 
 ### [Send-TelegramTextMessage](Send-TelegramTextMessage.md)
 Sends Telegram text message via Bot API
