@@ -39,6 +39,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 * [Send-TelegramURLDocument](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
 * [Send-TelegramURLPhoto](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md)
 * [Send-TelegramURLVideo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
+* [Send-TelegramVenue](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md)
 * [Test-BotToken](https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md)
 
 ## Why
@@ -137,11 +138,14 @@ Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $an
 #send an animated gif from a URL source
 Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 #------------------------------------------------------------------------------------------------
-#Sends a group of photos or videos as an album from a local source
+#sends a group of photos or videos as an album from a local source
 Send-TelegramMediaGroup -BotToken $botToken -ChatID $chat -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
 #------------------------------------------------------------------------------------------------
 #send a contact's information
 Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+#------------------------------------------------------------------------------------------------
+#send information about a venue
+Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 #------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell

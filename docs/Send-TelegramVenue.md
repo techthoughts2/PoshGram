@@ -1,24 +1,24 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
+online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md
 schema: 2.0.0
 ---
 
-# Send-TelegramContact
+# Send-TelegramVenue
 
 ## SYNOPSIS
-Sends Telegram phone contact message via BOT API.
+Sends Telegram information about a venue.
 
 ## SYNTAX
 
 ```
-Send-TelegramContact [-BotToken] <String> [-ChatID] <String> [-PhoneNumber] <String> [-FirstName] <String>
- [[-LastName] <String>] [-DisableNotification] [<CommonParameters>]
+Send-TelegramVenue [-BotToken] <String> [-ChatID] <String> [-Latitude] <Single> [-Longitude] <Single>
+ [-Title] <String> [-Address] <String> [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send contact information to specified Telegram chat.
+Uses Telegram Bot API to send latitude, longitude, title, and address information about a venue to specified Telegram chat.
 
 ## EXAMPLES
 
@@ -28,11 +28,13 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$phone = '1-222-222-2222'
-$firstName = 'Jean-Luc'
-Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+$latitude = 37.621313
+$longitude = -122.378955
+$title = 'Star Fleet Headquarters'
+$address = 'San Francisco, CA 94128'
+Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 
-Sends contact via Telegram API
+Sends venue information via Telegram API
 
 ### EXAMPLE 2
 ```
@@ -40,19 +42,21 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$phone = '1-222-222-2222'
-$firstName = 'Jean-Luc'
-$lastName = 'Picard'
-Send-TelegramContact \`
+$latitude = 37.621313
+$longitude = -122.378955
+$title = 'Star Fleet Headquarters'
+$address = 'San Francisco, CA 94128'
+Send-TelegramVenue \`
     -BotToken $botToken \`
     -ChatID $chat \`
-    -PhoneNumber $phone \`
-    -FirstName $firstName \`
-    -LastName $lastName \`
+    -Latitude $latitude \`
+    -Longitude $longitude \`
+    -Title $title \`
+    -Address $address \`
     -DisableNotification \`
     -Verbose
 
-Sends contact via Telegram API
+Sends venue information via Telegram API
 
 ## PARAMETERS
 
@@ -86,23 +90,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PhoneNumber
-Contact phone number
+### -Latitude
+Latitude of the venue
 
 ```yaml
-Type: String
+Type: Single
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 3
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FirstName
-Contact first name
+### -Longitude
+Longitude of the venue
+
+```yaml
+Type: Single
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 4
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Title
+Name of the venue
 
 ```yaml
 Type: String
@@ -110,22 +129,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LastName
-Contact last name
+### -Address
+Address of the venue
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 5
+Required: True
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -169,7 +188,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
+[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md)
 
-[https://core.telegram.org/bots/api#sendcontact](https://core.telegram.org/bots/api#sendcontact)
+[https://core.telegram.org/bots/api#sendvenue](https://core.telegram.org/bots/api#sendvenue)
 

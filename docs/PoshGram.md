@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 1.3.0
+Help Version: 1.4.0
 Locale: en-US
 ---
 
@@ -52,6 +52,9 @@ Sends Telegram photo message via Bot API from URL sourced photo image
 
 ### [Send-TelegramURLVideo](Send-TelegramURLVideo.md)
 Sends Telegram video message via Bot API from URL sourced file
+
+### [Send-TelegramVenue](Send-TelegramVenue.md)
+Sends Telegram information about a venue.
 
 ### [Test-BotToken](Test-BotToken.md)
 Validates Bot auth Token

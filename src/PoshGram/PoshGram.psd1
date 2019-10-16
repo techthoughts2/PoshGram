@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.3.0'
+    ModuleVersion     = '1.4.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -84,6 +84,7 @@
         'Send-TelegramURLDocument',
         'Send-TelegramURLPhoto',
         'Send-TelegramURLVideo',
+        'Send-TelegramVenue',
         'Test-BotToken'
     )
 
@@ -141,6 +142,7 @@
                 'telegram',
                 'telegram-bot-api',
                 'telegramx',
+                'Venue',
                 'Video',
                 'Videos'
             )
@@ -156,11 +158,12 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
-1.3.0:
+1.4.0:
+    Added Send-TelegramVenue
     Added Send-TelegramContact
     DisableNotification and Streaming parameters changed from bool to switch on all functions
     Send-TelegramTextMessage: Preview parameter renamed to DisablePreview and changed from bool to switch
-    Unit test and Inra test improvements
+    Unit test and Infra test improvements
 1.0.2 :
     Addressed bug where certain UTF-8 characters would fail to send properly in Send-TelegramTextMessage
     Cosmetic code change for Invoke functions to use splat parameters

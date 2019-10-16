@@ -200,7 +200,7 @@ task InfraTest {
     if (Test-Path -Path $script:InfraTestsPath) {
         Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
         $invokePesterParams = @{
-            Path       = '..\..\Tests\Infrastructure'
+            Path       = 'Tests\Infrastructure'
             Strict     = $true
             PassThru   = $true
             Verbose    = $false

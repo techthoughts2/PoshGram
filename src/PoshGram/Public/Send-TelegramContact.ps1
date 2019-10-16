@@ -7,7 +7,7 @@
     $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-#########"
     $phone = '1-222-222-2222'
-    $firstName = 'Jake'
+    $firstName = 'Jean-Luc'
     Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
 
     Sends contact via Telegram API
@@ -15,8 +15,8 @@
     $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-#########"
     $phone = '1-222-222-2222'
-    $firstName = 'Jake'
-    $lastName = 'Morrison'
+    $firstName = 'Jean-Luc'
+    $lastName = 'Picard'
     Send-TelegramContact `
         -BotToken $botToken `
         -ChatID $chat `
@@ -58,7 +58,7 @@
     first_name              String                  Yes         Contact's first name
     last_name               String                  Optional    Contact's last name
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md
+    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
 .LINK
     https://core.telegram.org/bots/api#sendcontact
 #>

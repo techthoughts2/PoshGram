@@ -45,7 +45,7 @@ Send-TelegramLocation \`
     -BotToken $botToken \`
     -ChatID $chat \`
     -Latitude $latitude \`
-    -Longitude $longitude
+    -Longitude $longitude \`
     -DisableNotification \`
     -Verbose
 
