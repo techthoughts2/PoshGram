@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send document message to specified Telegram chat. The file will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters. Only works for gif, pdf and zip files.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
     Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
 
     Sends document message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
     Send-TelegramURLDocument `
         -BotToken $botToken `
@@ -51,12 +51,12 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 				Type    				Required 	Description
-    chat_id 				Integer or String 		Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    document 				InputFile or String 	Yes 		File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-    caption 				String 					Optional 	Photo caption (may also be used when resending photos by file_id), 0-200 characters
-    parse_mode 				String 					Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    disable_notification 	Boolean 				Optional 	Sends the message silently. Users will receive a notification with no sound.
+    Parameters              Type                    Required    Description
+    chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    document                InputFile or String     Yes         File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
 .LINK

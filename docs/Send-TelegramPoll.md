@@ -24,10 +24,8 @@ Uses Telegram Bot API to send a native poll with a question and several answer o
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $question = 'What is your favorite Star Trek series?'
 $opt = @(
     'Star Trek: The Original Series',
@@ -40,15 +38,15 @@ $opt = @(
     'Star Trek: Picard'
 )
 Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
+```
+
 
 Sends poll via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $question = 'Who is your favorite Star Fleet Captain?'
 $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
 Send-TelegramPoll \`
@@ -57,6 +55,8 @@ Send-TelegramPoll \`
     -Question $question \`
     -Options $opt \`
     -DisableNotification
+```
+
 
 Sends poll via Telegram API
 
@@ -166,4 +166,5 @@ Telegram currently supports 2-10 options 1-100 characters each
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
+
 

@@ -18,7 +18,7 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $chat = "-nnnnnnnnn"
     function Write-Error {}
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramSticker' -Tag Unit {

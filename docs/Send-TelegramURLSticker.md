@@ -25,21 +25,19 @@ The sticker will be sourced from the provided URL and sent to Telegram.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
 Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
+```
+
 
 Sends sticker message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
 Send-TelegramURLSticker \`
     -BotToken $botToken \`
@@ -47,6 +45,8 @@ Send-TelegramURLSticker \`
     -StickerURL $StickerURL \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends sticker message via Telegram API
 
@@ -138,4 +138,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
+
 

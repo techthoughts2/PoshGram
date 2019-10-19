@@ -4,16 +4,16 @@
 .DESCRIPTION
     Uses Telegram Bot API to send contact information to specified Telegram chat.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $phone = '1-222-222-2222'
     $firstName = 'Jean-Luc'
     Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
 
     Sends contact via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $phone = '1-222-222-2222'
     $firstName = 'Jean-Luc'
     $lastName = 'Picard'

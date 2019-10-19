@@ -44,21 +44,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
+```
+
 
 Sends sticker message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 Send-TelegramSticker \`
     -BotToken $botToken \`
@@ -66,20 +64,25 @@ Send-TelegramSticker \`
     -FileID $sticker \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends sticker message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 ```
 
-$chat = "-#########"
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 
 Sends sticker message via Telegram API
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-#########"
+
+### EXAMPLE 4
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 Send-TelegramSticker \`
     -BotToken $botToken \`
     -ChatID $chat \`
@@ -87,6 +90,8 @@ Send-TelegramSticker \`
     -Shortcode ':slightly_smiling_face:' \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends sticker message via Telegram API
 
@@ -268,4 +273,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
+
 

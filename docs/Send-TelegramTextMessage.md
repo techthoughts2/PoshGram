@@ -25,20 +25,18 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
-$chat = "-#########"
-Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
 Sends text message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 Send-TelegramTextMessage \`
     -BotToken $botToken \`
     -ChatID $chat \`
@@ -47,6 +45,8 @@ Send-TelegramTextMessage \`
     -DisablePreview \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends text message via Telegram API
 
@@ -168,4 +168,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
+
 

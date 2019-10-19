@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
     Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
     Send-TelegramLocalPhoto `
         -BotToken $botToken `

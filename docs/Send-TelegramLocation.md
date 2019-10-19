@@ -24,22 +24,20 @@ Uses Telegram Bot API to send latitude and longitude points on map to specified 
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $latitude = 37.621313
 $longitude = -122.378955
 Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
+```
+
 
 Sends location via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $photo = "C:\photos\aphoto.jpg"
 Send-TelegramLocation \`
     -BotToken $botToken \`
@@ -48,6 +46,8 @@ Send-TelegramLocation \`
     -Longitude $longitude \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends location via Telegram API
 
@@ -154,4 +154,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md)
 
 [https://core.telegram.org/bots/api#sendlocation](https://core.telegram.org/bots/api#sendlocation)
+
 

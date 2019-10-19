@@ -18,7 +18,7 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLDocument' -Tag Unit {
         $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"

@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
 
     Sends sticker message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     Send-TelegramSticker `
         -BotToken $botToken `
@@ -23,13 +23,14 @@
 
     Sends sticker message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 
     Sends sticker message via Telegram API
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramSticker `
         -BotToken $botToken `
         -ChatID $chat `

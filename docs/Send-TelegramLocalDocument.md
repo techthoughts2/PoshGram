@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
 Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
+```
+
 
 Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
 Send-TelegramLocalDocument \`
     -BotToken $botToken \`
@@ -50,6 +48,8 @@ Send-TelegramLocalDocument \`
     -ParseMode Markdown \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends document message via Telegram API
 
@@ -174,4 +174,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+
 

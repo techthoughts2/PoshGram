@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $animation = "C:\animation\animation.gif"
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
+```
+
 
 Sends AnimationPath message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $animation = "C:\animation\animation.gif"
 Send-TelegramLocalAnimation \`
     -BotToken $botToken \`
@@ -50,6 +48,8 @@ Send-TelegramLocalAnimation \`
     -ParseMode Markdown \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends animation message via Telegram API
 
@@ -177,4 +177,5 @@ Get creative by sending Gifs with your bot!
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md)
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
+
 

@@ -18,7 +18,7 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalAnimation' -Tag Unit {
         BeforeEach {

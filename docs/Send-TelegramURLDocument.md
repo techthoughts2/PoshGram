@@ -27,21 +27,19 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
 Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+```
+
 
 Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
 Send-TelegramURLDocument \`
     -BotToken $botToken \`
@@ -51,6 +49,8 @@ Send-TelegramURLDocument \`
     -ParseMode Markdown \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends document message via Telegram API
 
@@ -175,4 +175,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+
 

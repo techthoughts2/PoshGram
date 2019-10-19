@@ -24,22 +24,20 @@ Uses Telegram Bot API to send contact information to specified Telegram chat.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $phone = '1-222-222-2222'
 $firstName = 'Jean-Luc'
 Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+```
+
 
 Sends contact via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $phone = '1-222-222-2222'
 $firstName = 'Jean-Luc'
 $lastName = 'Picard'
@@ -51,6 +49,8 @@ Send-TelegramContact \`
     -LastName $lastName \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends contact via Telegram API
 
@@ -172,4 +172,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
 
 [https://core.telegram.org/bots/api#sendcontact](https://core.telegram.org/bots/api#sendcontact)
+
 

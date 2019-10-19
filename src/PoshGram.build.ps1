@@ -260,6 +260,17 @@ task CreateMarkdownHelp {
     }
     $null = New-MarkdownHelp @markdownParams
 
+    # Replace multi-line EXAMPLES
+    $OutputDir = "$($script:ArtifactsPath)\docs\"
+    $OutputDir | Get-ChildItem -File | ForEach-Object {
+        # fix formatting in multiline examples
+        $content = Get-Content $_.FullName -Raw
+        $newContent = $content -replace '(## EXAMPLE [^`]+?```\r\n[^`\r\n]+?\r\n)(```\r\n\r\n)([^#]+?\r\n)(\r\n)([^#]+)(#)', '$1$3$2$4$5$6'
+        if ($newContent -ne $content) {
+            Set-Content -Path $_.FullName -Value $newContent -Force
+        }
+    }
+
     # Replace each missing element we need for a proper generic module page .md file
     $ModulePageFileContent = Get-Content -raw $ModulePage
     $ModulePageFileContent = $ModulePageFileContent -replace '{{Manually Enter Description Here}}', $script:ModuleDescription

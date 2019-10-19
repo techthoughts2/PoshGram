@@ -6,8 +6,8 @@
     The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video).
     2 files minimum and 10 files maximum are required for this function.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramMediaGroup `
         -BotToken $botToken `
         -ChatID $chat `
@@ -16,8 +16,8 @@
 
     Uploads all provided photo files as album via Telegram Bot API.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramMediaGroup `
         -BotToken $botToken `
         -ChatID $chat `
@@ -27,8 +27,8 @@
     Retrieves all photo file paths from C:\PhotoGroup and uploads as photo album.
     Keep in mind that your location must have at least 2, but not more than 10 files.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $vPath = 'C:\VideoGroup'
     $vFiles = @(
         "$vPath\first_contact.mp4",

@@ -19,7 +19,7 @@ InModuleScope PoshGram {
     $WarningPreference = "SilentlyContinue"
     function Write-Error {}
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramMediaGroup' -Tag Unit {
         $justRight = @(

@@ -100,7 +100,7 @@ function Get-TelegramStickerPackInfo {
     }#catch_messageSend
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Sticker information found. Processing emoji information...'
-    $assetPath ="$PSScriptRoot\asset\emoji.json"
+    $assetPath = "$PSScriptRoot\asset\emoji.json"
     Write-Verbose "Asset path: $assetPath"
     $je = Get-Content -Path $assetPath
     $psF = $je | ConvertFrom-Json

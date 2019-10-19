@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send video message to specified Telegram chat. The video will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters. Telegram only supports mp4 videos.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $file = "C:\videos\video.mp4"
     Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $video = "C:\videos\video.mp4"
     Send-TelegramLocalVideo `
         -BotToken $botToken `

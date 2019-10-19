@@ -173,7 +173,7 @@ Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerUR
 #sending a telegram message from older versions of powershell
 ###########################################################################
 #here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-#########";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
+& 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram using dynamic variables in the message
 $token = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
@@ -232,9 +232,17 @@ For a description of the Bot API, see this page: [https://core.telegram.org/bots
 
     ```powershell
     #here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram
-    & 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-#########";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
+    & 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
     ```
 
 * *Are there any restrictions when using PoshGram?*
   * Bots can currently send files of up to 50 MB in size
   * Certain functions are limited to certain file extensions, see each function's documentation for more information
+
+## License
+
+This project is [licensed under the MIT License](LICENSE).
+
+## Changelog
+
+Reference the [Changelog](.github/CHANGELOG.md)

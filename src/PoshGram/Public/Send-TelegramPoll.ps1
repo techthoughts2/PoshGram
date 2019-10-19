@@ -4,8 +4,8 @@
 .DESCRIPTION
     Uses Telegram Bot API to send a native poll with a question and several answer options.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $question = 'What is your favorite Star Trek series?'
     $opt = @(
         'Star Trek: The Original Series',
@@ -21,8 +21,8 @@
 
     Sends poll via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $question = 'Who is your favorite Star Fleet Captain?'
     $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
     Send-TelegramPoll `

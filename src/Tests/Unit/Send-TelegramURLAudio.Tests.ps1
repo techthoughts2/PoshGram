@@ -18,7 +18,7 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLAudio' -Tag Unit {
         $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"

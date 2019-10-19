@@ -4,14 +4,14 @@
 .DESCRIPTION
     Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
     Sends text message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramTextMessage `
         -BotToken $botToken `
         -ChatID $chat `

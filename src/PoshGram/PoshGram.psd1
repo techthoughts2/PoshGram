@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.9.0'
+    ModuleVersion     = '1.10.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -169,7 +169,8 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
-1.9.0:
+1.10.0:
+    Improved Help Formatting
     Added Send-TelegramURLSticker
     Added Send-TelegramLocalSticker
     Added Send-TelegramSticker

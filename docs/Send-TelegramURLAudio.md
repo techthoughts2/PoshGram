@@ -28,21 +28,19 @@ Only works for mp3 files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
 Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
+```
+
 
 Sends audio message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
 Send-TelegramURLAudio \`
     -BotToken $botToken \`
@@ -55,6 +53,8 @@ Send-TelegramURLAudio \`
     -Title "Halo On Fire" \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends audio message via Telegram API
 
@@ -225,4 +225,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
+
 

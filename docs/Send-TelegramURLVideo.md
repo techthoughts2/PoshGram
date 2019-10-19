@@ -28,21 +28,19 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
+```
+
 
 Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
 Send-TelegramURLVideo \`
     -BotToken $botToken \`
@@ -56,6 +54,8 @@ Send-TelegramURLVideo \`
     -Streaming \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends video message via Telegram API
 
@@ -241,4 +241,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
+
 

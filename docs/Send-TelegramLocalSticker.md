@@ -25,21 +25,19 @@ The sticker will be sourced from the local device and uploaded to telegram.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $sticker = "C:\stickers\sticker.webp"
 Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
+```
+
 
 Sends sticker message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $sticker = "C:\stickers\sticker.webp"
 Send-TelegramLocalSticker \`
     -BotToken $botToken \`
@@ -47,6 +45,8 @@ Send-TelegramLocalSticker \`
     -StickerPath $sticker \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends sticker message via Telegram API
 
@@ -141,4 +141,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
+
 

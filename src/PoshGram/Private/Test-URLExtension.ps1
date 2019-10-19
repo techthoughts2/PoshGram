@@ -127,7 +127,7 @@ function Test-URLExtension {
     $extension = $rawExtension.ToUpper()
     Write-Verbose "Verifying discovered extension: $extension"
     switch ($extension) {
-        {$extType -contains $_} {
+        { $extType -contains $_ } {
             Write-Verbose -Message "Extension verified."
         }
         default {

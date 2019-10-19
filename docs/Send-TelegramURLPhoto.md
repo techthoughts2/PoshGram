@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
+```
+
 
 Sends photo message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
 Send-TelegramURLPhoto \`
     -BotToken $botToken \`
@@ -50,6 +48,8 @@ Send-TelegramURLPhoto \`
     -ParseMode Markdown \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends photo message via Telegram API
 
@@ -172,4 +172,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
+
 

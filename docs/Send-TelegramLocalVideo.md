@@ -28,21 +28,19 @@ Telegram only supports mp4 videos.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $file = "C:\videos\video.mp4"
 Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
+```
+
 
 Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $video = "C:\videos\video.mp4"
 Send-TelegramLocalVideo \`
     -BotToken $botToken \`
@@ -56,6 +54,8 @@ Send-TelegramLocalVideo \`
     -Streaming \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends video message via Telegram API
 
@@ -241,4 +241,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
+
 

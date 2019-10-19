@@ -4,12 +4,12 @@
 .DESCRIPTION
     A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Test-BotToken -BotToken $botToken
 
     Validates the specified Bot auth token via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Test-BotToken `
         -BotToken $botToken `
         -Verbose

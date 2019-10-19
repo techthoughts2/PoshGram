@@ -30,7 +30,7 @@ InModuleScope PoshGram {
     #these infra tests require pre-populated LOCAL files to run successfully
     #you must also provide the bot token and chat id for these tests to run
     #$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    #$chat = "-#########"
+    #$chat = "-nnnnnnnnn"
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ###########################################################################
     #>

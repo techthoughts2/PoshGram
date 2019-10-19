@@ -28,21 +28,19 @@ Telegram only supports mp3 audio.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audio = "C:\audio\halo_on_fire.mp3"
 Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
+```
+
 
 Sends audio message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audio = "C:\audio\halo_on_fire.mp3"
 Send-TelegramLocalAudio \`
     -BotToken $botToken \`
@@ -55,6 +53,8 @@ Send-TelegramLocalAudio \`
     -Title "Halo On Fire" \`
     -DisableNotification \`
     -Verbose
+```
+
 
 Sends audio message via Telegram API
 
@@ -225,4 +225,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
+
 
