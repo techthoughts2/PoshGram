@@ -8,7 +8,7 @@ schema: 2.0.0
 # Send-TelegramSticker
 
 ## SYNOPSIS
-Sends Telegram text message via Bot API
+Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 
 ## SYNTAX
 
@@ -37,8 +37,12 @@ Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send text message to specified Telegram chat.
-Several options can be specified to adjust message parameters.
+Uses Telegram Bot API to send sticker message to specified Telegram chat.
+The file_id can be specified if you know it.
+Use Get-TelegramStickerPackInfo if you do not already know the file_id of the sticker.
+Alternatively you can specify the sticker pack name and an emoji shortcode.
+This function will make an attempt to find the sticker that corresponds with the specified emoji.
+See notes for details.
 
 ## EXAMPLES
 
@@ -267,6 +271,11 @@ How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
 Use the BotFather https://t.me/BotFather
+
+Sticker packs are controlled by their author
+    Not every sticker has a corresponding emoji
+    Some sticker authors have the same emoji linked to multiple stickers
+This function will make a best attempt to look up the sticker pack you specify and send a sticker that matches the corresponding emoji shortcode.
 
 ## RELATED LINKS
 
