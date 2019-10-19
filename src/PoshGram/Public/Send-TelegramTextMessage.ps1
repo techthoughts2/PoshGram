@@ -4,21 +4,21 @@
 .DESCRIPTION
     Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
     Sends text message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramTextMessage `
         -BotToken $botToken `
         -ChatID $chat `
-        -Message "Hello *chat* _channel_, check out this link: [TechThoughts](http://techthoughts.info/)" `
+        -Message "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)" `
         -ParseMode Markdown `
-        -Preview $false `
-        -DisableNotification $false `
+        -DisablePreview `
+        -DisableNotification `
         -Verbose
 
     Sends text message via Telegram API
@@ -30,15 +30,15 @@
     Text of the message to be sent
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
-.PARAMETER Preview
-    Disables link previews for links in this message. Default is $false
+.PARAMETER DisablePreview
+    Disables link previews for links in this message.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -46,13 +46,13 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 					Type 				Required 	Description
-    chat_id 				    Integer or String 	Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    text 						String 				Yes 		Text of the message to be sent
-    parse_mode 					String 				Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-    disable_web_page_preview 	Boolean 			Optional 	Disables link previews for links in this message
-    disable_notification 		Boolean 			Optional 	Sends the message silently. Users will receive a notification with no sound.
-    reply_to_message_id 	    Integer 			Optional 	If the message is a reply, ID of the original message
+    Parameters                  Type                Required    Description
+    chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    text                        String              Yes         Text of the message to be sent
+    parse_mode                  String              Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+    disable_web_page_preview    Boolean             Optional    Disables link previews for links in this message
+    disable_notification        Boolean             Optional    Sends the message silently. Users will receive a notification with no sound.
+    reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
 .LINK
@@ -83,10 +83,10 @@ function Send-TelegramTextMessage {
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables link previews')]
-        [bool]$Preview = $false, #set to false by default
+        [switch]$DisablePreview, #set to false by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -96,20 +96,21 @@ function Send-TelegramTextMessage {
         $ParseMode = 'HTML'
     }#if_
     #------------------------------------------------------------------------
+    #return $DisableNotification
     $payload = @{
         "chat_id"                  = $ChatID
         "text"                     = $Message
         "parse_mode"               = $ParseMode
-        "disable_web_page_preview" = $Preview
-        "disable_notification"     = $DisableNotification
+        "disable_web_page_preview" = $DisablePreview.IsPresent
+        "disable_notification"     = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendMessage" -f $BotToken)
-        Body = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload)))
+        Uri         = ("https://api.telegram.org/bot{0}/sendMessage" -f $BotToken)
+        Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload)))
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

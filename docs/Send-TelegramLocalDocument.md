@@ -14,7 +14,7 @@ Sends Telegram document message via Bot API from locally sourced file
 
 ```
 Send-TelegramLocalDocument [-BotToken] <String> [-ChatID] <String> [-File] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
 Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
+```
+
 
 Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
 Send-TelegramLocalDocument \`
     -BotToken $botToken \`
@@ -48,8 +46,10 @@ Send-TelegramLocalDocument \`
     -File $file \`
     -Caption "Check out this file" \`
     -ParseMode Markdown \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends document message via Telegram API
 
@@ -132,17 +132,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -159,8 +158,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Version: 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Version: 6.1+
 
 Bots can currently send files of up to 50 MB in size, this limit may be changed in the future.
 
@@ -175,4 +174,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+
 

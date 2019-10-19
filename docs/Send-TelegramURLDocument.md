@@ -14,7 +14,7 @@ Sends Telegram document message via Bot API from URL sourced file
 
 ```
 Send-TelegramURLDocument [-BotToken] <String> [-ChatID] <String> [-FileURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,21 +27,19 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
 Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+```
+
 
 Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
 Send-TelegramURLDocument \`
     -BotToken $botToken \`
@@ -49,8 +47,10 @@ Send-TelegramURLDocument \`
     -FileURL $fileURL \`
     -Caption "Log Files" \`
     -ParseMode Markdown \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends document message via Telegram API
 
@@ -133,17 +133,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -160,8 +159,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
 
@@ -176,4 +175,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+
 

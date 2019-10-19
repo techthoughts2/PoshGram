@@ -12,7 +12,7 @@
 .OUTPUTS
     System.Boolean
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 #>

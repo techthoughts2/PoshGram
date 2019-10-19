@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0]
+
+- Significantly improved formatting of help for all functions
+- Added Send-TelegramURLSticker
+- Added Send-TelegramLocalSticker
+- Added Send-TelegramSticker
+- Added Get-TelegramStickerPackInfo
+- Added Send-TelegramPoll
+- Added Send-TelegramVenue
+- Added Send-TelegramContact
+- Unit Tests split into separate function files
+- Build file
+  - Separated Infrastructure tests into new task
+  - Adjusted local test to not include infrastructure tests
+- Added full parameter references to unit tests
+- psd1 - Sorted functions and tags alphabetically
+- Parameter adjustments
+  - Send-TelegramLocalAnimation
+    - DisableNotification changed from bool to switch
+  - Send-TelegramLocalAudio
+    - DisableNotification changed from bool to switch
+  - Send-TelegramLocalDocument
+    - DisableNotification changed from bool to switch
+  - Send-TelegramLocalPhoto
+    - DisableNotification changed from bool to switch
+  - Send-TelegramLocalVideo
+    - DisableNotification changed from bool to switch
+    - Streaming changed from bool to switch
+  - Send-TelegramMediaGroup
+    - DisableNotification changed from bool to switch
+  - Send-TelegramTextMessage
+    - Preview parameter renamed to DisablePreview and changed from bool to switch
+    - DisableNotification changed from bool to switch
+  - Send-TelegramURLAnimation
+    - DisableNotification changed from bool to switch
+  - Send-TelegramURLAudio
+    - DisableNotification changed from bool to switch
+  - Send-TelegramURLDocument
+    - DisableNotification changed from bool to switch
+  - Send-TelegramURLPhoto
+    - DisableNotification changed from bool to switch
+
+
 ## [10/13/2019]
 
 No Version Change

@@ -25,21 +25,21 @@ Returns basic information about the bot in form of a User object.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+Test-BotToken -BotToken $botToken
 ```
 
-Test-BotToken -BotToken $botToken
 
 Validates the specified Bot auth token via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 Test-BotToken \`
     -BotToken $botToken \`
     -Verbose
+```
+
 
 Validates the specified Bot auth token via Telegram API
 
@@ -71,7 +71,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
@@ -84,4 +84,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md)
 
 [https://core.telegram.org/bots/api#getme](https://core.telegram.org/bots/api#getme)
+
 

@@ -30,20 +30,38 @@ InModuleScope PoshGram {
     #these infra tests require pre-populated LOCAL files to run successfully
     #you must also provide the bot token and chat id for these tests to run
     #$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    #$chat = "-#########"
+    #$chat = "-nnnnnnnnn"
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ###########################################################################
     #>
     $latitude = 37.621313
     $longitude = -122.378955
+    $phone = '1-222-222-2222'
+    $firstName = 'Jean-Luc'
+    $lastName = 'Picard'
+    $title = 'Star Fleet Headquarters'
+    $address = 'San Francisco, CA 94128'
+    $question = 'What is your favorite Star Trek series?'
+    $opt = @(
+        'Star Trek: The Original Series',
+        'Star Trek: The Animated Series',
+        'Star Trek: The Next Generation',
+        'Star Trek: Deep Space Nine',
+        'Star Trek: Voyager',
+        'Star Trek: Enterprise',
+        'Star Trek: Discovery',
+        'Star Trek: Picard'
+    )
+    $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
     $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
     $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
     $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
     $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
+    $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
     #//////////////////////////////////////////////////////////////////////////
-    #AWS Secrets manager retrieval - for use in AWS Codebuild deployment
-    #this section will need to be commented out if you want to run locally
+    # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
+    # this section will need to be commented out if you want to run locally
     Import-Module AWSPowerShell.NetCore
     $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
     $sObj = $s.SecretString | ConvertFrom-Json
@@ -73,6 +91,7 @@ InModuleScope PoshGram {
             "$vPath\first_contact.mp4",
             "$vPath\root_beer.mp4"
         )
+        $stickerFile = 'C:\Test\Stickers\picard.webp'
     }#if_windows
     elseif ($PSVersionTable.Platform -eq 'Unix') {
         $file = "/Test/Photos/Photo.jpg"
@@ -96,6 +115,7 @@ InModuleScope PoshGram {
             "$vPath/first_contact.mp4",
             "$vPath/root_beer.mp4"
         )
+        $stickerFile = "/Test/Stickers/picard.webp"
     }#elseif_Linux
     else{
         throw
@@ -114,7 +134,8 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramTextMessage `
                     -BotToken $token `
                     -ChatID $channel `
-                    -Message "I am a Pester test for *Send-TelegramTextMessage*"
+                    -Message "I am a Pester test for *Send-TelegramTextMessage*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramTextMessage
@@ -124,7 +145,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -PhotoPath $file `
-                    -Caption "I am a Pester test for *Send-TelegramLocalPhoto*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalPhoto*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -134,7 +156,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -PhotoURL $photoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLPhoto*"
+                    -Caption "I am a Pester test for *Send-TelegramURLPhoto*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -144,7 +167,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -File $file2 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalDocument*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalDocument*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
@@ -154,7 +178,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -FileURL $fileURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLDocument*"
+                    -Caption "I am a Pester test for *Send-TelegramURLDocument*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLDocument
@@ -164,7 +189,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Video $file3 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalVideo*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalVideo*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalVideo
@@ -174,7 +200,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -VideoURL $videoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLVideo*"
+                    -Caption "I am a Pester test for *Send-TelegramURLVideo*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLVideo
@@ -184,7 +211,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Audio $file4 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAudio*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalAudio*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAudio
@@ -194,7 +222,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AudioURL $audioURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAudio*"
+                    -Caption "I am a Pester test for *Send-TelegramURLAudio*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAudio
@@ -204,7 +233,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -Latitude $latitude `
-                    -Longitude $longitude
+                    -Longitude $longitude `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocation
@@ -214,7 +244,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AnimationPath $file5 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAnimation*"
+                    -Caption "I am a Pester test for *Send-TelegramLocalAnimation*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAnimation
@@ -224,7 +255,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -AnimationURL $animationURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAnimation*"
+                    -Caption "I am a Pester test for *Send-TelegramURLAnimation*" `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
@@ -234,7 +266,8 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Photo `
-                    -FilePaths $pFiles
+                    -FilePaths $pFiles `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
             It 'Should return with ok:true when a group of videos is successfully sent' {
@@ -242,9 +275,93 @@ InModuleScope PoshGram {
                     -BotToken $token `
                     -ChatID $channel `
                     -MediaType Video `
-                    -FilePaths $vFiles
+                    -FilePaths $vFiles `
+                    -DisableNotification
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
+        Context "Send-TelegramContact" {
+            It 'Should return with ok:true when a contact is successfully sent' {
+                $eval = Send-TelegramContact `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -PhoneNumber $phone `
+                    -FirstName $firstName `
+                    -LastName $lastName `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramContact
+        Context "Send-TelegramVenue" {
+            It 'Should return with ok:true when a venue is successfully sent' {
+                $eval = Send-TelegramVenue `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -Latitude $latitude `
+                    -Longitude $longitude `
+                    -Title $title `
+                    -Address $address `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramVenue
+        Context "Send-TelegramPoll" {
+            It 'Should return with ok:true when a poll is successfully sent' {
+                $eval = Send-TelegramPoll `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -Question $question `
+                    -Options $opt `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramPoll
+        Context "Get-TelegramStickerPackInfo" {
+            It 'Should return valid sticker pack information' {
+                $eval = Get-TelegramStickerPackInfo `
+                    -BotToken $token `
+                    -StickerSetName CookieMonster
+                $eval.set_name | Should -BeExactly 'CookieMonster'
+            }#it
+        }#context_Get-TelegramStickerPackInfo
+        Context "Send-TelegramSticker" {
+            It 'Should return with ok:true when a sticker is sent by file_id' {
+                $eval = Send-TelegramSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -FileID $sticker `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+            It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
+                $eval = Send-TelegramSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerSetName STPicard `
+                    -Shortcode ':slightly_smiling_face:' `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramSticker
+        Context "Send-TelegramLocalSticker" {
+            It 'Should return with ok:true when a local sticker message is successfully sent' {
+                $eval = Send-TelegramLocalSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerPath $stickerFile `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramLocalSticker
+        Context "Send-TelegramURLSticker" {
+            It 'Should return with ok:true when a sticker by URL is successfully sent' {
+                $eval = Send-TelegramURLSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerURL $StickerURL `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramURLSticker
     }#describe_InfraTests
 }#scope_PoshGram

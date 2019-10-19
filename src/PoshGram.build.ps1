@@ -30,10 +30,10 @@ $ModuleName = (Split-Path -Path $BuildFile -Leaf).Split('.')[0]
 . "./$ModuleName.Settings.ps1"
 
 #Default Build
-task . Clean, ValidateRequirements, Analyze, Test, CreateHelp, Build, Archive
+task . Clean, ValidateRequirements, Analyze, Test, InfraTest, CreateHelp, Build, Archive
 
 #Local testing build process
-task TestLocal Clean, Analyze, Test
+task TestLocal Clean, ValidateRequirements, Analyze, Test, CreateHelp, Build, Archive
 
 #Local help file creation process
 task HelpLocal CreateHelp, UpdateCBH
@@ -156,9 +156,11 @@ task Test {
             PassThru                     = $true
             Verbose                      = $false
             EnableExit                   = $false
-            CodeCoverage                 = "$ModuleName\*\*.ps1"
-            CodeCoverageOutputFile       = "$codeCovPath\codecoverage.xml"
-            CodeCoverageOutputFileFormat = 'JaCoCo'
+            CodeCoverage = "$ModuleName\*\*.ps1"
+            CodeCoverageOutputFile = "$($script:ArtifactsPath)\CodeCoverage.xml"
+            # CodeCoverage                 = "$ModuleName\*\*.ps1"
+            # CodeCoverageOutputFile       = "$codeCovPath\codecoverage.xml"
+            # CodeCoverageOutputFileFormat = 'JaCoCo'
         }
 
         # Publish Test Results as NUnitXml
@@ -194,10 +196,13 @@ task Test {
             Write-Host -ForegroundColor Green '...Pester Unit Tests Complete!'
         }
     }
+}#Test
+
+task InfraTest {
     if (Test-Path -Path $script:InfraTestsPath) {
         Write-Host -NoNewLine "      Performing Pester Infrastructure Tests"
         $invokePesterParams = @{
-            Path       = '..\..\Tests\Infrastructure'
+            Path       = 'Tests\Infrastructure'
             Strict     = $true
             PassThru   = $true
             Verbose    = $false
@@ -220,7 +225,7 @@ task Test {
         assert($numberFails -eq 0) ('Failed "{0}" unit tests.' -f $numberFails)
         Write-Host -ForegroundColor Green '...Pester Infrastructure Tests Complete!'
     }
-}#Test
+}
 
 #Synopsis: Used primarily during active development to generate xml file to graphically display code coverage in VSCode
 task DevCC {
@@ -254,6 +259,17 @@ task CreateMarkdownHelp {
         HelpVersion    = $script:ModuleVersion
     }
     $null = New-MarkdownHelp @markdownParams
+
+    # Replace multi-line EXAMPLES
+    $OutputDir = "$($script:ArtifactsPath)\docs\"
+    $OutputDir | Get-ChildItem -File | ForEach-Object {
+        # fix formatting in multiline examples
+        $content = Get-Content $_.FullName -Raw
+        $newContent = $content -replace '(## EXAMPLE [^`]+?```\r\n[^`\r\n]+?\r\n)(```\r\n\r\n)([^#]+?\r\n)(\r\n)([^#]+)(#)', '$1$3$2$4$5$6'
+        if ($newContent -ne $content) {
+            Set-Content -Path $_.FullName -Value $newContent -Force
+        }
+    }
 
     # Replace each missing element we need for a proper generic module page .md file
     $ModulePageFileContent = Get-Content -raw $ModulePage
@@ -319,6 +335,9 @@ task Build {
     Write-Host '        Copying Module Manifest to Artifacts...'
     Copy-Item -Path $script:ModuleManifestFile -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
     #Copy-Item -Path $script:ModuleSourcePath\bin -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
+
+    Write-Host '        Copying assets to Artifacts...'
+    Copy-Item -Path "$($script:ArtifactsPath)\Public\asset" -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
 
     Write-Host '        Merging Public and Private functions to one module file'
     #$private = "$script:ModuleSourcePath\Private"

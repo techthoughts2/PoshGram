@@ -14,7 +14,7 @@ Sends Telegram a group of photos or videos as an album via Bot API from locally 
 
 ```
 Send-TelegramMediaGroup [-BotToken] <String> [-ChatID] <String> [-MediaType] <String> [[-FilePaths] <String[]>]
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,39 +27,37 @@ This function only supports sending one media type per send (Photo | Video).
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 Send-TelegramMediaGroup \`
     -BotToken $botToken \`
     -ChatID $chat \`
     -MediaType Photo \`
     -FilePaths "C:\photo\photo1.jpg","C:\photo\photo2.jpg"
+```
+
 
 Uploads all provided photo files as album via Telegram Bot API.
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 Send-TelegramMediaGroup \`
     -BotToken $botToken \`
     -ChatID $chat \`
     -MediaType Photo \`
     -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
+```
+
 
 Retrieves all photo file paths from C:\PhotoGroup and uploads as photo album.
 Keep in mind that your location must have at least 2, but not more than 10 files.
 
 ### EXAMPLE 3
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $vPath = 'C:\VideoGroup'
 $vFiles = @(
     "$vPath\first_contact.mp4",
@@ -69,9 +67,12 @@ Send-TelegramMediaGroup \`
     -BotToken $botToken \`
     -ChatID $chat \`
     -MediaType Video \`
-    -FilePaths $vFiles
+    -FilePaths $vFiles \`
+    -DisableNotification
+```
 
-Uploads all provided video files as album via Telegram Bot API..
+
+Uploads all provided video files as album via Telegram Bot API.
 
 ## PARAMETERS
 
@@ -136,17 +137,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -163,8 +163,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Version: 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Version: 6.1+
 
 The following photo types are supported:
 JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
@@ -186,4 +186,5 @@ This was really hard to make.
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md)
 
 [https://core.telegram.org/bots/api#sendmediagroup](https://core.telegram.org/bots/api#sendmediagroup)
+
 

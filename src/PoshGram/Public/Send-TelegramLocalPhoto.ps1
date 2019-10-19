@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
     Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
     Send-TelegramLocalPhoto `
         -BotToken $botToken `
@@ -20,7 +20,7 @@
         -PhotoPath $photo `
         -Caption "Check out this photo" `
         -ParseMode Markdown `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends photo message via Telegram API
@@ -35,13 +35,13 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Version: 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Version: 6.1+
 
     The following photo types are supported:
     JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
@@ -91,8 +91,8 @@ function Send-TelegramLocalPhoto {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -103,7 +103,7 @@ function Send-TelegramLocalPhoto {
         $results = $false
         return $results
     }#if_testPath
-    else{
+    else {
         Write-Verbose -Message "Path verified."
     }#else_testPath
     #------------------------------------------------------------------------
@@ -142,14 +142,14 @@ function Send-TelegramLocalPhoto {
         photo                = $fileObject
         caption              = $Caption
         parse_mode           = $ParseMode
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

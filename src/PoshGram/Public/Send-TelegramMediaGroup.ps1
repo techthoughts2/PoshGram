@@ -6,8 +6,8 @@
     The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video).
     2 files minimum and 10 files maximum are required for this function.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramMediaGroup `
         -BotToken $botToken `
         -ChatID $chat `
@@ -16,8 +16,8 @@
 
     Uploads all provided photo files as album via Telegram Bot API.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     Send-TelegramMediaGroup `
         -BotToken $botToken `
         -ChatID $chat `
@@ -27,8 +27,8 @@
     Retrieves all photo file paths from C:\PhotoGroup and uploads as photo album.
     Keep in mind that your location must have at least 2, but not more than 10 files.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $vPath = 'C:\VideoGroup'
     $vFiles = @(
         "$vPath\first_contact.mp4",
@@ -38,9 +38,10 @@
         -BotToken $botToken `
         -ChatID $chat `
         -MediaType Video `
-        -FilePaths $vFiles
+        -FilePaths $vFiles `
+        -DisableNotification
 
-    Uploads all provided video files as album via Telegram Bot API..
+    Uploads all provided video files as album via Telegram Bot API.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -50,13 +51,13 @@
 .PARAMETER FilePaths
     List of filepaths for media you want to send
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Version: 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Version: 6.1+
 
     The following photo types are supported:
     JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
@@ -105,8 +106,8 @@ function Send-TelegramMediaGroup {
         [ValidateNotNullOrEmpty()]
         [string[]]$FilePaths,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -158,7 +159,7 @@ function Send-TelegramMediaGroup {
     Write-Verbose -Message "Forming serialzied JSON for all media files..."
     $Form = @{
         chat_id              = $ChatID;
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
         media                = ''
     }
     $json = @'
@@ -192,10 +193,10 @@ function Send-TelegramMediaGroup {
     Write-Verbose -Message "JSON formation completed."
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     Write-Verbose -Message "Sending media..."

@@ -14,7 +14,7 @@ Sends Telegram photo message via Bot API from URL sourced photo image
 
 ```
 Send-TelegramURLPhoto [-BotToken] <String> [-ChatID] <String> [-PhotoURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
+```
+
 
 Sends photo message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
 Send-TelegramURLPhoto \`
     -BotToken $botToken \`
@@ -48,8 +46,10 @@ Send-TelegramURLPhoto \`
     -PhotoURL $photourl \`
     -Caption "DSC is a great technology" \`
     -ParseMode Markdown \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends photo message via Telegram API
 
@@ -132,17 +132,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -159,7 +158,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
@@ -173,4 +172,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
+
 

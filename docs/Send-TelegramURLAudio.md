@@ -15,7 +15,7 @@ Sends Telegram audio message via Bot API from URL sourced file
 ```
 Send-TelegramURLAudio [-BotToken] <String> [-ChatID] <String> [-AudioURL] <String> [[-Caption] <String>]
  [[-ParseMode] <String>] [[-Duration] <Int32>] [[-Performer] <String>] [[-Title] <String>]
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,21 +28,19 @@ Only works for mp3 files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
 Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
+```
+
 
 Sends audio message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
 Send-TelegramURLAudio \`
     -BotToken $botToken \`
@@ -53,8 +51,10 @@ Send-TelegramURLAudio \`
     -Duration 495 \`
     -Performer "Metallica" \`
     -Title "Halo On Fire" \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends audio message via Telegram API
 
@@ -182,17 +182,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -209,8 +208,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 Your audio must be in the .mp3 format.
 Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -226,4 +225,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
+
 

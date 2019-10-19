@@ -14,7 +14,7 @@ Sends Telegram animation message via Bot API from URL sourced animation image
 
 ```
 Send-TelegramURLAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationURL] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,21 +26,19 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
 Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
+```
+
 
 Sends animation message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
 Send-TelegramURLAnimation \`
     -BotToken $botToken \`
@@ -48,8 +46,10 @@ Send-TelegramURLAnimation \`
     -AnimationURL $AnimationURL \`
     -Caption "Live long, and prosper." \`
     -ParseMode Markdown \`
-    -DisableNotification $false \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends animation message via Telegram API
 
@@ -132,17 +132,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -159,8 +158,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
@@ -173,4 +172,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md)
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
+
 

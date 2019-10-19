@@ -4,23 +4,23 @@
 .DESCRIPTION
     Uses Telegram Bot API to send latitude and longitude points on map to specified Telegram chat.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $latitude = 37.621313
     $longitude = -122.378955
     Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
 
     Sends location via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
     Send-TelegramLocation `
         -BotToken $botToken `
         -ChatID $chat `
         -Latitude $latitude `
-        -Longitude $longitude
-        -DisableNotification $false `
+        -Longitude $longitude `
+        -DisableNotification `
         -Verbose
 
     Sends location via Telegram API
@@ -33,13 +33,13 @@
 .PARAMETER Longitude
     Longitude of the location
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Version: 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Version: 6.1+
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -80,8 +80,8 @@ function Send-TelegramLocation {
         [ValidateRange(-180, 180)]
         [single]$Longitude,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -91,14 +91,14 @@ function Send-TelegramLocation {
         chat_id              = $ChatID
         latitude             = $Latitude
         longitude            = $Longitude
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

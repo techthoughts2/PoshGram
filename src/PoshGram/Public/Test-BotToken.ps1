@@ -4,12 +4,12 @@
 .DESCRIPTION
     A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Test-BotToken -BotToken $botToken
 
     Validates the specified Bot auth token via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     Test-BotToken `
         -BotToken $botToken `
         -Verbose
@@ -21,7 +21,7 @@
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -49,9 +49,9 @@ function Test-BotToken {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/getMe" -f $BotToken)
+        Uri         = ("https://api.telegram.org/bot{0}/getMe" -f $BotToken)
         ErrorAction = 'Stop'
-        Method = 'Get'
+        Method      = 'Get'
     }
     #------------------------------------------------------------------------
     try {

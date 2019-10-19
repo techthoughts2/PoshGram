@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send audio message to specified Telegram chat. The audio will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters. Telegram only supports mp3 audio.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $audio = "C:\audio\halo_on_fire.mp3"
     Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
 
     Sends audio message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $audio = "C:\audio\halo_on_fire.mp3"
     Send-TelegramLocalAudio `
         -BotToken $botToken `
@@ -23,7 +23,7 @@
         -Duration 495 `
         -Performer "Metallica" `
         -Title "Halo On Fire" `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends audio message via Telegram API
@@ -46,13 +46,13 @@
 .PARAMETER Title
     Track Name
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Version: 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Version: 6.1+
 
     Your audio must be in the .mp3 format.
     Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -63,15 +63,15 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 				Type    				Required 	Description
-    chat_id 				Integer or String 		Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    audio    				InputFile or String 	Yes 		Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
-    caption 				String 					Optional 	Photo caption (may also be used when resending photos by file_id), 0-200 characters
-    parse_mode 				String 					Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    Parameters              Type                    Required    Description
+    chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    audio                   InputFile or String     Yes         Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     duration                Integer                 Optional    Duration of the audio in seconds
     performer               String                  Optional    Performer
     title                   String                  Optional    Track Name
-    disable_notification 	Boolean 				Optional 	Sends the message silently. Users will receive a notification with no sound.
+    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md
 .LINK
@@ -113,8 +113,8 @@ function Send-TelegramLocalAudio {
             HelpMessage = 'TrackName')]
         [string]$Title,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -125,7 +125,7 @@ function Send-TelegramLocalAudio {
         $results = $false
         return $results
     }#if_testPath
-    else{
+    else {
         Write-Verbose -Message "Path verified."
     }#else_testPath
     #------------------------------------------------------------------------
@@ -167,14 +167,14 @@ function Send-TelegramLocalAudio {
         duration             = $Duration
         performer            = $Performer
         title                = $Title
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

@@ -14,8 +14,8 @@ Sends Telegram video message via Bot API from URL sourced file
 
 ```
 Send-TelegramURLVideo [-BotToken] <String> [-ChatID] <String> [-VideoURL] <String> [[-Duration] <Int32>]
- [[-Width] <Int32>] [[-Height] <Int32>] [[-Caption] <String>] [[-ParseMode] <String>] [[-Streaming] <Boolean>]
- [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [[-Width] <Int32>] [[-Height] <Int32>] [[-Caption] <String>] [[-ParseMode] <String>] [-Streaming]
+ [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,21 +28,19 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
+```
+
 
 Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
 Send-TelegramURLVideo \`
     -BotToken $botToken \`
@@ -53,9 +51,11 @@ Send-TelegramURLVideo \`
     -Height 1080 \`
     -Caption "Check out this video" \`
     -ParseMode Markdown \`
-    -Streaming $false \`
-    -DisableNotification $false \`
+    -Streaming \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends video message via Telegram API
 
@@ -183,32 +183,31 @@ Accept wildcard characters: False
 ```
 
 ### -Streaming
-Pass True, if the uploaded video is suitable for streaming
+Use if the uploaded video is suitable for streaming
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -225,8 +224,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 Telegram clients support mp4 videos (other formats may be sent as Document)
 Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -242,4 +241,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
+
 

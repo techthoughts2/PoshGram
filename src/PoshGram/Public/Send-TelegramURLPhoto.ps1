@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
     Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
     Send-TelegramURLPhoto `
         -BotToken $botToken `
@@ -20,7 +20,7 @@
         -PhotoURL $photourl `
         -Caption "DSC is a great technology" `
         -ParseMode Markdown `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends photo message via Telegram API
@@ -35,12 +35,12 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
@@ -88,8 +88,8 @@ function Send-TelegramURLPhoto {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -99,10 +99,10 @@ function Send-TelegramURLPhoto {
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_documentExtension
+    }#if_photoExtension
     else {
         Write-Verbose -Message "Extension supported."
-    }#else_documentExtension
+    }#else_photoExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message "Verifying URL presence and file size..."
     $fileSizeEval = Test-URLFileSize -URL $PhotoURL
@@ -119,15 +119,15 @@ function Send-TelegramURLPhoto {
         "photo"                = $PhotoURL
         "caption"              = $Caption
         "parse_mode"           = $ParseMode
-        "disable_notification" = $DisableNotification
+        "disable_notification" = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendphoto" -f $BotToken)
-        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        Uri         = ("https://api.telegram.org/bot{0}/sendphoto" -f $BotToken)
+        Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

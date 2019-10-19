@@ -14,7 +14,7 @@ Sends Telegram text message via Bot API
 
 ```
 Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <String> [[-ParseMode] <String>]
- [[-Preview] <Boolean>] [[-DisableNotification] <Boolean>] [<CommonParameters>]
+ [-DisablePreview] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,28 +25,28 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
-$chat = "-#########"
-Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
 Sends text message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-$chat = "-#########"
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
 Send-TelegramTextMessage \`
     -BotToken $botToken \`
     -ChatID $chat \`
-    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](http://techthoughts.info/)" \`
+    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](https://techthoughts.info/)" \`
     -ParseMode Markdown \`
-    -Preview $false \`
-    -DisableNotification $false \`
+    -DisablePreview \`
+    -DisableNotification \`
     -Verbose
+```
+
 
 Sends text message via Telegram API
 
@@ -113,34 +113,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Preview
+### -DisablePreview
 Disables link previews for links in this message.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DisableNotification
-Sends the message silently.
+Send the message silently.
 Users will receive a notification with no sound.
-Default is $false
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -157,7 +155,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
@@ -170,4 +168,5 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
+
 

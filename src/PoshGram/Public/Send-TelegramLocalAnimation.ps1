@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $animation = "C:\animation\animation.gif"
     Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 
     Sends AnimationPath message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $animation = "C:\animation\animation.gif"
     Send-TelegramLocalAnimation `
         -BotToken $botToken `
@@ -20,7 +20,7 @@
         -AnimationPath $animation `
         -Caption "Check out this animation" `
         -ParseMode Markdown `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends animation message via Telegram API
@@ -35,13 +35,13 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Version: 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Version: 6.1+
 
     The following animation types are supported:
     GIF
@@ -93,8 +93,8 @@ function Send-TelegramLocalAnimation {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -105,7 +105,7 @@ function Send-TelegramLocalAnimation {
         $results = $false
         return $results
     }#if_testPath
-    else{
+    else {
         Write-Verbose -Message "Path verified."
     }#else_testPath
     #------------------------------------------------------------------------
@@ -144,14 +144,14 @@ function Send-TelegramLocalAnimation {
         animation            = $fileObject
         caption              = $Caption
         parse_mode           = $ParseMode
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = $Uri
+        Uri         = $Uri
         ErrorAction = 'Stop'
-        Form = $Form
-        Method = 'Post'
+        Form        = $Form
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

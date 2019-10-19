@@ -27,12 +27,16 @@
     Test-URLExtension -URL $DocumentURL -Type Document
 
     Verifies if the URL path specified is a supported document extension type
+.EXAMPLE
+    Test-URLExtension -URL $StickerURL -Type Sticker
+
+    Verifies if the URL path specified is a supported sticker extension type
 .PARAMETER URL
     The URL string to the specified online file
 .OUTPUTS
     System.Boolean
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 #>
@@ -47,7 +51,7 @@ function Test-URLExtension {
         [string]$URL,
         [Parameter(Mandatory = $true,
             HelpMessage = 'Telegram message type')]
-        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Document')]
+        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Document', 'Sticker')]
         [string]$Type
     )
     #------------------------------------------------------------
@@ -75,6 +79,10 @@ function Test-URLExtension {
         'GIF',
         'ZIP'
     )
+    $supportedStickerExtensions = @(
+        'WEBP',
+        'TGS'
+    )
     switch ($Type) {
         Photo {
             $extType = $supportedPhotoExtensions
@@ -91,6 +99,9 @@ function Test-URLExtension {
         Document {
             $extType = $supportedDocumentExtensions
         }#document
+        Sticker {
+            $extType = $supportedStickerExtensions
+        }#sticker
     }#switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------
@@ -116,7 +127,7 @@ function Test-URLExtension {
     $extension = $rawExtension.ToUpper()
     Write-Verbose "Verifying discovered extension: $extension"
     switch ($extension) {
-        {$extType -contains $_} {
+        { $extType -contains $_ } {
             Write-Verbose -Message "Extension verified."
         }
         default {

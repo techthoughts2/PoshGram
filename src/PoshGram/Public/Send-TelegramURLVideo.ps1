@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send video message to specified Telegram chat. The file will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters. Only works for gif, pdf and zip files.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
     Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
     Send-TelegramURLVideo `
         -BotToken $botToken `
@@ -23,8 +23,8 @@
         -Height 1080 `
         -Caption "Check out this video" `
         -ParseMode Markdown `
-        -Streaming $false `
-        -DisableNotification $false `
+        -Streaming `
+        -DisableNotification `
         -Verbose
 
     Sends video message via Telegram API
@@ -45,15 +45,15 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER Streaming
-    Pass True, if the uploaded video is suitable for streaming
+    Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -64,16 +64,16 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 				Type    				Required 	Description
-    chat_id 				Integer or String 		Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    video    				InputFile or String 	Yes 		Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+    Parameters              Type                    Required    Description
+    chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    video                   InputFile or String     Yes         Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
     duration                Integer                 Optional    Duration of sent video in seconds
     width                   Integer                 Optional    Video width
     height                  Integer                 Optional    Video height
-    caption 				String 					Optional 	Photo caption (may also be used when resending photos by file_id), 0-200 characters
-    parse_mode 				String 					Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
-    disable_notification 	Boolean 				Optional 	Sends the message silently. Users will receive a notification with no sound.
+    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md
 .LINK
@@ -121,11 +121,11 @@ function Send-TelegramURLVideo {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Pass True, if the uploaded video is suitable for streaming')]
-        [bool]$Streaming, #set to Markdown by default
+            HelpMessage = 'Use if the uploaded video is suitable for streaming')]
+        [switch]$Streaming,
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -159,15 +159,15 @@ function Send-TelegramURLVideo {
         caption              = $Caption
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming
-        disable_notification = $DisableNotification
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendVideo" -f $BotToken)
-        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        Uri         = ("https://api.telegram.org/bot{0}/sendVideo" -f $BotToken)
+        Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {

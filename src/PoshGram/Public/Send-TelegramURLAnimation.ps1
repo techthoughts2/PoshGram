@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
     Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 
     Sends animation message via Telegram API
 .EXAMPLE
-    $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-#########"
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
     $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
     Send-TelegramURLAnimation `
         -BotToken $botToken `
@@ -20,7 +20,7 @@
         -AnimationURL $AnimationURL `
         -Caption "Live long, and prosper." `
         -ParseMode Markdown `
-        -DisableNotification $false `
+        -DisableNotification `
         -Verbose
 
     Sends animation message via Telegram API
@@ -35,13 +35,13 @@
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
 .PARAMETER DisableNotification
-    Sends the message silently. Users will receive a notification with no sound. Default is $false
+    Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - http://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
+    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -88,8 +88,8 @@ function Send-TelegramURLAnimation {
         [ValidateSet("Markdown", "HTML")]
         [string]$ParseMode = "Markdown", #set to Markdown by default
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Sends the message silently')]
-        [bool]$DisableNotification = $false #set to false by default
+            HelpMessage = 'Send the message silently')]
+        [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
@@ -119,15 +119,15 @@ function Send-TelegramURLAnimation {
         "animation"            = $AnimationURL
         "caption"              = $Caption
         "parse_mode"           = $ParseMode
-        "disable_notification" = $DisableNotification
+        "disable_notification" = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri = ("https://api.telegram.org/bot{0}/sendAnimation" -f $BotToken)
-        Body = (ConvertTo-Json -Compress -InputObject $payload)
+        Uri         = ("https://api.telegram.org/bot{0}/sendAnimation" -f $BotToken)
+        Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = "application/json"
-        Method = 'Post'
+        Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
