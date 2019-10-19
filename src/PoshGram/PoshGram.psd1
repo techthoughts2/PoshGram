@@ -147,12 +147,12 @@
                 'SM',
                 'Sticker',
                 'Stickers',
-                'Sticker Pack',
+                'Sticker-Pack',
                 'telegram',
                 'telegram-bot-api',
                 'telegramx',
-                'Telegram Sticker'
-                'Telegram Bot',
+                'Telegram-Sticker'
+                'Telegram-Bot',
                 'Venue',
                 'Video',
                 'Videos'
