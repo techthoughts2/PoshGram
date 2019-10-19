@@ -1,8 +1,8 @@
 <#
 .Synopsis
-    Sends Telegram text message via Bot API
+    Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 .DESCRIPTION
-    Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
+    Uses Telegram Bot API to send sticker message to specified Telegram chat. The file_id can be specified if you know it. Use Get-TelegramStickerPackInfo if you do not already know the file_id of the sticker. Alternatively you can specify the sticker pack name and an emoji shortcode. This function will make an attempt to find the sticker that corresponds with the specified emoji. See notes for details.
 .EXAMPLE
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
@@ -62,6 +62,11 @@
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+
+    Sticker packs are controlled by their author
+        Not every sticker has a corresponding emoji
+        Some sticker authors have the same emoji linked to multiple stickers
+    This function will make a best attempt to look up the sticker pack you specify and send a sticker that matches the corresponding emoji shortcode.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY

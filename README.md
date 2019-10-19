@@ -64,7 +64,7 @@ PoshGram also opens up several programmatic use cases:
 
 ### Prerequisites
 
-* [PowerShell 6.1.0](https://github.com/PowerShell/PowerShell)
+* [PowerShell 6.1.0](https://github.com/PowerShell/PowerShell) *(or higher version)*
 * A Telegram Account
 * [Telegram Bot created](https://core.telegram.org/bots)
 * Chat ID number
