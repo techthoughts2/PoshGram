@@ -36,9 +36,9 @@ InModuleScope PoshGram {
     #>
     $latitude = 37.621313
     $longitude = -122.378955
-    $phone = '1-222-222-2222'
-    $firstName = 'Jean-Luc'
-    $lastName = 'Picard'
+    # $phone = '1-222-222-2222'
+    # $firstName = 'Jean-Luc'
+    # $lastName = 'Picard'
     $title = 'Star Fleet Headquarters'
     $address = 'San Francisco, CA 94128'
     $question = 'What is your favorite Star Trek series?'
