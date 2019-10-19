@@ -60,13 +60,13 @@ InModuleScope PoshGram {
     $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
     $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
     #//////////////////////////////////////////////////////////////////////////
-    #AWS Secrets manager retrieval - for use in AWS Codebuild deployment
-    #this section will need to be commented out if you want to run locally
-    # Import-Module AWSPowerShell.NetCore
-    # $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-    # $sObj = $s.SecretString | ConvertFrom-Json
-    # $token = $sObj.PoshBotToken
-    # $channel = $sObj.PoshChannel
+    AWS Secrets manager retrieval - for use in AWS Codebuild deployment
+    this section will need to be commented out if you want to run locally
+    Import-Module AWSPowerShell.NetCore
+    $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+    $sObj = $s.SecretString | ConvertFrom-Json
+    $token = $sObj.PoshBotToken
+    $channel = $sObj.PoshChannel
     #//////////////////////////////////////////////////////////////////////////
     #referenced by AWS CodeBuild
     if ($PSVersionTable.Platform -eq 'Win32NT') {
