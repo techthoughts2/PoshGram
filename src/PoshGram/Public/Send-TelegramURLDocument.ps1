@@ -41,7 +41,7 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
+    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
 

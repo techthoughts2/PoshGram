@@ -1,27 +1,25 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
+online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
 schema: 2.0.0
 ---
 
-# Send-TelegramURLDocument
+# Send-TelegramURLSticker
 
 ## SYNOPSIS
-Sends Telegram document message via Bot API from URL sourced file
+Sends Telegram sticker message via Bot API from URL sourced sticker image
 
 ## SYNTAX
 
 ```
-Send-TelegramURLDocument [-BotToken] <String> [-ChatID] <String> [-FileURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+Send-TelegramURLSticker [-BotToken] <String> [-ChatID] <String> [-StickerURL] <String> [-DisableNotification]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send document message to specified Telegram chat.
-The file will be sourced from the provided URL and sent to Telegram.
-Several options can be specified to adjust message parameters.
-Only works for gif, pdf and zip files.
+Uses Telegram Bot API to send sticker message to specified Telegram chat.
+The sticker will be sourced from the provided URL and sent to Telegram.
 
 ## EXAMPLES
 
@@ -31,10 +29,10 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+$StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
+Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 
-Sends document message via Telegram API
+Sends sticker message via Telegram API
 
 ### EXAMPLE 2
 ```
@@ -42,17 +40,15 @@ $botToken = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 $chat = "-#########"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-Send-TelegramURLDocument \`
+$StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
+Send-TelegramURLSticker \`
     -BotToken $botToken \`
     -ChatID $chat \`
-    -FileURL $fileURL \`
-    -Caption "Log Files" \`
-    -ParseMode Markdown \`
+    -StickerURL $StickerURL \`
     -DisableNotification \`
     -Verbose
 
-Sends document message via Telegram API
+Sends sticker message via Telegram API
 
 ## PARAMETERS
 
@@ -86,8 +82,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FileURL
-URL path to file
+### -StickerURL
+URL path to sticker
 
 ```yaml
 Type: String
@@ -97,37 +93,6 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Caption
-Brief title or explanation for media
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ParseMode
-Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: Markdown
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -162,8 +127,6 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
 This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
-In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
-
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
@@ -172,7 +135,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
+[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md)
 
-[https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
+[https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

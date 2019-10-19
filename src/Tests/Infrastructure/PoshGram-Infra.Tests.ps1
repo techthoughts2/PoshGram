@@ -52,19 +52,21 @@ InModuleScope PoshGram {
         'Star Trek: Discovery',
         'Star Trek: Picard'
     )
+    $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
     $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
     $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
     $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
     $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
+    $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
     #//////////////////////////////////////////////////////////////////////////
     #AWS Secrets manager retrieval - for use in AWS Codebuild deployment
     #this section will need to be commented out if you want to run locally
-    Import-Module AWSPowerShell.NetCore
-    $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-    $sObj = $s.SecretString | ConvertFrom-Json
-    $token = $sObj.PoshBotToken
-    $channel = $sObj.PoshChannel
+    # Import-Module AWSPowerShell.NetCore
+    # $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+    # $sObj = $s.SecretString | ConvertFrom-Json
+    # $token = $sObj.PoshBotToken
+    # $channel = $sObj.PoshChannel
     #//////////////////////////////////////////////////////////////////////////
     #referenced by AWS CodeBuild
     if ($PSVersionTable.Platform -eq 'Win32NT') {
@@ -89,6 +91,7 @@ InModuleScope PoshGram {
             "$vPath\first_contact.mp4",
             "$vPath\root_beer.mp4"
         )
+        $stickerFile = 'C:\Test\Stickers\picard.webp'
     }#if_windows
     elseif ($PSVersionTable.Platform -eq 'Unix') {
         $file = "/Test/Photos/Photo.jpg"
@@ -112,6 +115,7 @@ InModuleScope PoshGram {
             "$vPath/first_contact.mp4",
             "$vPath/root_beer.mp4"
         )
+        $stickerFile = "/Test/Stickers/picard.webp"
     }#elseif_Linux
     else{
         throw
@@ -312,5 +316,52 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramPoll
+        Context "Get-TelegramStickerPackInfo" {
+            It 'Should return valid sticker pack information' {
+                $eval = Get-TelegramStickerPackInfo `
+                    -BotToken $token `
+                    -StickerSetName CookieMonster
+                $eval.set_name | Should -BeExactly 'CookieMonster'
+            }#it
+        }#context_Get-TelegramStickerPackInfo
+        Context "Send-TelegramSticker" {
+            It 'Should return with ok:true when a sticker is sent by file_id' {
+                $eval = Send-TelegramSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -FileID $sticker `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+            It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
+                $eval = Send-TelegramSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerSetName STPicard `
+                    -Shortcode ':slightly_smiling_face:' `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramSticker
+        Context "Send-TelegramLocalSticker" {
+            It 'Should return with ok:true when a local sticker message is successfully sent' {
+                $eval = Send-TelegramLocalSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerPath $stickerFile `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramLocalSticker
+        Context "Send-TelegramURLSticker" {
+            It 'Should return with ok:true when a sticker by URL is successfully sent' {
+                $eval = Send-TelegramURLSticker `
+                    -BotToken $token `
+                    -ChatID $channel `
+                    -StickerURL $StickerURL `
+                    -DisableNotification
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramURLSticker
     }#describe_InfraTests
 }#scope_PoshGram

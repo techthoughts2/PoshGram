@@ -27,6 +27,10 @@
     $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video
 
     Verifies if the path specified is a supported Video extension type
+.EXAMPLE
+    $fileTypeEval = Test-FileExtension -FilePath $Sticker -Type Sticker
+
+    Verifies if the path specified is a supported Sticker extension type
 .PARAMETER FilePath
     Path to file that will be evaluated
 .PARAMETER Type
@@ -49,7 +53,7 @@ function Test-FileExtension {
         [string]$FilePath,
         [Parameter(Mandatory = $true,
             HelpMessage = 'Telegram message type')]
-        [ValidateSet('Photo', 'Video', 'Audio', 'Animation')]
+        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Sticker')]
         [string]$Type
     )
     #------------------------------------------------------------
@@ -72,6 +76,10 @@ function Test-FileExtension {
     $supportedAnimationExtensions = @(
         'GIF'
     )
+    $supportedStickerExtensions = @(
+        'WEBP',
+        'TGS'
+    )
     switch ($Type) {
         Photo {
             $extType = $supportedPhotoExtensions
@@ -85,6 +93,9 @@ function Test-FileExtension {
         Animation {
             $extType = $supportedAnimationExtensions
         }#animation
+        Sticker {
+            $extType = $supportedStickerExtensions
+        }
     }#switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------

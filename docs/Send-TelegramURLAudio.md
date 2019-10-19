@@ -209,7 +209,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 Your audio must be in the .mp3 format.
 Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.

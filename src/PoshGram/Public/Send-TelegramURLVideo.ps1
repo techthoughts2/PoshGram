@@ -53,7 +53,7 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
+    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.

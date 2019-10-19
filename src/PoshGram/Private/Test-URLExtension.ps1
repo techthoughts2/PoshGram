@@ -27,6 +27,10 @@
     Test-URLExtension -URL $DocumentURL -Type Document
 
     Verifies if the URL path specified is a supported document extension type
+.EXAMPLE
+    Test-URLExtension -URL $StickerURL -Type Sticker
+
+    Verifies if the URL path specified is a supported sticker extension type
 .PARAMETER URL
     The URL string to the specified online file
 .OUTPUTS
@@ -47,7 +51,7 @@ function Test-URLExtension {
         [string]$URL,
         [Parameter(Mandatory = $true,
             HelpMessage = 'Telegram message type')]
-        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Document')]
+        [ValidateSet('Photo', 'Video', 'Audio', 'Animation', 'Document', 'Sticker')]
         [string]$Type
     )
     #------------------------------------------------------------
@@ -75,6 +79,10 @@ function Test-URLExtension {
         'GIF',
         'ZIP'
     )
+    $supportedStickerExtensions = @(
+        'WEBP',
+        'TGS'
+    )
     switch ($Type) {
         Photo {
             $extType = $supportedPhotoExtensions
@@ -91,6 +99,9 @@ function Test-URLExtension {
         Document {
             $extType = $supportedDocumentExtensions
         }#document
+        Sticker {
+            $extType = $supportedStickerExtensions
+        }#sticker
     }#switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------

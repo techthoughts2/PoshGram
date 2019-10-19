@@ -159,7 +159,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?

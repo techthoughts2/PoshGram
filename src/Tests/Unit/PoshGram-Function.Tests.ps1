@@ -44,6 +44,10 @@ InModuleScope PoshGram {
     $supportedAnimationExtensions = @(
         'GIF'
     )
+    $supportedStickerExtensions = @(
+        'WEBP',
+        'TGS'
+    )
     #-------------------------------------------------------------------------
     Describe 'PoshGram Supporting Function Tests' -Tag Unit {
         Context 'Test-FileExtension' {
@@ -56,6 +60,8 @@ InModuleScope PoshGram {
                     -Type Audio | Should -Be $false
                 Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
                     -Type Animation | Should -Be $false
+                Test-FileExtension -FilePath c:\fakepath\fakefile.txt `
+                    -Type Sticker | Should -Be $false
             }#it
             Context 'Photo' {
                 foreach ($extension in $supportedPhotoExtensions) {
@@ -89,6 +95,14 @@ InModuleScope PoshGram {
                     }#it
                 }#foreach
             }#context_Animation
+            Context 'Animation' {
+                foreach ($extension in $supportedStickerExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `
+                            -Type Sticker | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Animation
         }#context_Test-FileExtension
         Context 'Test-URLExtension' {
             Mock Confirm-Url -MockWith {
@@ -104,6 +118,10 @@ InModuleScope PoshGram {
                     -Type Audio | Should -Be $false
                 Test-URLExtension -URL "https://techthoughts.info/file.xml" `
                     -Type Animation | Should -Be $false
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+                    -Type Document | Should -Be $false
+                Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+                    -Type Sticker | Should -Be $false
             }#it
             Context 'Photo' {
                 foreach ($extension in $supportedPhotoExtensions) {
@@ -144,7 +162,15 @@ InModuleScope PoshGram {
                             -Type Document | Should -Be $true
                     }#it
                 }#foreach
-            }#context_Animation
+            }#context_Document
+            Context 'Sticker' {
+                foreach ($extension in $supportedStickerExtensions) {
+                    It "should return true when $extension extension is provided" {
+                        Test-URLExtension -URL "https://techthoughts.info/file.$extension" `
+                            -Type Sticker | Should -Be $true
+                    }#it
+                }#foreach
+            }#context_Sticker
             It 'should properly resolve an extension after a shortlink is resolved' {
                 Mock Confirm-Url -MockWith {
                     $true

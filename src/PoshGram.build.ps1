@@ -156,9 +156,11 @@ task Test {
             PassThru                     = $true
             Verbose                      = $false
             EnableExit                   = $false
-            CodeCoverage                 = "$ModuleName\*\*.ps1"
-            CodeCoverageOutputFile       = "$codeCovPath\codecoverage.xml"
-            CodeCoverageOutputFileFormat = 'JaCoCo'
+            CodeCoverage = "$ModuleName\*\*.ps1"
+            CodeCoverageOutputFile = "$($script:ArtifactsPath)\CodeCoverage.xml"
+            # CodeCoverage                 = "$ModuleName\*\*.ps1"
+            # CodeCoverageOutputFile       = "$codeCovPath\codecoverage.xml"
+            # CodeCoverageOutputFileFormat = 'JaCoCo'
         }
 
         # Publish Test Results as NUnitXml
@@ -322,6 +324,9 @@ task Build {
     Write-Host '        Copying Module Manifest to Artifacts...'
     Copy-Item -Path $script:ModuleManifestFile -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
     #Copy-Item -Path $script:ModuleSourcePath\bin -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
+
+    Write-Host '        Copying assets to Artifacts...'
+    Copy-Item -Path "$($script:ArtifactsPath)\Public\asset" -Destination $script:ArtifactsPath -Recurse -ErrorAction Stop
 
     Write-Host '        Merging Public and Private functions to one module file'
     #$private = "$script:ModuleSourcePath\Private"

@@ -46,13 +46,13 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 					Type 				Required 	Description
-    chat_id 				    Integer or String 	Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    text 						String 				Yes 		Text of the message to be sent
-    parse_mode 					String 				Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-    disable_web_page_preview 	Boolean 			Optional 	Disables link previews for links in this message
-    disable_notification 		Boolean 			Optional 	Sends the message silently. Users will receive a notification with no sound.
-    reply_to_message_id 	    Integer 			Optional 	If the message is a reply, ID of the original message
+    Parameters                  Type                Required    Description
+    chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    text                        String              Yes         Text of the message to be sent
+    parse_mode                  String              Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+    disable_web_page_preview    Boolean             Optional    Disables link previews for links in this message
+    disable_notification        Boolean             Optional    Sends the message silently. Users will receive a notification with no sound.
+    reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
 .LINK

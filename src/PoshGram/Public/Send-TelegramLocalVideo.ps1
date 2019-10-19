@@ -64,16 +64,16 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters 				Type    				Required 	Description
-    chat_id 				Integer or String 		Yes 		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    video    				InputFile or String 	Yes 		Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+    Parameters              Type                    Required    Description
+    chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    video                   InputFile or String     Yes         Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
     duration                Integer                 Optional    Duration of sent video in seconds
     width                   Integer                 Optional    Video width
     height                  Integer                 Optional    Video height
-    caption 				String 					Optional 	Photo caption (may also be used when resending photos by file_id), 0-200 characters
-    parse_mode 				String 					Optional 	Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
-    disable_notification 	Boolean 				Optional 	Sends the message silently. Users will receive a notification with no sound.
+    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
 .LINK
