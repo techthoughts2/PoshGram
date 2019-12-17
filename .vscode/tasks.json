@@ -9,34 +9,52 @@
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
-	"version": "2.0.0",
-
+    "version": "2.0.0",
     // Start PowerShell
     "windows": {
-        "command": "${env:windir}/System32/WindowsPowerShell/v1.0/powershell.exe",
-        //"command": "${env:ProgramFiles}/PowerShell/6.0.0/powershell.exe",
-        "args": [ "-NoProfile", "-ExecutionPolicy", "Bypass" ]
+        //"command": "${env:windir}/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "command": "${env:ProgramFiles}/PowerShell/6/pwsh.exe",
+        //"command": "${env:ProgramFiles}/PowerShell/7-preview/pwsh.exe",
+        "args": [
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass"
+        ]
     },
     "linux": {
         "command": "/usr/bin/powershell",
-        "args": [ "-NoProfile" ]
+        "args": [
+            "-NoProfile"
+        ]
     },
     "osx": {
         "command": "/usr/local/bin/powershell",
-        "args": [ "-NoProfile" ]
+        "args": [
+            "-NoProfile"
+        ]
     },
-
     // Associate with test task runner
     "tasks": [
         {
-            "taskName": "Test",
-            "suppressTaskName": true,
-            "isTestCommand": true,
-            "args": [
+            "label": "Test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": [
                 "Write-Host 'Invoking Pester...'; $ProgressPreference = 'SilentlyContinue'; Invoke-Pester -Script test -PesterOption @{IncludeVSCodeMarker=$true};",
                 "Invoke-Command { Write-Host 'Completed Test task in task runner.' }"
             ],
             "problemMatcher": "$pester"
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "$psversiontable;Invoke-Build"
         }
-	]
+    ]
 }
