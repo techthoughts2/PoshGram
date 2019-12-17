@@ -1,23 +1,30 @@
-#this psm1 is for locally testing and development use only
-# Sets the Script Path variable to the scripts invocation path.
-$paths = @('Private', 'Public')
+# this psm1 is for local testing and development use only
 
-# dot source the parent import
-#. $PSScriptRoot\Imports.ps1
+# discover all ps1 file(s) in Public and Private paths
+$itemSplat = @{
+    Filter      = '*.ps1'
+    Recurse     = $true
+    ErrorAction = 'Stop'
+}
+try {
+    $public = @(Get-ChildItem -Path "$PSScriptRoot\Public" @itemSplat)
+    $private = @(Get-ChildItem -Path "$PSScriptRoot\Private" @itemSplat)
+}
+catch {
+    Write-Error $_
+    throw "Unable to get get file information from Public & Private src."
+}
 
-foreach ($path in $paths) {
-    # Retrieve all .ps1 files in the Functions subfolder
-    $files = Get-ChildItem "$PSScriptRoot\$path" -Filter '*.ps1' -File
+# dot source all .ps1 file(s) found
+foreach ($file in @($public + $private)) {
+    try {
+        . $file.FullName
+    }
+    catch {
+        throw "Unable to dot source [$($file.FullName)]"
 
-    # Dot source all .ps1 file found
-    foreach ($file in $files) {
-        try {
-            . $file.FullName
-        }
-        catch {
-            if ($_.Exception.Message -notlike '*cannot be run because it contains a "#requires" statement for running as Administrator.*') {
-                throw
-            }
-        }
     }
 }
+
+# export all public functions
+Export-ModuleMember -Function $public.Basename

@@ -1,5 +1,5 @@
 <#
-    .SYNOPSIS
+.SYNOPSIS
     This script is used in AWS CodeBuild to install the required PowerShell Modules
     for the build process.
 #>
@@ -18,7 +18,7 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
 }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
     ModuleName    = 'InvokeBuild'
-    ModuleVersion = '5.5.3'
+    ModuleVersion = '5.5.6'
     BucketName    = 'ps-invoke-modules'
     KeyPrefix     = ''
 }))
