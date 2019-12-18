@@ -1,0 +1,23 @@
+version: 1.0.{build}
+
+# https://www.appveyor.com/docs/build-configuration/
+# https://www.appveyor.com/docs/build-configuration/#specializing-matrix-job-configuration
+# https://www.appveyor.com/docs/appveyor-yml/
+
+image:
+  - macOS
+skip_commits:
+  files:
+    - docs/*
+    - media/*
+  message: /updated readme.*|update readme.*s/
+build: off
+
+
+
+init:
+  - pwsh: $PSVersionTable
+install:
+  - pwsh: . .\actions_bootstrap.ps1
+build_script:
+  - pwsh: Invoke-Build -File .\src\PoshGram.build.ps1 -Task TestLocal
