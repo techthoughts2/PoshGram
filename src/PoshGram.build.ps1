@@ -108,7 +108,7 @@ Add-BuildTask Clean {
 #Synopsis: Validate system requirements are met
 Add-BuildTask ValidateRequirements {
     #running at least powershell 6.1?
-    assert ($PSVersionTable.PSVersion.Major.ToString() -ge '6' -and $PSVersionTable.PSVersion.Minor.ToString() -ge 1) 'At least Powershell 6.1 is required for this build to function properly'
+    Assert-Build ($PSVersionTable.PSVersion.Major.ToString() -ge [version]6.1) 'At least Powershell 6.1 is required for this build to function properly'
 }#ValidateRequirements
 
 #Synopsis: Invokes PSScriptAnalyzer against the Module source path
