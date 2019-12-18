@@ -115,11 +115,11 @@ function Send-TelegramURLPhoto {
     }#else_photoSize
     #------------------------------------------------------------------------
     $payload = @{
-        "chat_id"              = $ChatID
-        "photo"                = $PhotoURL
-        "caption"              = $Caption
-        "parse_mode"           = $ParseMode
-        "disable_notification" = $DisableNotification.IsPresent
+        chat_id              = $ChatID
+        photo                = $PhotoURL
+        caption              = $Caption
+        parse_mode           = $ParseMode
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

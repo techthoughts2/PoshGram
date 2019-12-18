@@ -115,11 +115,11 @@ function Send-TelegramURLAnimation {
     }#else_animationSize
     #------------------------------------------------------------------------
     $payload = @{
-        "chat_id"              = $ChatID
-        "animation"            = $AnimationURL
-        "caption"              = $Caption
-        "parse_mode"           = $ParseMode
-        "disable_notification" = $DisableNotification.IsPresent
+        chat_id              = $ChatID
+        animation            = $AnimationURL
+        caption              = $Caption
+        parse_mode           = $ParseMode
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

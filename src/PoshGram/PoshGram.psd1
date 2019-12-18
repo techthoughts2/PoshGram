@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.10.0'
+    ModuleVersion     = '1.10.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -169,6 +169,8 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
+1.10.1:
+    Fixed bug where DisableNotification had no effect when running Send-TelegramSticker
 1.10.0:
     Improved Help Formatting
     Added Send-TelegramURLSticker

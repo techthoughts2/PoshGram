@@ -8,9 +8,9 @@ phases:
   install:
     commands:
       - powershell -command '.\configure_aws_credential.ps1'
-      - aws s3 cp s3://ps-invoke-modules/PowerShell-6.1.1-win-x64.msi PowerShell-6.1.1-win-x64.msi --quiet
-      - powershell -command "Start-Process .\PowerShell-6.1.1-win-x64.msi -ArgumentList '/qn /norestart' -Wait"
-      - '& "C:\Program Files\PowerShell\6\pwsh.exe" -command ''.\install_modules.ps1'''
+      - aws s3 cp s3://ps-invoke-modules/PowerShell-7.0.0-rc.1-win-x64.msi PowerShell-7.0.0-rc.1-win-x64.msi --quiet
+      - powershell -command "Start-Process .\PowerShell-7.0.0-rc.1-win-x64.msi -ArgumentList '/qn /norestart' -Wait"
+      - '& "C:\Program Files\PowerShell\7-preview\pwsh.exe" -command ''.\install_modules.ps1'''
   pre_build:
     commands:
       - powershell -command 'New-Item -Path C:\Test -ItemType Directory | Out-Null'
@@ -40,7 +40,7 @@ phases:
       #- '& "C:\Program Files\PowerShell\6\pwsh.exe" -command ''Invoke-Build -File .\src\PoshGram.build.Settings.ps1 -Task ValidateUniqueModuleVersion'''
   build:
     commands:
-      - '& "C:\Program Files\PowerShell\6\pwsh.exe" -command ''Invoke-Build -File .\src\PoshGram.build.ps1'''
+      - '& "C:\Program Files\PowerShell\7-preview\pwsh.exe" -command ''Invoke-Build -File .\src\PoshGram.build.ps1'''
 artifacts:
   files:
     - '**/*'
