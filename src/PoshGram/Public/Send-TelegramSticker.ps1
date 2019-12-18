@@ -1789,8 +1789,8 @@ function Send-TelegramSticker {
     }#else_fileid
     $uri = "https://api.telegram.org/bot$BotToken/sendSticker"
     $Form = @{
-        chat_id = $ChatID
-        sticker = $sticker
+        chat_id              = $ChatID
+        sticker              = $sticker
         disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
