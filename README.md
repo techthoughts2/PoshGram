@@ -88,9 +88,11 @@ Install-Module -Name "PoshGram"
 3. Navigate to download location
 4. Change dir to **\src**
 5. Invoke build
+
     ``` powershell
     Invoke-Build -Task Clean,CreateHelp,Build
     ```
+
 6. Build will now be available in **\src\Artifacts**
 7. Import PoshGram
     * Create the following directory: ```C:\Program Files\WindowsPowerShell\Modules\PoshGram```
