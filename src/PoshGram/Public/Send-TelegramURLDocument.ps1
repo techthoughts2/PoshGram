@@ -116,11 +116,11 @@ function Send-TelegramURLDocument {
     }#else_documentSize
     #------------------------------------------------------------------------
     $payload = @{
-        "chat_id"              = $ChatID
-        "document"             = $FileURL
-        "caption"              = $Caption
-        "parse_mode"           = $ParseMode
-        "disable_notification" = $DisableNotification.IsPresent
+        chat_id              = $ChatID
+        document             = $FileURL
+        caption              = $Caption
+        parse_mode           = $ParseMode
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

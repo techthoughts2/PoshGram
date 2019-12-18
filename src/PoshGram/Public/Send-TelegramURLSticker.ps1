@@ -99,9 +99,9 @@ function Send-TelegramURLSticker {
     }#else_stickerSize
     #------------------------------------------------------------------------
     $payload = @{
-        "chat_id"              = $ChatID
-        "sticker"              = $StickerURL
-        "disable_notification" = $DisableNotification.IsPresent
+        chat_id              = $ChatID
+        sticker              = $StickerURL
+        disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

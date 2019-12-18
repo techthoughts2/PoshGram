@@ -1791,7 +1791,7 @@ function Send-TelegramSticker {
     $Form = @{
         chat_id = $ChatID
         sticker = $sticker
-        # disable_notification = $DisableNotification.IsPresent
+        disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

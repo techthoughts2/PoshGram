@@ -98,11 +98,11 @@ function Send-TelegramTextMessage {
     #------------------------------------------------------------------------
     #return $DisableNotification
     $payload = @{
-        "chat_id"                  = $ChatID
-        "text"                     = $Message
-        "parse_mode"               = $ParseMode
-        "disable_web_page_preview" = $DisablePreview.IsPresent
-        "disable_notification"     = $DisableNotification.IsPresent
+        chat_id                  = $ChatID
+        text                     = $Message
+        parse_mode               = $ParseMode
+        disable_web_page_preview = $DisablePreview.IsPresent
+        disable_notification     = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
