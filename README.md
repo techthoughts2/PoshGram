@@ -185,6 +185,8 @@ $test = "I am a test"
 
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
+This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
+
 ## FAQ
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
