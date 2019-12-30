@@ -8,10 +8,10 @@
 [psgallery-site]:  https://www.powershellgallery.com/packages/PoshGram
 [psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram/0.8.1
 
-Branch | Windows | Linux | MacOS
+Branch | Windows | MacOS | Linux
 --- | --- | --- | --- |
-master | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTzUwaEdhMFVoTmNuRWRjdXkwQzVDU1I5Z2NOM1gvTit5bHM0NHU0VWI5QlZBZ2theGMzMUp1dEs3ZnV0MC9IMGZJVHZWRm1GRDdvV0FKZ0tGNHlwdVg0PSIsIml2UGFyYW1ldGVyU3BlYyI6IkF1VWthME1ENHRLSStjVlEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicEtidmZ5SkYrTXBDTXRmbjA0Smd4SFk3UG5PSzNzOUc1a2lGTnZMRnpXOThXUStGcVhpVnl2NENJS213SjhlYW1Fd2szdHNoMWtiQW0zN09EYUc4dE1BPSIsIml2UGFyYW1ldGVyU3BlYyI6IjJPVDVYUGVLUDY0dkVTbGkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/master?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/master) |
-Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoielUvRmdJVEdyVko4TkZON05jSlI4bFZkM1V2RStKWjg4eEQ5WFQ1T1hnRVhBamZJTi9XUXdlR2hhMDFtZEx2V0VGS0RwZFpTOUNTR3JqUzhxR1N1UjlRPSIsIml2UGFyYW1ldGVyU3BlYyI6Im53MlF1VldxVUxCNUFFNzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiM2NTYXFGQ1p2MDFqaE9oNmFRU0NqdGcxNEtDb3lpbXk0QVBXMHFqUzNFU3pQbjdsWjU0MmtuSDhYK2pNLzBaUDVrU2FKU05wM0VDUnNDcldGSFFka2xNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9YRTV2MHJka1Eya2k1bWQiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/Enhancements?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/Enhancements) |
+master | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTzUwaEdhMFVoTmNuRWRjdXkwQzVDU1I5Z2NOM1gvTit5bHM0NHU0VWI5QlZBZ2theGMzMUp1dEs3ZnV0MC9IMGZJVHZWRm1GRDdvV0FKZ0tGNHlwdVg0PSIsIml2UGFyYW1ldGVyU3BlYyI6IkF1VWthME1ENHRLSStjVlEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/master?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/master) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicEtidmZ5SkYrTXBDTXRmbjA0Smd4SFk3UG5PSzNzOUc1a2lGTnZMRnpXOThXUStGcVhpVnl2NENJS213SjhlYW1Fd2szdHNoMWtiQW0zN09EYUc4dE1BPSIsIml2UGFyYW1ldGVyU3BlYyI6IjJPVDVYUGVLUDY0dkVTbGkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) |
+Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoielUvRmdJVEdyVko4TkZON05jSlI4bFZkM1V2RStKWjg4eEQ5WFQ1T1hnRVhBamZJTi9XUXdlR2hhMDFtZEx2V0VGS0RwZFpTOUNTR3JqUzhxR1N1UjlRPSIsIml2UGFyYW1ldGVyU3BlYyI6Im53MlF1VldxVUxCNUFFNzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/Enhancements?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/Enhancements)| ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiM2NTYXFGQ1p2MDFqaE9oNmFRU0NqdGcxNEtDb3lpbXk0QVBXMHFqUzNFU3pQbjdsWjU0MmtuSDhYK2pNLzBaUDVrU2FKU05wM0VDUnNDcldGSFFka2xNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9YRTV2MHJka1Eya2k1bWQiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) |
 
 ## Synopsis
 
@@ -72,32 +72,10 @@ PoshGram also opens up several programmatic use cases:
 
 ### Installing PoshGram via PowerShell Gallery
 
-***This is the recommended method***
-
 ```powershell
-#from an administrative 6.1.0+ PowerShell session
-Install-Module -Name "PoshGram"
+#from a 6.1.0+ PowerShell session
+Install-Module -Name "PoshGram" -Scope CurrentUser
 ```
-
-### Installing PoshGram direct from GitHub
-
-*Note: You will need to **build** PoshGram yourself using [Invoke-Build](https://github.com/nightroman/Invoke-Build) if you want to install directly from GitHub*
-
-1. Download Zip from GitHub
-2. Extract files
-3. Navigate to download location
-4. Change dir to **\src**
-5. Invoke build
-
-    ``` powershell
-    Invoke-Build -Task Clean,CreateHelp,Build
-    ```
-
-6. Build will now be available in **\src\Artifacts**
-7. Import PoshGram
-    * Create the following directory: ```C:\Program Files\WindowsPowerShell\Modules\PoshGram```
-      * Copy Artifact files into the created directory
-    * Alternatively you can import module from Artifacts location manually
 
 ## Quick start
 
@@ -174,14 +152,17 @@ Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerUR
 ###########################################################################
 #sending a telegram message from older versions of powershell
 ###########################################################################
-#here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
+#here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram
+& 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
-#here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram using dynamic variables in the message
+#here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram using dynamic variables in the message
 $token = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
 $chat = “-#########”
 $test = "I am a test"
-& '.\Program Files\PowerShell\6-preview\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message '$test';}"
+& '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message '$test';}"
+#--------------------------------------------------------------------------
+#here is an example of calling PowerShell 7+ from PowerShell 5.1 to send a Telegram message with PoshGram
+& 'C:\Program Files\PowerShell\7-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 ```
 
@@ -204,11 +185,13 @@ $test = "I am a test"
 
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
+This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
+
 ## FAQ
 
 * *I want to start using this, but how do I create a Telegram Bot and get a token?*
   * To learn how to create and set up a bot:
-    * [TechThoughts video on how to make a Telgram Bot](https://youtu.be/UhZtrhV7t3U)
+    * [TechThoughts video on how to make a Telegram Bot](https://youtu.be/UhZtrhV7t3U)
     * [Introduction to Bots](https://core.telegram.org/bots)
     * [Bot FAQ](https://core.telegram.org/bots/faq)
     * [BotFather](https://t.me/BotFather)
@@ -220,21 +203,21 @@ For a description of the Bot API, see this page: [https://core.telegram.org/bots
     * *Just copy the numbers after **g** and make sure to include the (-) before the channel number*
       * Ex ```-#########```
       * Ex from above would be: ```-112345678```
-  * Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
+  * *Alternative method*: Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
 
 * How can I use PoshGram to have my bot send stickers?
   * [PoshGram-Sticker-Info](docs/PoshGram-Sticker-Info.md)
 
-* *Why is PowerShell 6.1.0 required? - Why can't I use 5.1?*
+* *Why is PowerShell 6.1.0 (or higher) required? - Why can't I use 5.1?*
   * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilities. Functions that reference a URL, or that only use messaging  (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out separately if you are absolutely set on using 5.1
 
-* *I don't want to use PowerShell 6.1.0 because I primarily use 5.1 or lower*
-  * Good news - PowerShell 6.1.0 installs to a completely separate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
+* *I don't want to use PowerShell 6.1.0 (or higher) because I primarily use 5.1 or lower*
+  * Good news - PowerShell 6.1.0+ installs to a completely separate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
   * Here is an example of how you can call PS 6.1 and use PoshGram from older versions of PowerShell:
 
     ```powershell
-    #here is an example of calling PowerShell 6.1 from PowerShell 5.1 to send a Telegram message with PoshGram
-    & 'C:\Program Files\PowerShell\6-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
+    #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram
+    & 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
     ```
 
 * *Are there any restrictions when using PoshGram?*
