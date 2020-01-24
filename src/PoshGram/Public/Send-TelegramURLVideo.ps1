@@ -22,12 +22,26 @@
         -Width 1920 `
         -Height 1080 `
         -Caption "Check out this video" `
-        -ParseMode Markdown `
+        -ParseMode MarkdownV2 `
         -Streaming `
         -DisableNotification `
         -Verbose
 
     Sends video message via Telegram API
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+    $sendTelegramURLVideoSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        VideoURL  = $videourl
+        ParseMode = 'MarkdownV2'
+        Caption   = "Check out this __awesome__ video\."
+    }
+    Send-TelegramURLVideo @sendTelegramURLVideoSplat
+
+    Sends video message via Telegram API with properly formatted underlined word and escaped special character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -43,7 +57,7 @@
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER Streaming
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
@@ -61,6 +75,9 @@
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+
+    Markdown Style: This is a legacy mode, retained for backward compatibility.
+    When using Markdown/Markdownv2 you must properly escape characters.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
@@ -78,6 +95,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md
 .LINK
     https://core.telegram.org/bots/api#sendvideo
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramURLVideo {
     [CmdletBinding()]
@@ -118,8 +141,8 @@ function Send-TelegramURLVideo {
         [string]$Caption = "", #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,

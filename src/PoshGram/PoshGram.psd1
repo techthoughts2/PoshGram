@@ -24,7 +24,7 @@
     Author            = 'Jake Morrison'
 
     # Company or vendor of this module
-    CompanyName       = 'Tech Thoughts'
+    CompanyName       = 'TechThoughts'
 
     # Copyright statement for this module
     Copyright         = '(c) 2019 Jake Morrison. All rights reserved.'

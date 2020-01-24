@@ -54,7 +54,6 @@ $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
 ```
 
-
 Sends sticker message via Telegram API
 
 ### EXAMPLE 2
@@ -62,14 +61,13 @@ Sends sticker message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-Send-TelegramSticker \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -FileID $sticker \`
-    -DisableNotification \`
+Send-TelegramSticker `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -FileID $sticker `
+    -DisableNotification `
     -Verbose
 ```
-
 
 Sends sticker message via Telegram API
 
@@ -80,22 +78,20 @@ $chat = "-nnnnnnnnn"
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 ```
 
-
 Sends sticker message via Telegram API
 
 ### EXAMPLE 4
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramSticker \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -StickerSetName STPicard \`
-    -Shortcode ':slightly_smiling_face:' \`
-    -DisableNotification \`
+Send-TelegramSticker `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -StickerSetName STPicard `
+    -Shortcode ':slightly_smiling_face:' `
+    -DisableNotification `
     -Verbose
 ```
-
 
 Sends sticker message via Telegram API
 
@@ -282,5 +278,4 @@ This function will make a best attempt to look up the sticker pack you specify a
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
-
 

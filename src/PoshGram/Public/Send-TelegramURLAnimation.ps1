@@ -19,11 +19,24 @@
         -ChatID $chat `
         -AnimationURL $AnimationURL `
         -Caption "Live long, and prosper." `
-        -ParseMode Markdown `
         -DisableNotification `
         -Verbose
 
     Sends animation message via Telegram API
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+    $sendTelegramURLAnimationSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        AnimationURL        = $AnimationURL
+        Caption             = "Live __long__, and prosper\."
+        ParseMode           = 'MarkdownV2'
+    }
+    Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
+
+    Sends animation message via Telegram API with properly formatted underlined word and escaped special character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -33,7 +46,7 @@
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
@@ -60,6 +73,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md
 .LINK
     https://core.telegram.org/bots/api#sendanimation
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramURLAnimation {
     [CmdletBinding()]
@@ -85,8 +104,8 @@ function Send-TelegramURLAnimation {
         [string]$Caption,
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification

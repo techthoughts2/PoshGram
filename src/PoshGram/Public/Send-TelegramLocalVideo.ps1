@@ -22,12 +22,27 @@
         -Width 250 `
         -Height 250 `
         -Caption "Check out this video" `
-        -ParseMode Markdown `
+        -ParseMode MarkdownV2 `
         -Streaming `
         -DisableNotification `
         -Verbose
 
     Sends video message via Telegram API
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $video = "C:\videos\video.mp4"
+    $sendTelegramLocalVideoSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        Video     = $video
+        Streaming = $true
+        Caption   = "Check out this __awesome__ video\."
+        ParseMode = 'MarkdownV2'
+    }
+    Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
+
+    Sends video message via Telegram API with properly formatted underlined word and escaped special character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -43,7 +58,7 @@
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER Streaming
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
@@ -78,6 +93,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
 .LINK
     https://core.telegram.org/bots/api#sendvideo
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramLocalVideo {
     [CmdletBinding()]
@@ -118,8 +139,8 @@ function Send-TelegramLocalVideo {
         [string]$Caption = "", #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,

@@ -32,7 +32,6 @@ $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFil
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 ```
 
-
 Sends photo message via Telegram API
 
 ### EXAMPLE 2
@@ -40,18 +39,34 @@ Sends photo message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
-Send-TelegramURLPhoto \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -PhotoURL $photourl \`
-    -Caption "DSC is a great technology" \`
-    -ParseMode Markdown \`
-    -DisableNotification \`
+Send-TelegramURLPhoto `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -PhotoURL $photourl `
+    -Caption "DSC is a great technology" `
+    -ParseMode MarkdownV2 `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends photo message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+$sendTelegramURLPhotoSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    PhotoURL  = $photourl
+    Caption   = "DSC is a __great__ technology\."
+    ParseMode = 'MarkdownV2'
+}
+Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
+```
+
+Sends photo message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -117,7 +132,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -126,7 +141,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -173,4 +188,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

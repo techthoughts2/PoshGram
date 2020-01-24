@@ -31,7 +31,6 @@ $longitude = -122.378955
 Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
 ```
 
-
 Sends location via Telegram API
 
 ### EXAMPLE 2
@@ -39,15 +38,14 @@ Sends location via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $photo = "C:\photos\aphoto.jpg"
-Send-TelegramLocation \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -Latitude $latitude \`
-    -Longitude $longitude \`
-    -DisableNotification \`
+Send-TelegramLocation `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -Latitude $latitude `
+    -Longitude $longitude `
+    -DisableNotification `
     -Verbose
 ```
-
 
 Sends location via Telegram API
 
@@ -154,5 +152,4 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md)
 
 [https://core.telegram.org/bots/api#sendlocation](https://core.telegram.org/bots/api#sendlocation)
-
 

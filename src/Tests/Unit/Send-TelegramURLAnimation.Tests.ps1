@@ -48,7 +48,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AnimationURL $animationURL `
                     -Caption "Check out this animation" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
@@ -59,7 +59,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AnimationURL $animationURL `
                     -Caption "Check out this animation" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
@@ -72,7 +72,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AnimationURL $animationURL `
                     -Caption "Check out this animation" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
@@ -84,7 +84,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AnimationURL $animationURL `
                     -Caption "Check out this animation" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it

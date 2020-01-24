@@ -117,166 +117,219 @@ InModuleScope PoshGram {
         )
         $stickerFile = "/Test/Stickers/picard.webp"
     }#elseif_Linux
-    else{
+    else {
         throw
     }#else
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        Context "Test-BotToken" {
+        Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Test-BotToken
-        Context "Send-TelegramTextMessage" {
-            It 'Should return with ok:true when a message is successfully sent' {
-                $eval = Send-TelegramTextMessage `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Message "I am a Pester test for *Send-TelegramTextMessage*" `
-                    -DisableNotification
+        Context 'Send-TelegramTextMessage' {
+            It 'Should return with ok:true when a typical message is successfully sent' {
+                $sendTelegramTextMessageSplat = @{
+                    Message             = "I am a Pester test for <b>Send-TelegramTextMessage</b>"
+                    DisableNotification = $true
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                $eval.ok | Should -Be "True"
+            }#it
+            It 'should throw when a message is sent with markdown and characters are not properly escaped' {
+                $sendTelegramTextMessageSplat = @{
+                    Message             = "I am a Pester test with special_characters not escaped"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    BotToken            = $token
+                    ChatID              = $channel
+                    ErrorAction         = 'Stop'
+                }
+                { Send-TelegramTextMessage @sendTelegramTextMessageSplat } | Should Throw
+            }#it
+            It 'should return ok:true when a message is sent with markdown and characters are properly escaped' {
+                $sendTelegramTextMessageSplat = @{
+                    Message             = "I am a Pester test with __special\_characters__ escaped properly\."
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    BotToken            = $token
+                    ChatID              = $channel
+                    ErrorAction         = 'Stop'
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramTextMessage
-        Context "Send-TelegramLocalPhoto" {
+        Context 'Send-TelegramLocalPhoto' {
             It 'Should return with ok:true when a local photo message is successfully sent' {
-                $eval = Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -PhotoPath $file `
-                    -Caption "I am a Pester test for *Send-TelegramLocalPhoto*" `
-                    -DisableNotification
+                $sendTelegramLocalPhotoSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramLocalPhoto</b>"
+                    PhotoPath           = $file
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
-        Context "Send-TelegramURLPhoto" {
+        Context 'Send-TelegramURLPhoto' {
             It 'Should return with ok:true when a photo url message is successfully sent' {
-                $eval = Send-TelegramURLPhoto `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -PhotoURL $photoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLPhoto*" `
-                    -DisableNotification
+                $sendTelegramURLPhotoSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramURLPhoto</b>"
+                    BotToken            = $token
+                    PhotoURL            = $photoURL
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
-        Context "Send-TelegramLocalDocument" {
+        Context 'Send-TelegramLocalDocument' {
             It 'Should return with ok:true when a local document message is successfully sent' {
-                $eval = Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -File $file2 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalDocument*" `
-                    -DisableNotification
+                $sendTelegramLocalDocumentSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramLocalDocument</b>"
+                    File                = $file2
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
-        Context "Send-TelegramURLDocument" {
+        Context 'Send-TelegramURLDocument' {
             It 'Should return with ok:true when a URL document message is successfully sent' {
-                $eval = Send-TelegramURLDocument `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -FileURL $fileURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLDocument*" `
-                    -DisableNotification
+                $sendTelegramURLDocumentSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramURLDocument</b>"
+                    BotToken            = $token
+                    FileURL             = $fileURL
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLDocument
-        Context "Send-TelegramLocalVideo" {
+        Context 'Send-TelegramLocalVideo' {
             It 'Should return with ok:true when a local video message is successfully sent' {
-                $eval = Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Video $file3 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalVideo*" `
-                    -DisableNotification
+                $sendTelegramLocalVideoSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramLocalVideo</b>"
+                    Video               = $file3
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalVideo
-        Context "Send-TelegramURLVideo" {
+        Context 'Send-TelegramURLVideo' {
             It 'Should return with ok:true when a URL video message is successfully sent' {
-                $eval = Send-TelegramURLVideo `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -VideoURL $videoURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLVideo*" `
-                    -DisableNotification
+                $sendTelegramURLVideoSplat = @{
+                    VideoURL            = $videoURL
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramURLVideo</b>"
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLVideo
-        Context "Send-TelegramLocalAudio" {
+        Context 'Send-TelegramLocalAudio' {
             It 'Should return with ok:true when a local audio message is successfully sent' {
-                $eval = Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Audio $file4 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAudio*" `
-                    -DisableNotification
+                $sendTelegramLocalAudioSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramLocalAudio</b>"
+                    Audio               = $file4
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+
+                $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAudio
-        Context "Send-TelegramURLAudio" {
+        Context 'Send-TelegramURLAudio' {
             It 'Should return with ok:true when a URL audio message is successfully sent' {
-                $eval = Send-TelegramURLAudio `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -AudioURL $audioURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAudio*" `
-                    -DisableNotification
+                $sendTelegramURLAudioSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramURLAudio</b>"
+                    AudioURL            = $audioURL
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+
+                $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAudio
-        Context "Send-TelegramLocation" {
+        Context 'Send-TelegramLocation' {
             It 'Should return with ok:true when a location is successfully sent' {
-                $eval = Send-TelegramLocation `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Latitude $latitude `
-                    -Longitude $longitude `
-                    -DisableNotification
+                $sendTelegramLocationSplat = @{
+                    DisableNotification = $true
+                    Longitude           = $longitude
+                    Latitude            = $latitude
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocation @sendTelegramLocationSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocation
-        Context "Send-TelegramLocalAnimation" {
+        Context 'Send-TelegramLocalAnimation' {
             It 'Should return with ok:true when a local animation is successfully sent' {
-                $eval = Send-TelegramLocalAnimation `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -AnimationPath $file5 `
-                    -Caption "I am a Pester test for *Send-TelegramLocalAnimation*" `
-                    -DisableNotification
+                $sendTelegramLocalAnimationSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramLocalAnimation</b>"
+                    BotToken            = $token
+                    AnimationPath       = $file5
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAnimation
-        Context "Send-TelegramURLAnimation" {
+        Context 'Send-TelegramURLAnimation' {
             It 'Should return with ok:true when a location is successfully sent' {
-                $eval = Send-TelegramURLAnimation `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -AnimationURL $animationURL `
-                    -Caption "I am a Pester test for *Send-TelegramURLAnimation*" `
-                    -DisableNotification
+                $sendTelegramURLAnimationSplat = @{
+                    DisableNotification = $true
+                    Caption             = "I am a Pester test for <b>Send-TelegramURLAnimation</b>"
+                    BotToken            = $token
+                    AnimationURL        = $animationURL
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
-        Context "Send-TelegramMediaGroup" {
+        Context 'Send-TelegramMediaGroup' {
             It 'Should return with ok:true when a group of photos is successfully sent' {
-                $eval = Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -MediaType Photo `
-                    -FilePaths $pFiles `
-                    -DisableNotification
+                $sendTelegramMediaGroupSplat = @{
+                    DisableNotification = $true
+                    MediaType           = 'Photo'
+                    FilePaths           = $pFiles
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
             It 'Should return with ok:true when a group of videos is successfully sent' {
-                $eval = Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -MediaType Video `
-                    -FilePaths $vFiles `
-                    -DisableNotification
+                $sendTelegramMediaGroupSplat = @{
+                    DisableNotification = $true
+                    MediaType           = 'Video'
+                    FilePaths           = $vFiles
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
@@ -293,74 +346,89 @@ InModuleScope PoshGram {
         #         $eval.ok | Should -Be "True"
         #     }#it
         # }#context_Send-TelegramContact
-        Context "Send-TelegramVenue" {
+        Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
-                $eval = Send-TelegramVenue `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Latitude $latitude `
-                    -Longitude $longitude `
-                    -Title $title `
-                    -Address $address `
-                    -DisableNotification
+                $sendTelegramVenueSplat = @{
+                    Title               = $title
+                    Address             = $address
+                    Longitude           = $longitude
+                    ChatID              = $channel
+                    DisableNotification = $true
+                    BotToken            = $token
+                    Latitude            = $latitude
+                }
+                $eval = Send-TelegramVenue @sendTelegramVenueSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramVenue
-        Context "Send-TelegramPoll" {
+        Context 'Send-TelegramPoll' {
             It 'Should return with ok:true when a poll is successfully sent' {
-                $eval = Send-TelegramPoll `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -Question $question `
-                    -Options $opt `
-                    -DisableNotification
+                $sendTelegramPollSplat = @{
+                    DisableNotification = $true
+                    Question            = $question
+                    Options             = $opt
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramPoll
-        Context "Get-TelegramStickerPackInfo" {
+        Context 'Get-TelegramStickerPackInfo' {
             It 'Should return valid sticker pack information' {
-                $eval = Get-TelegramStickerPackInfo `
-                    -BotToken $token `
-                    -StickerSetName CookieMonster
+                $getTelegramStickerPackInfoSplat = @{
+                    StickerSetName = 'CookieMonster'
+                    BotToken       = $token
+                }
+
+                $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                 $eval.set_name | Should -BeExactly 'CookieMonster'
             }#it
         }#context_Get-TelegramStickerPackInfo
-        Context "Send-TelegramSticker" {
+        Context 'Send-TelegramSticker' {
             It 'Should return with ok:true when a sticker is sent by file_id' {
-                $eval = Send-TelegramSticker `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -FileID $sticker `
-                    -DisableNotification
+                $sendTelegramStickerSplat = @{
+                    FileID              = $sticker
+                    DisableNotification = $true
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -Be "True"
             }#it
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
-                $eval = Send-TelegramSticker `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -StickerSetName STPicard `
-                    -Shortcode ':slightly_smiling_face:' `
-                    -DisableNotification
+                $sendTelegramStickerSplat = @{
+                    DisableNotification = $true
+                    StickerSetName      = 'STPicard'
+                    BotToken            = $token
+                    Shortcode           = ':slightly_smiling_face:'
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramSticker
-        Context "Send-TelegramLocalSticker" {
+        Context 'Send-TelegramLocalSticker' {
             It 'Should return with ok:true when a local sticker message is successfully sent' {
-                $eval = Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -StickerPath $stickerFile `
-                    -DisableNotification
+                $sendTelegramLocalStickerSplat = @{
+                    StickerPath         = $stickerFile
+                    DisableNotification = $true
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalSticker
-        Context "Send-TelegramURLSticker" {
+        Context 'Send-TelegramURLSticker' {
             It 'Should return with ok:true when a sticker by URL is successfully sent' {
-                $eval = Send-TelegramURLSticker `
-                    -BotToken $token `
-                    -ChatID $channel `
-                    -StickerURL $StickerURL `
-                    -DisableNotification
+                $sendTelegramURLStickerSplat = @{
+                    DisableNotification = $true
+                    StickerURL          = $StickerURL
+                    BotToken            = $token
+                    ChatID              = $channel
+                }
+                $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLSticker

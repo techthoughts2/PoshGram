@@ -32,7 +32,6 @@ $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/Sourc
 Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 ```
 
-
 Sends animation message via Telegram API
 
 ### EXAMPLE 2
@@ -40,18 +39,33 @@ Sends animation message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
-Send-TelegramURLAnimation \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -AnimationURL $AnimationURL \`
-    -Caption "Live long, and prosper." \`
-    -ParseMode Markdown \`
-    -DisableNotification \`
+Send-TelegramURLAnimation `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -AnimationURL $AnimationURL `
+    -Caption "Live long, and prosper." `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends animation message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+$sendTelegramURLAnimationSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    AnimationURL        = $AnimationURL
+    Caption             = "Live __long__, and prosper\."
+    ParseMode           = 'MarkdownV2'
+}
+Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
+```
+
+Sends animation message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -117,7 +131,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -126,7 +140,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -173,4 +187,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

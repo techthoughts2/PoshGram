@@ -50,7 +50,7 @@ InModuleScope PoshGram {
                     -Duration 16 `
                     -Width 1920 `
                     -Height 1080 `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Streaming $false `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
@@ -64,7 +64,7 @@ InModuleScope PoshGram {
                     -Duration 16 `
                     -Width 1920 `
                     -Height 1080 `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Streaming $false `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
@@ -80,7 +80,7 @@ InModuleScope PoshGram {
                     -Duration 16 `
                     -Width 1920 `
                     -Height 1080 `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Streaming $false `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
@@ -95,7 +95,7 @@ InModuleScope PoshGram {
                     -Duration 16 `
                     -Width 1920 `
                     -Height 1080 `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Streaming $false `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject

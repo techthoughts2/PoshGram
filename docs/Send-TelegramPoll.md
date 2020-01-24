@@ -40,7 +40,6 @@ $opt = @(
 Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 ```
 
-
 Sends poll via Telegram API
 
 ### EXAMPLE 2
@@ -49,14 +48,13 @@ $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $question = 'Who is your favorite Star Fleet Captain?'
 $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
-Send-TelegramPoll \`
-    -BotToken $token \`
-    -ChatID $chat \`
-    -Question $question \`
-    -Options $opt \`
+Send-TelegramPoll `
+    -BotToken $token `
+    -ChatID $chat `
+    -Question $question `
+    -Options $opt `
     -DisableNotification
 ```
-
 
 Sends poll via Telegram API
 
@@ -166,5 +164,4 @@ Telegram currently supports 2-10 options 1-100 characters each
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
-
 
