@@ -54,14 +54,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -Message "Hi There Pester" `
                 | Should -BeOfType System.Management.Automation.PSCustomObject
-        }#it
-        It 'should handle underscores and return a custom PSCustomObject if successful' {
-            Send-TelegramTextMessage `
-                -BotToken $token `
-                -ChatID $chat `
-                -Message "Hi_There_Pester" `
-            | Should -BeOfType System.Management.Automation.PSCustomObject
-    }#it
-}#context_success
-}#describe_Send-TelegramTextMessage
+            }#it
+        }#context_success
+    }#describe_Send-TelegramTextMessage
 }#inModule

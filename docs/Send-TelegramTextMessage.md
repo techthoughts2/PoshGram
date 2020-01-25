@@ -30,25 +30,49 @@ $chat = "-nnnnnnnnn"
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
-
 Sends text message via Telegram API
 
 ### EXAMPLE 2
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramTextMessage \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -Message "Hello *chat* _channel_, check out this link: \[TechThoughts\](https://techthoughts.info/)" \`
-    -ParseMode Markdown \`
-    -DisablePreview \`
-    -DisableNotification \`
+Send-TelegramTextMessage `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -Message "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)" `
+    -ParseMode MarkdownV2 `
+    -DisablePreview `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends text message via Telegram API
+
+### EXAMPLE 3
+```
+$sendTelegramTextMessageSplat = @{
+    BotToken = $botToken
+    ChatID = $chat
+    ParseMode = 'MarkdownV2'
+    Message = 'This is how to escape an underscore in a message: \_'
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+Sends text message via Telegram API using MarkdownV2 with a properly escaped character.
+
+### EXAMPLE 4
+```
+$sendTelegramTextMessageSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    ParseMode = 'MarkdownV2'
+    Message   = 'You can underline __words__ in messages\.'
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+Sends text message via Telegram API using MarkdownV2 with an underlined word and a properly escaped character.
 
 ## PARAMETERS
 
@@ -99,7 +123,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -108,7 +132,7 @@ Aliases:
 
 Required: False
 Position: 4
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -156,12 +180,15 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1
+This works with PowerShell Versions: 5.1, 6+, 7+
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
 Use the BotFather https://t.me/BotFather
+
+Markdown Style: This is a legacy mode, retained for backward compatibility.
+When using Markdown/Markdownv2 you must properly escape characters.
 
 ## RELATED LINKS
 
@@ -169,4 +196,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

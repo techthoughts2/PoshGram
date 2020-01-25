@@ -97,7 +97,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -PhotoPath "c:\bs\diagvresults.jpg" `
                     -Caption "Check out this photo" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it

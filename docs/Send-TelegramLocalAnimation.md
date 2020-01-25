@@ -32,7 +32,6 @@ $animation = "C:\animation\animation.gif"
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 ```
 
-
 Sends AnimationPath message via Telegram API
 
 ### EXAMPLE 2
@@ -40,18 +39,34 @@ Sends AnimationPath message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $animation = "C:\animation\animation.gif"
-Send-TelegramLocalAnimation \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -AnimationPath $animation \`
-    -Caption "Check out this animation" \`
-    -ParseMode Markdown \`
-    -DisableNotification \`
+Send-TelegramLocalAnimation `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -AnimationPath $animation `
+    -Caption "Check out this animation" `
+    -ParseMode MarkdownV2 `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends animation message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$animation = "C:\animation\animation.gif"
+$sendTelegramLocalAnimationSplat = @{
+    BotToken      = $botToken
+    ChatID        = $chat
+    AnimationPath = $animation
+    Caption       = "Check out this __awesome__ animation\."
+    ParseMode     = 'MarkdownV2'
+}
+Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
+```
+
+Sends animation message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -117,7 +132,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -126,7 +141,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -178,4 +193,9 @@ Get creative by sending Gifs with your bot!
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

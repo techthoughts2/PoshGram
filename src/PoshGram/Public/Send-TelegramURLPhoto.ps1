@@ -19,11 +19,25 @@
         -ChatID $chat `
         -PhotoURL $photourl `
         -Caption "DSC is a great technology" `
-        -ParseMode Markdown `
+        -ParseMode MarkdownV2 `
         -DisableNotification `
         -Verbose
 
     Sends photo message via Telegram API
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    $sendTelegramURLPhotoSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        PhotoURL  = $photourl
+        Caption   = "DSC is a __great__ technology\."
+        ParseMode = 'MarkdownV2'
+    }
+    Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
+
+    Sends photo message via Telegram API with properly formatted underlined word and escaped special character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -33,7 +47,7 @@
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
@@ -60,6 +74,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md
 .LINK
     https://core.telegram.org/bots/api#sendphoto
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramURLPhoto {
     [CmdletBinding()]
@@ -85,8 +105,8 @@ function Send-TelegramURLPhoto {
         [string]$Caption,
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification

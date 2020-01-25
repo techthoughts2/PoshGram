@@ -16,12 +16,32 @@
         -BotToken $botToken `
         -ChatID $chat `
         -Message "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)" `
-        -ParseMode Markdown `
+        -ParseMode MarkdownV2 `
         -DisablePreview `
         -DisableNotification `
         -Verbose
 
     Sends text message via Telegram API
+.EXAMPLE
+    $sendTelegramTextMessageSplat = @{
+        BotToken = $botToken
+        ChatID = $chat
+        ParseMode = 'MarkdownV2'
+        Message = 'This is how to escape an underscore in a message: \_'
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API using MarkdownV2 with a properly escaped character.
+.EXAMPLE
+    $sendTelegramTextMessageSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        ParseMode = 'MarkdownV2'
+        Message   = 'You can underline __words__ in messages\.'
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API using MarkdownV2 with an underlined word and a properly escaped character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -29,7 +49,7 @@
 .PARAMETER Message
     Text of the message to be sent
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisablePreview
     Disables link previews for links in this message.
 .PARAMETER DisableNotification
@@ -39,10 +59,13 @@
     System.Boolean (on failure)
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
+    This works with PowerShell Versions: 5.1, 6+, 7+
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+
+    Markdown Style: This is a legacy mode, retained for backward compatibility.
+    When using Markdown/Markdownv2 you must properly escape characters.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
@@ -57,6 +80,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
 .LINK
     https://core.telegram.org/bots/api#sendmessage
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramTextMessage {
     [CmdletBinding()]
@@ -79,8 +108,8 @@ function Send-TelegramTextMessage {
         [string]$Message,
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables link previews')]
         [switch]$DisablePreview, #set to false by default
@@ -90,11 +119,6 @@ function Send-TelegramTextMessage {
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
-    #------------------------------------------------------------------------
-    if ($Message -like "*_*") {
-        Write-Verbose -Message "Characters detected that must be sent as HTML"
-        $ParseMode = 'HTML'
-    }#if_
     #------------------------------------------------------------------------
     #return $DisableNotification
     $payload = @{

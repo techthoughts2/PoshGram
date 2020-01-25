@@ -48,7 +48,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AudioURL $audioURL `
                     -Caption "Check out this audio track" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Duration 495 `
                     -Performer "Metallica" `
                     -Title "Halo On Fire" `
@@ -62,7 +62,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AudioURL $audioURL `
                     -Caption "Check out this audio track" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Duration 495 `
                     -Performer "Metallica" `
                     -Title "Halo On Fire" `
@@ -78,7 +78,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AudioURL $audioURL `
                     -Caption "Check out this audio track" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Duration 495 `
                     -Performer "Metallica" `
                     -Title "Halo On Fire" `
@@ -93,7 +93,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AudioURL $audioURL `
                     -Caption "Check out this audio track" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Duration 495 `
                     -Performer "Metallica" `
                     -Title "Halo On Fire" `

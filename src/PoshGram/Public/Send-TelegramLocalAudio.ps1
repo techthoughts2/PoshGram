@@ -19,7 +19,7 @@
         -ChatID $chat `
         -Audio $audio `
         -Caption "Check out this audio track" `
-        -ParseMode Markdown `
+        -ParseMode MarkdownV2 `
         -Duration 495 `
         -Performer "Metallica" `
         -Title "Halo On Fire" `
@@ -27,6 +27,22 @@
         -Verbose
 
     Sends audio message via Telegram API
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $audio = "C:\audio\halo_on_fire.mp3"
+    $sendTelegramLocalAudioSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        Audio     = $audio
+        Title     = "Halo On Fire"
+        Performer = "Metallica"
+        Caption   = "Check out this __awesome__ audio track\."
+        ParseMode = 'MarkdownV2'
+    }
+    Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
+
+    Sends audio message via Telegram API with properly formatted underlined word and escaped special character.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -38,7 +54,7 @@
 .PARAMETER Duration
     Duration of the audio in seconds
 .PARAMETER ParseMode
-    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is Markdown.
+    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER Duration
     Duration of the audio in seconds
 .PARAMETER Performer
@@ -76,6 +92,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md
 .LINK
     https://core.telegram.org/bots/api#sendaudio
+.LINK
+    https://core.telegram.org/bots/api#html-style
+.LINK
+    https://core.telegram.org/bots/api#markdownv2-style
+.LINK
+    https://core.telegram.org/bots/api#markdown-style
 #>
 function Send-TelegramLocalAudio {
     [CmdletBinding()]
@@ -101,8 +123,8 @@ function Send-TelegramLocalAudio {
         [string]$Caption = "", #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
-        [ValidateSet("Markdown", "HTML")]
-        [string]$ParseMode = "Markdown", #set to Markdown by default
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'Duration of the audio in seconds')]
         [int]$Duration,

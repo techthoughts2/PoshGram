@@ -89,7 +89,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -File "C:\customlog.txt" `
                     -Caption "Check out this file" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it

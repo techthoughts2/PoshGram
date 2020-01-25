@@ -34,7 +34,6 @@ $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFil
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 ```
 
-
 Sends video message via Telegram API
 
 ### EXAMPLE 2
@@ -42,22 +41,38 @@ Sends video message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
-Send-TelegramURLVideo \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -VideoURL $videourl \`
-    -Duration 16 \`
-    -Width 1920 \`
-    -Height 1080 \`
-    -Caption "Check out this video" \`
-    -ParseMode Markdown \`
-    -Streaming \`
-    -DisableNotification \`
+Send-TelegramURLVideo `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -VideoURL $videourl `
+    -Duration 16 `
+    -Width 1920 `
+    -Height 1080 `
+    -Caption "Check out this video" `
+    -ParseMode MarkdownV2 `
+    -Streaming `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends video message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$sendTelegramURLVideoSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    VideoURL  = $videourl
+    ParseMode = 'MarkdownV2'
+    Caption   = "Check out this __awesome__ video\."
+}
+Send-TelegramURLVideo @sendTelegramURLVideoSplat
+```
+
+Sends video message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -168,7 +183,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -177,7 +192,7 @@ Aliases:
 
 Required: False
 Position: 8
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -236,10 +251,18 @@ Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web clie
 How do I set up a bot and get a token?
 Use the BotFather https://t.me/BotFather
 
+Markdown Style: This is a legacy mode, retained for backward compatibility.
+When using Markdown/Markdownv2 you must properly escape characters.
+
 ## RELATED LINKS
 
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

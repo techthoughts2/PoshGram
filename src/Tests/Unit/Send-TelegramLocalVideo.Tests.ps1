@@ -100,7 +100,7 @@ InModuleScope PoshGram {
                     -Width 250 `
                     -Height 250 `
                     -Caption "Check out this video" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -Streaming `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject

@@ -34,7 +34,6 @@ $file = "C:\videos\video.mp4"
 Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
 ```
 
-
 Sends video message via Telegram API
 
 ### EXAMPLE 2
@@ -42,22 +41,39 @@ Sends video message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $video = "C:\videos\video.mp4"
-Send-TelegramLocalVideo \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -Video $video \`
-    -Duration 10 \`
-    -Width 250 \`
-    -Height 250 \`
-    -Caption "Check out this video" \`
-    -ParseMode Markdown \`
-    -Streaming \`
-    -DisableNotification \`
+Send-TelegramLocalVideo `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -Video $video `
+    -Duration 10 `
+    -Width 250 `
+    -Height 250 `
+    -Caption "Check out this video" `
+    -ParseMode MarkdownV2 `
+    -Streaming `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends video message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$video = "C:\videos\video.mp4"
+$sendTelegramLocalVideoSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    Video     = $video
+    Streaming = $true
+    Caption   = "Check out this __awesome__ video\."
+    ParseMode = 'MarkdownV2'
+}
+Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
+```
+
+Sends video message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -168,7 +184,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -177,7 +193,7 @@ Aliases:
 
 Required: False
 Position: 8
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -242,4 +258,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

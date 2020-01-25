@@ -66,7 +66,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -FileURL $fileURL `
                     -Caption "TechThoughts Logo" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     -ErrorAction SilentlyContinue | Should -Be $false
             }#it
@@ -78,7 +78,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -FileURL $fileURL `
                     -Caption "TechThoughts Logo" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it

@@ -32,7 +32,6 @@ $file = "C:\Logs\Log1.txt"
 Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
 ```
 
-
 Sends document message via Telegram API
 
 ### EXAMPLE 2
@@ -40,18 +39,34 @@ Sends document message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
-Send-TelegramLocalDocument \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -File $file \`
-    -Caption "Check out this file" \`
-    -ParseMode Markdown \`
-    -DisableNotification \`
+Send-TelegramLocalDocument `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -File $file `
+    -Caption "Check out this file" `
+    -ParseMode MarkdownV2 `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends document message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$file = "C:\Logs\Log1.txt"
+$sendTelegramLocalDocumentSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    File      = $file
+    Caption   = "Check out this __important__ file\."
+    ParseMode = 'MarkdownV2'
+}
+Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
+```
+
+Sends document message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -117,7 +132,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -126,7 +141,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -175,4 +190,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

@@ -34,7 +34,6 @@ $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFil
 Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 ```
 
-
 Sends audio message via Telegram API
 
 ### EXAMPLE 2
@@ -42,21 +41,39 @@ Sends audio message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-Send-TelegramURLAudio \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -AudioURL $audioURL \`
-    -Caption "Check out this audio track" \`
-    -ParseMode Markdown \`
-    -Duration 495 \`
-    -Performer "Metallica" \`
-    -Title "Halo On Fire" \`
-    -DisableNotification \`
+Send-TelegramURLAudio `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -AudioURL $audioURL `
+    -Caption "Check out this audio track" `
+    -ParseMode MarkdownV2 `
+    -Duration 495 `
+    -Performer "Metallica" `
+    -Title "Halo On Fire" `
+    -DisableNotification `
     -Verbose
 ```
 
-
 Sends audio message via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+$sendTelegramURLAudioSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    AudioURL            = $audioURL
+    Title               = "Halo On Fire"
+    Performer           = "Metallica"
+    Caption             = "Check out this __awesome__ audio track\."
+    ParseMode           = 'MarkdownV2'
+}
+Send-TelegramURLAudio @sendTelegramURLAudioSplat
+```
+
+Sends audio message via Telegram API with properly formatted underlined word and escaped special character.
 
 ## PARAMETERS
 
@@ -122,7 +139,7 @@ Accept wildcard characters: False
 
 ### -ParseMode
 Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-Default is Markdown.
+Default is HTML.
 
 ```yaml
 Type: String
@@ -131,7 +148,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Markdown
+Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -226,4 +243,9 @@ Use the BotFather https://t.me/BotFather
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
 
+[https://core.telegram.org/bots/api#html-style](https://core.telegram.org/bots/api#html-style)
+
+[https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
+
+[https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
 

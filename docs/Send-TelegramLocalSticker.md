@@ -31,7 +31,6 @@ $sticker = "C:\stickers\sticker.webp"
 Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
 ```
 
-
 Sends sticker message via Telegram API
 
 ### EXAMPLE 2
@@ -39,14 +38,13 @@ Sends sticker message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $sticker = "C:\stickers\sticker.webp"
-Send-TelegramLocalSticker \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -StickerPath $sticker \`
-    -DisableNotification \`
+Send-TelegramLocalSticker `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -StickerPath $sticker `
+    -DisableNotification `
     -Verbose
 ```
-
 
 Sends sticker message via Telegram API
 
@@ -141,5 +139,4 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
-
 

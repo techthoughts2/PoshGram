@@ -14,6 +14,7 @@ Sends Telegram native poll.
 
 ```
 Send-TelegramPoll [-BotToken] <String> [-ChatID] <String> [-Question] <String> [-Options] <String[]>
+ [[-IsAnonymous] <Boolean>] [[-PollType] <String>] [[-MultipleAnswers] <Boolean>] [[-QuizAnswer] <Int32>]
  [-DisableNotification] [<CommonParameters>]
 ```
 
@@ -40,7 +41,6 @@ $opt = @(
 Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 ```
 
-
 Sends poll via Telegram API
 
 ### EXAMPLE 2
@@ -49,16 +49,45 @@ $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $question = 'Who is your favorite Star Fleet Captain?'
 $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
-Send-TelegramPoll \`
-    -BotToken $token \`
-    -ChatID $chat \`
-    -Question $question \`
-    -Options $opt \`
-    -DisableNotification
+Send-TelegramPoll `
+    -BotToken $token `
+    -ChatID $chat `
+    -Question $question `
+    -Options $opt `
+    -DisableNotification `
+    -IsAnonymous $true `
+    -PollType 'regular `
+    -MultipleAnswers $false
 ```
 
-
 Sends poll via Telegram API
+
+### EXAMPLE 3
+```
+$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$chat = "-nnnnnnnnn"
+$question = 'Who was the best Starfleet captain?'
+$opt = @(
+    'James Kirk',
+    'Jean-Luc Picard',
+    'Benjamin Sisko',
+    'Kathryn Janeway',
+    'Jonathan Archer'
+)
+$answer = 2
+$sendTelegramPollSplat = @{
+    BotToken    = $botToken
+    ChatID      = $chat
+    Question    = $question
+    Options     = $opt
+    IsAnonymous = $false
+    PollType    = 'quiz'
+    QuizAnswer  = $answer
+}
+Send-TelegramPoll @sendTelegramPollSplat
+```
+
+Sends quiz via Telegram API
 
 ## PARAMETERS
 
@@ -122,6 +151,66 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IsAnonymous
+True, if the poll needs to be anonymous, defaults to True
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PollType
+Poll type, "quiz" or "regular", defaults to "regular"
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: Regular
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MultipleAnswers
+True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -QuizAnswer
+0-based identifier of the correct answer option, required for polls in quiz mode
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
@@ -166,5 +255,4 @@ Telegram currently supports 2-10 options 1-100 characters each
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
-
 

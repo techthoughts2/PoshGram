@@ -33,7 +33,6 @@ $address = 'San Francisco, CA 94128'
 Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 ```
 
-
 Sends venue information via Telegram API
 
 ### EXAMPLE 2
@@ -44,17 +43,16 @@ $latitude = 37.621313
 $longitude = -122.378955
 $title = 'Star Fleet Headquarters'
 $address = 'San Francisco, CA 94128'
-Send-TelegramVenue \`
-    -BotToken $botToken \`
-    -ChatID $chat \`
-    -Latitude $latitude \`
-    -Longitude $longitude \`
-    -Title $title \`
-    -Address $address \`
-    -DisableNotification \`
+Send-TelegramVenue `
+    -BotToken $botToken `
+    -ChatID $chat `
+    -Latitude $latitude `
+    -Longitude $longitude `
+    -Title $title `
+    -Address $address `
+    -DisableNotification `
     -Verbose
 ```
-
 
 Sends venue information via Telegram API
 
@@ -191,5 +189,4 @@ Use the BotFather https://t.me/BotFather
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md)
 
 [https://core.telegram.org/bots/api#sendvenue](https://core.telegram.org/bots/api#sendvenue)
-
 

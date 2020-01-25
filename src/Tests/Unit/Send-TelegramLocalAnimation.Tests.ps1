@@ -97,7 +97,7 @@ InModuleScope PoshGram {
                     -ChatID $chat `
                     -AnimationPath "C:\bs\animation.gif" ` `
                     -Caption "Check out this animation" `
-                    -ParseMode Markdown `
+                    -ParseMode MarkdownV2 `
                     -DisableNotification `
                     | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
