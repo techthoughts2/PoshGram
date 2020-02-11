@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [02/10/2020]
+
+No Version Change
+
+- Updated README
+  - Removed FAQ from primary README
+- Added PoshGram-FAQ.md
+  - Added new section under FAQ addressing how to send inline emojis in messages.
+
 ## [1.12.0]
 
 - Added support for MarkdownV2
@@ -57,7 +66,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Send-TelegramURLPhoto
     - DisableNotification changed from bool to switch
 
-
 ## [10/13/2019]
 
 No Version Change
@@ -72,7 +80,6 @@ No Version Change
   - Changelog
   - Contributing guidelines
 - Updated modules references in install_modules to latest versions
-
 
 ## [1.0.2]
 
