@@ -189,40 +189,7 @@ This PowerShell project was created with [Catesta](https://github.com/techthough
 
 ## FAQ
 
-* *I want to start using this, but how do I create a Telegram Bot and get a token?*
-  * To learn how to create and set up a bot:
-    * [TechThoughts video on how to make a Telegram Bot](https://youtu.be/UhZtrhV7t3U)
-    * [Introduction to Bots](https://core.telegram.org/bots)
-    * [Bot FAQ](https://core.telegram.org/bots/faq)
-    * [BotFather](https://t.me/BotFather)
-
-* *I've got a bot setup, and I have a token, but how do I determine my chat ID number (also referred to as the channel ID)?*
-  * The easiest way is to login to the [Telegram Web Client](https://web.telegram.org/#/login) and find your channel on the left. When you select it the address in your URL bar will change. Copy the channel ID in your browser's address bar
-    * It will look something like this:
-      * ```#/im?p=g112345678```
-    * *Just copy the numbers after **g** and make sure to include the (-) before the channel number*
-      * Ex ```-#########```
-      * Ex from above would be: ```-112345678```
-  * *Alternative method*: Forward a message from your channel to the getidsbot [https://telegram.me/getidsbot](https://telegram.me/getidsbot)
-
-* How can I use PoshGram to have my bot send stickers?
-  * [PoshGram-Sticker-Info](docs/PoshGram-Sticker-Info.md)
-
-* *Why is PowerShell 6.1.0 (or higher) required? - Why can't I use 5.1?*
-  * For new files to be uploaded and sent to a chat via bot, Telegram requires the use of multipart/form-data. This is not natively supported in 5.1. It is available in 6.0.0, but requires the manual creation of the form. 6.1.0 introduces native form capabilities. Functions that reference a URL, or that only use messaging  (**Send-TelegramTextMessage**) are 5.1 compatible. However, you would have to pull these functions out separately if you are absolutely set on using 5.1
-
-* *I don't want to use PowerShell 6.1.0 (or higher) because I primarily use 5.1 or lower*
-  * Good news - PowerShell 6.1.0+ installs to a completely separate folder, has a completely different exe (pwsh.exe), and references a different module path. This means you can install it on any system and use PoshGram while continuing to use any other version of PowerShell
-  * Here is an example of how you can call PS 6.1 and use PoshGram from older versions of PowerShell:
-
-    ```powershell
-    #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram
-    & 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1 to send Telegram Message via PoshGram" }
-    ```
-
-* *Are there any restrictions when using PoshGram?*
-  * Bots can currently send files of up to 50 MB in size
-  * Certain functions are limited to certain file extensions, see each function's documentation for more information
+**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
 
 ## License
 
