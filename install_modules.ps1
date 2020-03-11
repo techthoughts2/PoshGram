@@ -7,6 +7,10 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $VerbosePreference = 'SilentlyContinue'
 
+$tempPath = [System.IO.Path]::GetTempPath()
+# $moduleInstallPath = 'C:\Program Files\WindowsPowerShell\Modules'
+$moduleInstallPath = 'C:\Program Files\PowerShell\Modules'
+
 # List of PowerShell Modules required for the build
 # The AWS PowerShell Modules are added below, based on the $PSEdition
 $modulesToInstall = [System.Collections.ArrayList]::new()
