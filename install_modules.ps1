@@ -8,48 +8,65 @@ $ProgressPreference = 'SilentlyContinue'
 $VerbosePreference = 'SilentlyContinue'
 
 $tempPath = [System.IO.Path]::GetTempPath()
-# $moduleInstallPath = 'C:\Program Files\WindowsPowerShell\Modules'
-$moduleInstallPath = 'C:\Program Files\PowerShell\Modules'
 
 # List of PowerShell Modules required for the build
 # The AWS PowerShell Modules are added below, based on the $PSEdition
 $modulesToInstall = [System.Collections.ArrayList]::new()
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'Pester'
-    ModuleVersion = '4.10.1'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'Pester'
+            ModuleVersion = '4.10.1'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'InvokeBuild'
-    ModuleVersion = '5.5.7'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'InvokeBuild'
+            ModuleVersion = '5.5.7'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'PSScriptAnalyzer'
-    ModuleVersion = '1.18.3'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'PSScriptAnalyzer'
+            ModuleVersion = '1.18.3'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'platyPS'
-    ModuleVersion = '0.12.0'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'platyPS'
+            ModuleVersion = '0.12.0'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'AWS.Tools.Common'
-    ModuleVersion = '4.0.4.0'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'AWS.Tools.Common'
+            ModuleVersion = '4.0.4.0'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-    ModuleName    = 'AWS.Tools.SecretsManager'
-    ModuleVersion = '4.0.4.0'
-    BucketName    = 'ps-invoke-modules'
-    KeyPrefix     = ''
-}))
+            ModuleName    = 'AWS.Tools.SecretsManager'
+            ModuleVersion = '4.0.4.0'
+            BucketName    = 'ps-invoke-modules'
+            KeyPrefix     = ''
+        }))
+
+if ($PSVersionTable.Platform -eq 'Win32NT') {
+    $moduleInstallPath = [System.IO.Path]::Combine($env:ProgramFiles, 'WindowsPowerShell', 'Modules')
+    if ($PSEdition -eq 'Core') {
+        $moduleInstallPath = [System.IO.Path]::Combine($env:ProgramFiles, 'PowerShell', 'Modules')
+    }
+    else {
+        $moduleInstallPath = [System.IO.Path]::Combine($env:ProgramFiles, 'WindowsPowerShell', 'Modules')
+    }
+}
+elseif ($PSVersionTable.Platform -eq 'Unix') {
+    $moduleInstallPath = [System.IO.Path]::Combine('/', 'usr', 'local', 'share', 'powershell', 'Modules')
+}
+elseif ($PSEdition -eq 'Desktop') {
+    $moduleInstallPath = [System.IO.Path]::Combine($env:ProgramFiles, 'WindowsPowerShell', 'Modules')
+}
+else {
+    throw 'Unrecognized OS platform'
+}
 
 'Installing PowerShell Modules'
 foreach ($module in $modulesToInstall) {
