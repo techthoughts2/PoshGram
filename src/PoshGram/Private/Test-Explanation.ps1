@@ -28,7 +28,7 @@ function Test-Explanation {
     $results = $true #assume the best
     Write-Verbose -Message 'Evaluating provided explanation...'
 
-    $splitTest = $Explanation -split "`r`n"
+    $splitTest = $Explanation -split '\n'
     $carriageCount = $splitTest | Measure-Object | Select-Object -ExpandProperty Count
 
     if ($carriageCount -gt 2) {
