@@ -6,9 +6,8 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      dotnet: 3.0
+      dotnet: 3.1
     commands:
-      - pwsh -command '$PSVersionTable'
       - pwsh -command './configure_aws_credential.ps1'
       - pwsh -command './install_modules.ps1'
   pre_build:
@@ -38,9 +37,10 @@ phases:
       - aws s3 cp s3://poshgram-test-files/Intro.mp4 /Test/Videos/Intro.mp4 --quiet
       - aws s3 cp s3://poshgram-test-files/picard.webp /Test/Stickers/picard.webp --quiet
       #- pwsh -command 'Invoke-Build -File .\src\PoshGram.build.Settings.ps1 -Task ValidateUniqueModuleVersion'
+      - pwsh -command '$PSVersionTable'
   build:
     commands:
-      - pwsh -command 'Import-Module PSScriptAnalyzer; Invoke-Build -File .\src\PoshGram.build.ps1'
+      - pwsh -command 'Invoke-Build -File .\src\PoshGram.build.ps1'
 artifacts:
   files:
     - '**/*'
