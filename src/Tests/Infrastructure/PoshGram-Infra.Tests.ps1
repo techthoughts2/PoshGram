@@ -135,7 +135,7 @@ InModuleScope PoshGram {
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        $milliSeconds = 500
+        $milliSeconds = 15000
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
