@@ -132,12 +132,14 @@ InModuleScope PoshGram {
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
+        $milliSeconds = 500
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Test-BotToken
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramTextMessage' {
             It 'Should return with ok:true when a typical message is successfully sent' {
                 $sendTelegramTextMessageSplat = @{
@@ -173,6 +175,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramTextMessage
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalPhoto' {
             It 'Should return with ok:true when a local photo message is successfully sent' {
                 $sendTelegramLocalPhotoSplat = @{
@@ -186,6 +189,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLPhoto' {
             It 'Should return with ok:true when a photo url message is successfully sent' {
                 $sendTelegramURLPhotoSplat = @{
@@ -199,6 +203,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalDocument' {
             It 'Should return with ok:true when a local document message is successfully sent' {
                 $sendTelegramLocalDocumentSplat = @{
@@ -212,6 +217,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalPhoto
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLDocument' {
             It 'Should return with ok:true when a URL document message is successfully sent' {
                 $sendTelegramURLDocumentSplat = @{
@@ -225,6 +231,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLDocument
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalVideo' {
             It 'Should return with ok:true when a local video message is successfully sent' {
                 $sendTelegramLocalVideoSplat = @{
@@ -238,6 +245,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalVideo
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLVideo' {
             It 'Should return with ok:true when a URL video message is successfully sent' {
                 $sendTelegramURLVideoSplat = @{
@@ -251,6 +259,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLVideo
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalAudio' {
             It 'Should return with ok:true when a local audio message is successfully sent' {
                 $sendTelegramLocalAudioSplat = @{
@@ -265,6 +274,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAudio
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLAudio' {
             It 'Should return with ok:true when a URL audio message is successfully sent' {
                 $sendTelegramURLAudioSplat = @{
@@ -279,6 +289,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAudio
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocation' {
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramLocationSplat = @{
@@ -292,6 +303,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocation
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalAnimation' {
             It 'Should return with ok:true when a local animation is successfully sent' {
                 $sendTelegramLocalAnimationSplat = @{
@@ -305,6 +317,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalAnimation
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLAnimation' {
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramURLAnimationSplat = @{
@@ -318,6 +331,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
+        Start-Sleep -Seconds 5
         Context 'Send-TelegramMediaGroup' {
             It 'Should return with ok:true when a group of photos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
@@ -342,6 +356,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
+        Start-Sleep -Milliseconds $milliSeconds
         # Commenting as this API call has a low limit which sometimes results in failed builds
         # Context "Send-TelegramContact" {
         #     It 'Should return with ok:true when a contact is successfully sent' {
@@ -355,6 +370,7 @@ InModuleScope PoshGram {
         #         $eval.ok | Should -Be "True"
         #     }#it
         # }#context_Send-TelegramContact
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
@@ -370,6 +386,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramVenue
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramPoll' {
             It 'Should return with ok:true when a typical poll is successfully sent' {
                 $sendTelegramPollSplat = @{
@@ -397,6 +414,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramPoll
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Get-TelegramStickerPackInfo' {
             It 'Should return valid sticker pack information' {
                 $getTelegramStickerPackInfoSplat = @{
@@ -408,6 +426,7 @@ InModuleScope PoshGram {
                 $eval.set_name | Should -BeExactly 'CookieMonster'
             }#it
         }#context_Get-TelegramStickerPackInfo
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramSticker' {
             It 'Should return with ok:true when a sticker is sent by file_id' {
                 $sendTelegramStickerSplat = @{
@@ -431,6 +450,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramSticker
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalSticker' {
             It 'Should return with ok:true when a local sticker message is successfully sent' {
                 $sendTelegramLocalStickerSplat = @{
@@ -443,6 +463,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramLocalSticker
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramURLSticker' {
             It 'Should return with ok:true when a sticker by URL is successfully sent' {
                 $sendTelegramURLStickerSplat = @{

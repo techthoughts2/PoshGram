@@ -8,6 +8,7 @@ phases:
     runtime-versions:
       dotnet: 3.0
     commands:
+      - pwsh -command '$PSVersionTable'
       - pwsh -command './configure_aws_credential.ps1'
       - pwsh -command './install_modules.ps1'
   pre_build:
@@ -39,7 +40,7 @@ phases:
       #- pwsh -command 'Invoke-Build -File .\src\PoshGram.build.Settings.ps1 -Task ValidateUniqueModuleVersion'
   build:
     commands:
-      - pwsh -command 'Invoke-Build -File .\src\PoshGram.build.ps1'
+      - pwsh -command 'Import-Module PSScriptAnalyzer; Invoke-Build -File .\src\PoshGram.build.ps1'
 artifacts:
   files:
     - '**/*'
