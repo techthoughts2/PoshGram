@@ -132,7 +132,7 @@ InModuleScope PoshGram {
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        $milliSeconds = 500
+        $milliSeconds = 1000
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
@@ -331,7 +331,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
-        Start-Sleep -Seconds 5
+        Start-Sleep -Seconds 10
         Context 'Send-TelegramMediaGroup' {
             It 'Should return with ok:true when a group of photos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
