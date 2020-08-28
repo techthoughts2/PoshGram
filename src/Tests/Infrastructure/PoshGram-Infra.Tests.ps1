@@ -357,7 +357,6 @@ InModuleScope PoshGram {
             }#it
         }#context_Send-TelegramURLAnimation
         Start-Sleep -Seconds 10
-        Commenting as this API call has a low limit which sometimes results in failed builds
         Context "Send-TelegramContact" {
             It 'Should return with ok:true when a contact is successfully sent' {
                 $sendTelegramContactSplat = @{
