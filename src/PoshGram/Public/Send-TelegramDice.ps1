@@ -47,8 +47,7 @@
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    latitude                Float number            Yes         Latitude of the location
-    longitude               Float number            Yes         Longitude of the location
+    emoji                   String                  Optional    Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, or “🏀”. Dice can have values 1-6 for “🎲” and “🎯”, and values 1-5 for “🏀”. Defaults to “🎲”
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md

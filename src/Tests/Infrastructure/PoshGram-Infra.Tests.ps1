@@ -356,21 +356,23 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
-        Start-Sleep -Milliseconds $milliSeconds
-        # Commenting as this API call has a low limit which sometimes results in failed builds
-        # Context "Send-TelegramContact" {
-        #     It 'Should return with ok:true when a contact is successfully sent' {
-        #         $eval = Send-TelegramContact `
-        #             -BotToken $token `
-        #             -ChatID $channel `
-        #             -PhoneNumber $phone `
-        #             -FirstName $firstName `
-        #             -LastName $lastName `
-        #             -DisableNotification
-        #         $eval.ok | Should -Be "True"
-        #     }#it
-        # }#context_Send-TelegramContact
-        Start-Sleep -Milliseconds $milliSeconds
+        Start-Sleep -Seconds 10
+        Commenting as this API call has a low limit which sometimes results in failed builds
+        Context "Send-TelegramContact" {
+            It 'Should return with ok:true when a contact is successfully sent' {
+                $sendTelegramContactSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    PhoneNumber         = $phone
+                    FirstName           = $firstName
+                    LastName            = $lastName
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramContact @sendTelegramContactSplat
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramContact
+        Start-Sleep -Seconds 10
         Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
