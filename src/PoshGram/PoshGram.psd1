@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.13.0'
+    ModuleVersion     = '1.14.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -172,8 +172,9 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
-1.13.0:
+1.14.0:
     Added Send-TelegramDice
+    Updated Send-TelegramPoll to include newly supported parameters
     Updated help for all cmdlets to include splat examples
 1.12.0:
     Added support for MarkdownV2

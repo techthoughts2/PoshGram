@@ -13,6 +13,17 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $sendTelegramTextMessageSplat = @{
+        BotToken  = $botToken
+        ChatID    = $chat
+        Message   = 'This is how to use <b>bold</b>,<i>italic</i>,<u>underline</u>, and <s>strikethrough</s>, with default HTML formatting.'
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API with properly formatted default HTML syntax.
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $sendTelegramTextMessageSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         Message             = "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)"
@@ -23,23 +34,13 @@
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API
+    Sends text message via Telegram API with properly formatted MarkdownV2 syntax.
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         ParseMode = 'MarkdownV2'
-        Message   = 'This is how to escape an underscore in a message: \_'
-    }
-    Send-TelegramTextMessage @sendTelegramTextMessageSplat
-
-    Sends text message via Telegram API using MarkdownV2 with a properly escaped character.
-.EXAMPLE
-    $sendTelegramTextMessageSplat = @{
-        BotToken  = $botToken
-        ChatID    = $chat
-        ParseMode = 'MarkdownV2'
-        Message   = 'This is how to escape an underscore in a message: \_'
+        Message   = 'This is how to escape an __underscore__ in a message: \_'
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 

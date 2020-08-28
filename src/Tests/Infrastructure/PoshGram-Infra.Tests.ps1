@@ -50,7 +50,8 @@ InModuleScope PoshGram {
         'Star Trek: Voyager',
         'Star Trek: Enterprise',
         'Star Trek: Discovery',
-        'Star Trek: Picard'
+        'Star Trek: Picard',
+        'Star Trek: Lower Decks'
     )
     $question2 = 'Who was the best Starfleet captain?'
     $opt2 = @(
@@ -60,7 +61,9 @@ InModuleScope PoshGram {
         'Kathryn Janeway',
         'Jonathan Archer'
     )
-    $answer = 2
+    $answer = 1
+    $question3 = 'Which Star Trek captain has an artificial heart?'
+    $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
     $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
@@ -132,7 +135,7 @@ InModuleScope PoshGram {
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        $milliSeconds = 5000
+        $milliSeconds = 500
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
@@ -151,6 +154,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be "True"
             }#it
+            Start-Sleep -Milliseconds $milliSeconds
             It 'should throw when a message is sent with markdown and characters are not properly escaped' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -162,6 +166,7 @@ InModuleScope PoshGram {
                 }
                 { Send-TelegramTextMessage @sendTelegramTextMessageSplat } | Should Throw
             }#it
+            Start-Sleep -Milliseconds $milliSeconds
             It 'should return ok:true when a message is sent with markdown and characters are properly escaped' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -331,7 +336,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLAnimation
-        Start-Sleep -Seconds 30
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramMediaGroup' {
             It 'Should return with ok:true when a group of photos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
@@ -344,6 +349,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
+            Start-Sleep -Seconds 10
             It 'Should return with ok:true when a group of videos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -371,7 +377,7 @@ InModuleScope PoshGram {
         #         $eval.ok | Should -Be "True"
         #     }#it
         # }#context_Send-TelegramContact
-        Start-Sleep -Seconds 10
+        Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
@@ -400,6 +406,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be "True"
             }#it
+            Start-Sleep -Milliseconds $milliSeconds
             It 'Should return with ok:true when a quiz poll is successfully sent' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
@@ -410,6 +417,23 @@ InModuleScope PoshGram {
                     PollType            = 'quiz'
                     QuizAnswer          = $answer
                     DisableNotification = $true
+                }
+                $eval = Send-TelegramPoll @sendTelegramPollSplat
+                $eval.ok | Should -Be "True"
+            }#it
+            Start-Sleep -Milliseconds $milliSeconds
+            It 'Should return with ok:true when a quiz poll is successfully sent with additional options' {
+                $sendTelegramPollSplat = @{
+                    BotToken             = $token
+                    ChatID               = $channel
+                    Question             = $question3
+                    Options              = $opt
+                    Explanation          = $explanation
+                    ExplanationParseMode = 'MarkdownV2'
+                    IsAnonymous          = $false
+                    PollType             = 'quiz'
+                    QuizAnswer           = $answer
+                    CloseDate            = (Get-Date).AddDays(1)
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be "True"
@@ -439,6 +463,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -Be "True"
             }#it
+            Start-Sleep -Milliseconds $milliSeconds
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token

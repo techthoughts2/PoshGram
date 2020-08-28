@@ -5,10 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.13.0]
+## [1.14.0]
 
-- Added Send-TelegramDice
+- Added **Send-TelegramDice**
 - Updated help for all cmdlets to include splat examples
+- Updated help examples for Send-TelegramTextMessage to include properly formatted MarkdownV2 examples
+- Updated Send-TelegramPoll
+  - Added newly supported parameters:
+    - Explanation
+    - ExplanationParseMode
+    - OpenPeriod
+    - CloseDate
+  - New private function Test-Explanation created to validate provided Explanation
+- Added help clarification to Get-TelegramStickerPackInfo for finding sticker pack name
+- Several module build improvements made
+  - Updated PowerShell module references to latest versions
+  - Infra tests converted to use splat expressions
+  - Updated CodeBuild image references
+  - Updated CodeBuild to use latest version of PowerShell 7
 
 ## [03/10/2020]
 
