@@ -14,17 +14,19 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $audio = "C:\audio\halo_on_fire.mp3"
-    Send-TelegramLocalAudio `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -Audio $audio `
-        -Caption "Check out this audio track" `
-        -ParseMode MarkdownV2 `
-        -Duration 495 `
-        -Performer "Metallica" `
-        -Title "Halo On Fire" `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramLocalAudioSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        Audio               = $audio
+        Caption             = "Check out this audio track"
+        ParseMode           = 'MarkdownV2'
+        Duration            = 495
+        Performer           = "Metallica"
+        Title               = "Halo On Fire"
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
 
     Sends audio message via Telegram API
 .EXAMPLE

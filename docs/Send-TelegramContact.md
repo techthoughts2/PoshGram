@@ -40,14 +40,16 @@ $chat = "-nnnnnnnnn"
 $phone = '1-222-222-2222'
 $firstName = 'Jean-Luc'
 $lastName = 'Picard'
-Send-TelegramContact `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -PhoneNumber $phone `
-    -FirstName $firstName `
-    -LastName $lastName `
-    -DisableNotification `
-    -Verbose
+$sendTelegramContactSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    PhoneNumber         = $phone
+    FirstName           = $firstName
+    LastName            = $lastName
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramContact @sendTelegramContactSplat
 ```
 
 Sends contact via Telegram API

@@ -49,15 +49,17 @@ $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $question = 'Who is your favorite Star Fleet Captain?'
 $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
-Send-TelegramPoll `
-    -BotToken $token `
-    -ChatID $chat `
-    -Question $question `
-    -Options $opt `
-    -DisableNotification `
-    -IsAnonymous $true `
-    -PollType 'regular `
-    -MultipleAnswers $false
+$sendTelegramPollSplat = @{
+    BotToken            = $token
+    ChatID              = $chat
+    Question            = $question
+    Options             = $opt
+    DisableNotification = $true
+    IsAnonymous         = $true
+    PollType            = 'regular'
+    MultipleAnswers     = $false
+}
+Send-TelegramPoll @sendTelegramPollSplat
 ```
 
 Sends poll via Telegram API

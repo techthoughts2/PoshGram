@@ -19,7 +19,8 @@ InModuleScope PoshGram {
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
-    function Write-Error {}
+    function Write-Error {
+    }
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramSticker' -Tag Unit {
         BeforeEach {
@@ -56,45 +57,55 @@ InModuleScope PoshGram {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramSticker -BotToken $token `
-                    -ChatID $chat `
-                    -FileID CAADAgADDAAD3XATF5dBRoC9vn3aFgQ `
-                    -DisableNotification `
-                    | Should -Be $false
+                $sendTelegramStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
+                    DisableNotification = $true
+                }
+                Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
             }#it
             It 'should return false if shortcode is specified but the sticker pack can not be found' {
                 Mock Get-TelegramStickerPackInfo -MockWith { $false }
-                Send-TelegramSticker -BotToken $token `
-                    -ChatID $chat `
-                    -StickerSetName STPicard `
-                    -Shortcode ":grinning:" `
-                    -DisableNotification `
-                    | Should -Be $false
+                $sendTelegramStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerSetName      = 'STPicard'
+                    Shortcode           = ":grinning:"
+                    DisableNotification = $true
+                }
+                Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return false if the shortcode provided is not found in the sticker pack' {
-                Send-TelegramSticker -BotToken $token `
-                    -ChatID $chat `
-                    -StickerSetName STPicard `
-                    -Shortcode ":grinning:" `
-                    -DisableNotification `
-                    | Should -Be $false
+                $sendTelegramStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerSetName      = 'STPicard'
+                    Shortcode           = ":grinning:"
+                    DisableNotification = $true
+                }
+                Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
             }#it
             It 'should return a PSCustomObject if no errors are encountered and FileID is specified' {
-                Send-TelegramSticker -BotToken $token `
-                    -ChatID $chat `
-                    -FileID CAADAgADDAAD3XATF5dBRoC9vn3aFgQ `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
+                    DisableNotification = $true
+                }
+                Send-TelegramSticker @sendTelegramStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
             It 'should return a PSCustomObject if no errors are encountered and shortcode is specified' {
-                Send-TelegramSticker -BotToken $token `
-                    -ChatID $chat `
-                    -StickerSetName STPicard `
-                    -Shortcode ":slightly_smiling_face:" `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerSetName      = 'STPicard'
+                    Shortcode           = ":slightly_smiling_face:"
+                    DisableNotification = $true
+                }
+                Send-TelegramSticker @sendTelegramStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_Success
     }#describe_Send-TelegramSticker

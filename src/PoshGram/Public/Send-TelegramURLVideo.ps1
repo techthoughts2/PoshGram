@@ -14,18 +14,20 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
-    Send-TelegramURLVideo `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -VideoURL $videourl `
-        -Duration 16 `
-        -Width 1920 `
-        -Height 1080 `
-        -Caption "Check out this video" `
-        -ParseMode MarkdownV2 `
-        -Streaming `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramURLVideoSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        VideoURL            = $videourl
+        Duration            = 16
+        Width               = 1920
+        Height              = 1080
+        Caption             = "Check out this video"
+        ParseMode           = 'MarkdownV2'
+        Streaming           = $true
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramURLVideo @sendTelegramURLVideoSplat
 
     Sends video message via Telegram API
 .EXAMPLE

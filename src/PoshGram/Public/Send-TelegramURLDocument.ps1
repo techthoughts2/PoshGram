@@ -14,14 +14,16 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
-    Send-TelegramURLDocument `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -FileURL $fileURL `
-        -Caption "Log Files" `
-        -ParseMode MarkdownV2 `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramURLDocumentSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        FileURL             = $fileURL
+        Caption             = "Log Files"
+        ParseMode           = 'MarkdownV2'
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramURLDocument @sendTelegramURLDocumentSplat
 
     Sends document message via Telegram API
 .EXAMPLE

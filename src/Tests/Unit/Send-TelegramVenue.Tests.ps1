@@ -19,7 +19,8 @@ InModuleScope PoshGram {
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
-    function Write-Error {}
+    function Write-Error {
+    }
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramVenue' -Tag Unit {
         Context 'Error' {
@@ -27,15 +28,16 @@ InModuleScope PoshGram {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramVenue `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Latitude 37.621313 `
-                    -Longitude -122.378955 `
-                    -Title 'Star Fleet Headquarters' `
-                    -Address 'San Francisco, CA 94128' `
-                    -DisableNotification `
-                    | Should -Be $false
+                $sendTelegramVenueSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
+                    DisableNotification = $true
+                }
+                Send-TelegramVenue @sendTelegramVenueSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
@@ -54,15 +56,16 @@ InModuleScope PoshGram {
                         }
                     }
                 }#endMock
-                Send-TelegramVenue `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Latitude 37.621313 `
-                    -Longitude -122.378955 `
-                    -Title 'Star Fleet Headquarters' `
-                    -Address 'San Francisco, CA 94128' `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramVenueSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
+                    DisableNotification = $true
+                }
+                Send-TelegramVenue @sendTelegramVenueSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramVenue

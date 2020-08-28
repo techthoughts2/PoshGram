@@ -14,14 +14,16 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $animation = "C:\animation\animation.gif"
-    Send-TelegramLocalAnimation `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -AnimationPath $animation `
-        -Caption "Check out this animation" `
-        -ParseMode MarkdownV2 `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramLocalAnimationSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        AnimationPath       = $animation
+        Caption             = "Check out this animation"
+        ParseMode           = 'MarkdownV2'
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
 
     Sends animation message via Telegram API
 .EXAMPLE

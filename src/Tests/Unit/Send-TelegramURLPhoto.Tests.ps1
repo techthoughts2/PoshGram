@@ -43,50 +43,57 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the photo extension is not supported' {
                 mock Test-URLExtension { $false }
-                Send-TelegramURLPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoURL $photoURL `
-                    -Caption "DSC is a great technology" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhotoURL            = $photoURL
+                    Caption             = "DSC is a great technology"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                Send-TelegramURLPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoURL $photoURL `
-                    -Caption "DSC is a great technology" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhotoURL            = $photoURL
+                    Caption             = "DSC is a great technology"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramURLPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoURL $photoURL `
-                    -Caption "DSC is a great technology" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhotoURL            = $photoURL
+                    Caption             = "DSC is a great technology"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramURLPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoURL $photoURL `
-                    -Caption "DSC is a great technology" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramURLPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhotoURL            = $photoURL
+                    Caption             = "DSC is a great technology"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                }
+                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramURLPhoto

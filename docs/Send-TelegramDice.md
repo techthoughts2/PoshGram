@@ -1,24 +1,24 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md
+online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md
 schema: 2.0.0
 ---
 
-# Send-TelegramVenue
+# Send-TelegramDice
 
 ## SYNOPSIS
-Sends Telegram information about a venue.
+Sends Telegram animated emoji that will display a random value.
 
 ## SYNTAX
 
 ```
-Send-TelegramVenue [-BotToken] <String> [-ChatID] <String> [-Latitude] <Single> [-Longitude] <Single>
- [-Title] <String> [-Address] <String> [-DisableNotification] [<CommonParameters>]
+Send-TelegramDice [-BotToken] <String> [-ChatID] <String> [-Emoji] <String> [-DisableNotification]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send latitude, longitude, title, and address information about a venue to specified Telegram chat.
+Uses Telegram Bot API to send animated emoji that will display a random value to specified Telegram chat.
 
 ## EXAMPLES
 
@@ -26,37 +26,28 @@ Uses Telegram Bot API to send latitude, longitude, title, and address informatio
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-$latitude = 37.621313
-$longitude = -122.378955
-$title = 'Star Fleet Headquarters'
-$address = 'San Francisco, CA 94128'
-Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+$emoji = 'basketball'
+Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
 ```
 
-Sends venue information via Telegram API
+Sends animated basketball emoji that displays a random value via Telegram API
 
 ### EXAMPLE 2
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-$latitude = 37.621313
-$longitude = -122.378955
-$title = 'Star Fleet Headquarters'
-$address = 'San Francisco, CA 94128'
-$sendTelegramVenueSplat = @{
+$emoji = 'dice'
+$sendTelegramDiceSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
-    Latitude            = $latitude
-    Longitude           = $longitude
-    Title               = $title
-    Address             = $address
     DisableNotification = $true
     Verbose             = $true
+    Emoji               = $emoji
 }
-Send-TelegramVenue @sendTelegramVenueSplat
+Send-TelegramDice @sendTelegramDiceSplat
 ```
 
-Sends venue information via Telegram API
+Sends animated dice emoji that displays a random value via Telegram API
 
 ## PARAMETERS
 
@@ -90,61 +81,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Latitude
-Latitude of the venue
+### -Emoji
+Emoji on which the dice throw animation is based.
 
 ```yaml
-Type: Single
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 3
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Longitude
-Longitude of the venue
-
-```yaml
-Type: Single
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Title
-Name of the venue
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Address
-Address of the venue
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -188,7 +134,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md)
+[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md)
 
-[https://core.telegram.org/bots/api#sendvenue](https://core.telegram.org/bots/api#sendvenue)
+[https://core.telegram.org/bots/api#senddice](https://core.telegram.org/bots/api#senddice)
 

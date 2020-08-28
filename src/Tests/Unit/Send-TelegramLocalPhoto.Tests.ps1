@@ -51,55 +51,66 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the photo can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" | Should -Be $false
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if the photo extension is not supported' {
                 mock Test-FileExtension { $false }
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" | Should -Be $false
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if the photo is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" | Should -Be $false
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" | Should -Be $false
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    PhotoPath   = "c:\bs\diagvresults.jpg"
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramLocalPhoto `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -PhotoPath "c:\bs\diagvresults.jpg" `
-                    -Caption "Check out this photo" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhotoPath           = "c:\bs\diagvresults.jpg"
+                    Caption             = "Check out this photo"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_Success
     }#describe_Send-TelegramLocalPhoto

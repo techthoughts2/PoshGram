@@ -43,62 +43,69 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the audio extension is not supported' {
                 mock Test-URLExtension { $false }
-                Send-TelegramURLAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -AudioURL $audioURL `
-                    -Caption "Check out this audio track" `
-                    -ParseMode MarkdownV2 `
-                    -Duration 495 `
-                    -Performer "Metallica" `
-                    -Title "Halo On Fire" `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLAudioSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
+                    ParseMode           = 'MarkdownV2'
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                Send-TelegramURLAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -AudioURL $audioURL `
-                    -Caption "Check out this audio track" `
-                    -ParseMode MarkdownV2 `
-                    -Duration 495 `
-                    -Performer "Metallica" `
-                    -Title "Halo On Fire" `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLAudioSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
+                    ParseMode           = 'MarkdownV2'
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramURLAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -AudioURL $audioURL `
-                    -Caption "Check out this audio track" `
-                    -ParseMode MarkdownV2 `
-                    -Duration 495 `
-                    -Performer "Metallica" `
-                    -Title "Halo On Fire" `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLAudioSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
+                    ParseMode           = 'MarkdownV2'
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramURLAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -AudioURL $audioURL `
-                    -Caption "Check out this audio track" `
-                    -ParseMode MarkdownV2 `
-                    -Duration 495 `
-                    -Performer "Metallica" `
-                    -Title "Halo On Fire" `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramURLAudioSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
+                    ParseMode           = 'MarkdownV2'
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
+                    DisableNotification = $true
+                }
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Functions

@@ -41,42 +41,49 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the sticker extension is not supported' {
                 mock Test-URLExtension { $false }
-                Send-TelegramURLSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerURL $StickerURL `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                Send-TelegramURLSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerURL $StickerURL `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramURLSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerURL $StickerURL `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramURLSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerURL $StickerURL `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                }
+                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramURLSticker

@@ -38,12 +38,14 @@ Sends sticker message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
-Send-TelegramURLSticker `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -StickerURL $StickerURL `
-    -DisableNotification `
-    -Verbose
+$sendTelegramURLStickerSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    StickerURL          = $StickerURL
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramURLSticker @sendTelegramURLStickerSplat
 ```
 
 Sends sticker message via Telegram API

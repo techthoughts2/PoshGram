@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 1.12.0
+Help Version: 1.13.0
 Locale: en-US
 ---
 
@@ -16,6 +16,9 @@ Get information for specified Telegram sticker pack.
 
 ### [Send-TelegramContact](Send-TelegramContact.md)
 Sends Telegram phone contact message via BOT API.
+
+### [Send-TelegramDice](Send-TelegramDice.md)
+Sends Telegram animated emoji that will display a random value.
 
 ### [Send-TelegramLocalAnimation](Send-TelegramLocalAnimation.md)
 Sends Telegram animation message via Bot API from locally sourced animation

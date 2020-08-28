@@ -49,53 +49,64 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the sticker can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" | Should -Be $false
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = "c:\bs\sticker.webp"
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
             It 'should return false if the sticker extension is not supported' {
                 mock Test-FileExtension { $false }
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" | Should -Be $false
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = "c:\bs\sticker.webp"
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
             It 'should return false if the sticker is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" | Should -Be $false
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = "c:\bs\sticker.webp"
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" | Should -Be $false
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = "c:\bs\sticker.webp"
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = "c:\bs\sticker.webp"
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramLocalSticker `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -StickerPath "c:\bs\sticker.webp" `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerPath         = "c:\bs\sticker.webp"
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_Success
     }#describe_Send-TelegramLocalSticker

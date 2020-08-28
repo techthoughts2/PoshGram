@@ -130,7 +130,7 @@ InModuleScope PoshGram {
                     Options             = $opt2
                     IsAnonymous         = $true
                     PollType            = 'quiz'
-                    QuizAnswer  = $answer
+                    QuizAnswer          = $answer
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat

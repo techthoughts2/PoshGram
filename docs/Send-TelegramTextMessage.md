@@ -36,14 +36,16 @@ Sends text message via Telegram API
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramTextMessage `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -Message "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)" `
-    -ParseMode MarkdownV2 `
-    -DisablePreview `
-    -DisableNotification `
-    -Verbose
+$sendTelegramTextMessageSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    Message             = "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)"
+    ParseMode           = 'MarkdownV2'
+    DisablePreview      = $true
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
 Sends text message via Telegram API
@@ -51,10 +53,10 @@ Sends text message via Telegram API
 ### EXAMPLE 3
 ```
 $sendTelegramTextMessageSplat = @{
-    BotToken = $botToken
-    ChatID = $chat
+    BotToken  = $botToken
+    ChatID    = $chat
     ParseMode = 'MarkdownV2'
-    Message = 'This is how to escape an underscore in a message: \_'
+    Message   = 'This is how to escape an underscore in a message: \_'
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
@@ -67,7 +69,7 @@ $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     ParseMode = 'MarkdownV2'
-    Message   = 'You can underline __words__ in messages\.'
+    Message   = 'This is how to escape an underscore in a message: \_'
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```

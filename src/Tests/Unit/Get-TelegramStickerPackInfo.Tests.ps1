@@ -18,16 +18,17 @@ InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    function Write-Error {}
+    function Write-Error {
+    }
     #-------------------------------------------------------------------------
     Describe 'Get-TelegramStickerPackInfo' -Tag Unit {
         BeforeEach {
             Mock Test-PollOptions { $true }
             Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok          = 'True'
-                    result      = [PSCustomObject]@{
-                        Name = 'STPicard'
+                    ok     = 'True'
+                    result = [PSCustomObject]@{
+                        Name           = 'STPicard'
                         title          = 'Picard'
                         is_animated    = 'False'
                         contains_masks = 'False'
@@ -69,10 +70,11 @@ InModuleScope PoshGram {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Get-TelegramStickerPackInfo `
-                    -BotToken $token `
-                    -StickerSetName STPicard `
-                    | Should -Be $false
+                $getTelegramStickerPackInfoSplat = @{
+                    BotToken       = $token
+                    StickerSetName = 'STPicard'
+                }
+                Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
@@ -87,15 +89,18 @@ InModuleScope PoshGram {
                     $errorRecord.ErrorDetails = $errorDetails
                     throw $errorRecord
                 }
-                Get-TelegramStickerPackInfo `
-                    -BotToken $token `
-                    -StickerSetName Nope `
-                    | Should -Be $false
+                $getTelegramStickerPackInfoSplat = @{
+                    BotToken       = $token
+                    StickerSetName = 'Nope'
+                }
+                Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
             }#it
             It 'should return a custom PSCustomObject if successful' {
-                $eval = Get-TelegramStickerPackInfo `
-                    -BotToken $token `
-                    -StickerSetName STPicard
+                $getTelegramStickerPackInfoSplat = @{
+                    BotToken       = $token
+                    StickerSetName = 'STPicard'
+                }
+                $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                 $eval.width       | Should -BeExactly '512'
                 $eval.height      | Should -BeExactly '512'
                 $eval.emoji       | Should -BeExactly '🙂'

@@ -26,13 +26,15 @@ InModuleScope PoshGram {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocation `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Latitude 37.621313 `
-                    -Longitude -122.378955 `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocationSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramLocation @sendTelegramLocationSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
@@ -51,13 +53,14 @@ InModuleScope PoshGram {
                         }
                     }
                 }#endMock
-                Send-TelegramLocation `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Latitude 37.621313 `
-                    -Longitude -122.378955 `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocationSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    DisableNotification = $true
+                }
+                Send-TelegramLocation @sendTelegramLocationSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramLocation

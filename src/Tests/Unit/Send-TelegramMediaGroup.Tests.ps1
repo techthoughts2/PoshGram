@@ -17,7 +17,8 @@ $WarningPreference = "SilentlyContinue"
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
     $WarningPreference = "SilentlyContinue"
-    function Write-Error {}
+    function Write-Error {
+    }
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
@@ -58,12 +59,13 @@ InModuleScope PoshGram {
                 $tooFew = @(
                     'photo1.jpg'
                 )
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $tooFew `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $tooFew
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if the files provided are great than 10' {
                 $tooMany = @(
@@ -79,72 +81,79 @@ InModuleScope PoshGram {
                     'photo10.jpg',
                     'photo11.jpg'
                 )
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $tooMany `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $tooMany
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if the media can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $justRight `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if the media extension is not supported' {
                 mock Test-FileExtension { $false }
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $justRight `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if the media is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Video `
-                    -FilePaths $justRight `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Video'
+                    FilePaths = $justRight
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $justRight `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $justRight `
-                    | Should -Be $false
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramMediaGroup `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -MediaType Photo `
-                    -FilePaths $justRight `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    MediaType           = 'Photo'
+                    FilePaths           = $justRight
+                    DisableNotification = $true
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramMediaGroup

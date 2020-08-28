@@ -39,14 +39,16 @@ Sends photo message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
-Send-TelegramURLPhoto `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -PhotoURL $photourl `
-    -Caption "DSC is a great technology" `
-    -ParseMode MarkdownV2 `
-    -DisableNotification `
-    -Verbose
+$sendTelegramURLPhotoSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    PhotoURL            = $photourl
+    Caption             = "DSC is a great technology"
+    ParseMode           = 'MarkdownV2'
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
 ```
 
 Sends photo message via Telegram API

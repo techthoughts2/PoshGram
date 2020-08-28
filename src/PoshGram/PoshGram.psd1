@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.12.0'
+    ModuleVersion     = '1.13.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -72,6 +72,7 @@
     FunctionsToExport = @(
         'Get-TelegramStickerPackInfo',
         'Send-TelegramContact',
+        'Send-TelegramDice',
         'Send-TelegramLocalAnimation',
         'Send-TelegramLocalAudio',
         'Send-TelegramLocalDocument',
@@ -117,7 +118,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @(
+            Tags         = @(
                 'Animations',
                 'Audio',
                 'Automation',
@@ -125,6 +126,7 @@
                 'Contact',
                 'Contacts',
                 'Coordinates',
+                'Dice',
                 'Documents',
                 'Gif',
                 'Gifs',
@@ -170,6 +172,9 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = '
+1.13.0:
+    Added Send-TelegramDice
+    Updated help for all cmdlets to include splat examples
 1.12.0:
     Added support for MarkdownV2
     Changed default Parse Mode for all functions from legacy Markdown to HTML

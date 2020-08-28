@@ -476,5 +476,18 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramURLSticker
+        Start-Sleep -Milliseconds $milliSeconds
+        Context 'Send-TelegramDice' {
+            It 'Should return with ok:true when a dice is successfully sent' {
+                $sendTelegramDiceSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Emoji               = 'dice'
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramDice @sendTelegramDiceSplat
+                $eval.ok | Should -Be "True"
+            }#it
+        }#context_Send-TelegramDice
     }#describe_InfraTests
 }#scope_PoshGram

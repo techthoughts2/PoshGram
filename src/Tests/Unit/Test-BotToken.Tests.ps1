@@ -25,9 +25,11 @@ InModuleScope PoshGram {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Test-BotToken `
-                    -BotToken $token `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $testBotTokenSplat = @{
+                    BotToken    = $token
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Test-BotToken @testBotTokenSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
@@ -43,9 +45,10 @@ InModuleScope PoshGram {
                         }
                     }
                 }#endMock
-                Test-BotToken `
-                    -BotToken $token `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $testBotTokenSplat = @{
+                    BotToken = $token
+                }
+                Test-BotToken @testBotTokenSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Test-BotToken

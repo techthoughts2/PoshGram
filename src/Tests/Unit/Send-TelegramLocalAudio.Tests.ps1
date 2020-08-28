@@ -51,58 +51,71 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the audio can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" | Should -Be $false
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Audio    = "C:\bs\audio.mp3"
+                }
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
             It 'should return false if the audio extension is not supported' {
                 mock Test-FileExtension { $false }
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" | Should -Be $false
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Audio    = "C:\bs\audio.mp3"
+                }
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
             It 'should return false if the audio is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" | Should -Be $false
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Audio    = "C:\bs\audio.mp3"
+                }
+
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" | Should -Be $false
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Audio    = "C:\bs\audio.mp3"
+                }
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    Audio       = "C:\bs\audio.mp3"
+                    ErrorAction = 'SilentlyContinue'
+                }
+
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramLocalAudio `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Audio "C:\bs\audio.mp3" `
-                    -Caption "Check out this audio track" `
-                    -ParseMode MarkdownV2 `
-                    -Duration 495 `
-                    -Performer "Metallica" `
-                    -Title "Halo On Fire" `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocalAudioSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Audio               = "C:\bs\audio.mp3"
+                    Caption             = "Check out this audio track"
+                    ParseMode           = 'MarkdownV2'
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_Success
     }#describe_Send-TelegramLocalAudio

@@ -40,20 +40,23 @@ InModuleScope PoshGram {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramTextMessage `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Message "Hi there Pester" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramTextMessageSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    Message     = "Hi there Pester"
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramTextMessage `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Message "Hi There Pester" `
-                | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramTextMessageSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Message  = "Hi There Pester"
+                }
+                Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramTextMessage
