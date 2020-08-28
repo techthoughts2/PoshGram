@@ -5,7 +5,7 @@
 # https://docs.microsoft.com/powershell/module/packagemanagement/get-packageprovider
 Get-PackageProvider -Name Nuget -ForceBootstrap | Out-Null
 
-Install-Module -Name PowerShellGet -RequiredVersion 2.2.4.1 -Force
+Install-Module -Name PowerShellGet -RequiredVersion 2.2.4.1 -Force -Scope CurrentUser
 
 # https://docs.microsoft.com/powershell/module/powershellget/set-psrepository
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
