@@ -326,6 +326,30 @@ InModuleScope PoshGram {
                 Test-PollOptions -PollOptions $opt | Should -Be $true
             }#it
         }#Test-PollOptions
+        Context 'Test-Explanation' {
+            It 'should return false if the explanation exceeds 200 characters' {
+                $explanation = 'Space: the final frontier. These are the voyages of the starship Enterprise. Its five-year mission: to explore strange new worlds. To seek out new life and new civilizations. To boldly go where no man has gone before!'
+                Test-Explanation -Explanation $explanation | Should -Be $false
+            }#it
+            It 'should return false if the explanation has more than 2 line feeds' {
+                $explanation = @'
+The Original Series
+The Animated Series
+The Next Generation
+Deep Space Nine
+Voyager
+Enterprise
+Discovery
+Picard
+Lower Decks
+'@
+                Test-Explanation -Explanation $explanation | Should -Be $false
+            }#it
+            It 'should return true if the explanation meets criteria' {
+                $explanation = 'The Invincible-class is the single largest multi-mission combat-equipped starship ever constructed by Starfleet.'
+                Test-Explanation -Explanation $explanation | Should -Be $true
+            }#it
+        }#Test-Explanation
         Context 'Resolve-ShortLink' {
             #I haven't figured out at this time how to properly mock Invoke-WebRequest errors that indicate a re-direction condition.
             #as such, there is no test coverage for this function at this time

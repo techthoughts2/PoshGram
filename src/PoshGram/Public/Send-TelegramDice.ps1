@@ -1,44 +1,35 @@
-<#
+﻿<#
 .Synopsis
-    Sends Telegram phone contact message via BOT API.
+    Sends Telegram animated emoji that will display a random value.
 .DESCRIPTION
-    Uses Telegram Bot API to send contact information to specified Telegram chat.
+    Uses Telegram Bot API to send animated emoji that will display a random value to specified Telegram chat.
 .EXAMPLE
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
-    $phone = '1-222-222-2222'
-    $firstName = 'Jean-Luc'
-    Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+    $emoji = 'basketball'
+    Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
 
-    Sends contact via Telegram API
+    Sends animated basketball emoji that displays a random value via Telegram API
 .EXAMPLE
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
-    $phone = '1-222-222-2222'
-    $firstName = 'Jean-Luc'
-    $lastName = 'Picard'
-    $sendTelegramContactSplat = @{
+    $emoji = 'dice'
+    $sendTelegramDiceSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
-        PhoneNumber         = $phone
-        FirstName           = $firstName
-        LastName            = $lastName
         DisableNotification = $true
         Verbose             = $true
+        Emoji               = $emoji
     }
-    Send-TelegramContact @sendTelegramContactSplat
+    Send-TelegramDice @sendTelegramDiceSplat
 
-    Sends contact via Telegram API
+    Sends animated dice emoji that displays a random value via Telegram API
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
     Unique identifier for the target chat
-.PARAMETER PhoneNumber
-    Contact phone number
-.PARAMETER FirstName
-    Contact first name
-.PARAMETER LastName
-    Contact last name
+.PARAMETER Emoji
+    Emoji on which the dice throw animation is based.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
@@ -54,17 +45,16 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameter               Type                    Required    Description
+    Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    phone_number            String                  Yes         Contact's phone number
-    first_name              String                  Yes         Contact's first name
-    last_name               String                  Optional    Contact's last name
+    emoji                   String                  Optional    Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, or “🏀”. Dice can have values 1-6 for “🎲” and “🎯”, and values 1-5 for “🏀”. Defaults to “🎲”
+    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
+    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md
 .LINK
-    https://core.telegram.org/bots/api#sendcontact
+    https://core.telegram.org/bots/api#senddice
 #>
-function Send-TelegramContact {
+function Send-TelegramDice {
     [CmdletBinding()]
     Param
     (
@@ -79,17 +69,9 @@ function Send-TelegramContact {
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
         [Parameter(Mandatory = $true,
-            HelpMessage = 'Contact phone number')]
-        [ValidateNotNullOrEmpty()]
-        [string]$PhoneNumber,
-        [Parameter(Mandatory = $true,
-            HelpMessage = 'Contact first name')]
-        [ValidateNotNullOrEmpty()]
-        [string]$FirstName,
-        [Parameter(Mandatory = $false,
-            HelpMessage = 'Contact last name')]
-        [ValidateNotNullOrEmpty()]
-        [string]$LastName,
+            HelpMessage = 'Emoji on which the dice throw animation is based.')]
+        [ValidateSet('dice', 'dart', 'basketball')]
+        [string]$Emoji,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
@@ -97,12 +79,22 @@ function Send-TelegramContact {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/sendContact"
+    switch ($Emoji) {
+        dice {
+            $emojiSend = '🎲'
+        }
+        dart {
+            $emojiSend = '🎯'
+        }
+        basketball {
+            $emojiSend = '🏀'
+        }
+    }
+    #------------------------------------------------------------------------
+    $uri = "https://api.telegram.org/bot$BotToken/sendDice"
     $Form = @{
         chat_id              = $ChatID
-        phone_number         = $PhoneNumber
-        first_name           = $FirstName
-        last_name            = $LastName
+        emoji                = $emojiSend
         disable_notification = $DisableNotification.IsPresent
     }#form
     #------------------------------------------------------------------------
@@ -117,10 +109,10 @@ function Send-TelegramContact {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram contact:"
+        Write-Warning "An error was encountered sending the Telegram location:"
         Write-Error $_
         $results = $false
     }#catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramContact
+}#function_Send-TelegramDice

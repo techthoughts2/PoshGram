@@ -50,48 +50,57 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the document can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -File "C:\customlog.txt" | Should -Be $false
+                $sendTelegramLocalDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    File     = "C:\customlog.txt"
+                }
+                Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -File "C:\customlog.txt" | Should -Be $false
+                $sendTelegramLocalDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    File     = "C:\customlog.txt"
+                }
+                Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -File "C:\customlog.txt" | Should -Be $false
+                $sendTelegramLocalDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    File     = "C:\customlog.txt"
+                }
+                Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -File "C:\customlog.txt" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocalDocumentSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    File        = "C:\customlog.txt"
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
         }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramLocalDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -File "C:\customlog.txt" `
-                    -Caption "Check out this file" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocalDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    File                = "C:\customlog.txt"
+                    Caption             = "Check out this file"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramLocalDocument

@@ -39,14 +39,16 @@ Sends document message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $file = "C:\Logs\Log1.txt"
-Send-TelegramLocalDocument `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -File $file `
-    -Caption "Check out this file" `
-    -ParseMode MarkdownV2 `
-    -DisableNotification `
-    -Verbose
+$sendTelegramLocalDocumentSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    File                = $file
+    Caption             = "Check out this file"
+    ParseMode           = 'MarkdownV2'
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
 ```
 
 Sends document message via Telegram API

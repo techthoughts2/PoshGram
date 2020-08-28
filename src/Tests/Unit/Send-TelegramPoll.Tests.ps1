@@ -32,7 +32,8 @@ InModuleScope PoshGram {
             'Star Trek: Voyager',
             'Star Trek: Enterprise',
             'Star Trek: Discovery',
-            'Star Trek: Picard'
+            'Star Trek: Picard',
+            'Star Trek: Lower Decks'
         )
         $question2 = 'Who was the best Starfleet captain?'
         $opt2 = @(
@@ -42,7 +43,9 @@ InModuleScope PoshGram {
             'Kathryn Janeway',
             'Jonathan Archer'
         )
-        $answer = 2
+        $answer = 1
+        $question3 = 'Which Star Trek captain has an artificial heart?'
+        $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
         BeforeEach {
             mock Test-PollOptions { $true }
             mock Invoke-RestMethod -MockWith {
@@ -106,6 +109,19 @@ InModuleScope PoshGram {
                 }
                 Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
             }#it
+            It 'should return false if a quiz type poll has an explanation that does not meet requirements' {
+                $sendTelegramPollSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Question            = $question
+                    Options             = $opt
+                    DisableNotification = $true
+                    Explanation         = 'Space: the final frontier. These are the voyages of the starship Enterprise. Its five-year mission: to explore strange new worlds. To seek out new life and new civilizations. To boldly go where no man has gone before!'
+                    PollType            = 'quiz'
+                    QuizAnswer          = 1
+                }
+                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
+            }#it
         }#context_Error
         Context 'Success' {
             It 'should return expected results if successful with a typical poll' {
@@ -130,8 +146,41 @@ InModuleScope PoshGram {
                     Options             = $opt2
                     IsAnonymous         = $true
                     PollType            = 'quiz'
-                    QuizAnswer  = $answer
+                    QuizAnswer          = $answer
                     DisableNotification = $true
+                }
+                $eval = Send-TelegramPoll @sendTelegramPollSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -Be "True"
+            }#it
+            It 'should return expected results if successfull with a quiz poll with additional options' {
+                $sendTelegramPollSplat = @{
+                    BotToken             = $token
+                    ChatID               = $chat
+                    Question             = $question3
+                    Options              = $opt
+                    Explanation          = $explanation
+                    ExplanationParseMode = 'MarkdownV2'
+                    IsAnonymous          = $false
+                    PollType             = 'quiz'
+                    QuizAnswer           = $answer
+                    CloseDate            = (Get-Date).AddDays(1)
+                }
+                $eval = Send-TelegramPoll @sendTelegramPollSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -Be "True"
+
+                $sendTelegramPollSplat = @{
+                    BotToken             = $token
+                    ChatID               = $chat
+                    Question             = $question3
+                    Options              = $opt
+                    Explanation          = $explanation
+                    ExplanationParseMode = 'MarkdownV2'
+                    IsAnonymous          = $false
+                    PollType             = 'quiz'
+                    QuizAnswer           = $answer
+                    OpenPeriod           = 500
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

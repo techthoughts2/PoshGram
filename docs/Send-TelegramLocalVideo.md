@@ -41,18 +41,20 @@ Sends video message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $video = "C:\videos\video.mp4"
-Send-TelegramLocalVideo `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -Video $video `
-    -Duration 10 `
-    -Width 250 `
-    -Height 250 `
-    -Caption "Check out this video" `
-    -ParseMode MarkdownV2 `
-    -Streaming `
-    -DisableNotification `
-    -Verbose
+$sendTelegramLocalVideoSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    Video               = $video
+    Duration            = 10
+    Width               = 250
+    Height              = 250
+    Caption             = "Check out this video"
+    ParseMode           = 'MarkdownV2'
+    Streaming           = $true
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
 ```
 
 Sends video message via Telegram API

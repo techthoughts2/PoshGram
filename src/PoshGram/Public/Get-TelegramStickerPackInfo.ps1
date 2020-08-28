@@ -35,6 +35,8 @@
     Bytes       : {61, 216, 66, 222}
     Code        : U+1F642
     Shortcode   : :slightly_smiling_face:
+
+    To find the name of a sticker pack use the telegram app to share the sticker pack. This will provide a link which contains the sticker pack name.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY

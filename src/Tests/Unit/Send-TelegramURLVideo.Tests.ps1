@@ -43,62 +43,73 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the video extension is not supported' {
                 mock Test-URLExtension { $false }
-                Send-TelegramURLVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -VideoURL $videourl `
-                    -Duration 16 `
-                    -Width 1920 `
-                    -Height 1080 `
-                    -ParseMode MarkdownV2 `
-                    -Streaming $false `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    VideoURL            = $videourl
+                    Duration            = 16
+                    Width               = 1920
+                    Height              = 1080
+                    ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                    Caption             = $false
+                }
+                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                Send-TelegramURLVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -VideoURL $videourl `
-                    -Duration 16 `
-                    -Width 1920 `
-                    -Height 1080 `
-                    -ParseMode MarkdownV2 `
-                    -Streaming $false `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    VideoURL            = $videourl
+                    Duration            = 16
+                    Width               = 1920
+                    Height              = 1080
+                    ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                    Caption             = $false
+                }
+                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramURLVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -VideoURL $videourl `
-                    -Duration 16 `
-                    -Width 1920 `
-                    -Height 1080 `
-                    -ParseMode MarkdownV2 `
-                    -Streaming $false `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    VideoURL            = $videourl
+                    Duration            = 16
+                    Width               = 1920
+                    Height              = 1080
+                    ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                    Caption             = $false
+                }
+                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramURLVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -VideoURL $videourl `
-                    -Duration 16 `
-                    -Width 1920 `
-                    -Height 1080 `
-                    -ParseMode MarkdownV2 `
-                    -Streaming $false `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramURLVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    VideoURL            = $videourl
+                    Duration            = 16
+                    Width               = 1920
+                    Height              = 1080
+                    ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
+                    DisableNotification = $true
+                    Caption             = $false
+                }
+                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramURLPhoto

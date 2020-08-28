@@ -14,17 +14,19 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    Send-TelegramURLAudio `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -AudioURL $audioURL `
-        -Caption "Check out this audio track" `
-        -ParseMode MarkdownV2 `
-        -Duration 495 `
-        -Performer "Metallica" `
-        -Title "Halo On Fire" `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramURLAudioSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        AudioURL            = $audioURL
+        Caption             = "Check out this audio track"
+        ParseMode           = 'MarkdownV2'
+        Duration            = 495
+        Performer           = "Metallica"
+        Title               = "Halo On Fire"
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramURLAudio @sendTelegramURLAudioSplat
 
     Sends audio message via Telegram API
 .EXAMPLE

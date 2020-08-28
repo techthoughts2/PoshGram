@@ -12,32 +12,35 @@
 .EXAMPLE
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
-    Send-TelegramTextMessage `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -Message "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)" `
-        -ParseMode MarkdownV2 `
-        -DisablePreview `
-        -DisableNotification `
-        -Verbose
-
-    Sends text message via Telegram API
-.EXAMPLE
     $sendTelegramTextMessageSplat = @{
-        BotToken = $botToken
-        ChatID = $chat
-        ParseMode = 'MarkdownV2'
-        Message = 'This is how to escape an underscore in a message: \_'
+        BotToken  = $botToken
+        ChatID    = $chat
+        Message   = 'This is how to use <b>bold</b>,<i>italic</i>,<u>underline</u>, and <s>strikethrough</s>, with default HTML formatting.'
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API using MarkdownV2 with a properly escaped character.
+    Sends text message via Telegram API with properly formatted default HTML syntax.
+.EXAMPLE
+    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $chat = "-nnnnnnnnn"
+    $sendTelegramTextMessageSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        Message             = "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)"
+        ParseMode           = 'MarkdownV2'
+        DisablePreview      = $true
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API with properly formatted MarkdownV2 syntax.
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         ParseMode = 'MarkdownV2'
-        Message   = 'You can underline __words__ in messages\.'
+        Message   = 'This is how to escape an __underscore__ in a message: \_'
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 

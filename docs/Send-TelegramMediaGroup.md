@@ -29,11 +29,13 @@ This function only supports sending one media type per send (Photo | Video).
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramMediaGroup `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -MediaType Photo `
-    -FilePaths "C:\photo\photo1.jpg","C:\photo\photo2.jpg"
+$sendTelegramMediaGroupSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    MediaType = 'Photo'
+    FilePaths = "C:\photo\photo1.jpg", "C:\photo\photo2.jpg"
+}
+Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 ```
 
 Uploads all provided photo files as album via Telegram Bot API.
@@ -42,11 +44,13 @@ Uploads all provided photo files as album via Telegram Bot API.
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramMediaGroup `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -MediaType Photo `
-    -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
+$sendTelegramMediaGroupSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    MediaType = 'Photo'
+    FilePaths = (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
+}
+Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 ```
 
 Retrieves all photo file paths from C:\PhotoGroup and uploads as photo album.
@@ -61,12 +65,14 @@ $vFiles = @(
     "$vPath\first_contact.mp4",
     "$vPath\root_beer.mp4"
 )
-Send-TelegramMediaGroup `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -MediaType Video `
-    -FilePaths $vFiles `
-    -DisableNotification
+$sendTelegramMediaGroupSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    MediaType           = 'Video'
+    FilePaths           = $vFiles
+    DisableNotification = $true
+}
+Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 ```
 
 Uploads all provided video files as album via Telegram Bot API.

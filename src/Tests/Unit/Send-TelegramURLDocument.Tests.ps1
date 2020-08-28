@@ -43,44 +43,51 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the document extension is not supported' {
                 mock Test-URLExtension { $false }
-                Send-TelegramURLDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -FileURL $fileURL `
-                    -Caption "TechThoughts Logo" | Should -Be $false
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    FileURL  = $fileURL
+                    Caption  = "TechThoughts Logo"
+                }
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                Send-TelegramURLDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -FileURL $fileURL `
-                    -Caption "TechThoughts Logo" | Should -Be $false
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    FileURL  = $fileURL
+                    Caption  = "TechThoughts Logo"
+                }
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramURLDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -FileURL $fileURL `
-                    -Caption "TechThoughts Logo" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileURL             = $fileURL
+                    Caption             = "TechThoughts Logo"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramURLDocument `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -FileURL $fileURL `
-                    -Caption "TechThoughts Logo" `
-                    -ParseMode MarkdownV2 `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileURL             = $fileURL
+                    Caption             = "TechThoughts Logo"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                }
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramURLDocument

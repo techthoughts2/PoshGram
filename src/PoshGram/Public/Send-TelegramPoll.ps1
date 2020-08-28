@@ -15,7 +15,8 @@
         'Star Trek: Voyager',
         'Star Trek: Enterprise',
         'Star Trek: Discovery',
-        'Star Trek: Picard'
+        'Star Trek: Picard',
+        'Star Trek: Lower Decks'
     )
     Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 
@@ -25,15 +26,17 @@
     $chat = "-nnnnnnnnn"
     $question = 'Who is your favorite Star Fleet Captain?'
     $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
-    Send-TelegramPoll `
-        -BotToken $token `
-        -ChatID $chat `
-        -Question $question `
-        -Options $opt `
-        -DisableNotification `
-        -IsAnonymous $true `
-        -PollType 'regular `
-        -MultipleAnswers $false
+    $sendTelegramPollSplat = @{
+        BotToken            = $token
+        ChatID              = $chat
+        Question            = $question
+        Options             = $opt
+        DisableNotification = $true
+        IsAnonymous         = $true
+        PollType            = 'regular'
+        MultipleAnswers     = $false
+    }
+    Send-TelegramPoll @sendTelegramPollSplat
 
     Sends poll via Telegram API
 .EXAMPLE
@@ -47,7 +50,7 @@
         'Kathryn Janeway',
         'Jonathan Archer'
     )
-    $answer = 2
+    $answer = 1
     $sendTelegramPollSplat = @{
         BotToken    = $botToken
         ChatID      = $chat
@@ -60,6 +63,61 @@
     Send-TelegramPoll @sendTelegramPollSplat
 
     Sends quiz via Telegram API
+.EXAMPLE
+    $question = 'Which class is the largest starship constructed by Starfleet?'
+    $opt = @(
+        'Constitution class',
+        'Intrepid class',
+        'California class',
+        'Galaxy class',
+        'Invincible class',
+        'Sovereign class',
+        'Excelsior class',
+        'Miranda class',
+        'Nebula class',
+        'Olympic class'
+    )
+    $explanation = 'At 1,607.2 meters in length, 764.4 meters across, and 305.76 meters high, Invincible class is the largest starship class ever built by Starfleet.'
+    $answer = 4
+    $sendTelegramPollSplat = @{
+        BotToken    = $token
+        ChatID      = $channel
+        Question    = $question
+        Options     = $opt
+        Explanation = $explanation
+        IsAnonymous = $false
+        PollType    = 'quiz'
+        QuizAnswer  = $answer
+    }
+    Send-TelegramPoll @sendTelegramPollSplat
+
+    Sends quiz via Telegram API with answer explanation.
+.EXAMPLE
+    $question = 'Which Star Trek captain has an artificial heart?'
+    $opt = @(
+        'James Kirk',
+        'Jean-Luc Picard',
+        'Benjamin Sisko',
+        'Kathryn Janeway',
+        'Jonathan Archer'
+    )
+    $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
+    $answer = 1
+    $sendTelegramPollSplat = @{
+        BotToken             = $token
+        ChatID               = $channel
+        Question             = $question
+        Options              = $opt
+        Explanation          = $explanation
+        ExplanationParseMode = 'MarkdownV2'
+        IsAnonymous          = $false
+        PollType             = 'quiz'
+        QuizAnswer           = $answer
+        CloseDate            = (Get-Date).AddDays(1)
+    }
+    Send-TelegramPoll @sendTelegramPollSplat
+
+    Sends quiz via Telegram API with answer explanation properly formatted in MarkdownV2. Quiz will be open for 24 hours (1 day).
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -76,6 +134,14 @@
     True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
 .PARAMETER QuizAnswer
     0-based identifier of the correct answer option, required for polls in quiz mode
+.PARAMETER Explanation
+    Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+.PARAMETER ExplanationParseMode
+    HTML vs Markdown for explanation formatting - HTML by default - https://core.telegram.org/bots/api#formatting-options
+.PARAMETER OpenPeriod
+    Amount of time in seconds the poll will be active after creation, 5-600.
+.PARAMETER CloseDate
+    Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
@@ -102,6 +168,10 @@
     type                    String                  Optional    Poll type, “quiz” or “regular”, defaults to “regular”
     allows_multiple_answers Boolean                 Optional    True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
     correct_option_id       Integer                 Optional    0-based identifier of the correct answer option, required for polls in quiz mode
+    explanation             String                  Optional    Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+    explanation_parse_mode  String                  Optional    Mode for parsing entities in the explanation.
+    open_period             Integer                 Optional    Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
+    close_date              Integer                 Optional    Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
@@ -109,7 +179,7 @@
     https://core.telegram.org/bots/api#sendpoll
 #>
 function Send-TelegramPoll {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'default')]
     Param
     (
         [Parameter(Mandatory = $true,
@@ -117,32 +187,60 @@ function Send-TelegramPoll {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Poll question')]
         [ValidateLength(1, 255)]
         [string]$Question,
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'String array of answer options')]
         [ValidateNotNullOrEmpty()]
         [string[]]$Options,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Set the poll to be anonymous or not')]
         [bool]$IsAnonymous = $true, #default is anonymous
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Poll Type')]
         [ValidateSet('quiz', 'regular')]
         [string]$PollType = 'regular', #default is regular
+
         [Parameter(Mandatory = $false,
-            HelpMessage = 'Poll allows multiple answers')]
+            HelpMessage = 'Poll allows multiple answers - ignored in quiz mode')]
         [bool]$MultipleAnswers = $false, #default is false
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Quiz answer designator')]
         [int]$QuizAnswer,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Text that is shown when a user chooses an incorrect answer')]
+        [string]$Explanation,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'HTML vs Markdown for explanation formatting')]
+        [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
+        [string]$ExplanationParseMode = 'HTML', #set to HTML by default
+
+        [Parameter(ParameterSetName = 'OpenPeriod',
+            Mandatory = $false,
+            HelpMessage = 'Time in seconds the poll/quiz will be active after creation')]
+        [ValidateRange(5, 600)]
+        [int]$OpenPeriod,
+
+        [Parameter(ParameterSetName = 'OpenDate',
+            Mandatory = $false,
+            HelpMessage = 'Point in time when the poll will be automatically closed.')]
+        [datetime]$CloseDate,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
@@ -176,7 +274,24 @@ function Send-TelegramPoll {
         }
         else {
             $Form += @{correct_option_id = $QuizAnswer }
+
+            if ($Explanation) {
+                $explanationEval = Test-Explanation -Explanation $Explanation
+                if ($explanationEval -eq $false) {
+                    $results = $false
+                    return $results
+                }
+                $Form += @{explanation = $Explanation }
+                $Form += @{explanation_parse_mode = $ExplanationParseMode }
+            }
         }
+    }
+    #------------------------------------------------------------------------
+    if ($OpenPeriod) {
+        $Form += @{open_period = $OpenPeriod }
+    }
+    if ($CloseDate) {
+        $Form += @{close_date = (New-TimeSpan -Start (Get-Date) -End $CloseDate).TotalSeconds }
     }
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{

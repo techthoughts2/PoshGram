@@ -27,6 +27,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 
 * [Get-TelegramStickerPackInfo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md)
 * [Send-TelegramContact](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
+* [Send-TelegramDice](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md)
 * [Send-TelegramLocalAnimation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md)
 * [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
 * [Send-TelegramLocalDocument](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md)
@@ -147,7 +148,10 @@ Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 #------------------------------------------------------------------------------------------------
 #send a sticker message from a URL source
-Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
+Send-TelegramURLSticker -BotToken $botToken -ChatID $chat -StickerURL $StickerURL
+#------------------------------------------------------------------------------------------------
+#send an animated emoji that will display a random value
+Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
 #------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell
@@ -172,11 +176,9 @@ $test = "I am a test"
 
 ## Contributors
 
-[Justin Saylor](https://twitter.com/XJustinSaylorX) - Logo
-
-[Mark Kraus](https://twitter.com/markekraus) - PowerShell 6.1 Form handling advice
-
-[Andrew Pearce](https://twitter.com/austoonz) - CI/CD advice
+* [Justin Saylor](https://twitter.com/XJustinSaylorX) - Logo
+* [Mark Kraus](https://twitter.com/markekraus) - PowerShell 6.1 Form handling advice
+* [Andrew Pearce](https://twitter.com/austoonz) - CI/CD advice
 
 ## Notes
 

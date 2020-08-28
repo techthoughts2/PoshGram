@@ -39,13 +39,15 @@ Sends animation message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
-Send-TelegramURLAnimation `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -AnimationURL $AnimationURL `
-    -Caption "Live long, and prosper." `
-    -DisableNotification `
-    -Verbose
+$sendTelegramURLAnimationSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    AnimationURL        = $AnimationURL
+    Caption             = "Live long, and prosper."
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
 ```
 
 Sends animation message via Telegram API

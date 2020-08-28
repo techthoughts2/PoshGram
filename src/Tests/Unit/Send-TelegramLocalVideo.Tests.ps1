@@ -51,59 +51,70 @@ InModuleScope PoshGram {
         Context 'Error' {
             It 'should return false if the video can not be found' {
                 mock Test-Path { $false }
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" | Should -Be $false
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if the video extension is not supported' {
                 mock Test-FileExtension { $false }
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" | Should -Be $false
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if the video is too large' {
                 mock Test-FileSize { $false }
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" | Should -Be $false
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" | Should -Be $false
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" `
-                    -ErrorAction SilentlyContinue | Should -Be $false
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    Video       = "C:\bs\video.mp4"
+                    ErrorAction = 'SilentlyContinue'
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                Send-TelegramLocalVideo `
-                    -BotToken $token `
-                    -ChatID $chat `
-                    -Video "C:\bs\video.mp4" `
-                    -Duration 10 `
-                    -Width 250 `
-                    -Height 250 `
-                    -Caption "Check out this video" `
-                    -ParseMode MarkdownV2 `
-                    -Streaming `
-                    -DisableNotification `
-                    | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Video               = "C:\bs\video.mp4"
+                    Duration            = 10
+                    Width               = 250
+                    Height              = 250
+                    Caption             = "Check out this video"
+                    ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
     }#describe_Send-TelegramLocalVideo

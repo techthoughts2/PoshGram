@@ -34,9 +34,11 @@ Validates the specified Bot auth token via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-Test-BotToken `
-    -BotToken $botToken `
-    -Verbose
+$testBotTokenSplat = @{
+    BotToken = $botToken
+    Verbose  = $true
+}
+Test-BotToken @testBotTokenSplat
 ```
 
 Validates the specified Bot auth token via Telegram API

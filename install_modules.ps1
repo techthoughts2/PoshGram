@@ -20,13 +20,13 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'InvokeBuild'
-            ModuleVersion = '5.5.7'
+            ModuleVersion = '5.6.1'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'PSScriptAnalyzer'
-            ModuleVersion = '1.18.3'
+            ModuleVersion = '1.19.1'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
@@ -38,13 +38,13 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'AWS.Tools.Common'
-            ModuleVersion = '4.0.4.0'
+            ModuleVersion = '4.1.0.0'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'AWS.Tools.SecretsManager'
-            ModuleVersion = '4.0.4.0'
+            ModuleVersion = '4.1.0.0'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))

@@ -61,12 +61,14 @@ Sends sticker message via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-Send-TelegramSticker `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -FileID $sticker `
-    -DisableNotification `
-    -Verbose
+$sendTelegramStickerSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    FileID              = $sticker
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramSticker @sendTelegramStickerSplat
 ```
 
 Sends sticker message via Telegram API
@@ -84,13 +86,15 @@ Sends sticker message via Telegram API
 ```
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
-Send-TelegramSticker `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -StickerSetName STPicard `
-    -Shortcode ':slightly_smiling_face:' `
-    -DisableNotification `
-    -Verbose
+$sendTelegramStickerSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    StickerSetName      = 'STPicard'
+    Shortcode           = ':slightly_smiling_face:'
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramSticker @sendTelegramStickerSplat
 ```
 
 Sends sticker message via Telegram API

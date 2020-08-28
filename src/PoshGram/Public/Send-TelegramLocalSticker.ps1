@@ -14,12 +14,14 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $sticker = "C:\stickers\sticker.webp"
-    Send-TelegramLocalSticker `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -StickerPath $sticker `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramLocalStickerSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        StickerPath         = $sticker
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
 
     Sends sticker message via Telegram API
 .PARAMETER BotToken

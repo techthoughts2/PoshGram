@@ -138,10 +138,13 @@ Add-BuildTask AnalyzeTests -After Analyze {
     if (Test-Path -Path $script:TestsPath) {
 
         $scriptAnalyzerParams = @{
-            Path    = $script:TestsPath
-            Setting = "PSScriptAnalyzerSettings.psd1"
-            Recurse = $true
-            Verbose = $false
+            Path        = $script:TestsPath
+            Setting     = "PSScriptAnalyzerSettings.psd1"
+            ExcludeRule = @(
+                'PSAvoidOverwritingBuiltInCmdlets'
+            )
+            Recurse     = $true
+            Verbose     = $false
         }
 
         Write-Build White '      Performing Test ScriptAnalyzer checks...'
@@ -160,14 +163,14 @@ Add-BuildTask AnalyzeTests -After Analyze {
 #Synopsis: Analyze scripts to verify if they adhere to desired coding format (Stroustrup / OTBS / Allman)
 Add-BuildTask FormattingCheck {
     $scriptAnalyzerParams = @{
-        Setting      = 'CodeFormattingStroustrup'
+        Setting     = 'CodeFormattingStroustrup'
         ExcludeRule = @(
             'PSUseConsistentIndentation',
             'PSUseConsistentWhitespace'
         )
         # ExcludeRule = 'PSUseConsistentWhitespace'
-        Recurse      = $true
-        Verbose      = $false
+        Recurse     = $true
+        Verbose     = $false
     }
 
     Write-Build White '      Performing script formatting checks...'

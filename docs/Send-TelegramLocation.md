@@ -38,13 +38,15 @@ Sends location via Telegram API
 $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 $chat = "-nnnnnnnnn"
 $photo = "C:\photos\aphoto.jpg"
-Send-TelegramLocation `
-    -BotToken $botToken `
-    -ChatID $chat `
-    -Latitude $latitude `
-    -Longitude $longitude `
-    -DisableNotification `
-    -Verbose
+$sendTelegramLocationSplat = @{
+    BotToken            = $botToken
+    ChatID              = $chat
+    Latitude            = $latitude
+    Longitude           = $longitude
+    DisableNotification = $true
+    Verbose             = $true
+}
+Send-TelegramLocation @sendTelegramLocationSplat
 ```
 
 Sends location via Telegram API

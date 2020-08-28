@@ -14,14 +14,16 @@
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     $photo = "C:\photos\aphoto.jpg"
-    Send-TelegramLocalPhoto `
-        -BotToken $botToken `
-        -ChatID $chat `
-        -PhotoPath $photo `
-        -Caption "Check out this photo" `
-        -ParseMode MarkdownV2 `
-        -DisableNotification `
-        -Verbose
+    $sendTelegramLocalPhotoSplat = @{
+        BotToken            = $botToken
+        ChatID              = $chat
+        PhotoPath           = $photo
+        Caption             = "Check out this photo"
+        ParseMode           = 'MarkdownV2'
+        DisableNotification = $true
+        Verbose             = $true
+    }
+    Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
 
     Sends photo message via Telegram API
 .EXAMPLE
