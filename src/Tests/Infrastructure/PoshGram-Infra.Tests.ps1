@@ -427,7 +427,7 @@ InModuleScope PoshGram {
                     BotToken             = $token
                     ChatID               = $channel
                     Question             = $question3
-                    Options              = $opt
+                    Options              = $opt2
                     Explanation          = $explanation
                     ExplanationParseMode = 'MarkdownV2'
                     IsAnonymous          = $false
