@@ -8,7 +8,7 @@
 # Install-Module -Name PowerShellGet -RequiredVersion 2.2.4.1 -Force -Scope CurrentUser
 
 # https://docs.microsoft.com/powershell/module/powershellget/set-psrepository
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+# Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 # List of PowerShell Modules required for the build
 $modulesToInstall = [System.Collections.ArrayList]::new()
