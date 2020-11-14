@@ -155,7 +155,7 @@ InModuleScope PoshGram {
     #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        $milliSeconds = 15000
+        $milliSeconds = 20000
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
@@ -369,7 +369,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
-            Start-Sleep -Seconds 10
+            Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of videos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -381,7 +381,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
-            Start-Sleep -Seconds 10
+            Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of audios is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -393,7 +393,7 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be "True"
             }#it
-            Start-Sleep -Seconds 10
+            Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of documents is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -421,7 +421,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be "True"
             }#it
         }#context_Send-TelegramContact
-        Start-Sleep -Milliseconds $milliSeconds
+        Start-Sleep -Seconds 30
         Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
