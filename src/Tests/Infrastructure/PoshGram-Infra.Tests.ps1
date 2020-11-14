@@ -397,9 +397,9 @@ InModuleScope PoshGram {
             It 'Should return with ok:true when a group of documents is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
-                    ChatID              = $dFiles
-                    MediaType           = 'Documents'
-                    FilePaths           = $aFiles
+                    ChatID              = $channel
+                    MediaType           = 'Document'
+                    FilePaths           = $dFiles
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
