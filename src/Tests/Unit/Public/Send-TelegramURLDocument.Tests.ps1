@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -20,8 +20,8 @@ InModuleScope PoshGram {
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
-    Describe 'Send-TelegramURLPhoto' -Tag Unit {
-        $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    Describe 'Send-TelegramURLDocument' -Tag Unit {
+        $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
@@ -33,68 +33,62 @@ InModuleScope PoshGram {
                         from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
                         chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
                         date             = "1530157540"
-                        photo            = "{@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCjAABG9Ju7DQr02GYgMBAAEC; file_size=1084;file_path=photos/file_427.jpg; width=90; height=85},@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCj################; file_size=2305; width=123;height=116}}"
-                        caption          = "Please work, please"
+                        document         = "@{file_name=LogExample.zip; mime_type=application/zip;file_id=BQADBAADBgAD2j69UXHVUcgmhQqsAg; file_size=216}"
+                        caption          = "TechThoughts Logo"
                         caption_entities = "{@{offset=13; length=6; type=bold}}"
                     }
                 }
             }#endMock
         }#before_each
         Context 'Error' {
-            It 'should return false if the photo extension is not supported' {
+            It 'should return false if the document extension is not supported' {
                 mock Test-URLExtension { $false }
-                $sendTelegramURLPhotoSplat = @{
-                    BotToken            = $token
-                    ChatID              = $chat
-                    PhotoURL            = $photoURL
-                    Caption             = "DSC is a great technology"
-                    ParseMode           = 'MarkdownV2'
-                    DisableNotification = $true
-                    ErrorAction         = 'SilentlyContinue'
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    FileURL  = $fileURL
+                    Caption  = "TechThoughts Logo"
                 }
-                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                $sendTelegramURLPhotoSplat = @{
-                    BotToken            = $token
-                    ChatID              = $chat
-                    PhotoURL            = $photoURL
-                    Caption             = "DSC is a great technology"
-                    ParseMode           = 'MarkdownV2'
-                    DisableNotification = $true
-                    ErrorAction         = 'SilentlyContinue'
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    FileURL  = $fileURL
+                    Caption  = "TechThoughts Logo"
                 }
-                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramURLPhotoSplat = @{
+                $sendTelegramURLDocumentSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    PhotoURL            = $photoURL
-                    Caption             = "DSC is a great technology"
+                    FileURL             = $fileURL
+                    Caption             = "TechThoughts Logo"
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
-                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -Be $false
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                $sendTelegramURLPhotoSplat = @{
+                $sendTelegramURLDocumentSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    PhotoURL            = $photoURL
-                    Caption             = "DSC is a great technology"
+                    FileURL             = $fileURL
+                    Caption             = "TechThoughts Logo"
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                 }
-                Send-TelegramURLPhoto @sendTelegramURLPhotoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
-    }#describe_Send-TelegramURLPhoto
+    }#describe_Send-TelegramURLDocument
 }#inModule

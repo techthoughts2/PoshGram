@@ -24,7 +24,9 @@ phases:
       - powershell -command 'New-Item -Path C:\Test\Stickers -ItemType Directory | Out-Null'
       - aws s3 cp s3://poshgram-test-files/jean.gif C:\Test\Animation\jean.gif --quiet
       - aws s3 cp s3://poshgram-test-files/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 --quiet
+      - aws s3 cp s3://poshgram-test-files/TestAudio.mp3 C:\Test\Audio\TestAudio.mp3 --quiet
       - aws s3 cp s3://poshgram-test-files/customlog.txt C:\Test\Documents\customlog.txt --quiet
+      - aws s3 cp s3://poshgram-test-files/customlog2.txt C:\Test\Documents\customlog2.txt --quiet
       - aws s3 cp s3://poshgram-test-files/beverly.jpg C:\Test\PhotoGroup\beverly.jpg --quiet
       - aws s3 cp s3://poshgram-test-files/data.jpg C:\Test\PhotoGroup\data.jpg --quiet
       - aws s3 cp s3://poshgram-test-files/geordi.jpg C:\Test\PhotoGroup\geordi.jpg --quiet

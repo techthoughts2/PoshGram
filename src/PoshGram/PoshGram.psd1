@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.14.0'
+    ModuleVersion     = '1.15.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -127,6 +127,7 @@
                 'Contacts',
                 'Coordinates',
                 'Dice',
+                'Document',
                 'Documents',
                 'Gif',
                 'Gifs',
@@ -171,50 +172,7 @@
             IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = '
-1.14.0:
-    Added Send-TelegramDice
-    Updated Send-TelegramPoll to include newly supported parameters
-    Updated help for all cmdlets to include splat examples
-1.12.0:
-    Added support for MarkdownV2
-    Changed default Parse Mode for all functions from legacy Markdown to HTML
-    Added support for Polls v2.0 features
-1.10.1:
-    Fixed bug where DisableNotification had no effect when running Send-TelegramSticker
-1.10.0:
-    Improved Help Formatting
-    Added Send-TelegramURLSticker
-    Added Send-TelegramLocalSticker
-    Added Send-TelegramSticker
-    Added Get-TelegramStickerPackInfo
-    Added Send-TelegramPoll
-    Added Send-TelegramVenue
-    Added Send-TelegramContact
-    DisableNotification and Streaming parameters changed from bool to switch on all functions
-    Send-TelegramTextMessage: Preview parameter renamed to DisablePreview and changed from bool to switch
-    Unit test and Infra test improvements
-1.0.2 :
-    Addressed bug where certain UTF-8 characters would fail to send properly in Send-TelegramTextMessage
-    Cosmetic code change for Invoke functions to use splat parameters
-1.0.0 :
-    Addressed bug in Send-TelegramTextMessage that wasnt handling underscores
-    Added code to support AWS Codebuild
-0.9.0 :
-    Restructured module for CI/CD Workflow
-    Added Invoke-Build capabilities to module
-    Added Animation functionality:
-        Send-TelegramLocalAnimation
-        Send-TelegramURLAnimation
-    Added location functionality:
-        Send-TelegramLocation
-    Added multi-media functionality:
-        Send-TelegramMediaGroup
-    Consolidated private support functions
-    Code Logic improvements
-0.8.4 Added IconURI to manifest
-0.8.3 Initial beta release.
-'
+            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/master/.github/CHANGELOG.md'
 
         } # End of PSData hashtable
 

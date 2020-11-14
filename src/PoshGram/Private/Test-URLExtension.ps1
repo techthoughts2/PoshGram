@@ -69,7 +69,8 @@ function Test-URLExtension {
         'MP4'
     )
     $supportedAudioExtensions = @(
-        'MP3'
+        'MP3',
+        'M4A'
     )
     $supportedAnimationExtensions = @(
         'GIF'
@@ -107,7 +108,7 @@ function Test-URLExtension {
     #------------------------------------------------------------
     [bool]$results = $true #assume the best.
     #------------------------------------------------------------
-    Write-Verbose -Message "Testing provided URL"
+    Write-Verbose -Message 'Testing provided URL'
     $urlEval = Confirm-URL -Uri $URL
     if ($urlEval -ne $true) {
         Write-Verbose -Message 'URL Confirmation did not return true.'
@@ -115,7 +116,7 @@ function Test-URLExtension {
         return $results
     }#if_urlEval
     #------------------------------------------------------------
-    Write-Verbose -Message "Resolving potential shortlink..."
+    Write-Verbose -Message 'Resolving potential shortlink...'
     $slEval = Resolve-ShortLink -Uri $URL -ErrorAction SilentlyContinue
     if ($slEval) {
         $URL = $slEval
@@ -125,10 +126,10 @@ function Test-URLExtension {
     $divide = $URL.Split(".")
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
-    Write-Verbose "Verifying discovered extension: $extension"
+    Write-Verbose -Message "Verifying discovered extension: $extension"
     switch ($extension) {
         { $extType -contains $_ } {
-            Write-Verbose -Message "Extension verified."
+            Write-Verbose -Message 'Extension verified.'
         }
         default {
             Write-Warning -Message "The specified file is not a supported $Type extension."

@@ -107,7 +107,7 @@ function Send-TelegramLocation {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram location:"
+        Write-Warning -Message 'An error was encountered sending the Telegram location:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

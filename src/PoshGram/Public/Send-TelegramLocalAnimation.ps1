@@ -121,41 +121,41 @@ function Send-TelegramLocalAnimation {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying presence of animation..."
+    Write-Verbose -Message 'Verifying presence of animation...'
     if (!(Test-Path -Path $AnimationPath)) {
-        Write-Warning "The specified animation path: $AnimationPath was not found."
+        Write-Warning -Message "The specified animation path: $AnimationPath was not found."
         $results = $false
         return $results
     }#if_testPath
     else {
-        Write-Verbose -Message "Path verified."
+        Write-Verbose -Message 'Path verified.'
     }#else_testPath
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying extension type..."
+    Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $AnimationPath -Type Animation
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_animationExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_animationExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying file size..."
+    Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $AnimationPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_animationSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_animationSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $AnimationPath -ErrorAction Stop
     }#try_Get-ItemAnimation
     catch {
-        Write-Warning "The specified animation could not be interpreted properly."
+        Write-Warning -Message 'The specified animation could not be interpreted properly.'
         $results = $false
         return $results
     }#catch_Get-ItemAnimation
@@ -180,7 +180,7 @@ function Send-TelegramLocalAnimation {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram animation message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram animation message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

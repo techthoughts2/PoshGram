@@ -32,12 +32,12 @@ function Test-Explanation {
     $carriageCount = $splitTest | Measure-Object | Select-Object -ExpandProperty Count
 
     if ($carriageCount -gt 2) {
-        Write-Warning 'Explanation can contain at most 2 line feeds.'
+        Write-Warning -Message 'Explanation can contain at most 2 line feeds.'
         $results = $false
     }
 
     if ($Explanation.Length -gt 200) {
-        Write-Warning 'Explanation can contain at most 200 characters.'
+        Write-Warning -Message 'Explanation can contain at most 200 characters.'
         $results = $false
     }
 

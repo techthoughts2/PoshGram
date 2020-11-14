@@ -67,12 +67,13 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters              Type                    Required    Description
-    chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    document                InputFile or String     Yes         File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-    caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
-    parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
-    disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    Parameters                      Type                    Required    Description
+    chat_id                         Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    document                        InputFile or String     Yes         File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+    caption                         String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
+    parse_mode                      String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    disable_content_type_detection  Boolean                 Optional    Disables automatic server-side content type detection for files uploaded using multipart/form-data
+    disable_notification            Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
 .LINK
@@ -111,54 +112,58 @@ function Send-TelegramURLDocument {
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Disables automatic server-side content type detection')]
+        [switch]$DisableContentTypeDetection,
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL leads to supported document extension..."
+    Write-Verbose -Message 'Verifying URL leads to supported document extension...'
     $fileTypeEval = Test-URLExtension -URL $FileURL -Type Document
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_documentExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_documentExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL presence and file size..."
+    Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $FileURL
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_documentSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_documentSize
     #------------------------------------------------------------------------
     $payload = @{
-        chat_id              = $ChatID
-        document             = $FileURL
-        caption              = $Caption
-        parse_mode           = $ParseMode
-        disable_notification = $DisableNotification.IsPresent
+        chat_id                        = $ChatID
+        document                       = $FileURL
+        caption                        = $Caption
+        parse_mode                     = $ParseMode
+        disable_content_type_detection = $DisableContentTypeDetection.IsPresent
+        disable_notification           = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri         = ("https://api.telegram.org/bot{0}/sendDocument" -f $BotToken)
+        Uri         = ('https://api.telegram.org/bot{0}/sendDocument' -f $BotToken)
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
-        ContentType = "application/json"
+        ContentType = 'application/json'
         Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Sending message..."
+        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

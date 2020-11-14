@@ -119,41 +119,41 @@ function Send-TelegramLocalPhoto {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying presence of photo..."
+    Write-Verbose -Message 'Verifying presence of photo...'
     if (!(Test-Path -Path $PhotoPath)) {
-        Write-Warning "The specified photo path: $PhotoPath was not found."
+        Write-Warning -Message 'The specified photo path: $PhotoPath was not found.'
         $results = $false
         return $results
     }#if_testPath
     else {
-        Write-Verbose -Message "Path verified."
+        Write-Verbose -Message 'Path verified.'
     }#else_testPath
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying extension type..."
+    Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $PhotoPath -Type Photo
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_photoExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_photoExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying file size..."
+    Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $PhotoPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_photoSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_photoSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $PhotoPath -ErrorAction Stop
     }#try_Get-ItemPhoto
     catch {
-        Write-Warning "The specified photo could not be interpreted properly."
+        Write-Warning -Message 'The specified photo could not be interpreted properly.'
         $results = $false
         return $results
     }#catch_Get-ItemPhoto
@@ -178,7 +178,7 @@ function Send-TelegramLocalPhoto {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram photo message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

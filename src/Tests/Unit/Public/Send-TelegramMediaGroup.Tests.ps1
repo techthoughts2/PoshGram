@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -28,9 +28,7 @@ InModuleScope PoshGram {
             'photo2.jpg'
         )
         BeforeEach {
-            mock Test-Path { $true }
-            mock Test-FileExtension { $true }
-            mock Test-FileSize { $true }
+            mock Test-MediaGroupRequirements { $true }
             mock Get-Item {
                 [PSCustomObject]@{
                     Mode          = "True"
@@ -55,66 +53,12 @@ InModuleScope PoshGram {
             }#endMock
         }#before_each
         Context 'Error' {
-            It 'should return false if the files provided are fewer than 2' {
-                $tooFew = @(
-                    'photo1.jpg'
-                )
+            It 'should return false if the MediaGroup requirements are not met' {
+                mock Test-MediaGroupRequirements { $false }
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
                     ChatID    = $chat
                     MediaType = 'Photo'
-                    FilePaths = $tooFew
-                }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
-            It 'should return false if the files provided are great than 10' {
-                $tooMany = @(
-                    'photo1.jpg',
-                    'photo2.jpg',
-                    'photo3.jpg',
-                    'photo4.jpg',
-                    'photo5.jpg',
-                    'photo6.jpg',
-                    'photo7.jpg',
-                    'photo8.jpg',
-                    'photo9.jpg',
-                    'photo10.jpg',
-                    'photo11.jpg'
-                )
-                $sendTelegramMediaGroupSplat = @{
-                    BotToken  = $token
-                    ChatID    = $chat
-                    MediaType = 'Photo'
-                    FilePaths = $tooMany
-                }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
-            It 'should return false if the media can not be found' {
-                mock Test-Path { $false }
-                $sendTelegramMediaGroupSplat = @{
-                    BotToken  = $token
-                    ChatID    = $chat
-                    MediaType = 'Photo'
-                    FilePaths = $justRight
-                }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
-            It 'should return false if the media extension is not supported' {
-                mock Test-FileExtension { $false }
-                $sendTelegramMediaGroupSplat = @{
-                    BotToken  = $token
-                    ChatID    = $chat
-                    MediaType = 'Photo'
-                    FilePaths = $justRight
-                }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
-            It 'should return false if the media is too large' {
-                mock Test-FileSize { $false }
-                $sendTelegramMediaGroupSplat = @{
-                    BotToken  = $token
-                    ChatID    = $chat
-                    MediaType = 'Video'
                     FilePaths = $justRight
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false

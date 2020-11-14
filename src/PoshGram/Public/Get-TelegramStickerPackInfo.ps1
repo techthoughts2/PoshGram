@@ -90,11 +90,10 @@ function Get-TelegramStickerPackInfo {
             $errorEval = $theError.ErrorDetails.Message | ConvertFrom-Json
         }
         if ($errorEval -like "*STICKERSET_INVALID*") {
-            Write-Warning "STICKERSET_INVALID"
-
+            Write-Warning -Message 'STICKERSET_INVALID'
         }
         else {
-            Write-Warning "An error was encountered retrieving sticker information:"
+            Write-Warning -Message 'An error was encountered retrieving sticker information:'
             Write-Error $_
         }
         $results = $false
@@ -102,7 +101,7 @@ function Get-TelegramStickerPackInfo {
     }#catch_messageSend
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Sticker information found. Processing emoji information...'
-    Write-Verbose "Asset path: $script:assetPath"
+    Write-Verbose -Message "Asset path: $script:assetPath"
     $je = Get-Content -Path $script:assetPath
     $psF = $je | ConvertFrom-Json
     $stickerData = @()

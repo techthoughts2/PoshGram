@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -20,7 +20,7 @@ InModuleScope PoshGram {
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
-    Describe 'Send-TelegramLocalAnimation' -Tag Unit {
+    Describe 'Send-TelegramLocalVideo' -Tag Unit {
         BeforeEach {
             mock Test-Path { $true }
             mock Test-FileExtension { $true }
@@ -41,7 +41,7 @@ InModuleScope PoshGram {
                         from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
                         chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
                         date             = "1530157540"
-                        audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
+                        video            = "@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}"
                         caption          = "Local Video Test"
                         caption_entities = "{@{offset=13; length=6; type=bold}}"
                     }
@@ -49,70 +49,73 @@ InModuleScope PoshGram {
             }#endMock
         }#before_each
         Context 'Error' {
-            It 'should return false if the animation can not be found' {
+            It 'should return false if the video can not be found' {
                 mock Test-Path { $false }
-                $sendTelegramLocalAnimationSplat = @{
-                    BotToken      = $token
-                    ChatID        = $chat
-                    AnimationPath = "C:\bs\animation.gif"
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
                 }
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
-            It 'should return false if the animation extension is not supported' {
+            It 'should return false if the video extension is not supported' {
                 mock Test-FileExtension { $false }
-                $sendTelegramLocalAnimationSplat = @{
-                    BotToken      = $token
-                    ChatID        = $chat
-                    AnimationPath = "C:\bs\animation.gif"
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
                 }
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
-            It 'should return false if the animation is too large' {
+            It 'should return false if the video is too large' {
                 mock Test-FileSize { $false }
-                $sendTelegramLocalAnimationSplat = @{
-                    BotToken      = $token
-                    ChatID        = $chat
-                    AnimationPath = "C:\bs\animation.gif"
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
                 }
-
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramLocalAnimationSplat = @{
-                    BotToken      = $token
-                    ChatID        = $chat
-                    AnimationPath = "C:\bs\animation.gif"
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken = $token
+                    ChatID   = $chat
+                    Video    = "C:\bs\video.mp4"
                 }
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramLocalAnimationSplat = @{
-                    BotToken      = $token
-                    ChatID        = $chat
-                    AnimationPath = "C:\bs\animation.gif"
-                    ErrorAction   = 'SilentlyContinue'
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    Video       = "C:\bs\video.mp4"
+                    ErrorAction = 'SilentlyContinue'
                 }
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
-        }#context_Error
+        }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                $sendTelegramLocalAnimationSplat = @{
+                $sendTelegramLocalVideoSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    AnimationPath       = "C:\bs\animation.gif"
-                    Caption             = "Check out this animation"
+                    Video               = "C:\bs\video.mp4"
+                    Duration            = 10
+                    Width               = 250
+                    Height              = 250
+                    Caption             = "Check out this video"
                     ParseMode           = 'MarkdownV2'
+                    Streaming           = $true
                     DisableNotification = $true
                 }
-                Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
-    }#describe_Send-TelegramLocalAnimation
+    }#describe_Send-TelegramLocalVideo
 }#inModule

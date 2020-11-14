@@ -130,7 +130,7 @@ function Send-TelegramVenue {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram venue:"
+        Write-Warning -Message 'An error was encountered sending the Telegram venue:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

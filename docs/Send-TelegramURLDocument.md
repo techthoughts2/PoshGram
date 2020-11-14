@@ -14,7 +14,7 @@ Sends Telegram document message via Bot API from URL sourced file
 
 ```
 Send-TelegramURLDocument [-BotToken] <String> [-ChatID] <String> [-FileURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableContentTypeDetection] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -145,6 +145,21 @@ Aliases:
 Required: False
 Position: 5
 Default value: HTML
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableContentTypeDetection
+set to HTML by default
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

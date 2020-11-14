@@ -117,7 +117,7 @@ function Send-TelegramContact {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram contact:"
+        Write-Warning -Message 'An error was encountered sending the Telegram contact:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

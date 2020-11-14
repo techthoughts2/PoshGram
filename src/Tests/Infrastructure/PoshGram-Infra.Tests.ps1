@@ -84,8 +84,10 @@ InModuleScope PoshGram {
     if ($PSVersionTable.Platform -eq 'Win32NT') {
         $file = "C:\Test\Photos\Photo.jpg"
         $file2 = "C:\Test\Documents\customlog.txt"
+        $file7 = "C:\Test\Documents\customlog2.txt"
         $file3 = "C:\Test\Videos\Intro.mp4"
         $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+        $file6 = "C:\Test\Audio\TestAudio.mp3"
         $file5 = "C:\Test\Animation\jean.gif"
         $pPath = 'C:\Test\PhotoGroup'
         $pFiles = @(
@@ -103,13 +105,23 @@ InModuleScope PoshGram {
             "$vPath\first_contact.mp4",
             "$vPath\root_beer.mp4"
         )
+        $aFiles = @(
+            $file4,
+            $file6
+        )
+        $dFiles = @(
+            $file2,
+            $file7
+        )
         $stickerFile = 'C:\Test\Stickers\picard.webp'
     }#if_windows
     elseif ($PSVersionTable.Platform -eq 'Unix') {
         $file = "/Test/Photos/Photo.jpg"
         $file2 = "/Test/Documents/customlog.txt"
+        $file7 = "/Test/Documents/customlog2.txt"
         $file3 = "/Test/Videos/Intro.mp4"
         $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+        $file6 = "/Test/Audio/TestAudio.mp3"
         $file5 = "/Test/Animation/jean.gif"
         $pPath = '/Test/PhotoGroup'
         $pFiles = @(
@@ -126,6 +138,14 @@ InModuleScope PoshGram {
         $vFiles = @(
             "$vPath/first_contact.mp4",
             "$vPath/root_beer.mp4"
+        )
+        $aFiles = @(
+            $file4,
+            $file6
+        )
+        $dFiles = @(
+            $file2,
+            $file7
         )
         $stickerFile = "/Test/Stickers/picard.webp"
     }#elseif_Linux
@@ -356,6 +376,30 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     MediaType           = 'Video'
                     FilePaths           = $vFiles
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                $eval.ok | Should -Be "True"
+            }#it
+            Start-Sleep -Seconds 10
+            It 'Should return with ok:true when a group of audios is successfully sent' {
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    MediaType           = 'Audio'
+                    FilePaths           = $aFiles
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                $eval.ok | Should -Be "True"
+            }#it
+            Start-Sleep -Seconds 10
+            It 'Should return with ok:true when a group of documents is successfully sent' {
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken            = $token
+                    ChatID              = $dFiles
+                    MediaType           = 'Documents'
+                    FilePaths           = $aFiles
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat

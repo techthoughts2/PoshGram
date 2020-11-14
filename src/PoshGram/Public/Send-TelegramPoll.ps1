@@ -155,7 +155,7 @@
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
-    Telegram currently supports questions 1-255 characters
+    Telegram currently supports questions 1-300 characters
     Telegram currently supports 2-10 options 1-100 characters each
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
@@ -196,7 +196,7 @@ function Send-TelegramPoll {
 
         [Parameter(Mandatory = $true,
             HelpMessage = 'Poll question')]
-        [ValidateLength(1, 255)]
+        [ValidateLength(1, 300)]
         [string]$Question,
 
         [Parameter(Mandatory = $true,
@@ -268,7 +268,7 @@ function Send-TelegramPoll {
     #------------------------------------------------------------------------
     if ($PollType -eq 'quiz') {
         if ($null -eq $QuizAnswer -or $QuizAnswer -lt 1 -or $QuizAnswer -gt 10) {
-            Write-Warning 'When PollType is quiz, you must supply a QuizAnswer desginator.'
+            Write-Warning -Message 'When PollType is quiz, you must supply a QuizAnswer desginator.'
             $results = $false
             return $results
         }
@@ -305,7 +305,7 @@ function Send-TelegramPoll {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram poll:"
+        Write-Warning -Message 'An error was encountered sending the Telegram poll:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

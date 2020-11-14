@@ -391,8 +391,8 @@ Add-BuildTask Build {
 
     # here you could move your docs up to your repos doc level if you wanted
     Write-Build Gray '        Overwriting docs output...'
-    Move-Item "$($script:ArtifactsPath)\docs\*.md" -Destination "..\docs\" -Force
-    Remove-Item "$($script:ArtifactsPath)\docs" -Recurse -Force -ErrorAction Stop
+    Move-Item "$($script:ArtifactsPath)\docs\*.md" -Destination "..\docs\" -Force -ErrorAction SilentlyContinue
+    Remove-Item "$($script:ArtifactsPath)\docs" -Recurse -Force -ErrorAction SilentlyContinue
     Write-Build Gray '        ...Docs output completed.'
 
     Write-Build Gray '        Cleaning up leftover artifacts...'

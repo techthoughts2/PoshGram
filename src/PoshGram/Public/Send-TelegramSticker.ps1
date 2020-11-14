@@ -86,33 +86,33 @@ function Send-TelegramSticker {
     [CmdletBinding()]
     Param
     (
-        [Parameter(ParameterSetName = "FileIDG")]
-        [Parameter(ParameterSetName = "FileEmojiG")]
+        [Parameter(ParameterSetName = 'FileIDG')]
+        [Parameter(ParameterSetName = 'FileEmojiG')]
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
-        [Parameter(ParameterSetName = "FileIDG")]
-        [Parameter(ParameterSetName = "FileEmojiG")]
+        [Parameter(ParameterSetName = 'FileIDG')]
+        [Parameter(ParameterSetName = 'FileEmojiG')]
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
-        [Parameter(ParameterSetName = "FileIDG")]
+        [Parameter(ParameterSetName = 'FileIDG')]
         [Parameter(Mandatory = $true,
-            ParameterSetName = "ByFileID",
+            ParameterSetName = 'ByFileID',
             HelpMessage = 'Telegram sticker file_id')]
         [string]$FileID,
-        [Parameter(ParameterSetName = "FileEmojiG")]
+        [Parameter(ParameterSetName = 'FileEmojiG')]
         [Parameter(Mandatory = $true,
-            ParameterSetName = "BySPShortCode",
+            ParameterSetName = 'BySPShortCode',
             HelpMessage = 'Name of the sticker set')]
         [string]$StickerSetName,
-        [Parameter(ParameterSetName = "FileEmojiG")]
+        [Parameter(ParameterSetName = 'FileEmojiG')]
         [Parameter(Mandatory = $true,
-            ParameterSetName = "BySPShortCode",
+            ParameterSetName = 'BySPShortCode',
             HelpMessage = 'Emoji shortcode')]
         [ValidateSet(
             ':hash:',
@@ -1768,16 +1768,16 @@ function Send-TelegramSticker {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     if ($FileID) {
-        Write-Verbose -Message "sticker file_id provided."
+        Write-Verbose -Message 'sticker file_id provided.'
         $sticker = $FileID
     }#if_fileid
     else {
-        Write-Verbose -Message "Sticker by emoji shortcode and sticker pack."
+        Write-Verbose -Message 'Sticker by emoji shortcode and sticker pack.'
         $stickerPackInfo = Get-TelegramStickerPackInfo -BotToken $BotToken -StickerSetName $StickerSetName
         if (-not $stickerPackInfo -eq $false) {
             $sticker = $stickerPackInfo | Where-Object { $_.Shortcode -eq $Shortcode } | Select-Object -First 1
             if (-not $sticker) {
-                Write-Warning "The sticker pack $StickerSetName does not contain the emoji $Shortcode"
+                Write-Warning -Message "The sticker pack $StickerSetName does not contain the emoji $Shortcode"
                 $results = $false
                 return $results
             }#if_noSticker
@@ -1786,7 +1786,7 @@ function Send-TelegramSticker {
             }#else_noSticker
         }#if_sticker_info
         else {
-            Write-Warning 'Unable to obtain sticker pack information.'
+            Write-Warning -Message 'Unable to obtain sticker pack information.'
             $results = $false
             return $results
         }#else_sticker_info
@@ -1806,11 +1806,11 @@ function Send-TelegramSticker {
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Sending message..."
+        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the sticker:"
+        Write-Warning -Message 'An error was encountered sending the sticker:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

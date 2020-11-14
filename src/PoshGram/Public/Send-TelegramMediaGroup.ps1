@@ -1,9 +1,9 @@
 <#
 .Synopsis
-    Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
+    Sends Telegram a group of photos, videos, documents, or audios as an album via Bot API from locally sourced media
 .DESCRIPTION
-    Uses Telegram Bot API to send a group of photo or video as an album message to specified Telegram chat.
-    The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video).
+    Uses Telegram Bot API to send a group of photos, videos, documents, or audios as an album message to specified Telegram chat.
+    The media will be sourced from the local device and uploaded to telegram. This function only supports sending one media type per send (Photo | Video | Documents | Audio).
     2 files minimum and 10 files maximum are required for this function.
 .EXAMPLE
     $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -71,6 +71,9 @@
     The following video types are supported:
     Telegram clients support mp4 videos
 
+    The following audio types are supported:
+    MP3, M4A
+
     For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
@@ -79,10 +82,10 @@
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
-    Parameters            Type                  Required    Description
-    chat_id               Integer or String     Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    media                 Array of Photo/Video  Yes         A JSON-serialized array describing photos and videos to be sent
-    disable_notification  Boolean               Optional    Sends the message silently. Users will receive a notification with no sound.
+    Parameters            Type                                                                              Required     Description
+    chat_id               Integer or String                                                                  Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    media                 Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo  Yes         A JSON-serialized array describing photos and videos to be sent
+    disable_notification  Boolean                                                                            Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md
 .LINK
@@ -104,8 +107,8 @@ function Send-TelegramMediaGroup {
         [string]$ChatID, #you could set a Chat ID right here if you wanted
         [Parameter(Mandatory = $true,
             HelpMessage = 'Type of media to send')]
-        [ValidateSet("Photo", "Video")]
-        [string]$MediaType, #set to false by default
+        [ValidateSet('Photo', 'Video', 'Document', 'Audio')]
+        [string]$MediaType,
         [Parameter(Mandatory = $false,
             HelpMessage = 'List of filepaths for media you want to send')]
         [ValidateNotNull()]
@@ -116,53 +119,19 @@ function Send-TelegramMediaGroup {
         [switch]$DisableNotification
     )
     #------------------------------------------------------------------------
-    $results = $true #assume the best
     $MediaType = $MediaType.ToLower()
-    #------------------------------------------------------------------------
-    Write-Verbose -Message "Evaluating file count..."
-    if ($FilePaths.Count -le 1 -or $FilePaths.Count -gt 10) {
-        Write-Warning -Message "Send-TelegramMediaGroup requires a minimum of 2 and a maximum of 10 media files to be provided."
-        $results = $false
-        return $results
-    }#file_Count
-    else {
-        Write-Verbose -Message "File count is: $($FilePaths.Count)"
-    }#else_FileCount
-    #------------------------------------------------------------------------
     Write-Verbose -Message "You have specified a media type of: $MediaType"
     #------------------------------------------------------------------------
-    foreach ($file in $FilePaths) {
-        $fileTypeEval = $null
-        $fileSizeEval = $null
-        Write-Verbose -Message "Verifying presence of media..."
-        if (!(Test-Path -Path $file)) {
-            Write-Warning "The specified media path: $file was not found."
-            $results = $false
-            return $results
-        }#if_testPath
-        Write-Verbose -Message "Verifying extension type..."
-        $fileTypeEval = Test-FileExtension -FilePath $file -Type $MediaType
-        if ($fileTypeEval -eq $false) {
-            $results = $false
-            return $results
-        }#if_Extension
-        else {
-            Write-Verbose -Message "Extension supported."
-        }#else_Extension
-        Write-Verbose -Message "Verifying file size..."
-        $fileSizeEval = Test-FileSize -Path $file
-        if ($fileSizeEval -eq $false) {
-            $results = $false
-            return $results
-        }#if_Size
-        else {
-            Write-Verbose -Message "File size verified."
-        }#else_Size
-    }#foreach_File
+    # Testing logic needs to be placed here
+    $mediaGroupReqsEval = Test-MediaGroupRequirements -MediaType $MediaType -FilePath $FilePaths
+    if (-not $mediaGroupReqsEval) {
+        $results = $false
+        return $results
+    }
     #------------------------------------------------------------------------
     $uri = "https://api.telegram.org/bot$BotToken/sendMediaGroup"
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Forming serialzied JSON for all media files..."
+    Write-Verbose -Message 'Forming serialzied JSON for all media files...'
     $Form = @{
         chat_id              = $ChatID;
         disable_notification = $DisableNotification.IsPresent
@@ -196,7 +165,7 @@ function Send-TelegramMediaGroup {
 '@
 
     $Form.media = $json
-    Write-Verbose -Message "JSON formation completed."
+    Write-Verbose -Message 'JSON formation completed.'
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -205,13 +174,13 @@ function Send-TelegramMediaGroup {
         Method      = 'Post'
     }
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Sending media..."
+    Write-Verbose -Message 'Sending media...'
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-        Write-Verbose -Message "Media sent."
+        Write-Verbose -Message 'Media sent.'
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram photo message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

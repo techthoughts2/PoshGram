@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -69,6 +69,20 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     Emoji               = 'dice'
+                    DisableNotification = $true
+                }
+                Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramDiceSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Emoji               = 'football'
+                    DisableNotification = $true
+                }
+                Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramDiceSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Emoji               = 'slotmachine'
                     DisableNotification = $true
                 }
                 Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
