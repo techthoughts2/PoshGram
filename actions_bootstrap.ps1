@@ -34,6 +34,9 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleVersion = '0.12.0'
         }))
 
+'Setting PSGallery to trusted'
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
 'Installing PowerShell Modules'
 foreach ($module in $modulesToInstall) {
     $installSplat = @{
