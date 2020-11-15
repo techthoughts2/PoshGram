@@ -133,19 +133,19 @@ function Send-TelegramTextMessage {
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri         = ("https://api.telegram.org/bot{0}/sendMessage" -f $BotToken)
+        Uri         = ('https://api.telegram.org/bot{0}/sendMessage' -f $BotToken)
         Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload)))
         ErrorAction = 'Stop'
-        ContentType = "application/json"
+        ContentType = 'application/json'
         Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Sending message..."
+        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

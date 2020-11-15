@@ -41,7 +41,7 @@ function Test-URLFileSize {
         }#if_size
     }#try_Invoke-WebRequest
     catch {
-        Write-Warning -Message "An error was encountered evaluating the file size"
+        Write-Warning -Message 'An error was encountered evaluating the file size'
         $results = $false
     }#catch_Invoke-WebRequest
     return $results

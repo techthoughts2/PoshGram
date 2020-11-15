@@ -155,24 +155,24 @@ function Send-TelegramURLVideo {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL leads to supported document extension..."
+    Write-Verbose -Message 'Verifying URL leads to supported document extension...'
     $fileTypeEval = Test-URLExtension -URL $VideoURL -Type Video
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_documentExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_documentExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL presence and file size..."
+    Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $VideoURL
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_documentSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_documentSize
     #------------------------------------------------------------------------
     $payload = @{
@@ -188,19 +188,19 @@ function Send-TelegramURLVideo {
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri         = ("https://api.telegram.org/bot{0}/sendVideo" -f $BotToken)
+        Uri         = ('https://api.telegram.org/bot{0}/sendVideo' -f $BotToken)
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
-        ContentType = "application/json"
+        ContentType = 'application/json'
         Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Sending message..."
+        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

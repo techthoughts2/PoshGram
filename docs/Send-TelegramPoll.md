@@ -390,7 +390,7 @@ Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web clie
 How do I set up a bot and get a token?
 Use the BotFather https://t.me/BotFather
 
-Telegram currently supports questions 1-255 characters
+Telegram currently supports questions 1-300 characters
 Telegram currently supports 2-10 options 1-100 characters each
 
 ## RELATED LINKS

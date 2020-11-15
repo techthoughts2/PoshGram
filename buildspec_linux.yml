@@ -23,7 +23,9 @@ phases:
       - pwsh -command 'New-Item -Path /Test/Stickers -ItemType Directory | Out-Null'
       - aws s3 cp s3://poshgram-test-files/jean.gif /Test/Animation/jean.gif --quiet
       - aws s3 cp s3://poshgram-test-files/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 /Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3 --quiet
+      - aws s3 cp s3://poshgram-test-files/TestAudio.mp3 /Test/Audio/TestAudio.mp3 --quiet
       - aws s3 cp s3://poshgram-test-files/customlog.txt /Test/Documents/customlog.txt --quiet
+      - aws s3 cp s3://poshgram-test-files/customlog2.txt /Test/Documents/customlog2.txt --quiet
       - aws s3 cp s3://poshgram-test-files/beverly.jpg /Test/PhotoGroup/beverly.jpg --quiet
       - aws s3 cp s3://poshgram-test-files/data.jpg /Test/PhotoGroup/data.jpg --quiet
       - aws s3 cp s3://poshgram-test-files/geordi.jpg /Test/PhotoGroup/geordi.jpg --quiet

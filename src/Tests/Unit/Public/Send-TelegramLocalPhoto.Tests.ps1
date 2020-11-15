@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -20,7 +20,7 @@ InModuleScope PoshGram {
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
-    Describe 'Send-TelegramLocalVideo' -Tag Unit {
+    Describe 'Send-TelegramLocalPhoto' -Tag Unit {
         BeforeEach {
             mock Test-Path { $true }
             mock Test-FileExtension { $true }
@@ -41,81 +41,77 @@ InModuleScope PoshGram {
                         from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
                         chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
                         date             = "1530157540"
-                        video            = "@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}"
-                        caption          = "Local Video Test"
+                        photo            = "{@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCjAABG9Ju7DQr02GYgMBAAEC; file_size=1084;file_path=photos/file_427.jpg; width=90; height=85},@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCj################; file_size=2305; width=123;height=116}}"
+                        caption          = "Please work, please"
                         caption_entities = "{@{offset=13; length=6; type=bold}}"
                     }
                 }
             }#endMock
         }#before_each
         Context 'Error' {
-            It 'should return false if the video can not be found' {
+            It 'should return false if the photo can not be found' {
                 mock Test-Path { $false }
-                $sendTelegramLocalVideoSplat = @{
-                    BotToken = $token
-                    ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
-            It 'should return false if the video extension is not supported' {
+            It 'should return false if the photo extension is not supported' {
                 mock Test-FileExtension { $false }
-                $sendTelegramLocalVideoSplat = @{
-                    BotToken = $token
-                    ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
-            It 'should return false if the video is too large' {
+            It 'should return false if the photo is too large' {
                 mock Test-FileSize { $false }
-                $sendTelegramLocalVideoSplat = @{
-                    BotToken = $token
-                    ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if it cannot successfuly get the file' {
                 mock Get-Item {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramLocalVideoSplat = @{
-                    BotToken = $token
-                    ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    PhotoPath = "c:\bs\diagvresults.jpg"
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered sending the message' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramLocalVideoSplat = @{
+                $sendTelegramLocalPhotoSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    Video       = "C:\bs\video.mp4"
+                    PhotoPath   = "c:\bs\diagvresults.jpg"
                     ErrorAction = 'SilentlyContinue'
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -Be $false
             }#it
-        }#context_error
+        }#context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                $sendTelegramLocalVideoSplat = @{
+                $sendTelegramLocalPhotoSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    Video               = "C:\bs\video.mp4"
-                    Duration            = 10
-                    Width               = 250
-                    Height              = 250
-                    Caption             = "Check out this video"
+                    PhotoPath           = "c:\bs\diagvresults.jpg"
+                    Caption             = "Check out this photo"
                     ParseMode           = 'MarkdownV2'
-                    Streaming           = $true
                     DisableNotification = $true
                 }
-                Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
-        }#context_success
-    }#describe_Send-TelegramLocalVideo
+        }#context_Success
+    }#describe_Send-TelegramLocalPhoto
 }#inModule

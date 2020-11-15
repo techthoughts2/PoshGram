@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -20,8 +20,8 @@ InModuleScope PoshGram {
     $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
     $chat = "-nnnnnnnnn"
     #-------------------------------------------------------------------------
-    Describe 'Send-TelegramURLPhoto' -Tag Unit {
-        $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+    Describe 'Send-TelegramURLAudio' -Tag Unit {
+        $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
@@ -33,7 +33,7 @@ InModuleScope PoshGram {
                         from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
                         chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
                         date             = "1530157540"
-                        video            = "@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}"
+                        audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
                         caption          = "Video URL test"
                         caption_entities = "{@{offset=13; length=6; type=bold}}"
                     }
@@ -41,76 +41,72 @@ InModuleScope PoshGram {
             }#endMock
         }#before_each
         Context 'Error' {
-            It 'should return false if the video extension is not supported' {
+            It 'should return false if the audio extension is not supported' {
                 mock Test-URLExtension { $false }
-                $sendTelegramURLVideoSplat = @{
+                $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    VideoURL            = $videourl
-                    Duration            = 16
-                    Width               = 1920
-                    Height              = 1080
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
                     ParseMode           = 'MarkdownV2'
-                    Streaming           = $true
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
-                    Caption             = $false
                 }
-                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
             It 'should return false if the file is too large' {
                 mock Test-URLFileSize { $false }
-                $sendTelegramURLVideoSplat = @{
+                $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    VideoURL            = $videourl
-                    Duration            = 16
-                    Width               = 1920
-                    Height              = 1080
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
                     ParseMode           = 'MarkdownV2'
-                    Streaming           = $true
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
-                    Caption             = $false
                 }
-                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramURLVideoSplat = @{
+                $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    VideoURL            = $videourl
-                    Duration            = 16
-                    Width               = 1920
-                    Height              = 1080
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
                     ParseMode           = 'MarkdownV2'
-                    Streaming           = $true
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
-                    Caption             = $false
                 }
-                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -Be $false
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                $sendTelegramURLVideoSplat = @{
+                $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    VideoURL            = $videourl
-                    Duration            = 16
-                    Width               = 1920
-                    Height              = 1080
+                    AudioURL            = $audioURL
+                    Caption             = "Check out this audio track"
                     ParseMode           = 'MarkdownV2'
-                    Streaming           = $true
+                    Duration            = 495
+                    Performer           = "Metallica"
+                    Title               = "Halo On Fire"
                     DisableNotification = $true
-                    Caption             = $false
                 }
-                Send-TelegramURLVideo @sendTelegramURLVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
-    }#describe_Send-TelegramURLPhoto
+    }#describe_Functions
 }#inModule

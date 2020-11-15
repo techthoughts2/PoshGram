@@ -143,41 +143,41 @@ function Send-TelegramLocalAudio {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying presence of file..."
+    Write-Verbose -Message 'Verifying presence of file...'
     if (!(Test-Path -Path $Audio)) {
-        Write-Warning "The specified file: $Audio was not found."
+        Write-Warning -Message "The specified file: $Audio was not found."
         $results = $false
         return $results
     }#if_testPath
     else {
-        Write-Verbose -Message "Path verified."
+        Write-Verbose -Message 'Path verified.'
     }#else_testPath
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying extension type..."
+    Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $Audio -Type Audio
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_videoExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_videoExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying file size..."
+    Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $Audio
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_videoSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_videoSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $Audio -ErrorAction Stop
     }#try_Get-ItemVideo
     catch {
-        Write-Warning "The specified file could not be interpreted properly."
+        Write-Warning -Message 'The specified file could not be interpreted properly.'
         $results = $false
         return $results
     }#catch_Get-ItemVideo
@@ -205,7 +205,7 @@ function Send-TelegramLocalAudio {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram audio message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram audio message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

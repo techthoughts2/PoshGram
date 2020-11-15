@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.15.0]
+
+- Send-TelegramLocalAudio / Send-TelegramURLAudio
+  - Audio now supports both MP3 and M4A file extensions
+- Send-TelegramDice
+  - Now supports soccer (footbal), and slot machine emoji
+- Send-TelegramLocalDocument / Send-TelegramURLDocument
+  - Added DisableContentTypeDetection switch which disables automatic server-side content type detection
+- Send-TelegramPoll
+  - Questions can now be 300 characters long
+- Send-TelegramMediaGroup
+  - Now supports both audio and document media group types
+  - Restructured logic of this cmdlet to engage a new private function: Test-MediaGroupRequirements
+- Added more verbosity in verbose and warning outputs
+- Removed manifest releasenotes and linked changelog
+- Build Improvements
+  - Restructured private tests from one monolithic file to seperate private function tests
+  - Restructured test folder layout
+  - Updated Windows CodeBuild container from 2016 to 2019
+
 ## [1.14.0]
 
 - Added **Send-TelegramDice**

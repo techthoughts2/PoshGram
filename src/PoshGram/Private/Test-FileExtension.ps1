@@ -71,7 +71,8 @@ function Test-FileExtension {
         'MP4'
     )
     $supportedAudioExtensions = @(
-        'MP3'
+        'MP3',
+        'M4A'
     )
     $supportedAnimationExtensions = @(
         'GIF'
@@ -105,10 +106,10 @@ function Test-FileExtension {
     $divide = $FilePath.Split(".")
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
-    Write-Verbose "Verifying discovered extension: $extension"
+    Write-Verbose -Message "Verifying discovered extension: $extension"
     switch ($extension) {
         { $extType -contains $_ } {
-            Write-Verbose -Message "Extension verified."
+            Write-Verbose -Message 'Extension verified.'
         }
         default {
             Write-Warning -Message "The specified file is not a supported $Type extension."

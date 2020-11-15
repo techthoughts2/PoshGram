@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it

@@ -70,7 +70,7 @@ function Send-TelegramDice {
         [string]$ChatID, #you could set a Chat ID right here if you wanted
         [Parameter(Mandatory = $true,
             HelpMessage = 'Emoji on which the dice throw animation is based.')]
-        [ValidateSet('dice', 'dart', 'basketball')]
+        [ValidateSet('dice', 'dart', 'basketball', 'football', 'slotmachine')]
         [string]$Emoji,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
@@ -88,6 +88,12 @@ function Send-TelegramDice {
         }
         basketball {
             $emojiSend = '🏀'
+        }
+        football {
+            $emojiSend = '⚽'
+        }
+        slotmachine {
+            $emojiSend = '🎰'
         }
     }
     #------------------------------------------------------------------------
@@ -109,7 +115,7 @@ function Send-TelegramDice {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram location:"
+        Write-Warning -Message 'An error was encountered sending the Telegram location:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

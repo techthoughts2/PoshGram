@@ -33,7 +33,7 @@ function Test-PollOptions {
     Write-Verbose -Message 'Evaluating number of options...'
     $optionCount = $PollOptions.Length
     if ($optionCount -lt 2 -or $optionCount -gt 10) {
-        Write-Warning 'Only 2-10 poll options are allowed.'
+        Write-Warning -Message 'Only 2-10 poll options are allowed.'
         $results = $false
     }#if_optionCount
     else {
@@ -41,7 +41,7 @@ function Test-PollOptions {
         Write-Verbose -Message 'Evaluating character length of options...'
         foreach ($option in $PollOptions) {
             if ($option.Length -lt 1 -or $option.Length -gt 100) {
-                Write-Warning "$option is not between 1-100 characters."
+                Write-Warning -Message "$option is not between 1-100 characters."
                 $results = $false
             }#if_length
         }#foreach_option

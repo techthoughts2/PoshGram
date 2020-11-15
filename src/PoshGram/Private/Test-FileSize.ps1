@@ -41,7 +41,7 @@ function Test-FileSize {
         }
     }
     catch {
-        Write-Warning -Message "An error was encountered evaluating the file size"
+        Write-Warning -Message 'An error was encountered evaluating the file size'
         $results = $false
     }
     return $results

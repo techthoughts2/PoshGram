@@ -83,41 +83,41 @@ function Send-TelegramLocalSticker {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying presence of sticker..."
+    Write-Verbose -Message 'Verifying presence of sticker...'
     if (!(Test-Path -Path $StickerPath)) {
-        Write-Warning "The specified sticker path: $StickerPath was not found."
+        Write-Warning -Message "The specified sticker path: $StickerPath was not found."
         $results = $false
         return $results
     }#if_testPath
     else {
-        Write-Verbose -Message "Path verified."
+        Write-Verbose -Message 'Path verified.'
     }#else_testPath
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying extension type..."
+    Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $StickerPath -Type Sticker
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_stickerExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_stickerExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying file size..."
+    Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $StickerPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_stickerSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_stickerSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $StickerPath -ErrorAction Stop
     }#try_Get-ItemSticker
     catch {
-        Write-Warning "The specified sticker could not be interpreted properly."
+        Write-Warning -Message 'The specified sticker could not be interpreted properly.'
         $results = $false
         return $results
     }#catch_Get-ItemSticker
@@ -140,7 +140,7 @@ function Send-TelegramLocalSticker {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram sticker message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram sticker message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

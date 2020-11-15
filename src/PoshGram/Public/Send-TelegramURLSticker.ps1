@@ -80,24 +80,24 @@ function Send-TelegramURLSticker {
     #------------------------------------------------------------------------
     $results = $true #assume the best
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL leads to supported sticker extension..."
+    Write-Verbose -Message 'Verifying URL leads to supported sticker extension...'
     $fileTypeEval = Test-URLExtension -URL $StickerURL -Type Sticker
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
     }#if_stickerExtension
     else {
-        Write-Verbose -Message "Extension supported."
+        Write-Verbose -Message 'Extension supported.'
     }#else_stickerExtension
     #------------------------------------------------------------------------
-    Write-Verbose -Message "Verifying URL presence and file size..."
+    Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $StickerURL
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
     }#if_stickerSize
     else {
-        Write-Verbose -Message "File size verified."
+        Write-Verbose -Message 'File size verified.'
     }#else_stickerSize
     #------------------------------------------------------------------------
     $payload = @{
@@ -107,19 +107,19 @@ function Send-TelegramURLSticker {
     }#payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri         = ("https://api.telegram.org/bot{0}/sendSticker" -f $BotToken)
+        Uri         = ('https://api.telegram.org/bot{0}/sendSticker' -f $BotToken)
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
-        ContentType = "application/json"
+        ContentType = 'application/json'
         Method      = 'Post'
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Sending message..."
+        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered sending the Telegram message:"
+        Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     #if the module is already in memory, remove it
@@ -22,24 +22,22 @@ InModuleScope PoshGram {
     function Write-Error {
     }
     #-------------------------------------------------------------------------
-    Describe 'Send-TelegramContact' -Tag Unit {
-        $phone = '1-222-222-2222'
-        $firstName = 'Jake'
-        $lastName = 'Morrison'
+    Describe 'Send-TelegramVenue' -Tag Unit {
         Context 'Error' {
-            It 'should return false if an error is encountered sending the contact' {
+            It 'should return false if an error is encountered sending the venue' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
                 }#endMock
-                $sendTelegramContactSplat = @{
+                $sendTelegramVenueSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    PhoneNumber         = $phone
-                    FirstName           = $firstName
-                    LastName            = $lastName
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
                 }
-                Send-TelegramContact @sendTelegramContactSplat | Should -Be $false
+                Send-TelegramVenue @sendTelegramVenueSplat | Should -Be $false
             }#it
         }#context_error
         Context 'Success' {
@@ -48,24 +46,27 @@ InModuleScope PoshGram {
                     [PSCustomObject]@{
                         ok     = "True"
                         result = @{
-                            message_id = 2222
-                            from       = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                            chat       = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                            date       = "1530157540"
-                            contact    = "@{phone_number=12222222222; first_name=Jake}"
+                            message_id       = 2222
+                            from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
+                            chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
+                            date             = "1530157540"
+                            audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
+                            caption          = "Video URL test"
+                            caption_entities = "{@{offset=13; length=6; type=bold}}"
                         }
                     }
                 }#endMock
-                $sendTelegramContactSplat = @{
+                $sendTelegramVenueSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    PhoneNumber         = $phone
-                    FirstName           = $firstName
-                    LastName            = $lastName
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
                 }
-                Send-TelegramContact @sendTelegramContactSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                Send-TelegramVenue @sendTelegramVenueSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it
         }#context_success
-    }#describe_Send-TelegramContact
+    }#describe_Send-TelegramVenue
 }#inModule

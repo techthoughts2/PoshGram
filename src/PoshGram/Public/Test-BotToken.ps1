@@ -51,17 +51,17 @@ function Test-BotToken {
     $results = $true #assume the best
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
-        Uri         = ("https://api.telegram.org/bot{0}/getMe" -f $BotToken)
+        Uri         = ('https://api.telegram.org/bot{0}/getMe' -f $BotToken)
         ErrorAction = 'Stop'
         Method      = 'Get'
     }
     #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message "Testing Bot Token..."
+        Write-Verbose -Message 'Testing Bot Token...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     }#try_messageSend
     catch {
-        Write-Warning "An error was encountered testing the BOT token:"
+        Write-Warning -Message 'An error was encountered testing the BOT token:'
         Write-Error $_
         $results = $false
     }#catch_messageSend

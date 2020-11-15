@@ -8,7 +8,7 @@ schema: 2.0.0
 # Send-TelegramMediaGroup
 
 ## SYNOPSIS
-Sends Telegram a group of photos or videos as an album via Bot API from locally sourced media
+Sends Telegram a group of photos, videos, documents, or audios as an album via Bot API from locally sourced media
 
 ## SYNTAX
 
@@ -18,9 +18,9 @@ Send-TelegramMediaGroup [-BotToken] <String> [-ChatID] <String> [-MediaType] <St
 ```
 
 ## DESCRIPTION
-Uses Telegram Bot API to send a group of photo or video as an album message to specified Telegram chat.
+Uses Telegram Bot API to send a group of photos, videos, documents, or audios as an album message to specified Telegram chat.
 The media will be sourced from the local device and uploaded to telegram.
-This function only supports sending one media type per send (Photo | Video).
+This function only supports sending one media type per send (Photo | Video | Documents | Audio).
 2 files minimum and 10 files maximum are required for this function.
 
 ## EXAMPLES
@@ -174,6 +174,9 @@ JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
 
 The following video types are supported:
 Telegram clients support mp4 videos
+
+The following audio types are supported:
+MP3, M4A
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
