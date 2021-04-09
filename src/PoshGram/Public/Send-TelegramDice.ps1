@@ -70,7 +70,7 @@ function Send-TelegramDice {
         [string]$ChatID, #you could set a Chat ID right here if you wanted
         [Parameter(Mandatory = $true,
             HelpMessage = 'Emoji on which the dice throw animation is based.')]
-        [ValidateSet('dice', 'dart', 'basketball', 'football', 'slotmachine')]
+        [ValidateSet('dice', 'dart', 'basketball', 'football', 'slotmachine', 'bowling')]
         [string]$Emoji,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
@@ -94,6 +94,9 @@ function Send-TelegramDice {
         }
         slotmachine {
             $emojiSend = '🎰'
+        }
+        bowling {
+            $emojiSend = '🎳'
         }
     }
     #------------------------------------------------------------------------

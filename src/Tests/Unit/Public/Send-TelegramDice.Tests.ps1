@@ -94,6 +94,15 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
                 $eval.ok | Should -Be 'True'
+                Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $sendTelegramDiceSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Emoji               = 'bowling'
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramDice @sendTelegramDiceSplat
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_success
     }#describe_Send-TelegramDice
