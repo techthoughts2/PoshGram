@@ -23,6 +23,7 @@
         Duration            = 495
         Performer           = 'Metallica'
         Title               = 'Halo On Fire'
+        FileName            = 'halo_on_fire.mp3'
         DisableNotification = $true
         Verbose             = $true
     }
@@ -38,6 +39,7 @@
         ChatID              = $chat
         AudioURL            = $audioURL
         Title               = 'Halo On Fire'
+        FileName            = 'halo_on_fire.mp3'
         Performer           = 'Metallica'
         Caption             = 'Check out this __awesome__ audio track\.'
         ParseMode           = 'MarkdownV2'

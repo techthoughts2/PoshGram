@@ -14,8 +14,8 @@ Sends Telegram video message via Bot API from locally sourced file
 
 ```
 Send-TelegramLocalVideo [-BotToken] <String> [-ChatID] <String> [-Video] <String> [[-Duration] <Int32>]
- [[-Width] <Int32>] [[-Height] <Int32>] [[-Caption] <String>] [[-ParseMode] <String>] [-Streaming]
- [-DisableNotification] [<CommonParameters>]
+ [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
+ [-Streaming] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +48,7 @@ $sendTelegramLocalVideoSplat = @{
     Duration            = 10
     Width               = 250
     Height              = 250
+    FileName            = 'video.mp4'
     Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
@@ -69,6 +70,7 @@ $sendTelegramLocalVideoSplat = @{
     ChatID    = $chat
     Video     = $video
     Streaming = $true
+    FileName  = 'video.mp4'
     Caption   = 'Check out this __awesome__ video\.'
     ParseMode = 'MarkdownV2'
 }
@@ -169,6 +171,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FileName
+Original File Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Caption
 Brief title or explanation for media
 
@@ -178,7 +195,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -194,7 +211,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -21,6 +21,7 @@
         Duration            = 16
         Width               = 1920
         Height              = 1080
+        FileName            = 'video.mp4'
         Caption             = 'Check out this video'
         ParseMode           = 'MarkdownV2'
         Streaming           = $true
@@ -39,6 +40,7 @@
         ChatID    = $chat
         VideoURL  = $videourl
         ParseMode = 'MarkdownV2'
+        FileName  = 'video.mp4'
         Caption   = 'Check out this __awesome__ video\.'
     }
     Send-TelegramURLVideo @sendTelegramURLVideoSplat
@@ -56,6 +58,8 @@
     Video width
 .PARAMETER Height
     Video height
+.PARAMETER FileName
+    Original File Name
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
@@ -139,6 +143,9 @@ function Send-TelegramURLVideo {
         [ValidateNotNullOrEmpty()]
         [Int32]$Height,
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Original File Name')]
+        [string]$FileName,
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
         [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
@@ -181,6 +188,7 @@ function Send-TelegramURLVideo {
         duration             = $Duration
         width                = $Width
         height               = $Height
+        file_name            = $FileName
         caption              = $Caption
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming

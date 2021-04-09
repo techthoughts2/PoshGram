@@ -104,6 +104,7 @@ InModuleScope PoshGram {
                     Duration            = 16
                     Width               = 1920
                     Height              = 1080
+                    FileName            = 'video.mp4'
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true

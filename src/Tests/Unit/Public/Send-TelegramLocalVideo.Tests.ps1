@@ -109,6 +109,7 @@ InModuleScope PoshGram {
                     Duration            = 10
                     Width               = 250
                     Height              = 250
+                    FileName            = 'video.mp4'
                     Caption             = 'Check out this video'
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true

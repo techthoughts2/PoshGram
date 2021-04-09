@@ -263,6 +263,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     Video               = $file3
+                    FileName            = 'Intro.mp4'
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalVideo</b>"
                     DisableNotification = $true
                 }
@@ -277,6 +278,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     VideoURL            = $videoURL
+                    FileName            = 'Intro.mp4'
                     Caption             = "I am a Pester test for <b>Send-TelegramURLVideo</b>"
                     DisableNotification = $true
                 }
