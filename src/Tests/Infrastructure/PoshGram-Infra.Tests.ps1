@@ -245,7 +245,7 @@ InModuleScope PoshGram {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "Inline keyboard pester test."
+                    Message             = "Inline keyboard pester test\."
                     Keyboard            = $inlineKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
@@ -259,7 +259,7 @@ InModuleScope PoshGram {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "Custom keyboard pester test."
+                    Message             = "Custom keyboard pester test\."
                     Keyboard            = $customKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
