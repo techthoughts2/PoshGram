@@ -103,7 +103,7 @@ function Test-FileExtension {
     [bool]$results = $true #assume the best.
     #------------------------------------------------------------
     Write-Verbose -Message "Processing $FilePath ..."
-    $divide = $FilePath.Split(".")
+    $divide = $FilePath.Split('.')
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
     Write-Verbose -Message "Verifying discovered extension: $extension"

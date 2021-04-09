@@ -4,25 +4,25 @@
 .DESCRIPTION
     Uses Telegram Bot API to send audio message to specified Telegram chat. The file will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters. Only works for mp3 files.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
     Sends audio message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         AudioURL            = $audioURL
-        Caption             = "Check out this audio track"
+        Caption             = 'Check out this audio track'
         ParseMode           = 'MarkdownV2'
         Duration            = 495
-        Performer           = "Metallica"
-        Title               = "Halo On Fire"
+        Performer           = 'Metallica'
+        Title               = 'Halo On Fire'
         DisableNotification = $true
         Verbose             = $true
     }
@@ -30,16 +30,16 @@
 
     Sends audio message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         AudioURL            = $audioURL
-        Title               = "Halo On Fire"
-        Performer           = "Metallica"
-        Caption             = "Check out this __awesome__ audio track\."
+        Title               = 'Halo On Fire'
+        Performer           = 'Metallica'
+        Caption             = 'Check out this __awesome__ audio track\.'
         ParseMode           = 'MarkdownV2'
     }
     Send-TelegramURLAudio @sendTelegramURLAudioSplat
@@ -122,7 +122,7 @@ function Send-TelegramURLAudio {
         [string]$AudioURL,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
-        [string]$Caption = "", #set to false by default
+        [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]

@@ -15,7 +15,7 @@ Sends Telegram audio message via Bot API from locally sourced file
 ```
 Send-TelegramLocalAudio [-BotToken] <String> [-ChatID] <String> [-Audio] <String> [[-Caption] <String>]
  [[-ParseMode] <String>] [[-Duration] <Int32>] [[-Performer] <String>] [[-Title] <String>]
- [-DisableNotification] [<CommonParameters>]
+ [[-FileName] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,9 +28,9 @@ Telegram only supports mp3 audio.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$audio = "C:\audio\halo_on_fire.mp3"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$audio = 'C:\audio\halo_on_fire.mp3'
 Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
 ```
 
@@ -38,18 +38,19 @@ Sends audio message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$audio = "C:\audio\halo_on_fire.mp3"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$audio = 'C:\audio\halo_on_fire.mp3'
 $sendTelegramLocalAudioSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     Audio               = $audio
-    Caption             = "Check out this audio track"
+    Caption             = 'Check out this audio track'
     ParseMode           = 'MarkdownV2'
     Duration            = 495
-    Performer           = "Metallica"
-    Title               = "Halo On Fire"
+    Performer           = 'Metallica'
+    Title               = 'Halo On Fire'
+    FileName            = 'halo_on_fire.mp3'
     DisableNotification = $true
     Verbose             = $true
 }
@@ -60,16 +61,17 @@ Sends audio message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$audio = "C:\audio\halo_on_fire.mp3"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$audio = 'C:\audio\halo_on_fire.mp3'
 $sendTelegramLocalAudioSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     Audio     = $audio
-    Title     = "Halo On Fire"
-    Performer = "Metallica"
-    Caption   = "Check out this __awesome__ audio track\."
+    Performer = 'Metallica'
+    Title     = 'Halo On Fire'
+    FileName  = 'halo_on_fire.mp3'
+    Caption   = 'Check out this __awesome__ audio track\.'
     ParseMode = 'MarkdownV2'
 }
 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
@@ -195,6 +197,21 @@ Aliases:
 
 Required: False
 Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FileName
+Original File Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

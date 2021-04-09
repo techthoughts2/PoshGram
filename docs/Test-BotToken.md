@@ -25,7 +25,7 @@ Returns basic information about the bot in form of a User object.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 Test-BotToken -BotToken $botToken
 ```
 
@@ -33,7 +33,7 @@ Validates the specified Bot auth token via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $testBotTokenSplat = @{
     BotToken = $botToken
     Verbose  = $true

@@ -28,9 +28,9 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 ```
 
@@ -38,9 +38,9 @@ Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -48,7 +48,7 @@ $sendTelegramURLVideoSplat = @{
     Duration            = 16
     Width               = 1920
     Height              = 1080
-    Caption             = "Check out this video"
+    Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
@@ -61,15 +61,15 @@ Sends video message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     VideoURL  = $videourl
     ParseMode = 'MarkdownV2'
-    Caption   = "Check out this __awesome__ video\."
+    Caption   = 'Check out this __awesome__ video\.'
 }
 Send-TelegramURLVideo @sendTelegramURLVideoSplat
 ```

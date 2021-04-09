@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramDice' -Tag Unit {
         Context 'Error' {
@@ -52,12 +52,12 @@ InModuleScope PoshGram {
             It 'should return a custom PSCustomObject if successful' {
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
-                        ok     = "True"
+                        ok     = 'True'
                         result = @{
                             message_id = 2222
-                            from       = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                            chat       = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                            date       = "1530157540"
+                            from       = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                            chat       = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                            date       = '1530157540'
                             dice       = @{
                                 emoji = '🎲'
                                 value = 2
@@ -93,7 +93,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_success
     }#describe_Send-TelegramDice

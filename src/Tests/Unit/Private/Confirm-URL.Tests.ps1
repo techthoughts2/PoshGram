@@ -37,12 +37,12 @@ InModuleScope PoshGram {
         It 'should return true when a website can be reached' {
             mock Invoke-WebRequest -MockWith {
                 [PSCustomObject]@{
-                    StatusCode        = "200"
-                    StatusDescription = "OK"
-                    Content           = "{137, 80, 78, 71...}"
-                    RawContent        = "HTTP/1.1 200 OK"
+                    StatusCode        = '200'
+                    StatusDescription = 'OK'
+                    Content           = '{137, 80, 78, 71...}'
+                    RawContent        = 'HTTP/1.1 200 OK'
                     Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
-                    RawContentLength  = "119136"
+                    RawContentLength  = '119136'
                 }
             }#endMock
             Confirm-URL -Uri 'https://gph.is/2nlyzm4' |  Should -Be $true

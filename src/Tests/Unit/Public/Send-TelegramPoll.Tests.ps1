@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     function Write-Error {
     }
     #-------------------------------------------------------------------------
@@ -50,13 +50,13 @@ InModuleScope PoshGram {
             mock Test-PollOptions { $true }
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id = 2222
-                        from       = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat       = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date       = "1530157540"
-                        poll       = "@{id=4987907110399377412; question=What is your favorite Star Trek series?; options=System.Object[]; is_closed=False}"
+                        from       = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat       = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date       = '1530157540'
+                        poll       = '@{id=4987907110399377412; question=What is your favorite Star Trek series?; options=System.Object[]; is_closed=False}'
                     }
                 }
             }#endMock
@@ -136,7 +136,7 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             It 'should return expected results if successful with a quiz poll' {
                 $sendTelegramPollSplat = @{
@@ -151,7 +151,7 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             It 'should return expected results if successfull with a quiz poll with additional options' {
                 $sendTelegramPollSplat = @{
@@ -168,7 +168,7 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
 
                 $sendTelegramPollSplat = @{
                     BotToken             = $token
@@ -184,7 +184,7 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Success
     }#describe_Send-TelegramPoll

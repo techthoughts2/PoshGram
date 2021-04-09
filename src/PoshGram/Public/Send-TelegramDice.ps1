@@ -4,15 +4,15 @@
 .DESCRIPTION
     Uses Telegram Bot API to send animated emoji that will display a random value to specified Telegram chat.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     $emoji = 'basketball'
     Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
 
     Sends animated basketball emoji that displays a random value via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     $emoji = 'dice'
     $sendTelegramDiceSplat = @{
         BotToken            = $botToken

@@ -4,21 +4,21 @@
 .DESCRIPTION
     Uses Telegram Bot API to send document message to specified Telegram chat. The document will be sourced from the local device and uploaded to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $file = "C:\Logs\Log1.txt"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $file = 'C:\Logs\Log1.txt'
     Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
 
     Sends document message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $file = "C:\Logs\Log1.txt"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         File                = $file
-        Caption             = "Check out this file"
+        Caption             = 'Check out this file'
         ParseMode           = 'MarkdownV2'
         DisableNotification = $true
         Verbose             = $true
@@ -27,14 +27,14 @@
 
     Sends document message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $file = "C:\Logs\Log1.txt"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         File      = $file
-        Caption   = "Check out this __important__ file\."
+        Caption   = 'Check out this __important__ file\.'
         ParseMode = 'MarkdownV2'
     }
     Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
@@ -106,7 +106,7 @@ function Send-TelegramLocalDocument {
         [string]$File,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
-        [string]$Caption = "", #set to false by default
+        [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]

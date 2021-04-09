@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocation' -Tag Unit {
         Context 'Error' {
@@ -41,15 +41,15 @@ InModuleScope PoshGram {
             It 'should return a custom PSCustomObject if successful' {
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
-                        ok     = "True"
+                        ok     = 'True'
                         result = @{
                             message_id       = 2222
-                            from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                            chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                            date             = "1530157540"
-                            audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
-                            caption          = "Video URL test"
-                            caption_entities = "{@{offset=13; length=6; type=bold}}"
+                            from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                            chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                            date             = '1530157540'
+                            audio            = '@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}'
+                            caption          = 'Video URL test'
+                            caption_entities = '{@{offset=13; length=6; type=bold}}'
                         }
                     }
                 }#endMock

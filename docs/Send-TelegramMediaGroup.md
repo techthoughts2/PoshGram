@@ -27,13 +27,13 @@ This function only supports sending one media type per send (Photo | Video | Doc
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $sendTelegramMediaGroupSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     MediaType = 'Photo'
-    FilePaths = "C:\photo\photo1.jpg", "C:\photo\photo2.jpg"
+    FilePaths = 'C:\photo\photo1.jpg', 'C:\photo\photo2.jpg'
 }
 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 ```
@@ -42,8 +42,8 @@ Uploads all provided photo files as album via Telegram Bot API.
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $sendTelegramMediaGroupSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -58,8 +58,8 @@ Keep in mind that your location must have at least 2, but not more than 10 files
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $vPath = 'C:\VideoGroup'
 $vFiles = @(
     "$vPath\first_contact.mp4",

@@ -26,9 +26,9 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$animation = "C:\animation\animation.gif"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$animation = 'C:\animation\animation.gif'
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 ```
 
@@ -36,14 +36,14 @@ Sends AnimationPath message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$animation = "C:\animation\animation.gif"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     AnimationPath       = $animation
-    Caption             = "Check out this animation"
+    Caption             = 'Check out this animation'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
     Verbose             = $true
@@ -55,14 +55,14 @@ Sends animation message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$animation = "C:\animation\animation.gif"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken      = $botToken
     ChatID        = $chat
     AnimationPath = $animation
-    Caption       = "Check out this __awesome__ animation\."
+    Caption       = 'Check out this __awesome__ animation\.'
     ParseMode     = 'MarkdownV2'
 }
 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat

@@ -10,24 +10,24 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLSticker' -Tag Unit {
-        $StickerURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp"
+        $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id = '1635'
                         from       = '@{id=515383114; is_bot=True; first_name=poshgram; username=poshgram_bot}'

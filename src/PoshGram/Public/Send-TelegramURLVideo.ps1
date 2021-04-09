@@ -4,16 +4,16 @@
 .DESCRIPTION
     Uses Telegram Bot API to send video message to specified Telegram chat. The file will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters. Only works for gif, pdf and zip files.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
     Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -21,7 +21,7 @@
         Duration            = 16
         Width               = 1920
         Height              = 1080
-        Caption             = "Check out this video"
+        Caption             = 'Check out this video'
         ParseMode           = 'MarkdownV2'
         Streaming           = $true
         DisableNotification = $true
@@ -31,15 +31,15 @@
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         VideoURL  = $videourl
         ParseMode = 'MarkdownV2'
-        Caption   = "Check out this __awesome__ video\."
+        Caption   = 'Check out this __awesome__ video\.'
     }
     Send-TelegramURLVideo @sendTelegramURLVideoSplat
 
@@ -140,7 +140,7 @@ function Send-TelegramURLVideo {
         [Int32]$Height,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
-        [string]$Caption = "", #set to false by default
+        [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]

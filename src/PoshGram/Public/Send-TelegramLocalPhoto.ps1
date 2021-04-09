@@ -4,21 +4,21 @@
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photo = "C:\photos\aphoto.jpg"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photo = 'C:\photos\aphoto.jpg'
     Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photo = "C:\photos\aphoto.jpg"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocalPhotoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         PhotoPath           = $photo
-        Caption             = "Check out this photo"
+        Caption             = 'Check out this photo'
         ParseMode           = 'MarkdownV2'
         DisableNotification = $true
         Verbose             = $true
@@ -27,14 +27,14 @@
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photo = "C:\photos\aphoto.jpg"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocalPhotoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         PhotoPath = $photo
-        Caption   = "Check out this __awesome__ photo\."
+        Caption   = 'Check out this __awesome__ photo\.'
         ParseMode = 'MarkdownV2'
     }
     Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
@@ -107,7 +107,7 @@ function Send-TelegramLocalPhoto {
         [string]$PhotoPath,
         [Parameter(Mandatory = $false,
             HelpMessage = 'Photo caption')]
-        [string]$Caption = "", #set to false by default
+        [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]

@@ -14,7 +14,7 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
+    $WarningPreference = 'SilentlyContinue'
     #-------------------------------------------------------------------------
     ###########################################################################
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -29,8 +29,8 @@ InModuleScope PoshGram {
     #>
     #these infra tests require pre-populated LOCAL files to run successfully
     #you must also provide the bot token and chat id for these tests to run
-    #$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    #$chat = "-nnnnnnnnn"
+    #$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    #$chat = '-nnnnnnnnn'
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ###########################################################################
     #>
@@ -159,7 +159,7 @@ InModuleScope PoshGram {
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Test-BotToken
         Start-Sleep -Milliseconds $milliSeconds
@@ -172,7 +172,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Milliseconds $milliSeconds
             It 'should throw when a message is sent with markdown and characters are not properly escaped' {
@@ -197,7 +197,7 @@ InModuleScope PoshGram {
                     ErrorAction         = 'Stop'
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramTextMessage
         Start-Sleep -Milliseconds $milliSeconds
@@ -211,7 +211,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalPhoto
         Start-Sleep -Milliseconds $milliSeconds
@@ -225,7 +225,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalPhoto
         Start-Sleep -Milliseconds $milliSeconds
@@ -239,7 +239,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalPhoto
         Start-Sleep -Milliseconds $milliSeconds
@@ -253,7 +253,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLDocument
         Start-Sleep -Milliseconds $milliSeconds
@@ -267,7 +267,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalVideo
         Start-Sleep -Milliseconds $milliSeconds
@@ -281,7 +281,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLVideo
         Start-Sleep -Milliseconds $milliSeconds
@@ -296,7 +296,7 @@ InModuleScope PoshGram {
                 }
 
                 $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalAudio
         Start-Sleep -Milliseconds $milliSeconds
@@ -311,7 +311,7 @@ InModuleScope PoshGram {
                 }
 
                 $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLAudio
         Start-Sleep -Milliseconds $milliSeconds
@@ -325,7 +325,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocation @sendTelegramLocationSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocation
         Start-Sleep -Milliseconds $milliSeconds
@@ -339,7 +339,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalAnimation
         Start-Sleep -Milliseconds $milliSeconds
@@ -353,7 +353,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLAnimation
         Start-Sleep -Milliseconds $milliSeconds
@@ -367,7 +367,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of videos is successfully sent' {
@@ -379,7 +379,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of audios is successfully sent' {
@@ -391,7 +391,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Seconds 30
             It 'Should return with ok:true when a group of documents is successfully sent' {
@@ -403,7 +403,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLAnimation
         Start-Sleep -Milliseconds $milliSeconds
@@ -418,7 +418,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramContact @sendTelegramContactSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramContact
         Start-Sleep -Seconds 30
@@ -434,7 +434,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramVenue @sendTelegramVenueSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramVenue
         Start-Sleep -Milliseconds $milliSeconds
@@ -448,7 +448,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Milliseconds $milliSeconds
             It 'Should return with ok:true when a quiz poll is successfully sent' {
@@ -463,7 +463,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Milliseconds $milliSeconds
             It 'Should return with ok:true when a quiz poll is successfully sent with additional options' {
@@ -480,7 +480,7 @@ InModuleScope PoshGram {
                     CloseDate            = (Get-Date).AddDays(1)
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramPoll
         Start-Sleep -Milliseconds $milliSeconds
@@ -505,7 +505,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
             Start-Sleep -Milliseconds $milliSeconds
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
@@ -517,7 +517,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramSticker
         Start-Sleep -Milliseconds $milliSeconds
@@ -530,7 +530,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramLocalSticker
         Start-Sleep -Milliseconds $milliSeconds
@@ -543,7 +543,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramURLSticker
         Start-Sleep -Milliseconds $milliSeconds
@@ -556,7 +556,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
-                $eval.ok | Should -Be "True"
+                $eval.ok | Should -Be 'True'
             }#it
         }#context_Send-TelegramDice
     }#describe_InfraTests

@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalDocument' -Tag Unit {
         BeforeEach {
@@ -26,23 +26,23 @@ InModuleScope PoshGram {
             mock Test-FileSize { $true }
             mock Get-Item {
                 [PSCustomObject]@{
-                    Mode          = "True"
-                    LastWriteTime = "06/17/16     00:19"
-                    Length        = "1902"
-                    Name          = "customlog.txt"
+                    Mode          = 'True'
+                    LastWriteTime = '06/17/16     00:19'
+                    Length        = '1902'
+                    Name          = 'customlog.txt'
                 }
             }#endMock
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        photo            = "{@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCjAABG9Ju7DQr02GYgMBAAEC; file_size=1084;file_path=photos/file_427.jpg; width=90; height=85},@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCj################; file_size=2305; width=123;height=116}}"
-                        caption          = "Please work, please"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        photo            = '{@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCjAABG9Ju7DQr02GYgMBAAEC; file_size=1084;file_path=photos/file_427.jpg; width=90; height=85},@{file_id=AgADAQAD-qcxG3V1oUWan8rsJbPxtH6vCj################; file_size=2305; width=123;height=116}}'
+                        caption          = 'Please work, please'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -53,7 +53,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    File     = "C:\customlog.txt"
+                    File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
@@ -62,7 +62,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    File     = "C:\customlog.txt"
+                    File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
@@ -73,7 +73,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    File     = "C:\customlog.txt"
+                    File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
             }#it
@@ -84,7 +84,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    File        = "C:\customlog.txt"
+                    File        = 'C:\customlog.txt'
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
@@ -95,8 +95,8 @@ InModuleScope PoshGram {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    File                = "C:\customlog.txt"
-                    Caption             = "Check out this file"
+                    File                = 'C:\customlog.txt'
+                    Caption             = 'Check out this file'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                 }

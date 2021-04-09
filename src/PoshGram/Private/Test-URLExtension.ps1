@@ -123,7 +123,7 @@ function Test-URLExtension {
     }#if_slEval
     #------------------------------------------------------------
     Write-Verbose -Message "Processing $URL ..."
-    $divide = $URL.Split(".")
+    $divide = $URL.Split('.')
     $rawExtension = $divide[$divide.Length - 1]
     $extension = $rawExtension.ToUpper()
     Write-Verbose -Message "Verifying discovered extension: $extension"

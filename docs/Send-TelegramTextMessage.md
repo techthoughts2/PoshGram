@@ -25,8 +25,8 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
@@ -34,8 +34,8 @@ Sends text message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -48,12 +48,12 @@ Sends text message via Telegram API with properly formatted default HTML syntax.
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $sendTelegramTextMessageSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
-    Message             = "Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)"
+    Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)'
     ParseMode           = 'MarkdownV2'
     DisablePreview      = $true
     DisableNotification = $true

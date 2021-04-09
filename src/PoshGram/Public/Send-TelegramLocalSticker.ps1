@@ -4,16 +4,16 @@
 .DESCRIPTION
     Uses Telegram Bot API to send sticker message to specified Telegram chat. The sticker will be sourced from the local device and uploaded to telegram.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $sticker = "C:\stickers\sticker.webp"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $sticker = 'C:\stickers\sticker.webp'
     Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
 
     Sends sticker message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $sticker = "C:\stickers\sticker.webp"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $sticker = 'C:\stickers\sticker.webp'
     $sendTelegramLocalStickerSplat = @{
         BotToken            = $botToken
         ChatID              = $chat

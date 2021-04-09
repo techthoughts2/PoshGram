@@ -10,32 +10,32 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLAudio' -Tag Unit {
-        $audioURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+        $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
-                        caption          = "Video URL test"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        audio            = '@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}'
+                        caption          = 'Video URL test'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -47,11 +47,11 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     AudioURL            = $audioURL
-                    Caption             = "Check out this audio track"
+                    Caption             = 'Check out this audio track'
                     ParseMode           = 'MarkdownV2'
                     Duration            = 495
-                    Performer           = "Metallica"
-                    Title               = "Halo On Fire"
+                    Performer           = 'Metallica'
+                    Title               = 'Halo On Fire'
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
@@ -63,11 +63,11 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     AudioURL            = $audioURL
-                    Caption             = "Check out this audio track"
+                    Caption             = 'Check out this audio track'
                     ParseMode           = 'MarkdownV2'
                     Duration            = 495
-                    Performer           = "Metallica"
-                    Title               = "Halo On Fire"
+                    Performer           = 'Metallica'
+                    Title               = 'Halo On Fire'
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
@@ -81,11 +81,11 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     AudioURL            = $audioURL
-                    Caption             = "Check out this audio track"
+                    Caption             = 'Check out this audio track'
                     ParseMode           = 'MarkdownV2'
                     Duration            = 495
-                    Performer           = "Metallica"
-                    Title               = "Halo On Fire"
+                    Performer           = 'Metallica'
+                    Title               = 'Halo On Fire'
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
@@ -98,11 +98,11 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     AudioURL            = $audioURL
-                    Caption             = "Check out this audio track"
+                    Caption             = 'Check out this audio track'
                     ParseMode           = 'MarkdownV2'
                     Duration            = 495
-                    Performer           = "Metallica"
-                    Title               = "Halo On Fire"
+                    Performer           = 'Metallica'
+                    Title               = 'Halo On Fire'
                     DisableNotification = $true
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject

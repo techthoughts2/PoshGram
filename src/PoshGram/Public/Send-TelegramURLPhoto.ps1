@@ -4,21 +4,21 @@
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
     Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         PhotoURL            = $photourl
-        Caption             = "DSC is a great technology"
+        Caption             = 'DSC is a great technology'
         ParseMode           = 'MarkdownV2'
         DisableNotification = $true
         Verbose             = $true
@@ -27,9 +27,9 @@
 
     Sends photo message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat

@@ -10,14 +10,14 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     #-------------------------------------------------------------------------
     Describe 'Test-BotToken' -Tag Unit {
         Context 'Error' {
@@ -36,12 +36,12 @@ InModuleScope PoshGram {
             It 'should return a custom PSCustomObject if successful' {
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
-                        ok     = "True"
+                        ok     = 'True'
                         result = @{
                             id         = 2222
-                            is_bot     = "True"
-                            first_name = "botname"
-                            username   = "botname_bot"
+                            is_bot     = 'True'
+                            first_name = 'botname'
+                            username   = 'botname_bot'
                         }
                     }
                 }#endMock

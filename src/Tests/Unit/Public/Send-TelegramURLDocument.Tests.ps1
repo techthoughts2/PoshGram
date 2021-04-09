@@ -10,32 +10,32 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLDocument' -Tag Unit {
-        $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
+        $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        document         = "@{file_name=LogExample.zip; mime_type=application/zip;file_id=BQADBAADBgAD2j69UXHVUcgmhQqsAg; file_size=216}"
-                        caption          = "TechThoughts Logo"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        document         = '@{file_name=LogExample.zip; mime_type=application/zip;file_id=BQADBAADBgAD2j69UXHVUcgmhQqsAg; file_size=216}'
+                        caption          = 'TechThoughts Logo'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -47,7 +47,7 @@ InModuleScope PoshGram {
                     BotToken = $token
                     ChatID   = $chat
                     FileURL  = $fileURL
-                    Caption  = "TechThoughts Logo"
+                    Caption  = 'TechThoughts Logo'
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
@@ -57,7 +57,7 @@ InModuleScope PoshGram {
                     BotToken = $token
                     ChatID   = $chat
                     FileURL  = $fileURL
-                    Caption  = "TechThoughts Logo"
+                    Caption  = 'TechThoughts Logo'
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
             }#it
@@ -69,7 +69,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     FileURL             = $fileURL
-                    Caption             = "TechThoughts Logo"
+                    Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -83,7 +83,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     FileURL             = $fileURL
-                    Caption             = "TechThoughts Logo"
+                    Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                 }

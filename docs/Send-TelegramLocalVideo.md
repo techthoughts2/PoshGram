@@ -28,9 +28,9 @@ Telegram only supports mp4 videos.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$file = "C:\videos\video.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$file = 'C:\videos\video.mp4'
 Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
 ```
 
@@ -38,9 +38,9 @@ Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$video = "C:\videos\video.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$video = 'C:\videos\video.mp4'
 $sendTelegramLocalVideoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -48,7 +48,7 @@ $sendTelegramLocalVideoSplat = @{
     Duration            = 10
     Width               = 250
     Height              = 250
-    Caption             = "Check out this video"
+    Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
@@ -61,15 +61,15 @@ Sends video message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$video = "C:\videos\video.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$video = 'C:\videos\video.mp4'
 $sendTelegramLocalVideoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     Video     = $video
     Streaming = $true
-    Caption   = "Check out this __awesome__ video\."
+    Caption   = 'Check out this __awesome__ video\.'
     ParseMode = 'MarkdownV2'
 }
 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
