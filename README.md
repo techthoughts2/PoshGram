@@ -170,6 +170,10 @@ $test = "I am a test"
 #--------------------------------------------------------------------------
 ```
 
+## FAQ
+
+**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
+
 ## Author
 
 [Jake Morrison](https://twitter.com/JakeMorrison) - [https://techthoughts.info/](https://techthoughts.info/)
@@ -188,10 +192,6 @@ $test = "I am a test"
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
 This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
-
-## FAQ
-
-**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
 
 ## License
 
