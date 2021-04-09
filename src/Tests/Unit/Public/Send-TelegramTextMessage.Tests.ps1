@@ -20,6 +20,24 @@ InModuleScope PoshGram {
     $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
+    $inlineRow1 = @(
+        @{
+            text = "`u{1F517} Visit"
+            url  = 'https://www.techthoughts.info'
+        }
+    )
+    $inlineRow2 = @(
+        @{
+            text = "`u{1F4CC} Pin"
+            url  = 'https://www.techthoughts.info/learn-powershell-series/'
+        }
+    )
+    $inlineKeyboard = @{
+        inline_keyboard = @(
+            $inlineRow1,
+            $inlineRow2
+        )
+    }
     Describe 'Send-TelegramTextMessage' -Tag Unit {
         BeforeEach {
             mock Invoke-RestMethod -MockWith {
@@ -55,6 +73,18 @@ InModuleScope PoshGram {
                     BotToken = $token
                     ChatID   = $chat
                     Message  = 'Hi there Pester'
+                }
+                Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+            }#it
+            It 'should return a custom PSCustomObject if successful when sending a keyboard' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Message             = 'Hi there Pester'
+                    ParseMode           = 'MarkdownV2'
+                    DisablePreview      = $true
+                    DisableNotification = $true
+                    Keyboard            = $inlineKeyboard
                 }
                 Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -BeOfType System.Management.Automation.PSCustomObject
             }#it

@@ -71,6 +71,47 @@ InModuleScope PoshGram {
     $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
     $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
     $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
+    $inlineRow1 = @(
+        @{
+            text = "`u{1F517} Visit"
+            url  = 'https://www.techthoughts.info'
+        }
+    )
+    $inlineRow2 = @(
+        @{
+            text = "`u{1F4CC} Pin"
+            url  = 'https://www.techthoughts.info/learn-powershell-series/'
+        }
+    )
+    $inlineKeyboard = @{
+        inline_keyboard = @(
+            $inlineRow1,
+            $inlineRow2
+        )
+    }
+    $row1 = @(
+        @{
+            text = "`u{1F513} Unlock"
+        }
+        # @{
+        #     text = 'button2'
+        # }
+    )
+    $row2 = @(
+        @{
+            text = "`u{1F512} Lock"
+        }
+        # @{
+        #     text = 'button2'
+        # }
+    )
+    $customKeyboard = @{
+        keyboard          = @(
+            $row1,
+            $row2
+        )
+        one_time_keyboard = $true
+    }
     #//////////////////////////////////////////////////////////////////////////
     # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
     # this section will need to be commented out if you want to run locally
@@ -199,6 +240,48 @@ InModuleScope PoshGram {
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
             }#it
+            Start-Sleep -Milliseconds $milliSeconds
+            It 'should return ok:true when a message is sent with an inline keyboard' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Message             = "Inline keyboard pester test."
+                    Keyboard            = $inlineKeyboard
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'Stop'
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                $eval.ok | Should -Be 'True'
+            }#it
+            Start-Sleep -Milliseconds $milliSeconds
+            It 'should return ok:true when a message is sent with a custom keyboard' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Message             = "Custom keyboard pester test."
+                    Keyboard            = $customKeyboard
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'Stop'
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                $eval.ok | Should -Be 'True'
+            }#it
+            Start-Sleep -Milliseconds $milliSeconds
+            It 'should return ok:true when a message is sent with properly formed emojis' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Message             = "`u{1F192} Sending emojis is cool\! `u{1F49B}"
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'Stop'
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                $eval.ok | Should -Be 'True'
+            }#it
+            Start-Sleep -Milliseconds $milliSeconds
         }#context_Send-TelegramTextMessage
         Start-Sleep -Milliseconds $milliSeconds
         Context 'Send-TelegramLocalPhoto' {
