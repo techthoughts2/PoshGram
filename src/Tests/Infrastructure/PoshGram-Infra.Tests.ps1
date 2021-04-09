@@ -292,6 +292,9 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     Audio               = $file4
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalAudio</b>"
+                    Performer           = 'Tobu & Syndec'
+                    Title               = 'Dusk'
+                    FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
                     DisableNotification = $true
                 }
 
@@ -306,6 +309,9 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     AudioURL            = $audioURL
+                    Performer           = 'Tobu & Syndec'
+                    Title               = 'Dusk'
+                    FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
                     Caption             = "I am a Pester test for <b>Send-TelegramURLAudio</b>"
                     DisableNotification = $true
                 }

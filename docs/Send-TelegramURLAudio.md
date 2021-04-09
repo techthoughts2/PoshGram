@@ -15,7 +15,7 @@ Sends Telegram audio message via Bot API from URL sourced file
 ```
 Send-TelegramURLAudio [-BotToken] <String> [-ChatID] <String> [-AudioURL] <String> [[-Caption] <String>]
  [[-ParseMode] <String>] [[-Duration] <Int32>] [[-Performer] <String>] [[-Title] <String>]
- [-DisableNotification] [<CommonParameters>]
+ [[-FileName] <String>] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -195,6 +195,21 @@ Aliases:
 
 Required: False
 Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FileName
+Original File Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

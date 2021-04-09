@@ -103,6 +103,7 @@ InModuleScope PoshGram {
                     Duration            = 495
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
+                    FileName            = 'audio.mp3'
                     DisableNotification = $true
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject

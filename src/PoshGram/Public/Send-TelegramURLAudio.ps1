@@ -63,6 +63,8 @@
     Performer
 .PARAMETER Title
     Track Name
+.PARAMETER FileName
+    Original File Name
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
@@ -137,6 +139,9 @@ function Send-TelegramURLAudio {
             HelpMessage = 'TrackName')]
         [string]$Title,
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Original File Name')]
+        [string]$FileName,
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
@@ -171,6 +176,7 @@ function Send-TelegramURLAudio {
         duration             = $Duration
         performer            = $Performer
         title                = $Title
+        file_name            = $FileName
         disable_notification = $DisableNotification.IsPresent
     }#payload
     #------------------------------------------------------------------------
