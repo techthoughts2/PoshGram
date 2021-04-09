@@ -27,9 +27,9 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
 Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
 ```
 
@@ -37,14 +37,14 @@ Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     FileURL             = $fileURL
-    Caption             = "Log Files"
+    Caption             = 'Log Files'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
     Verbose             = $true
@@ -56,14 +56,14 @@ Sends document message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     FileURL   = $fileURL
-    Caption   = "Here are the __important__ Log Files\."
+    Caption   = 'Here are the __important__ Log Files\.'
     ParseMode = 'MarkdownV2'
 }
 Send-TelegramURLDocument @sendTelegramURLDocumentSplat

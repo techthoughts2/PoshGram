@@ -10,32 +10,32 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLPhoto' -Tag Unit {
-        $videoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+        $videoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
         BeforeEach {
             mock Test-URLExtension { $true }
             mock Test-URLFileSize { $true }
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        video            = "@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}"
-                        caption          = "Video URL test"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        video            = '@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}'
+                        caption          = 'Video URL test'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -104,6 +104,7 @@ InModuleScope PoshGram {
                     Duration            = 16
                     Width               = 1920
                     Height              = 1080
+                    FileName            = 'video.mp4'
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true

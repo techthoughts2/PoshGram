@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     function Write-Error {
     }
     #-------------------------------------------------------------------------
@@ -26,7 +26,7 @@ InModuleScope PoshGram {
         BeforeEach {
             Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id = '1628'
                         from       = '@{id=515383114; is_bot=True; first_name=poshgram; username=poshgram_bot}'
@@ -83,7 +83,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     StickerSetName      = 'STPicard'
-                    Shortcode           = ":grinning:"
+                    Shortcode           = ':grinning:'
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
@@ -102,7 +102,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     StickerSetName      = 'STPicard'
-                    Shortcode           = ":slightly_smiling_face:"
+                    Shortcode           = ':slightly_smiling_face:'
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject

@@ -26,9 +26,9 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 ```
 
@@ -36,14 +36,14 @@ Sends photo message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     PhotoURL            = $photourl
-    Caption             = "DSC is a great technology"
+    Caption             = 'DSC is a great technology'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
     Verbose             = $true
@@ -55,9 +55,9 @@ Sends photo message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photoURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat

@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalSticker' -Tag Unit {
         BeforeEach {
@@ -27,15 +27,15 @@ InModuleScope PoshGram {
             mock Test-FileSize { $true }
             mock Get-Item {
                 [PSCustomObject]@{
-                    Mode          = "True"
-                    LastWriteTime = "06/17/16     00:19"
-                    Length        = "1902"
-                    Name          = "sticker.webp"
+                    Mode          = 'True'
+                    LastWriteTime = '06/17/16     00:19'
+                    Length        = '1902'
+                    Name          = 'sticker.webp'
                 }
             }#endMock
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id = '1633'
                         from       = '@{id=515383114; is_bot=True; first_name=poshgram; username=poshgram_bot}'
@@ -52,7 +52,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    StickerPath = "c:\bs\sticker.webp"
+                    StickerPath = 'c:\bs\sticker.webp'
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
@@ -61,7 +61,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    StickerPath = "c:\bs\sticker.webp"
+                    StickerPath = 'c:\bs\sticker.webp'
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
@@ -70,7 +70,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    StickerPath = "c:\bs\sticker.webp"
+                    StickerPath = 'c:\bs\sticker.webp'
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
@@ -81,7 +81,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    StickerPath = "c:\bs\sticker.webp"
+                    StickerPath = 'c:\bs\sticker.webp'
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
             }#it
@@ -92,7 +92,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    StickerPath = "c:\bs\sticker.webp"
+                    StickerPath = 'c:\bs\sticker.webp'
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
@@ -103,7 +103,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerPath         = "c:\bs\sticker.webp"
+                    StickerPath         = 'c:\bs\sticker.webp'
                     DisableNotification = $true
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject

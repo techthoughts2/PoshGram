@@ -14,8 +14,8 @@ Sends Telegram video message via Bot API from URL sourced file
 
 ```
 Send-TelegramURLVideo [-BotToken] <String> [-ChatID] <String> [-VideoURL] <String> [[-Duration] <Int32>]
- [[-Width] <Int32>] [[-Height] <Int32>] [[-Caption] <String>] [[-ParseMode] <String>] [-Streaming]
- [-DisableNotification] [<CommonParameters>]
+ [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
+ [-Streaming] [-DisableNotification] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,9 +28,9 @@ Only works for gif, pdf and zip files.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 ```
 
@@ -38,9 +38,9 @@ Sends video message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -48,7 +48,8 @@ $sendTelegramURLVideoSplat = @{
     Duration            = 16
     Width               = 1920
     Height              = 1080
-    Caption             = "Check out this video"
+    FileName            = 'video.mp4'
+    Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
@@ -61,15 +62,16 @@ Sends video message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$videourl = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     VideoURL  = $videourl
     ParseMode = 'MarkdownV2'
-    Caption   = "Check out this __awesome__ video\."
+    FileName  = 'video.mp4'
+    Caption   = 'Check out this __awesome__ video\.'
 }
 Send-TelegramURLVideo @sendTelegramURLVideoSplat
 ```
@@ -168,6 +170,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FileName
+Original File Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Caption
 Brief title or explanation for media
 
@@ -177,7 +194,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -193,7 +210,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: HTML
 Accept pipeline input: False
 Accept wildcard characters: False

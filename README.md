@@ -157,7 +157,7 @@ Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
 #sending a telegram message from older versions of powershell
 ###########################################################################
 #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1+ to send Telegram Message via PoshGram" }
+& 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chat = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram using dynamic variables in the message
 $token = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
@@ -166,9 +166,13 @@ $test = "I am a test"
 & '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message '$test';}"
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 7+ from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\7-preview\pwsh.exe' -command { Import-Module PoshGram;$token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx";$chat = "-nnnnnnnnn";Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }
+& 'C:\Program Files\PowerShell\7-preview\pwsh.exe' -command { Import-Module PoshGram;$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chat = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 ```
+
+## FAQ
+
+**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
 
 ## Author
 
@@ -188,10 +192,6 @@ $test = "I am a test"
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
 This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
-
-## FAQ
-
-**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
 
 ## License
 

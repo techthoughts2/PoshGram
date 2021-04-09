@@ -24,8 +24,8 @@ Uses Telegram Bot API to send latitude, longitude, title, and address informatio
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $latitude = 37.621313
 $longitude = -122.378955
 $title = 'Star Fleet Headquarters'
@@ -37,8 +37,8 @@ Sends venue information via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
 $latitude = 37.621313
 $longitude = -122.378955
 $title = 'Star Fleet Headquarters'

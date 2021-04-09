@@ -24,30 +24,30 @@ InModuleScope PoshGram {
         It 'Should return true when the file is at or below 50MB' {
             mock Get-ChildItem -MockWith {
                 [PSCustomObject]@{
-                    Mode          = "-a----"
-                    LastWriteTime = "06/30/18     09:52"
-                    Length        = "119136"
-                    Name          = "techthoughts.png"
+                    Mode          = '-a----'
+                    LastWriteTime = '06/30/18     09:52'
+                    Length        = '119136'
+                    Name          = 'techthoughts.png'
                 }
             }#endMock
-            Test-FileSize -Path "C:\videos\video.mp4" | Should -Be $true
+            Test-FileSize -Path 'C:\videos\video.mp4' | Should -Be $true
         }#it
         It 'should return false when the file is over 50MB' {
             mock Get-ChildItem -MockWith {
                 [PSCustomObject]@{
-                    Mode          = "-a----"
-                    LastWriteTime = "06/30/18     09:52"
-                    Length        = "1593681272"
-                    Name          = "techthoughts.png"
+                    Mode          = '-a----'
+                    LastWriteTime = '06/30/18     09:52'
+                    Length        = '1593681272'
+                    Name          = 'techthoughts.png'
                 }
             }#endMock
-            Test-FileSize -Path "C:\videos\video.mp4" | Should -Be $false
+            Test-FileSize -Path 'C:\videos\video.mp4' | Should -Be $false
         }#it
         It 'should return false when an error is encountered' {
             mock Get-ChildItem -MockWith {
                 Throw 'Bullshit Error'
             }#endMock
-            Test-FileSize -Path "C:\videos\video.mp4" | Should -Be $false
+            Test-FileSize -Path 'C:\videos\video.mp4' | Should -Be $false
         }#it
     }#describe
 }#inModule

@@ -6,7 +6,7 @@ $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleNam
 $PathToModule = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psm1")
 #-------------------------------------------------------------------------
 Describe 'Module Tests' -Tag Unit {
-    Context "Module Tests" {
+    Context 'Module Tests' {
         It 'Passes Test-ModuleManifest' {
             { $script:manifestEval = Test-ModuleManifest -Path $PathToManifest } | Should Not throw
             $? | Should Be $true

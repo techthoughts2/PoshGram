@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.0]
+
+- String literals throughout PoshGram now use single quotes (') instead of double quotes (")
+- Send-TelegramDice
+  - Now supports bowling emoji
+- Added FileName parameter to:
+  - Send-TelegramURLAudio
+  - Send-TelegramURLVideo
+  - Send-TelegramLocalAudio
+  - Send-TelegramLocalVideo
+- ***Added custom and inline keyboard support for Send-TelegramTextMessage***
+- Added more examples for Send-TelegramTextMessage help
+- Added additional documentation enhancements for emoji support and keyboards to FAQ.md
+
 ## [1.15.0]
 
 - Send-TelegramLocalAudio / Send-TelegramURLAudio

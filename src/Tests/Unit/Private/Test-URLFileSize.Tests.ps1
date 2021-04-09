@@ -20,18 +20,18 @@ InModuleScope PoshGram {
     function Write-Error {
     }
     #-------------------------------------------------------------------------
-    $fileURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip"
+    $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
     #-------------------------------------------------------------------------
     Describe 'Test-URLFileSize' -Tag Unit {
         It 'Should return true when the file is at or below 50MB' {
             mock Invoke-WebRequest -MockWith {
                 [PSCustomObject]@{
-                    StatusCode        = "200"
-                    StatusDescription = "OK"
-                    Content           = "{137, 80, 78, 71...}"
-                    RawContent        = "HTTP/1.1 200 OK"
+                    StatusCode        = '200'
+                    StatusDescription = 'OK'
+                    Content           = '{137, 80, 78, 71...}'
+                    RawContent        = 'HTTP/1.1 200 OK'
                     Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
-                    RawContentLength  = "119136"
+                    RawContentLength  = '119136'
                 }
             }#endMock
             Test-URLFileSize -URL $fileURL | Should -Be $true
@@ -39,12 +39,12 @@ InModuleScope PoshGram {
         It 'should return false when the file is over 50MB' {
             mock Invoke-WebRequest -MockWith {
                 [PSCustomObject]@{
-                    StatusCode        = "200"
-                    StatusDescription = "OK"
-                    Content           = "{137, 80, 78, 71...}"
-                    RawContent        = "HTTP/1.1 200 OK"
+                    StatusCode        = '200'
+                    StatusDescription = 'OK'
+                    Content           = '{137, 80, 78, 71...}'
+                    RawContent        = 'HTTP/1.1 200 OK'
                     Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
-                    RawContentLength  = "1593681272"
+                    RawContentLength  = '1593681272'
                 }
             }#endMock
             Test-URLFileSize -URL $fileURL | Should -Be $false

@@ -26,9 +26,9 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photo = "C:\photos\aphoto.jpg"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photo = 'C:\photos\aphoto.jpg'
 Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
 ```
 
@@ -36,14 +36,14 @@ Sends photo message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photo = "C:\photos\aphoto.jpg"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photo = 'C:\photos\aphoto.jpg'
 $sendTelegramLocalPhotoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     PhotoPath           = $photo
-    Caption             = "Check out this photo"
+    Caption             = 'Check out this photo'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
     Verbose             = $true
@@ -55,14 +55,14 @@ Sends photo message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$photo = "C:\photos\aphoto.jpg"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$photo = 'C:\photos\aphoto.jpg'
 $sendTelegramLocalPhotoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     PhotoPath = $photo
-    Caption   = "Check out this __awesome__ photo\."
+    Caption   = 'Check out this __awesome__ photo\.'
     ParseMode = 'MarkdownV2'
 }
 Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat

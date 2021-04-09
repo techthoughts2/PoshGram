@@ -20,7 +20,7 @@ InModuleScope PoshGram {
     function Write-Error {
     }
     #-------------------------------------------------------------------------
-    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
     #-------------------------------------------------------------------------
     $supportedPhotoExtensions = @(
         'JPG',
@@ -58,17 +58,17 @@ InModuleScope PoshGram {
         }#endmock
         Mock Resolve-ShortLink {}
         It 'should return false when a non-supported extension is provided' {
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Photo | Should -Be $false
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Video | Should -Be $false
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Audio | Should -Be $false
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Animation | Should -Be $false
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Document | Should -Be $false
-            Test-URLExtension -URL "https://techthoughts.info/file.xml" `
+            Test-URLExtension -URL 'https://techthoughts.info/file.xml' `
                 -Type Sticker | Should -Be $false
         }#it
         Context 'Photo' {
@@ -126,14 +126,14 @@ InModuleScope PoshGram {
             Mock Resolve-ShortLink -MockWith {
                 $animationURL
             }
-            Test-URLExtension -URL "http://bit.ly/fakeaddress" `
+            Test-URLExtension -URL 'http://bit.ly/fakeaddress' `
                 -Type Animation | Should -Be $true
         }#it
         It 'should return false if the URL cannot be reached' {
             Mock Confirm-Url -MockWith {
                 $false
             }#endmock
-            Test-URLExtension -URL "http://bit.ly/fakeaddress" `
+            Test-URLExtension -URL 'http://bit.ly/fakeaddress' `
                 -Type Animation | Should -Be $false
         }
     }#describe

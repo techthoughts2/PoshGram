@@ -26,9 +26,9 @@ Several options can be specified to adjust message parameters.
 
 ### EXAMPLE 1
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$file = "C:\Logs\Log1.txt"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$file = 'C:\Logs\Log1.txt'
 Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
 ```
 
@@ -36,14 +36,14 @@ Sends document message via Telegram API
 
 ### EXAMPLE 2
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$file = "C:\Logs\Log1.txt"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$file = 'C:\Logs\Log1.txt'
 $sendTelegramLocalDocumentSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     File                = $file
-    Caption             = "Check out this file"
+    Caption             = 'Check out this file'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
     Verbose             = $true
@@ -55,14 +55,14 @@ Sends document message via Telegram API
 
 ### EXAMPLE 3
 ```
-$botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-$chat = "-nnnnnnnnn"
-$file = "C:\Logs\Log1.txt"
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chat = '-nnnnnnnnn'
+$file = 'C:\Logs\Log1.txt'
 $sendTelegramLocalDocumentSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
     File      = $file
-    Caption   = "Check out this __important__ file\."
+    Caption   = 'Check out this __important__ file\.'
     ParseMode = 'MarkdownV2'
 }
 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat

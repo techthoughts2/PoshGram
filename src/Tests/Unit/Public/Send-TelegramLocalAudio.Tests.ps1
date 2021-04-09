@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalAudio' -Tag Unit {
         BeforeEach {
@@ -27,23 +27,23 @@ InModuleScope PoshGram {
             mock Test-FileSize { $true }
             mock Get-Item {
                 [PSCustomObject]@{
-                    Mode          = "True"
-                    LastWriteTime = "06/17/16     00:19"
-                    Length        = "1902"
-                    Name          = "diagvresults.jpg"
+                    Mode          = 'True'
+                    LastWriteTime = '06/17/16     00:19'
+                    Length        = '1902'
+                    Name          = 'diagvresults.jpg'
                 }
             }#endMock
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        audio            = "@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}"
-                        caption          = "Local Video Test"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        audio            = '@{duration=225; mime_type=audio/mpeg; file_id=CQADAQADTgADiOTBRejNi8mgvPkEAg; file_size=6800709}'
+                        caption          = 'Local Video Test'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -54,7 +54,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Audio    = "C:\bs\audio.mp3"
+                    Audio    = 'C:\bs\audio.mp3'
                 }
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
@@ -63,7 +63,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Audio    = "C:\bs\audio.mp3"
+                    Audio    = 'C:\bs\audio.mp3'
                 }
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
@@ -72,7 +72,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Audio    = "C:\bs\audio.mp3"
+                    Audio    = 'C:\bs\audio.mp3'
                 }
 
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
@@ -84,7 +84,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Audio    = "C:\bs\audio.mp3"
+                    Audio    = 'C:\bs\audio.mp3'
                 }
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -Be $false
             }#it
@@ -95,7 +95,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    Audio       = "C:\bs\audio.mp3"
+                    Audio       = 'C:\bs\audio.mp3'
                     ErrorAction = 'SilentlyContinue'
                 }
 
@@ -107,12 +107,13 @@ InModuleScope PoshGram {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    Audio               = "C:\bs\audio.mp3"
-                    Caption             = "Check out this audio track"
+                    Audio               = 'C:\bs\audio.mp3'
+                    Caption             = 'Check out this audio track'
                     ParseMode           = 'MarkdownV2'
                     Duration            = 495
-                    Performer           = "Metallica"
-                    Title               = "Halo On Fire"
+                    Performer           = 'Metallica'
+                    Title               = 'Halo On Fire'
+                    FileName            = 'audio.mp3'
                     DisableNotification = $true
                 }
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject

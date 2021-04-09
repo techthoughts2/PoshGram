@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     function Write-Error {
     }
     #-------------------------------------------------------------------------
@@ -46,13 +46,13 @@ InModuleScope PoshGram {
             It 'should return a custom PSCustomObject if successful' {
                 mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
-                        ok     = "True"
+                        ok     = 'True'
                         result = @{
                             message_id = 2222
-                            from       = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                            chat       = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                            date       = "1530157540"
-                            contact    = "@{phone_number=12222222222; first_name=Jake}"
+                            from       = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                            chat       = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                            date       = '1530157540'
+                            contact    = '@{phone_number=12222222222; first_name=Jake}'
                         }
                     }
                 }#endMock

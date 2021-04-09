@@ -10,15 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = "SilentlyContinue"
+$WarningPreference = 'SilentlyContinue'
 #-------------------------------------------------------------------------
 #Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
-    $WarningPreference = "SilentlyContinue"
-    $token = "#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
+    $WarningPreference = 'SilentlyContinue'
+    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
     #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalVideo' -Tag Unit {
         BeforeEach {
@@ -27,23 +27,23 @@ InModuleScope PoshGram {
             mock Test-FileSize { $true }
             mock Get-Item {
                 [PSCustomObject]@{
-                    Mode          = "True"
-                    LastWriteTime = "06/17/16     00:19"
-                    Length        = "1902"
-                    Name          = "diagvresults.jpg"
+                    Mode          = 'True'
+                    LastWriteTime = '06/17/16     00:19'
+                    Length        = '1902'
+                    Name          = 'diagvresults.jpg'
                 }
             }#endMock
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
-                    ok     = "True"
+                    ok     = 'True'
                     result = @{
                         message_id       = 2222
-                        from             = "@{id=#########; is_bot=True; first_name=botname; username=bot_name}"
-                        chat             = "@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}"
-                        date             = "1530157540"
-                        video            = "@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}"
-                        caption          = "Local Video Test"
-                        caption_entities = "{@{offset=13; length=6; type=bold}}"
+                        from             = '@{id=#########; is_bot=True; first_name=botname; username=bot_name}'
+                        chat             = '@{id=-#########; title=ChatName; type=group; all_members_are_administrators=True}'
+                        date             = '1530157540'
+                        video            = '@{duration=17; width=1920; height=1080; mime_type=video/mp4; thumb=; file_id=BAADAQADPwADiOTBRROL3QmsMu9OAg;file_size=968478}'
+                        caption          = 'Local Video Test'
+                        caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
             }#endMock
@@ -54,7 +54,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                    Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
@@ -63,7 +63,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                    Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
@@ -72,7 +72,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                    Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
@@ -83,7 +83,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
-                    Video    = "C:\bs\video.mp4"
+                    Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
             }#it
@@ -94,7 +94,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
-                    Video       = "C:\bs\video.mp4"
+                    Video       = 'C:\bs\video.mp4'
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
@@ -105,11 +105,12 @@ InModuleScope PoshGram {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    Video               = "C:\bs\video.mp4"
+                    Video               = 'C:\bs\video.mp4'
                     Duration            = 10
                     Width               = 250
                     Height              = 250
-                    Caption             = "Check out this video"
+                    FileName            = 'video.mp4'
+                    Caption             = 'Check out this video'
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true

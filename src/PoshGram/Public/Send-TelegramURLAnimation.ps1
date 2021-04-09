@@ -4,21 +4,21 @@
 .DESCRIPTION
     Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $animationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
     Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 
     Sends animation message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         AnimationURL        = $AnimationURL
-        Caption             = "Live long, and prosper."
+        Caption             = 'Live long, and prosper.'
         DisableNotification = $true
         Verbose             = $true
     }
@@ -26,14 +26,14 @@
 
     Sends animation message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $AnimationURL = "https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         AnimationURL        = $AnimationURL
-        Caption             = "Live __long__, and prosper\."
+        Caption             = 'Live __long__, and prosper\.'
         ParseMode           = 'MarkdownV2'
     }
     Send-TelegramURLAnimation @sendTelegramURLAnimationSplat

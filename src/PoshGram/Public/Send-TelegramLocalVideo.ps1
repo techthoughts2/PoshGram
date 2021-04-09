@@ -4,16 +4,16 @@
 .DESCRIPTION
     Uses Telegram Bot API to send video message to specified Telegram chat. The video will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters. Telegram only supports mp4 videos.
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $file = "C:\videos\video.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $file = 'C:\videos\video.mp4'
     Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $video = "C:\videos\video.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -21,7 +21,8 @@
         Duration            = 10
         Width               = 250
         Height              = 250
-        Caption             = "Check out this video"
+        FileName            = 'video.mp4'
+        Caption             = 'Check out this video'
         ParseMode           = 'MarkdownV2'
         Streaming           = $true
         DisableNotification = $true
@@ -31,15 +32,16 @@
 
     Sends video message via Telegram API
 .EXAMPLE
-    $botToken = "nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    $chat = "-nnnnnnnnn"
-    $video = "C:\videos\video.mp4"
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    $chat = '-nnnnnnnnn'
+    $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
         Video     = $video
         Streaming = $true
-        Caption   = "Check out this __awesome__ video\."
+        FileName  = 'video.mp4'
+        Caption   = 'Check out this __awesome__ video\.'
         ParseMode = 'MarkdownV2'
     }
     Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
@@ -57,6 +59,8 @@
     Video width
 .PARAMETER Height
     Video height
+.PARAMETER FileName
+    Original File Name
 .PARAMETER Caption
     Brief title or explanation for media
 .PARAMETER ParseMode
@@ -137,8 +141,11 @@ function Send-TelegramLocalVideo {
         [ValidateNotNullOrEmpty()]
         [Int32]$Height,
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Original File Name')]
+        [string]$FileName,
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
-        [string]$Caption = "", #set to false by default
+        [string]$Caption = '', #set to false by default
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
@@ -199,6 +206,7 @@ function Send-TelegramLocalVideo {
         duration             = $Duration
         width                = $Width
         height               = $Height
+        file_name            = $FileName
         caption              = $Caption
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming.IsPresent
