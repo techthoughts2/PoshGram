@@ -213,8 +213,10 @@ function Send-TelegramTextMessage {
         parse_mode               = $ParseMode
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
-        reply_markup             = $Keyboard
     }#payload
+    if ($Keyboard) {
+        $payload.Add('reply_markup', $Keyboard)
+    }
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = ('https://api.telegram.org/bot{0}/sendMessage' -f $BotToken)
