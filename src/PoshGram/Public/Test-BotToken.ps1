@@ -20,8 +20,7 @@
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1
@@ -63,7 +62,6 @@ function Test-BotToken {
     catch {
         Write-Warning -Message 'An error was encountered testing the BOT token:'
         Write-Error $_
-        $results = $false
     } #catch_messageSend
     return $results
     #------------------------------------------------------------------------

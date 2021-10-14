@@ -70,8 +70,7 @@
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1+

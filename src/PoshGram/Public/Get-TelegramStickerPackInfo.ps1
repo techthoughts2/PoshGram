@@ -12,8 +12,7 @@
 .PARAMETER StickerSetName
     Name of the sticker set
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     This works with PowerShell Version: 6.1+

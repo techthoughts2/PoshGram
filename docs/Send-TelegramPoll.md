@@ -378,7 +378,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject (if successful)
+### System.Management.Automation.PSCustomObject
 ### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
