@@ -30,7 +30,7 @@ function Confirm-URL {
     try {
         Invoke-WebRequest -Uri $uri -UseBasicParsing -DisableKeepAlive -ErrorAction Stop | Out-Null
         Write-Verbose -Message 'Confirmed.'
-    }#try_Invoke-WebRequest
+    } #try_Invoke-WebRequest
     catch {
         Write-Verbose -Message 'Catch on Invoke-WebRequest. This is not neccessarily a bad thing. Checking status code.'
         if ([int]$_.Exception.Response.StatusCode -eq 0) {
@@ -39,6 +39,6 @@ function Confirm-URL {
             $result = $false
         }
         #we will proceed with any other exit code
-    }#catch_Invoke-WebRequest
+    } #catch_Invoke-WebRequest
     return $result
-}#Confirm-URL
+} #Confirm-URL

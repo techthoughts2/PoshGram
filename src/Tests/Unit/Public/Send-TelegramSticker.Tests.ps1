@@ -10,20 +10,16 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramSticker' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
             Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
@@ -35,7 +31,7 @@ InModuleScope PoshGram {
                         sticker    = '@{width=512; height=512; emoji=🙂; set_name=STPicard; is_animated=False; thumb=; file_id=CAADAgADCwAD3XATF_qdh42c06D5FgQ; file_size=1698'
                     }
                 }
-            }#endMock
+            } #endMock
             Mock Get-TelegramStickerPackInfo -MockWith {
                 [PSCustomObject]@{
                     width       = '512'
@@ -50,13 +46,13 @@ InModuleScope PoshGram {
                     Code        = 'U+1F642'
                     Shortcode   = ':slightly_smiling_face:'
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if an error is encountered sending the sticker' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -64,7 +60,8 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if shortcode is specified but the sticker pack can not be found' {
                 Mock Get-TelegramStickerPackInfo -MockWith { $false }
                 $sendTelegramStickerSplat = @{
@@ -75,8 +72,8 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
-            }#it
-        }#context_Error
+            } #it
+        } #context_Error
         Context 'Success' {
             It 'should return false if the shortcode provided is not found in the sticker pack' {
                 $sendTelegramStickerSplat = @{
@@ -87,7 +84,8 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return a PSCustomObject if no errors are encountered and FileID is specified' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
@@ -96,7 +94,8 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
+            } #it
+
             It 'should return a PSCustomObject if no errors are encountered and shortcode is specified' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
@@ -106,7 +105,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_Success
-    }#describe_Send-TelegramSticker
-}#inModule
+            } #it
+        } #context_Success
+    } #describe_Send-TelegramSticker
+} #inModule

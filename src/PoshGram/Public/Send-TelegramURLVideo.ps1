@@ -167,20 +167,20 @@ function Send-TelegramURLVideo {
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_documentExtension
+    } #if_documentExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    }#else_documentExtension
+    } #else_documentExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $VideoURL
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_documentSize
+    } #if_documentSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_documentSize
+    } #else_documentSize
     #------------------------------------------------------------------------
     $payload = @{
         chat_id              = $ChatID
@@ -193,7 +193,7 @@ function Send-TelegramURLVideo {
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming
         disable_notification = $DisableNotification.IsPresent
-    }#payload
+    } #payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = ('https://api.telegram.org/bot{0}/sendVideo' -f $BotToken)
@@ -206,12 +206,12 @@ function Send-TelegramURLVideo {
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramURLVideo
+} #function_Send-TelegramURLVideo

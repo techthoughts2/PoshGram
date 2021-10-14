@@ -178,12 +178,12 @@ function Send-TelegramMediaGroup {
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
         Write-Verbose -Message 'Media sent.'
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramMediaGroup
+} #function_Send-TelegramMediaGroup

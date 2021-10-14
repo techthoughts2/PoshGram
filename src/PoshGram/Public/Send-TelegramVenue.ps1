@@ -117,7 +117,7 @@ function Send-TelegramVenue {
         title                = $Title
         address              = $Address
         disable_notification = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -128,12 +128,12 @@ function Send-TelegramVenue {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram venue:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramVenue
+} #function_Send-TelegramVenue

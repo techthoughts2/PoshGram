@@ -87,23 +87,23 @@ function Test-URLExtension {
     switch ($Type) {
         Photo {
             $extType = $supportedPhotoExtensions
-        }#photo
+        } #photo
         Video {
             $extType = $supportedVideoExtensions
-        }#video
+        } #video
         Audio {
             $extType = $supportedAudioExtensions
-        }#audio
+        } #audio
         Animation {
             $extType = $supportedAnimationExtensions
-        }#animation
+        } #animation
         Document {
             $extType = $supportedDocumentExtensions
-        }#document
+        } #document
         Sticker {
             $extType = $supportedStickerExtensions
-        }#sticker
-    }#switch_Type
+        } #sticker
+    } #switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------
     [bool]$results = $true #assume the best.
@@ -114,13 +114,13 @@ function Test-URLExtension {
         Write-Verbose -Message 'URL Confirmation did not return true.'
         $results = $false
         return $results
-    }#if_urlEval
+    } #if_urlEval
     #------------------------------------------------------------
     Write-Verbose -Message 'Resolving potential shortlink...'
     $slEval = Resolve-ShortLink -Uri $URL -ErrorAction SilentlyContinue
     if ($slEval) {
         $URL = $slEval
-    }#if_slEval
+    } #if_slEval
     #------------------------------------------------------------
     Write-Verbose -Message "Processing $URL ..."
     $divide = $URL.Split('.')
@@ -134,8 +134,8 @@ function Test-URLExtension {
         default {
             Write-Warning -Message "The specified file is not a supported $Type extension."
             $results = $false
-        }#default
-    }#switch_extension
+        } #default
+    } #switch_extension
     #------------------------------------------------------------
     return $results
-}#function_Test-URLExtension
+} #function_Test-URLExtension

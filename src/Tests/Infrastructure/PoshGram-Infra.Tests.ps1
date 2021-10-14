@@ -1,209 +1,193 @@
 #-------------------------------------------------------------------------
+Set-Location -Path $PSScriptRoot
+#-------------------------------------------------------------------------
+$ModuleName = 'PoshGram'
+#-------------------------------------------------------------------------
 #if the module is already in memory, remove it
 Get-Module PoshGram | Remove-Module -Force
-#-------------------------------------------------------------------------
-Set-Location -Path $PSScriptRoot
-
-$ModuleName = 'PoshGram'
 $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
-
-if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
-    Remove-Module -Name $ModuleName -Force
-}
+#-------------------------------------------------------------------------
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    #-------------------------------------------------------------------------
-    ###########################################################################
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    <#
-         _______.___________.  ______   .______
-        /       |           | /  __  \  |   _  \
-       |   (----`---|  |----`|  |  |  | |  |_)  |
-        \   \       |  |     |  |  |  | |   ___/
-    .----)   |      |  |     |  `--'  | |  |
-    |_______/       |__|      \______/  | _|
-
-    #>
-    #these infra tests require pre-populated LOCAL files to run successfully
-    #you must also provide the bot token and chat id for these tests to run
-    #$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    #$chat = '-nnnnnnnnn'
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ###########################################################################
-    #>
-    $latitude = 37.621313
-    $longitude = -122.378955
-    $phone = '1-222-222-2222'
-    $firstName = 'Jean-Luc'
-    $lastName = 'Picard'
-    $title = 'Star Fleet Headquarters'
-    $address = 'San Francisco, CA 94128'
-    $question = 'What is your favorite Star Trek series?'
-    $opt = @(
-        'Star Trek: The Original Series',
-        'Star Trek: The Animated Series',
-        'Star Trek: The Next Generation',
-        'Star Trek: Deep Space Nine',
-        'Star Trek: Voyager',
-        'Star Trek: Enterprise',
-        'Star Trek: Discovery',
-        'Star Trek: Picard',
-        'Star Trek: Lower Decks'
-    )
-    $question2 = 'Who was the best Starfleet captain?'
-    $opt2 = @(
-        'James Kirk',
-        'Jean-Luc Picard',
-        'Benjamin Sisko',
-        'Kathryn Janeway',
-        'Jonathan Archer'
-    )
-    $answer = 1
-    $question3 = 'Which Star Trek captain has an artificial heart?'
-    $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
-    $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-    $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
-    $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
-    $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
-    $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-    $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
-    $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
-    $inlineRow1 = @(
-        @{
-            text = "`u{1F517} Visit"
-            url  = 'https://www.techthoughts.info'
-        }
-    )
-    $inlineRow2 = @(
-        @{
-            text = "`u{1F4CC} Pin"
-            url  = 'https://www.techthoughts.info/learn-powershell-series/'
-        }
-    )
-    $inlineKeyboard = @{
-        inline_keyboard = @(
-            $inlineRow1,
-            $inlineRow2
-        )
-    }
-    $row1 = @(
-        @{
-            text = "`u{1F513} Unlock"
-        }
-        # @{
-        #     text = 'button2'
-        # }
-    )
-    $row2 = @(
-        @{
-            text = "`u{1F512} Lock"
-        }
-        # @{
-        #     text = 'button2'
-        # }
-    )
-    $customKeyboard = @{
-        keyboard          = @(
-            $row1,
-            $row2
-        )
-        one_time_keyboard = $true
-    }
-    #//////////////////////////////////////////////////////////////////////////
-    # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
-    # this section will need to be commented out if you want to run locally
-    Import-Module AWS.Tools.SecretsManager
-    $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-    $sObj = $s.SecretString | ConvertFrom-Json
-    $token = $sObj.PoshBotToken
-    $channel = $sObj.PoshChannel
-    #//////////////////////////////////////////////////////////////////////////
-    #referenced by AWS CodeBuild
-    if ($PSVersionTable.Platform -eq 'Win32NT') {
-        $file = "C:\Test\Photos\Photo.jpg"
-        $file2 = "C:\Test\Documents\customlog.txt"
-        $file7 = "C:\Test\Documents\customlog2.txt"
-        $file3 = "C:\Test\Videos\Intro.mp4"
-        $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-        $file6 = "C:\Test\Audio\TestAudio.mp3"
-        $file5 = "C:\Test\Animation\jean.gif"
-        $pPath = 'C:\Test\PhotoGroup'
-        $pFiles = @(
-            "$pPath\picard.jpg",
-            "$pPath\riker.PNG",
-            "$pPath\data.jpg",
-            "$pPath\geordi.jpg",
-            "$pPath\troi.jpg",
-            "$pPath\beverly.jpg",
-            "$pPath\worf.jpg"
-        )
-
-        $vPath = 'C:\Test\VideoGroup'
-        $vFiles = @(
-            "$vPath\first_contact.mp4",
-            "$vPath\root_beer.mp4"
-        )
-        $aFiles = @(
-            $file4,
-            $file6
-        )
-        $dFiles = @(
-            $file2,
-            $file7
-        )
-        $stickerFile = 'C:\Test\Stickers\picard.webp'
-    }#if_windows
-    elseif ($PSVersionTable.Platform -eq 'Unix') {
-        $file = "/Test/Photos/Photo.jpg"
-        $file2 = "/Test/Documents/customlog.txt"
-        $file7 = "/Test/Documents/customlog2.txt"
-        $file3 = "/Test/Videos/Intro.mp4"
-        $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-        $file6 = "/Test/Audio/TestAudio.mp3"
-        $file5 = "/Test/Animation/jean.gif"
-        $pPath = '/Test/PhotoGroup'
-        $pFiles = @(
-            "$pPath/picard.jpg",
-            "$pPath/riker.PNG",
-            "$pPath/data.jpg",
-            "$pPath/geordi.jpg",
-            "$pPath/troi.jpg",
-            "$pPath/beverly.jpg",
-            "$pPath/worf.jpg"
-        )
-
-        $vPath = '/Test/VideoGroup'
-        $vFiles = @(
-            "$vPath/first_contact.mp4",
-            "$vPath/root_beer.mp4"
-        )
-        $aFiles = @(
-            $file4,
-            $file6
-        )
-        $dFiles = @(
-            $file2,
-            $file7
-        )
-        $stickerFile = "/Test/Stickers/picard.webp"
-    }#elseif_Linux
-    else {
-        throw
-    }#else
-    #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    ###########################################################################
     Describe 'Infrastructure Tests' -Tag Infrastructure {
-        $milliSeconds = 20000
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $milliSeconds = 20000
+            $latitude = 37.621313
+            $longitude = -122.378955
+            $phone = '1-222-222-2222'
+            $firstName = 'Jean-Luc'
+            $lastName = 'Picard'
+            $title = 'Star Fleet Headquarters'
+            $address = 'San Francisco, CA 94128'
+            $question = 'What is your favorite Star Trek series?'
+            $opt = @(
+                'Star Trek: The Original Series',
+                'Star Trek: The Animated Series',
+                'Star Trek: The Next Generation',
+                'Star Trek: Deep Space Nine',
+                'Star Trek: Voyager',
+                'Star Trek: Enterprise',
+                'Star Trek: Discovery',
+                'Star Trek: Picard',
+                'Star Trek: Lower Decks'
+            )
+            $question2 = 'Who was the best Starfleet captain?'
+            $opt2 = @(
+                'James Kirk',
+                'Jean-Luc Picard',
+                'Benjamin Sisko',
+                'Kathryn Janeway',
+                'Jonathan Archer'
+            )
+            $answer = 1
+            $question3 = 'Which Star Trek captain has an artificial heart?'
+            $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
+            $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
+            $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
+            $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
+            $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
+            $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+            $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
+            $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
+            $inlineRow1 = @(
+                @{
+                    text = "`u{1F517} Visit"
+                    url  = 'https://www.techthoughts.info'
+                }
+            )
+            $inlineRow2 = @(
+                @{
+                    text = "`u{1F4CC} Pin"
+                    url  = 'https://www.techthoughts.info/learn-powershell-series/'
+                }
+            )
+            $inlineKeyboard = @{
+                inline_keyboard = @(
+                    $inlineRow1,
+                    $inlineRow2
+                )
+            }
+            $row1 = @(
+                @{
+                    text = "`u{1F513} Unlock"
+                }
+                # @{
+                #     text = 'button2'
+                # }
+            )
+            $row2 = @(
+                @{
+                    text = "`u{1F512} Lock"
+                }
+                # @{
+                #     text = 'button2'
+                # }
+            )
+            $customKeyboard = @{
+                keyboard          = @(
+                    $row1,
+                    $row2
+                )
+                one_time_keyboard = $true
+            }
+            #//////////////////////////////////////////////////////////////////////////
+            # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
+            # this section will need to be commented out if you want to run locally
+            # Import-Module AWS.Tools.SecretsManager
+            # $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+            # $sObj = $s.SecretString | ConvertFrom-Json
+            # $token = $sObj.PoshBotToken
+            # $channel = $sObj.PoshChannel
+            #//////////////////////////////////////////////////////////////////////////
+            #referenced by AWS CodeBuild
+            if ($PSVersionTable.Platform -eq 'Win32NT') {
+                $file = "C:\Test\Photos\Photo.jpg"
+                $file2 = "C:\Test\Documents\customlog.txt"
+                $file7 = "C:\Test\Documents\customlog2.txt"
+                $file3 = "C:\Test\Videos\Intro.mp4"
+                $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+                $file6 = "C:\Test\Audio\TestAudio.mp3"
+                $file5 = "C:\Test\Animation\jean.gif"
+                $pPath = 'C:\Test\PhotoGroup'
+                $pFiles = @(
+                    "$pPath\picard.jpg",
+                    "$pPath\riker.PNG",
+                    "$pPath\data.jpg",
+                    "$pPath\geordi.jpg",
+                    "$pPath\troi.jpg",
+                    "$pPath\beverly.jpg",
+                    "$pPath\worf.jpg"
+                )
+
+                $vPath = 'C:\Test\VideoGroup'
+                $vFiles = @(
+                    "$vPath\first_contact.mp4",
+                    "$vPath\root_beer.mp4"
+                )
+                $aFiles = @(
+                    $file4,
+                    $file6
+                )
+                $dFiles = @(
+                    $file2,
+                    $file7
+                )
+                $stickerFile = 'C:\Test\Stickers\picard.webp'
+            } #if_windows
+            elseif ($PSVersionTable.Platform -eq 'Unix') {
+                $file = "/Test/Photos/Photo.jpg"
+                $file2 = "/Test/Documents/customlog.txt"
+                $file7 = "/Test/Documents/customlog2.txt"
+                $file3 = "/Test/Videos/Intro.mp4"
+                $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+                $file6 = "/Test/Audio/TestAudio.mp3"
+                $file5 = "/Test/Animation/jean.gif"
+                $pPath = '/Test/PhotoGroup'
+                $pFiles = @(
+                    "$pPath/picard.jpg",
+                    "$pPath/riker.PNG",
+                    "$pPath/data.jpg",
+                    "$pPath/geordi.jpg",
+                    "$pPath/troi.jpg",
+                    "$pPath/beverly.jpg",
+                    "$pPath/worf.jpg"
+                )
+
+                $vPath = '/Test/VideoGroup'
+                $vFiles = @(
+                    "$vPath/first_contact.mp4",
+                    "$vPath/root_beer.mp4"
+                )
+                $aFiles = @(
+                    $file4,
+                    $file6
+                )
+                $dFiles = @(
+                    $file2,
+                    $file7
+                )
+                $stickerFile = "/Test/Stickers/picard.webp"
+            } #elseif_Linux
+            else {
+                throw
+            } #else
+
+        } #before_all
+        BeforeEach {
+            # ! these infra tests require pre-populated LOCAL files to run successfully
+            # ! you must also provide the bot token and chat id for these tests to run
+            # $token = ''
+            # $channel = ''
+        } #before_each
         Context 'Test-BotToken' {
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $eval = Test-BotToken -BotToken $token
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Test-BotToken
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Test-BotToken
         Context 'Send-TelegramTextMessage' {
             It 'Should return with ok:true when a typical message is successfully sent' {
                 $sendTelegramTextMessageSplat = @{
@@ -214,8 +198,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'should throw when a message is sent with markdown and characters are not properly escaped' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -225,9 +210,10 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     ErrorAction         = 'Stop'
                 }
-                { Send-TelegramTextMessage @sendTelegramTextMessageSplat } | Should Throw
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                { Send-TelegramTextMessage @sendTelegramTextMessageSplat } | Should -Throw
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'should return ok:true when a message is sent with markdown and characters are properly escaped' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -239,8 +225,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'should return ok:true when a message is sent with an inline keyboard' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -253,8 +240,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'should return ok:true when a message is sent with a custom keyboard' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -267,8 +255,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'should return ok:true when a message is sent with properly formed emojis' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -280,10 +269,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
-        }#context_Send-TelegramTextMessage
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
+        } #context_Send-TelegramTextMessage
         Context 'Send-TelegramLocalPhoto' {
             It 'Should return with ok:true when a local photo message is successfully sent' {
                 $sendTelegramLocalPhotoSplat = @{
@@ -293,11 +282,13 @@ InModuleScope PoshGram {
                     PhotoPath           = $file
                     DisableNotification = $true
                 }
+                Start-Sleep -Milliseconds $milliSeconds
                 $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalPhoto
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalPhoto
+
         Context 'Send-TelegramURLPhoto' {
             It 'Should return with ok:true when a photo url message is successfully sent' {
                 $sendTelegramURLPhotoSplat = @{
@@ -309,9 +300,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalPhoto
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalPhoto
+
         Context 'Send-TelegramLocalDocument' {
             It 'Should return with ok:true when a local document message is successfully sent' {
                 $sendTelegramLocalDocumentSplat = @{
@@ -323,9 +315,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalPhoto
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalPhoto
+
         Context 'Send-TelegramURLDocument' {
             It 'Should return with ok:true when a URL document message is successfully sent' {
                 $sendTelegramURLDocumentSplat = @{
@@ -337,9 +330,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLDocument
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLDocument
+
         Context 'Send-TelegramLocalVideo' {
             It 'Should return with ok:true when a local video message is successfully sent' {
                 $sendTelegramLocalVideoSplat = @{
@@ -352,9 +346,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalVideo
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalVideo
+
         Context 'Send-TelegramURLVideo' {
             It 'Should return with ok:true when a URL video message is successfully sent' {
                 $sendTelegramURLVideoSplat = @{
@@ -367,9 +362,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLVideo
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLVideo
+
         Context 'Send-TelegramLocalAudio' {
             It 'Should return with ok:true when a local audio message is successfully sent' {
                 $sendTelegramLocalAudioSplat = @{
@@ -385,9 +381,10 @@ InModuleScope PoshGram {
 
                 $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalAudio
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalAudio
+
         Context 'Send-TelegramURLAudio' {
             It 'Should return with ok:true when a URL audio message is successfully sent' {
                 $sendTelegramURLAudioSplat = @{
@@ -403,9 +400,10 @@ InModuleScope PoshGram {
 
                 $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLAudio
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLAudio
+
         Context 'Send-TelegramLocation' {
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramLocationSplat = @{
@@ -417,9 +415,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramLocation @sendTelegramLocationSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocation
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocation
+
         Context 'Send-TelegramLocalAnimation' {
             It 'Should return with ok:true when a local animation is successfully sent' {
                 $sendTelegramLocalAnimationSplat = @{
@@ -431,9 +430,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalAnimation
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalAnimation
+
         Context 'Send-TelegramURLAnimation' {
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramURLAnimationSplat = @{
@@ -445,9 +445,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLAnimation
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLAnimation
+
         Context 'Send-TelegramMediaGroup' {
             It 'Should return with ok:true when a group of photos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
@@ -459,8 +460,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Seconds 30
+                Start-Sleep -Seconds 30
+            } #it
+
             It 'Should return with ok:true when a group of videos is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -471,8 +473,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Seconds 30
+                Start-Sleep -Seconds 30
+            } #it
+
             It 'Should return with ok:true when a group of audios is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -483,8 +486,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Seconds 30
+                Start-Sleep -Seconds 30
+            } #it
+
             It 'Should return with ok:true when a group of documents is successfully sent' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -495,9 +499,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLAnimation
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLAnimation
+
         Context "Send-TelegramContact" {
             It 'Should return with ok:true when a contact is successfully sent' {
                 $sendTelegramContactSplat = @{
@@ -510,9 +515,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramContact @sendTelegramContactSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramContact
-        Start-Sleep -Seconds 30
+                Start-Sleep -Seconds 30
+            } #it
+        } #context_Send-TelegramContact
+
         Context 'Send-TelegramVenue' {
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
@@ -526,9 +532,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramVenue @sendTelegramVenueSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramVenue
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramVenue
+
         Context 'Send-TelegramPoll' {
             It 'Should return with ok:true when a typical poll is successfully sent' {
                 $sendTelegramPollSplat = @{
@@ -540,8 +547,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'Should return with ok:true when a quiz poll is successfully sent' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
@@ -555,8 +563,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'Should return with ok:true when a quiz poll is successfully sent with additional options' {
                 $sendTelegramPollSplat = @{
                     BotToken             = $token
@@ -572,9 +581,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramPoll
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramPoll
+
         Context 'Get-TelegramStickerPackInfo' {
             It 'Should return valid sticker pack information' {
                 $getTelegramStickerPackInfoSplat = @{
@@ -584,9 +594,10 @@ InModuleScope PoshGram {
 
                 $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                 $eval.set_name | Should -BeExactly 'CookieMonster'
-            }#it
-        }#context_Get-TelegramStickerPackInfo
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Get-TelegramStickerPackInfo
+
         Context 'Send-TelegramSticker' {
             It 'Should return with ok:true when a sticker is sent by file_id' {
                 $sendTelegramStickerSplat = @{
@@ -597,8 +608,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-            Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
@@ -609,9 +621,10 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramSticker
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramSticker
+
         Context 'Send-TelegramLocalSticker' {
             It 'Should return with ok:true when a local sticker message is successfully sent' {
                 $sendTelegramLocalStickerSplat = @{
@@ -622,9 +635,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramLocalSticker
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramLocalSticker
         Context 'Send-TelegramURLSticker' {
             It 'Should return with ok:true when a sticker by URL is successfully sent' {
                 $sendTelegramURLStickerSplat = @{
@@ -635,9 +648,9 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramURLSticker
-        Start-Sleep -Milliseconds $milliSeconds
+                Start-Sleep -Milliseconds $milliSeconds
+            } #it
+        } #context_Send-TelegramURLSticker
         Context 'Send-TelegramDice' {
             It 'Should return with ok:true when a dice is successfully sent' {
                 $sendTelegramDiceSplat = @{
@@ -648,7 +661,7 @@ InModuleScope PoshGram {
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
                 $eval.ok | Should -Be 'True'
-            }#it
-        }#context_Send-TelegramDice
-    }#describe_InfraTests
-}#scope_PoshGram
+            } #it
+        } #context_Send-TelegramDice
+    } #describe_InfraTests
+} #scope_PoshGram

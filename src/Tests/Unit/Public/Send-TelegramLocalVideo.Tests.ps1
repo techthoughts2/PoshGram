@@ -10,30 +10,28 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalVideo' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-Path { $true }
-            mock Test-FileExtension { $true }
-            mock Test-FileSize { $true }
-            mock Get-Item {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            Mock Test-Path { $true }
+            Mock Test-FileExtension { $true }
+            Mock Test-FileSize { $true }
+            Mock Get-Item {
                 [PSCustomObject]@{
                     Mode          = 'True'
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'diagvresults.jpg'
                 }
-            }#endMock
-            mock Invoke-RestMethod -MockWith {
+            } #endMock
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -46,51 +44,55 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the video can not be found' {
-                mock Test-Path { $false }
+                Mock Test-Path { $false }
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the video extension is not supported' {
-                mock Test-FileExtension { $false }
+                Mock Test-FileExtension { $false }
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the video is too large' {
-                mock Test-FileSize { $false }
+                Mock Test-FileSize { $false }
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if it cannot successfuly get the file' {
-                mock Get-Item {
+                Mock Get-Item {
                     Throw 'Bullshit Error'
-                }#endMock
+                } #endMock
                 $sendTelegramLocalVideoSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     Video    = 'C:\bs\video.mp4'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered sending the message' {
-                mock Invoke-RestMethod {
+                Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
-                }#endMock
+                } #endMock
                 $sendTelegramLocalVideoSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
@@ -98,8 +100,8 @@ InModuleScope PoshGram {
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramLocalVideoSplat = @{
@@ -116,7 +118,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramLocalVideo
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramLocalVideo
+} #inModule

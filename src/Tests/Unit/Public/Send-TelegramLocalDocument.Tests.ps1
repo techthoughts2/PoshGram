@@ -10,29 +10,27 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalDocument' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-Path { $true }
-            mock Test-FileSize { $true }
-            mock Get-Item {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            Mock Test-Path { $true }
+            Mock Test-FileSize { $true }
+            Mock Get-Item {
                 [PSCustomObject]@{
                     Mode          = 'True'
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'customlog.txt'
                 }
-            }#endMock
-            mock Invoke-RestMethod -MockWith {
+            } #endMock
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -45,42 +43,45 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the document can not be found' {
-                mock Test-Path { $false }
+                Mock Test-Path { $false }
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the file is too large' {
-                mock Test-FileSize { $false }
+                Mock Test-FileSize { $false }
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if it cannot successfuly get the file' {
-                mock Get-Item {
+                Mock Get-Item {
                     Throw 'Bullshit Error'
-                }#endMock
+                } #endMock
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
                     File     = 'C:\customlog.txt'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered sending the message' {
-                mock Invoke-RestMethod {
+                Mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
-                }#endMock
+                } #endMock
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
@@ -88,8 +89,9 @@ InModuleScope PoshGram {
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -Be $false
-            }#it
-        }#context_Error
+            } #it
+
+        } #context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramLocalDocumentSplat = @{
@@ -101,7 +103,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramLocalDocument
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramLocalDocument
+} #inModule

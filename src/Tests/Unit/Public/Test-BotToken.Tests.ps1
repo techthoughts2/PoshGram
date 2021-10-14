@@ -10,31 +10,31 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    #-------------------------------------------------------------------------
     Describe 'Test-BotToken' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+        BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        } #before_each
         Context 'Error' {
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Bullshit Error'
+                } #endMock
                 $testBotTokenSplat = @{
                     BotToken    = $token
                     ErrorAction = 'SilentlyContinue'
                 }
                 Test-BotToken @testBotTokenSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                mock Invoke-RestMethod -MockWith {
+                Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
                         ok     = 'True'
                         result = @{
@@ -44,12 +44,12 @@ InModuleScope PoshGram {
                             username   = 'botname_bot'
                         }
                     }
-                }#endMock
+                } #endMock
                 $testBotTokenSplat = @{
                     BotToken = $token
                 }
                 Test-BotToken @testBotTokenSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Test-BotToken
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Test-BotToken
+} #inModule

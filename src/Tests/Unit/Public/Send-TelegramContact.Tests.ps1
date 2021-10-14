@@ -10,27 +10,25 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
-
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramContact' -Tag Unit {
-        $phone = '1-222-222-2222'
-        $firstName = 'Jake'
-        $lastName = 'Morrison'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+        BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $phone = '1-222-222-2222'
+            $firstName = 'Jake'
+            $lastName = 'Morrison'
+        } #before_each
+
         Context 'Error' {
             It 'should return false if an error is encountered sending the contact' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -40,11 +38,11 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramContact @sendTelegramContactSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                mock Invoke-RestMethod -MockWith {
+                Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
                         ok     = 'True'
                         result = @{
@@ -55,7 +53,7 @@ InModuleScope PoshGram {
                             contact    = '@{phone_number=12222222222; first_name=Jake}'
                         }
                     }
-                }#endMock
+                } #endMock
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -65,7 +63,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramContact @sendTelegramContactSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramContact
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramContact
+} #inModule

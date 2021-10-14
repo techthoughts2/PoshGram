@@ -9,27 +9,22 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     Remove-Module -Name $ModuleName -Force
 }
 Import-Module $PathToManifest -Force
-#-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Test-MediaGroupRequirements' -Tag Unit {
-        $justRight = @(
-            'photo1.jpg',
-            'photo2.jpg'
-        )
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-Path { $true }
-            mock Test-FileExtension { $true }
-            mock Test-FileSize { $true }
-        }#before_each
+            Mock Test-Path { $true }
+            Mock Test-FileExtension { $true }
+            Mock Test-FileSize { $true }
+            $justRight = @(
+                'photo1.jpg',
+                'photo2.jpg'
+            )
+        } #before_each
 
         It 'should return false if the files provided are fewer than 2' {
             $tooFew = @(
@@ -40,7 +35,8 @@ InModuleScope PoshGram {
                 FilePaths = $tooFew
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if the files provided are great than 10' {
             $tooMany = @(
                 'photo1.jpg',
@@ -60,37 +56,42 @@ InModuleScope PoshGram {
                 FilePaths = $tooMany
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if the media can not be found' {
-            mock Test-Path { $false }
+            Mock Test-Path { $false }
             $testMediaGroupRequirementsSplat = @{
                 MediaType = 'Photo'
                 FilePaths = $justRight
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if the media extension is not supported' {
-            mock Test-FileExtension { $false }
+            Mock Test-FileExtension { $false }
             $testMediaGroupRequirementsSplat = @{
                 MediaType = 'Photo'
                 FilePaths = $justRight
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if the media is too large' {
-            mock Test-FileSize { $false }
+            Mock Test-FileSize { $false }
             $testMediaGroupRequirementsSplat = @{
                 MediaType = 'Video'
                 FilePaths = $justRight
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $false
-        }#it
+        } #it
+
         It 'should return true if all conditions are met' {
             $testMediaGroupRequirementsSplat = @{
                 MediaType = 'Video'
                 FilePaths = $justRight
             }
             Test-MediaGroupRequirements @testMediaGroupRequirementsSplat | Should -Be $true
-        }
-    }#describe
-}#inModule
+        } #it
+
+    } #describe
+} #inModule

@@ -127,6 +127,12 @@
             "command": "Invoke-Build -Task Build -File './src/PoshGram.build.ps1'"
         },
         {
+            "label": "BuildNoInfra",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "command": "Invoke-Build -Task BuildNoInfra -File './src/PoshGram.build.ps1'"
+        },
+        {
             "label": "InfraTest",
             "type": "shell",
             "problemMatcher": "$msCompile",

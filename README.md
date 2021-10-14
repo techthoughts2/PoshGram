@@ -50,7 +50,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 
 ## Why
 
-The Telegram Bot API requires very specific formatting and criteria for Bot messaging. The goal of this project to abstract that complexity away in favor of simple and direct PowerShell commands.
+The Telegram Bot API requires very specific formatting and criteria for Bot messaging. The goal of this project is to abstract that complexity away in favor of simple and direct PowerShell commands.
 
 PoshGram also opens up several programmatic use cases:
 

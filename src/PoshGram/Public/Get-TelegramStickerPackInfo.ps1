@@ -70,7 +70,7 @@ function Get-TelegramStickerPackInfo {
 
     $Form = @{
         name = $StickerSetName
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -82,7 +82,7 @@ function Get-TelegramStickerPackInfo {
     Write-Verbose -Message 'Retrieving sticker information...'
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         $theError = $_
         $errorEval = $theError.ErrorDetails.Message
@@ -98,7 +98,7 @@ function Get-TelegramStickerPackInfo {
         }
         $results = $false
         return $results
-    }#catch_messageSend
+    } #catch_messageSend
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Sticker information found. Processing emoji information...'
     Write-Verbose -Message "Asset path: $script:assetPath"
@@ -123,4 +123,4 @@ function Get-TelegramStickerPackInfo {
         $stickerData += $emoji
     }
     return $stickerData
-}#function_Get-TelegramStickerPackInfo
+} #function_Get-TelegramStickerPackInfo

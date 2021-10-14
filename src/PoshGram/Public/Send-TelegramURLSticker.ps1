@@ -85,26 +85,26 @@ function Send-TelegramURLSticker {
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_stickerExtension
+    } #if_stickerExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    }#else_stickerExtension
+    } #else_stickerExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $StickerURL
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_stickerSize
+    } #if_stickerSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_stickerSize
+    } #else_stickerSize
     #------------------------------------------------------------------------
     $payload = @{
         chat_id              = $ChatID
         sticker              = $StickerURL
         disable_notification = $DisableNotification.IsPresent
-    }#payload
+    } #payload
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = ('https://api.telegram.org/bot{0}/sendSticker' -f $BotToken)
@@ -117,12 +117,12 @@ function Send-TelegramURLSticker {
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramURLSticker
+} #function_Send-TelegramURLSticker

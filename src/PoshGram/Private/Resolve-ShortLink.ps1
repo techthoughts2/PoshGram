@@ -31,7 +31,7 @@ function Resolve-ShortLink {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     try {
         $a = Invoke-WebRequest -Uri $uri -MaximumRedirection 0 -ErrorAction Stop
-    }#try_Invoke-WebRequest
+    } #try_Invoke-WebRequest
     catch {
         #if($_.ErrorDetails.Message -like "*maximum redirection*"){
         if ($_.Exception.Message -like "*Moved*") {
@@ -39,11 +39,11 @@ function Resolve-ShortLink {
             Write-Verbose -Message 'Moved detected.'
             #$result = $a.Headers.Location
             $result = $a.Exception.Response.Headers.Location.AbsoluteUri
-        }#if_Error_Moved
+        } #if_Error_Moved
         else {
             Write-Warning -Message 'An Error was encountered resolving a potential shortlink:'
             Write-Error $_
-        }#else_Error_Moved
-    }#catch_Invoke-WebRequest
+        } #else_Error_Moved
+    } #catch_Invoke-WebRequest
     return $result
-}#Resolve-ShortLink
+} #Resolve-ShortLink

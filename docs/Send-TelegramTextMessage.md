@@ -128,17 +128,11 @@ $row1 = @(
     @{
         text = "`u{1F513} Unlock"
     }
-    # @{
-    #     text = 'button2'
-    # }
 )
 $row2 = @(
     @{
         text = "`u{1F512} Lock"
     }
-    # @{
-    #     text = 'button2'
-    # }
 )
 $customKeyboard = @{
     keyboard          = @(

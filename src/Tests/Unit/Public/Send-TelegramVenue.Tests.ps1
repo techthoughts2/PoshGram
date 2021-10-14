@@ -10,24 +10,22 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramVenue' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+        BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+        } #before_each
         Context 'Error' {
             It 'should return false if an error is encountered sending the venue' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramVenueSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -38,11 +36,11 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramVenue @sendTelegramVenueSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                mock Invoke-RestMethod -MockWith {
+                Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
                         ok     = 'True'
                         result = @{
@@ -55,7 +53,7 @@ InModuleScope PoshGram {
                             caption_entities = '{@{offset=13; length=6; type=bold}}'
                         }
                     }
-                }#endMock
+                } #endMock
                 $sendTelegramVenueSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -66,7 +64,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramVenue @sendTelegramVenueSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramVenue
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramVenue
+} #inModule

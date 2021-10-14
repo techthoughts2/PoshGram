@@ -10,36 +10,34 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
-    $inlineRow1 = @(
-        @{
-            text = "`u{1F517} Visit"
-            url  = 'https://www.techthoughts.info'
-        }
-    )
-    $inlineRow2 = @(
-        @{
-            text = "`u{1F4CC} Pin"
-            url  = 'https://www.techthoughts.info/learn-powershell-series/'
-        }
-    )
-    $inlineKeyboard = @{
-        inline_keyboard = @(
-            $inlineRow1,
-            $inlineRow2
-        )
-    }
     Describe 'Send-TelegramTextMessage' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
+            $inlineRow1 = @(
+                @{
+                    text = "`u{1F517} Visit"
+                    url  = 'https://www.techthoughts.info'
+                }
+            )
+            $inlineRow2 = @(
+                @{
+                    text = "`u{1F4CC} Pin"
+                    url  = 'https://www.techthoughts.info/learn-powershell-series/'
+                }
+            )
+            $inlineKeyboard = @{
+                inline_keyboard = @(
+                    $inlineRow1,
+                    $inlineRow2
+                )
+            }
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
             mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
@@ -51,13 +49,13 @@ InModuleScope PoshGram {
                         text       = 'Catesta is cool.'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramTextMessageSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
@@ -65,8 +63,8 @@ InModuleScope PoshGram {
                     ErrorAction = 'SilentlyContinue'
                 }
                 Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -Be $false
-            }#it
-        }#context_Error
+            } #it
+        } #context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramTextMessageSplat = @{
@@ -75,7 +73,8 @@ InModuleScope PoshGram {
                     Message  = 'Hi there Pester'
                 }
                 Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
+            } #it
+
             It 'should return a custom PSCustomObject if successful when sending a keyboard' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -87,7 +86,7 @@ InModuleScope PoshGram {
                     Keyboard            = $inlineKeyboard
                 }
                 Send-TelegramTextMessage @sendTelegramTextMessageSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramTextMessage
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramTextMessage
+} #inModule

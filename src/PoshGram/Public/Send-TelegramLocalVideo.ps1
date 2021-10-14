@@ -165,39 +165,39 @@ function Send-TelegramLocalVideo {
         Write-Warning -Message "The specified file: $Video was not found."
         $results = $false
         return $results
-    }#if_testPath
+    } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
-    }#else_testPath
+    } #else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_videoExtension
+    } #if_videoExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    }#else_videoExtension
+    } #else_videoExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $Video
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_videoSize
+    } #if_videoSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_videoSize
+    } #else_videoSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $Video -ErrorAction Stop
-    }#try_Get-ItemVideo
+    } #try_Get-ItemVideo
     catch {
         Write-Warning -Message 'The specified file could not be interpreted properly.'
         $results = $false
         return $results
-    }#catch_Get-ItemVideo
+    } #catch_Get-ItemVideo
     #------------------------------------------------------------------------
     $uri = "https://api.telegram.org/bot$BotToken/sendVideo"
     $Form = @{
@@ -211,7 +211,7 @@ function Send-TelegramLocalVideo {
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming.IsPresent
         disable_notification = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -222,12 +222,12 @@ function Send-TelegramLocalVideo {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram video message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramLocalVideo
+} #function_Send-TelegramLocalVideo

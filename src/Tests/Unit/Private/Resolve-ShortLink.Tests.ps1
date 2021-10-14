@@ -9,18 +9,13 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     Remove-Module -Name $ModuleName -Force
 }
 Import-Module $PathToManifest -Force
-#-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Resolve-ShortLink' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         #I haven't figured out at this time how to properly mock Invoke-WebRequest errors that indicate a re-direction condition.
         #as such, there is no test coverage for this function at this time
         <#
@@ -43,10 +38,10 @@ InModuleScope PoshGram {
                     , supply a higher value to the -MaximumRedirection parameter."}'
                     $errorRecord.ErrorDetails = $errorDetails
                     throw $errorRecord
-                }#endMock
+                } #endMock
                 Resolve-ShortLink -Uri 'https://gph.is/2nlyzm4' | Should
 
-                }#it
+                } #it
                 $hi = [System.Net.Http.HttpResponseMessage]::new()
                 $hi.Headers = [System.Net.Http.Headers.HttpResponseHeaders]::Equals()
                 [System.Net.Http.HttpResponseMessage] = @(
@@ -66,8 +61,8 @@ InModuleScope PoshGram {
                         Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
                         RawContentLength  = "119136"
                     }
-                }#endMock
-            }#it
+                } #endMock
+            } #it
             #>
-    }#describe
-}#inModule
+    } #describe
+} #inModule

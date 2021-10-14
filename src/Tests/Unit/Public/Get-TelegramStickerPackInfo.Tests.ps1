@@ -10,19 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Get-TelegramStickerPackInfo' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             Mock Test-PollOptions { $true }
             Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
@@ -47,7 +43,7 @@ InModuleScope PoshGram {
                         }
                     }
                 }
-            }#endMock
+            } #endMock
             Mock Get-Content -MockWith {
                 '[
                     {
@@ -64,19 +60,21 @@ InModuleScope PoshGram {
                     }
                 ]'
             }
-        }#before_each
+        } #before_each
+
         Context 'Error' {
             It 'should return false if an error is encountered getting sticker pack information' {
                 mock Invoke-RestMethod {
                     Throw 'Bullshit Error'
-                }#endMock
+                } #endMock
                 $getTelegramStickerPackInfoSplat = @{
                     BotToken       = $token
                     StickerSetName = 'STPicard'
                 }
                 Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
-            }#it
-        }#context_Error
+            } #it
+        } #context_Error
+
         Context 'Success' {
             It 'should return $false if the sticker pack is not found' {
                 Mock Invoke-RestMethod -MockWith {
@@ -94,7 +92,8 @@ InModuleScope PoshGram {
                     StickerSetName = 'Nope'
                 }
                 Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $getTelegramStickerPackInfoSplat = @{
                     BotToken       = $token
@@ -111,7 +110,7 @@ InModuleScope PoshGram {
                 $eval.file_size   | Should -BeExactly '18356'
                 $eval.Code        | Should -BeExactly 'U+1F642'
                 $eval.Shortcode   | Should -BeExactly ':slightly_smiling_face:'
-            }#it
-        }#context_Success
-    }#describe_Get-TelegramStickerPackInfo
-}#inModule
+            } #it
+        } #context_Success
+    } #describe_Get-TelegramStickerPackInfo
+} #inModule

@@ -126,29 +126,29 @@ function Send-TelegramLocalDocument {
         Write-Warning -Message "The specified file: $File was not found."
         $results = $false
         return $results
-    }#if_testPath
+    } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
-    }#else_testPath
+    } #else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $File
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_photoSize
+    } #if_photoSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_photoSize
+    } #else_photoSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $File -ErrorAction Stop
-    }#try_Get-ItemPhoto
+    } #try_Get-ItemPhoto
     catch {
         Write-Warning -Message 'The specified file could not be interpreted properly.'
         $results = $false
         return $results
-    }#catch_Get-ItemPhoto
+    } #catch_Get-ItemPhoto
     #------------------------------------------------------------------------
     $uri = "https://api.telegram.org/bot$BotToken/sendDocument"
     $Form = @{
@@ -158,7 +158,7 @@ function Send-TelegramLocalDocument {
         parse_mode                     = $ParseMode
         disable_content_type_detection = $DisableContentTypeDetection.IsPresent
         disable_notification           = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -169,12 +169,12 @@ function Send-TelegramLocalDocument {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram document message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramLocalDocument
+} #function_Send-TelegramLocalDocument

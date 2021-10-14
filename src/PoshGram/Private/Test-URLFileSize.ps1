@@ -38,11 +38,11 @@ function Test-URLFileSize {
         if (($urlFileInfo.RawContentLength / 1MB) -gt $supportedSize) {
             Write-Warning -Message "The file is over $supportedSize (MB)"
             $results = $false
-        }#if_size
-    }#try_Invoke-WebRequest
+        } #if_size
+    } #try_Invoke-WebRequest
     catch {
         Write-Warning -Message 'An error was encountered evaluating the file size'
         $results = $false
-    }#catch_Invoke-WebRequest
+    } #catch_Invoke-WebRequest
     return $results
-}#function_Test-URLFileSize
+} #function_Test-URLFileSize

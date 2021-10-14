@@ -207,7 +207,7 @@ function Send-TelegramTextMessage {
         parse_mode               = $ParseMode
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
-    }#payload
+    } #payload
     if ($Keyboard) {
         $payload.Add('reply_markup', $Keyboard)
     }
@@ -223,12 +223,12 @@ function Send-TelegramTextMessage {
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramTextMessage
+} #function_Send-TelegramTextMessage

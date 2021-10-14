@@ -59,12 +59,12 @@ function Test-BotToken {
     try {
         Write-Verbose -Message 'Testing Bot Token...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered testing the BOT token:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Test-BotToken
+} #function_Test-BotToken

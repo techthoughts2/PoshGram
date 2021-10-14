@@ -126,39 +126,39 @@ function Send-TelegramLocalAnimation {
         Write-Warning -Message "The specified animation path: $AnimationPath was not found."
         $results = $false
         return $results
-    }#if_testPath
+    } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
-    }#else_testPath
+    } #else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $AnimationPath -Type Animation
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_animationExtension
+    } #if_animationExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    }#else_animationExtension
+    } #else_animationExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $AnimationPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_animationSize
+    } #if_animationSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_animationSize
+    } #else_animationSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $AnimationPath -ErrorAction Stop
-    }#try_Get-ItemAnimation
+    } #try_Get-ItemAnimation
     catch {
         Write-Warning -Message 'The specified animation could not be interpreted properly.'
         $results = $false
         return $results
-    }#catch_Get-ItemAnimation
+    } #catch_Get-ItemAnimation
     #------------------------------------------------------------------------
     $uri = "https://api.telegram.org/bot$BotToken/sendAnimation"
     $Form = @{
@@ -167,7 +167,7 @@ function Send-TelegramLocalAnimation {
         caption              = $Caption
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -178,12 +178,12 @@ function Send-TelegramLocalAnimation {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram animation message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramLocalAnimation
+} #function_Send-TelegramLocalAnimation

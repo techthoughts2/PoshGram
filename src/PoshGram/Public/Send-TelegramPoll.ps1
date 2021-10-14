@@ -264,7 +264,7 @@ function Send-TelegramPoll {
         is_anonymous            = $IsAnonymous
         type                    = $PollType
         allows_multiple_answers = $MultipleAnswers
-    }#form
+    } #form
     #------------------------------------------------------------------------
     if ($PollType -eq 'quiz') {
         if ($null -eq $QuizAnswer -or $QuizAnswer -lt 1 -or $QuizAnswer -gt 10) {
@@ -303,12 +303,12 @@ function Send-TelegramPoll {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram poll:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramPoll
+} #function_Send-TelegramPoll

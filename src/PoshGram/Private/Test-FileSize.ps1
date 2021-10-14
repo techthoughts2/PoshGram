@@ -45,4 +45,4 @@ function Test-FileSize {
         $results = $false
     }
     return $results
-}#function_Test-FileSize
+} #function_Test-FileSize

@@ -10,22 +10,20 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLDocument' -Tag Unit {
-        $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-URLExtension { $true }
-            mock Test-URLFileSize { $true }
-            mock Invoke-RestMethod -MockWith {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+            Mock Test-URLExtension { $true }
+            Mock Test-URLFileSize { $true }
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -38,11 +36,11 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the document extension is not supported' {
-                mock Test-URLExtension { $false }
+                Mock Test-URLExtension { $false }
                 $sendTelegramURLDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
@@ -50,9 +48,10 @@ InModuleScope PoshGram {
                     Caption  = 'TechThoughts Logo'
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the file is too large' {
-                mock Test-URLFileSize { $false }
+                Mock Test-URLFileSize { $false }
                 $sendTelegramURLDocumentSplat = @{
                     BotToken = $token
                     ChatID   = $chat
@@ -60,11 +59,12 @@ InModuleScope PoshGram {
                     Caption  = 'TechThoughts Logo'
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramURLDocumentSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -75,8 +75,8 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramURLDocumentSplat = @{
@@ -88,7 +88,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramURLDocument
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramURLDocument
+} #inModule

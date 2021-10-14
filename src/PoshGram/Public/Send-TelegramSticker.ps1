@@ -1770,7 +1770,7 @@ function Send-TelegramSticker {
     if ($FileID) {
         Write-Verbose -Message 'sticker file_id provided.'
         $sticker = $FileID
-    }#if_fileid
+    } #if_fileid
     else {
         Write-Verbose -Message 'Sticker by emoji shortcode and sticker pack.'
         $stickerPackInfo = Get-TelegramStickerPackInfo -BotToken $BotToken -StickerSetName $StickerSetName
@@ -1780,23 +1780,23 @@ function Send-TelegramSticker {
                 Write-Warning -Message "The sticker pack $StickerSetName does not contain the emoji $Shortcode"
                 $results = $false
                 return $results
-            }#if_noSticker
+            } #if_noSticker
             else {
                 $sticker = $sticker.file_id
-            }#else_noSticker
-        }#if_sticker_info
+            } #else_noSticker
+        } #if_sticker_info
         else {
             Write-Warning -Message 'Unable to obtain sticker pack information.'
             $results = $false
             return $results
-        }#else_sticker_info
-    }#else_fileid
+        } #else_sticker_info
+    } #else_fileid
     $uri = "https://api.telegram.org/bot$BotToken/sendSticker"
     $Form = @{
         chat_id              = $ChatID
         sticker              = $sticker
         disable_notification = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -1808,12 +1808,12 @@ function Send-TelegramSticker {
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the sticker:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramSticker
+} #function_Send-TelegramSticker

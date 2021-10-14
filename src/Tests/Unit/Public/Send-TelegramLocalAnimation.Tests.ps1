@@ -10,30 +10,28 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocalAnimation' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-Path { $true }
-            mock Test-FileExtension { $true }
-            mock Test-FileSize { $true }
-            mock Get-Item {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            Mock Test-Path { $true }
+            Mock Test-FileExtension { $true }
+            Mock Test-FileSize { $true }
+            Mock Get-Item {
                 [PSCustomObject]@{
                     Mode          = 'True'
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'diagvresults.jpg'
                 }
-            }#endMock
-            mock Invoke-RestMethod -MockWith {
+            } #endMock
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -46,29 +44,31 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the animation can not be found' {
-                mock Test-Path { $false }
+                Mock Test-Path { $false }
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken      = $token
                     ChatID        = $chat
                     AnimationPath = 'C:\bs\animation.gif'
                 }
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the animation extension is not supported' {
-                mock Test-FileExtension { $false }
+                Mock Test-FileExtension { $false }
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken      = $token
                     ChatID        = $chat
                     AnimationPath = 'C:\bs\animation.gif'
                 }
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the animation is too large' {
-                mock Test-FileSize { $false }
+                Mock Test-FileSize { $false }
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken      = $token
                     ChatID        = $chat
@@ -76,22 +76,24 @@ InModuleScope PoshGram {
                 }
 
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if it cannot successfuly get the file' {
-                mock Get-Item {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Get-Item {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken      = $token
                     ChatID        = $chat
                     AnimationPath = 'C:\bs\animation.gif'
                 }
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered sending the message' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken      = $token
                     ChatID        = $chat
@@ -99,8 +101,9 @@ InModuleScope PoshGram {
                     ErrorAction   = 'SilentlyContinue'
                 }
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -Be $false
-            }#it
-        }#context_Error
+            } #it
+
+        } #context_Error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramLocalAnimationSplat = @{
@@ -112,7 +115,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramLocalAnimation
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramLocalAnimation
+} #inModule

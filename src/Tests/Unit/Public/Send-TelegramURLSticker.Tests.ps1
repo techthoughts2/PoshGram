@@ -10,22 +10,20 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLSticker' -Tag Unit {
-        $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-URLExtension { $true }
-            mock Test-URLFileSize { $true }
-            mock Invoke-RestMethod -MockWith {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+            Mock Test-URLExtension { $true }
+            Mock Test-URLFileSize { $true }
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -36,11 +34,11 @@ InModuleScope PoshGram {
                         sticker    = '@{width=512; height=512; is_animated=False; thumb=; file_id=CAADBAADkAEAAvRXTVFFkzUj6CRvGRYE; file_size=18356}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the sticker extension is not supported' {
-                mock Test-URLExtension { $false }
+                Mock Test-URLExtension { $false }
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -49,9 +47,10 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if the file is too large' {
-                mock Test-URLFileSize { $false }
+                Mock Test-URLFileSize { $false }
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -60,11 +59,12 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -73,8 +73,8 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramURLStickerSplat = @{
@@ -84,7 +84,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramURLSticker
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramURLSticker
+} #inModule

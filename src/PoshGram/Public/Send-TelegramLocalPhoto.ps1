@@ -124,39 +124,39 @@ function Send-TelegramLocalPhoto {
         Write-Warning -Message 'The specified photo path: $PhotoPath was not found.'
         $results = $false
         return $results
-    }#if_testPath
+    } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
-    }#else_testPath
+    } #else_testPath
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $PhotoPath -Type Photo
     if ($fileTypeEval -eq $false) {
         $results = $false
         return $results
-    }#if_photoExtension
+    } #if_photoExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    }#else_photoExtension
+    } #else_photoExtension
     #------------------------------------------------------------------------
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $PhotoPath
     if ($fileSizeEval -eq $false) {
         $results = $false
         return $results
-    }#if_photoSize
+    } #if_photoSize
     else {
         Write-Verbose -Message 'File size verified.'
-    }#else_photoSize
+    } #else_photoSize
     #------------------------------------------------------------------------
     try {
         $fileObject = Get-Item $PhotoPath -ErrorAction Stop
-    }#try_Get-ItemPhoto
+    } #try_Get-ItemPhoto
     catch {
         Write-Warning -Message 'The specified photo could not be interpreted properly.'
         $results = $false
         return $results
-    }#catch_Get-ItemPhoto
+    } #catch_Get-ItemPhoto
     #------------------------------------------------------------------------
     $uri = "https://api.telegram.org/bot$BotToken/sendphoto"
     $Form = @{
@@ -165,7 +165,7 @@ function Send-TelegramLocalPhoto {
         caption              = $Caption
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification.IsPresent
-    }#form
+    } #form
     #------------------------------------------------------------------------
     $invokeRestMethodSplat = @{
         Uri         = $Uri
@@ -176,12 +176,12 @@ function Send-TelegramLocalPhoto {
     #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
         Write-Error $_
         $results = $false
-    }#catch_messageSend
+    } #catch_messageSend
     return $results
     #------------------------------------------------------------------------
-}#function_Send-TelegramLocalPhoto
+} #function_Send-TelegramLocalPhoto

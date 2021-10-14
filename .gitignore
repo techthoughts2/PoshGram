@@ -10,3 +10,4 @@ cov.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
+.pytest*

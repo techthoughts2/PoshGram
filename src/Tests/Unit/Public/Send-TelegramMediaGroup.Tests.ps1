@@ -10,34 +10,30 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    function Write-Error {
-    }
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramMediaGroup' -Tag Unit {
-        $justRight = @(
-            'photo1.jpg',
-            'photo2.jpg'
-        )
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-MediaGroupRequirements { $true }
-            mock Get-Item {
+            $justRight = @(
+                'photo1.jpg',
+                'photo2.jpg'
+            )
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            Mock Test-MediaGroupRequirements { $true }
+            Mock Get-Item {
                 [PSCustomObject]@{
                     Mode          = 'True'
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'diagvresults.jpg'
                 }
-            }#endMock
-            mock Invoke-RestMethod -MockWith {
+            } #endMock
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -50,11 +46,11 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the MediaGroup requirements are not met' {
-                mock Test-MediaGroupRequirements { $false }
+                Mock Test-MediaGroupRequirements { $false }
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
                     ChatID    = $chat
@@ -62,11 +58,12 @@ InModuleScope PoshGram {
                     FilePaths = $justRight
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if it cannot successfuly get the file' {
-                mock Get-Item {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Get-Item {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
                     ChatID    = $chat
@@ -74,11 +71,12 @@ InModuleScope PoshGram {
                     FilePaths = $justRight
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
+            } #it
+
             It 'should return false if an error is encountered sending the message' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
                     ChatID    = $chat
@@ -86,8 +84,8 @@ InModuleScope PoshGram {
                     FilePaths = $justRight
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramMediaGroupSplat = @{
@@ -98,7 +96,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramMediaGroup
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramMediaGroup
+} #inModule

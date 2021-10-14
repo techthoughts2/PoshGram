@@ -10,22 +10,20 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLAudio' -Tag Unit {
-        $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-URLExtension { $true }
-            mock Test-URLFileSize { $true }
-            mock Invoke-RestMethod -MockWith {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+            Mock Test-URLExtension { $true }
+            Mock Test-URLFileSize { $true }
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -38,11 +36,11 @@ InModuleScope PoshGram {
                         caption_entities = '{@{offset=13; length=6; type=bold}}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the audio extension is not supported' {
-                mock Test-URLExtension { $false }
+                Mock Test-URLExtension { $false }
                 $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -56,9 +54,9 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
-            }#it
+            } #it
             It 'should return false if the file is too large' {
-                mock Test-URLFileSize { $false }
+                Mock Test-URLFileSize { $false }
                 $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -72,11 +70,11 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
-            }#it
+            } #it
             It 'should return false if an error is encountered' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -90,8 +88,8 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramURLAudioSplat = @{
@@ -107,7 +105,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Functions
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Functions
+} #inModule

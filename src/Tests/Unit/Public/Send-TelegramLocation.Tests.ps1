@@ -10,22 +10,22 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramLocation' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+        BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+        } #before_each
         Context 'Error' {
             It 'should return false if an error is encountered sending the location' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                Mock Invoke-RestMethod {
+                    throw 'Bullshit Error'
+                } #endMock
                 $sendTelegramLocationSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -35,11 +35,11 @@ InModuleScope PoshGram {
                     ErrorAction         = 'SilentlyContinue'
                 }
                 Send-TelegramLocation @sendTelegramLocationSplat | Should -Be $false
-            }#it
-        }#context_error
+            } #it
+        } #context_error
         Context 'Success' {
             It 'should return a custom PSCustomObject if successful' {
-                mock Invoke-RestMethod -MockWith {
+                Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
                         ok     = 'True'
                         result = @{
@@ -52,7 +52,7 @@ InModuleScope PoshGram {
                             caption_entities = '{@{offset=13; length=6; type=bold}}'
                         }
                     }
-                }#endMock
+                } #endMock
                 $sendTelegramLocationSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -61,7 +61,7 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                 }
                 Send-TelegramLocation @sendTelegramLocationSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramLocation
-}#inModule
+            } #it
+        } #context_success
+    } #describe_Send-TelegramLocation
+} #inModule
