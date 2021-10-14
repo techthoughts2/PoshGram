@@ -12,6 +12,7 @@ No Version Change
 - Build/dev improvements
   - Bumped module versions to latest available
   - Updated Pester tests from Pester 4 to Pester 5
+  - Updated CodeBuild to use latest version of PowerShell 7
 
 ## [1.16.0]
 

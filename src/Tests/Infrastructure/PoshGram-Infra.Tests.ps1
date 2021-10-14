@@ -95,11 +95,11 @@ InModuleScope PoshGram {
             #//////////////////////////////////////////////////////////////////////////
             # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
             # this section will need to be commented out if you want to run locally
-            # Import-Module AWS.Tools.SecretsManager
-            # $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-            # $sObj = $s.SecretString | ConvertFrom-Json
-            # $token = $sObj.PoshBotToken
-            # $channel = $sObj.PoshChannel
+            Import-Module AWS.Tools.SecretsManager
+            $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+            $sObj = $s.SecretString | ConvertFrom-Json
+            $token = $sObj.PoshBotToken
+            $channel = $sObj.PoshChannel
             #//////////////////////////////////////////////////////////////////////////
             #referenced by AWS CodeBuild
             if ($PSVersionTable.Platform -eq 'Win32NT') {
