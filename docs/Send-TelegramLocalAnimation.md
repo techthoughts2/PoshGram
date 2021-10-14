@@ -175,7 +175,7 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ### System.Management.Automation.PSCustomObject (if successful)
 ### System.Boolean (on failure)
 ## NOTES
-Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 This works with PowerShell Version: 6.1+
 
 The following animation types are supported:

@@ -72,7 +72,7 @@
     System.Management.Automation.PSCustomObject (if successful)
     System.Boolean (on failure)
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
