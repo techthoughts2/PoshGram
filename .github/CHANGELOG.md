@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated Pester tests from Pester 4 to Pester 5
   - Updated CodeBuild to use latest version of PowerShell 7
   - Added new functionality to ```tasks.json```
+  - Updated infra tests to have API back off capability
 
 ## [1.16.0]
 
