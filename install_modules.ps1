@@ -14,19 +14,19 @@ $tempPath = [System.IO.Path]::GetTempPath()
 $modulesToInstall = [System.Collections.ArrayList]::new()
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'Pester'
-            ModuleVersion = '4.10.1'
+            ModuleVersion = '5.3.1'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'InvokeBuild'
-            ModuleVersion = '5.6.1'
+            ModuleVersion = '5.8.4'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'PSScriptAnalyzer'
-            ModuleVersion = '1.19.1'
+            ModuleVersion = '1.20.0'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))

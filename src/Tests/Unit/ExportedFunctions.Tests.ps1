@@ -10,13 +10,17 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
+BeforeAll {
+    Set-Location -Path $PSScriptRoot
+    $ModuleName = 'PoshGram'
+    $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleName.psd1")
+    $manifestContent = Test-ModuleManifest -Path $PathToManifest
+    $moduleExported = Get-Command -Module $ModuleName | Select-Object -ExpandProperty Name
+    $manifestExported = ($manifestContent.ExportedFunctions).Keys
+}
 Describe -Name $ModuleName -Fixture {
 
-    $manifestContent = Test-ModuleManifest -Path $PathToManifest
-
     Context -Name 'Exported Commands' -Fixture {
-        $manifestExported = ($manifestContent.ExportedFunctions).Keys
-        $moduleExported = Get-Command -Module $ModuleName | Select-Object -ExpandProperty Name
 
         Context -Name 'Number of commands' -Fixture {
             It -Name 'Exports the same number of public funtions as what is listed in the Module Manifest' -Test {

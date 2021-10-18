@@ -9,24 +9,21 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     Remove-Module -Name $ModuleName -Force
 }
 Import-Module $PathToManifest -Force
-#-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Test-PollOptions' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+
         It 'should return false if the number of options is below 2' {
             $opt = @(
                 'One'
             )
             Test-PollOptions -PollOptions $opt | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if the number of options is above 10' {
             $opt = @(
                 'One',
@@ -42,7 +39,8 @@ InModuleScope PoshGram {
                 'Eleven'
             )
             Test-PollOptions -PollOptions $opt | Should -Be $false
-        }#it
+        } #it
+
         It 'should return false if an option has a character count above 300' {
             $opt = @(
                 'Three',
@@ -50,7 +48,8 @@ InModuleScope PoshGram {
                 'uhvfulonqhitqljlpyiziijocidwiljbjyezzkzmvcahymsppqpqrhxpcdqbaikjbkevsohjnjtdrmrvwoconbqeaemouzzpypeeguhvfulonqhitqljlpyiziijocidwiljbjyezzkzmvcahymsppqpqrhxpcdqbaikjbkevsohjnjtdrmrvwoconbqeaemouzzpypeeguhvfulonqhitqljlpyiziijocidwiljbjyezzkzmvcahymsppqpqrhxpcdqbaikjbkevsohjnjtdrmrvwoconbqeaemouzzpypeeg'
             )
             Test-PollOptions -PollOptions $opt | Should -Be $false
-        }#it
+        } #it
+
         It 'should return true if a valid set of options is provided' {
             $opt = @(
                 'Star Trek: The Original Series',
@@ -63,6 +62,7 @@ InModuleScope PoshGram {
                 'Star Trek: Picard'
             )
             Test-PollOptions -PollOptions $opt | Should -Be $true
-        }#it
-    }#describe
-}#inModule
+        } #it
+
+    } #describe
+} #inModule

@@ -145,13 +145,10 @@
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Version: 6.1+
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
@@ -177,11 +174,12 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
 .LINK
     https://core.telegram.org/bots/api#sendpoll
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramPoll {
     [CmdletBinding(DefaultParameterSetName = 'default')]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -245,18 +243,18 @@ function Send-TelegramPoll {
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
+    Write-Verbose -Message 'Testing poll options...'
     $optionEval = Test-PollOptions -PollOptions $Options
     if ($optionEval -eq $false) {
-        $results = $false
-        return $results
+        throw 'Poll options do not meet Telegram requirements'
     }
-    #------------------------------------------------------------------------
+
+    Write-Verbose -Message 'Converting options to json format...'
     $Options = $Options | ConvertTo-Json
-    $uri = "https://api.telegram.org/bot$BotToken/sendPoll"
-    $Form = @{
+    $form = @{
         chat_id                 = $ChatID
         question                = $Question
         disable_notification    = $DisableNotification.IsPresent
@@ -264,13 +262,12 @@ function Send-TelegramPoll {
         is_anonymous            = $IsAnonymous
         type                    = $PollType
         allows_multiple_answers = $MultipleAnswers
-    }#form
-    #------------------------------------------------------------------------
+    } #form
+
     if ($PollType -eq 'quiz') {
+        Write-Verbose -Message 'Processing quiz...'
         if ($null -eq $QuizAnswer -or $QuizAnswer -lt 1 -or $QuizAnswer -gt 10) {
-            Write-Warning -Message 'When PollType is quiz, you must supply a QuizAnswer desginator.'
-            $results = $false
-            return $results
+            throw 'When PollType is quiz, you must supply a QuizAnswer desginator.'
         }
         else {
             $Form += @{correct_option_id = $QuizAnswer }
@@ -278,37 +275,44 @@ function Send-TelegramPoll {
             if ($Explanation) {
                 $explanationEval = Test-Explanation -Explanation $Explanation
                 if ($explanationEval -eq $false) {
-                    $results = $false
-                    return $results
+                    throw 'Explanation does not meet Telegram requirements.'
                 }
                 $Form += @{explanation = $Explanation }
                 $Form += @{explanation_parse_mode = $ExplanationParseMode }
             }
         }
     }
-    #------------------------------------------------------------------------
+
     if ($OpenPeriod) {
         $Form += @{open_period = $OpenPeriod }
     }
     if ($CloseDate) {
         $Form += @{close_date = (New-TimeSpan -Start (Get-Date) -End $CloseDate).TotalSeconds }
     }
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendPoll' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
+    Write-Verbose -Message 'Sending poll...'
     $invokeRestMethodSplat = @{
-        Uri         = $Uri
+        Uri         = $uri
         ErrorAction = 'Stop'
-        Form        = $Form
+        Form        = $form
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram poll:'
         Write-Error $_
-        $results = $false
-    }#catch_messageSend
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
+    } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
-}#function_Send-TelegramPoll
+} #function_Send-TelegramPoll

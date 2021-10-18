@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0]
+
+- Adjusted error control and error return behavior - ***potential* breaking change**
+  - Previous behavior: any error (API error, validation error [size requirements, extension verification, etc.] would return a Boolean value: ```$false```)
+    - This behavior wasn't especially helpful and did not provide a lot of insight into what went wrong
+    - This behavior did not allow you to take any meaningful action if the API endpoint returned a certain error condition
+  - New behavior:
+    - Any validation error with ```throw``` for the failed validation
+    - Any API error will return as a PSObject containing the API exception
+      - Example 1:
+
+        ```powershell
+        ok      error_code description
+        --      ---------- -----------
+        False          401 Unauthorized
+        ```
+
+      - Example 2:
+
+        ```powershell
+        ok      error_code description                       parameters
+        --      ---------- -----------                       ----------
+        False          429 Too Many Requests: retry after 10 @{retry_after=10}
+        ```
+
+- General code style adjustments throughout the code-base
+- Build/dev improvements
+  - Bumped module versions to latest available
+  - Updated Pester tests from Pester 4 to Pester 5
+  - Updated CodeBuild to use latest version of PowerShell 7
+  - Added new functionality to ```tasks.json```
+  - Updated infra tests to have API back off capability
+
 ## [1.16.0]
 
 - String literals throughout PoshGram now use single quotes (') instead of double quotes (")
@@ -24,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Send-TelegramLocalAudio / Send-TelegramURLAudio
   - Audio now supports both MP3 and M4A file extensions
 - Send-TelegramDice
-  - Now supports soccer (footbal), and slot machine emoji
+  - Now supports soccer (football), and slot machine emoji
 - Send-TelegramLocalDocument / Send-TelegramURLDocument
   - Added DisableContentTypeDetection switch which disables automatic server-side content type detection
 - Send-TelegramPoll
@@ -33,9 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Now supports both audio and document media group types
   - Restructured logic of this cmdlet to engage a new private function: Test-MediaGroupRequirements
 - Added more verbosity in verbose and warning outputs
-- Removed manifest releasenotes and linked changelog
+- Removed manifest release notes and linked changelog
 - Build Improvements
-  - Restructured private tests from one monolithic file to seperate private function tests
+  - Restructured private tests from one monolithic file to separate private function tests
   - Restructured test folder layout
   - Updated Windows CodeBuild container from 2016 to 2019
 
@@ -66,7 +99,7 @@ No Version Change
   - Bumped module versions to latest available
   - Replaced monolithic AWSPowerShell module with new AWS.Tools versions
   - Switched Windows Build container to use PowerShell 7 instead of PowerShell 7 preview
-  - Updated tasks.json to have better integration with InvokeBuild
+  - Updated ```tasks.json``` to have better integration with InvokeBuild
   - Switched Infra tests to use new AWS.Tools module
 
 ## [02/10/2020]
@@ -134,7 +167,7 @@ No Version Change
 
 No Version Change
 
-- Updated gitignore references
+- Updated ```.gitignore``` references
 - Updated README to reflect 6.1+ PowerShell version
 - Updated vscode settings for Stroustrup code formatting
 - Added Git community files

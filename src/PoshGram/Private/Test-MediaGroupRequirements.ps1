@@ -14,15 +14,14 @@
 .OUTPUTS
     System.Boolean
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     Telegram currently supports a 50MB file size for bots
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 #>
 function Test-MediaGroupRequirements {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Type of media to send')]
         [ValidateSet('Photo', 'Video', 'Document', 'Audio')]
@@ -42,42 +41,42 @@ function Test-MediaGroupRequirements {
         Write-Warning -Message 'Send-TelegramMediaGroup requires a minimum of 2 and a maximum of 10 media files to be provided.'
         $results = $false
         return $results
-    }#file_Count
+    } #file_Count
     else {
         Write-Verbose -Message "File count is: $($FilePaths.Count)"
-    }#else_FileCount
+    } #else_FileCount
 
     foreach ($file in $FilePaths) {
         $fileTypeEval = $null
         $fileSizeEval = $null
         Write-Verbose -Message 'Verifying presence of media...'
-        if (!(Test-Path -Path $file)) {
+        if (-not(Test-Path -Path $file)) {
             Write-Warning -Message "The specified media path: $file was not found."
             $results = $false
             return $results
-        }#if_testPath
+        } #if_testPath
         if ($MediaType -ne 'Document') {
             Write-Verbose -Message 'Verifying extension type...'
             $fileTypeEval = Test-FileExtension -FilePath $file -Type $MediaType
             if ($fileTypeEval -eq $false) {
                 $results = $false
                 return $results
-            }#if_Extension
+            } #if_Extension
             else {
                 Write-Verbose -Message 'Extension supported.'
-            }#else_Extension
+            } #else_Extension
         }
         Write-Verbose -Message 'Verifying file size...'
         $fileSizeEval = Test-FileSize -Path $file
         if ($fileSizeEval -eq $false) {
             $results = $false
             return $results
-        }#if_Size
+        } #if_Size
         else {
             Write-Verbose -Message 'File size verified.'
-        }#else_Size
-    }#foreach_File
+        } #else_Size
+    } #foreach_File
 
     return $results
 
-}#Test-MediaGroupRequirements
+} #Test-MediaGroupRequirements

@@ -378,13 +378,10 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject (if successful)
-### System.Boolean (on failure)
+### System.Management.Automation.PSCustomObject
 ## NOTES
-Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Version: 6.1+
+Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
@@ -398,4 +395,6 @@ Telegram currently supports 2-10 options 1-100 characters each
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

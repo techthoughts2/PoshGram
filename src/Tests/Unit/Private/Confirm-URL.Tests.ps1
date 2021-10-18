@@ -9,10 +9,6 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
     Remove-Module -Name $ModuleName -Force
 }
 Import-Module $PathToManifest -Force
-#-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
     #-------------------------------------------------------------------------
@@ -21,6 +17,11 @@ InModuleScope PoshGram {
     }
     #-------------------------------------------------------------------------
     Describe 'Confirm-URL' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+
         It 'should return false if the website can not be reached' {
             Mock Invoke-WebRequest -MockWith {
                 [System.Exception]$exception = 'No such host is known'
@@ -31,11 +32,12 @@ InModuleScope PoshGram {
                 [System.Management.Automation.ErrorDetails]$errorDetails = '{"message":"No such host is known"}'
                 $errorRecord.ErrorDetails = $errorDetails
                 throw $errorRecord
-            }#endMock
+            } #endMock
             Confirm-URL -Uri 'https://bssite.is/2nlyzm4' | Should -Be $false
-        }#it
+        } #it
+
         It 'should return true when a website can be reached' {
-            mock Invoke-WebRequest -MockWith {
+            Mock Invoke-WebRequest -MockWith {
                 [PSCustomObject]@{
                     StatusCode        = '200'
                     StatusDescription = 'OK'
@@ -44,8 +46,9 @@ InModuleScope PoshGram {
                     Headers           = "{[Content-Security-Policy, default-src 'none'; style-src 'unsafe-inline'; sandbox], [Strict-Transport-Security, max-age=31536000], [X-Content-Type-Options, nosniff]"
                     RawContentLength  = '119136'
                 }
-            }#endMock
-            Confirm-URL -Uri 'https://gph.is/2nlyzm4' |  Should -Be $true
-        }#it
-    }#describe
-}#inModule
+            } #endMock
+            Confirm-URL -Uri 'https://gph.is/2nlyzm4' | Should -Be $true
+        } #it
+
+    } #describe
+} #inModule

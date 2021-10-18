@@ -1,6 +1,7 @@
 Archive
 Artifacts
 cov.xml
+coverage.xml
 # OS generated files #
 ######################
 .DS_Store
@@ -10,3 +11,4 @@ cov.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
+.pytest*

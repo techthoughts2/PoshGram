@@ -10,22 +10,20 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramURLSticker' -Tag Unit {
-        $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
-            mock Test-URLExtension { $true }
-            mock Test-URLFileSize { $true }
-            mock Invoke-RestMethod -MockWith {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+            Mock Test-URLExtension { $true }
+            Mock Test-URLFileSize { $true }
+            Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
                     ok     = 'True'
                     result = @{
@@ -36,11 +34,11 @@ InModuleScope PoshGram {
                         sticker    = '@{width=512; height=512; is_animated=False; thumb=; file_id=CAADBAADkAEAAvRXTVFFkzUj6CRvGRYE; file_size=18356}'
                     }
                 }
-            }#endMock
-        }#before_each
+            } #endMock
+        } #before_each
         Context 'Error' {
             It 'should return false if the sticker extension is not supported' {
-                mock Test-URLExtension { $false }
+                Mock Test-URLExtension { $false }
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -48,10 +46,11 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
-                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
+                { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
+            } #it
+
             It 'should return false if the file is too large' {
-                mock Test-URLFileSize { $false }
+                Mock Test-URLFileSize { $false }
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -59,12 +58,13 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
-                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
-            It 'should return false if an error is encountered' {
+                { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
+            } #it
+
+            It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+                    throw 'Fake Error'
+                } #endMock
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -72,10 +72,66 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
-                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -Be $false
-            }#it
-        }#context_error
+                { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                { Send-TelegramURLSticker @sendTelegramURLStickerSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
+            } #it
+        } #context_error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendSticker*' }
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerURL          = $StickerURL
+                    DisableNotification = $true
+                }
+                Send-TelegramURLSticker @sendTelegramURLStickerSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
@@ -83,8 +139,10 @@ InModuleScope PoshGram {
                     StickerURL          = $StickerURL
                     DisableNotification = $true
                 }
-                Send-TelegramURLSticker @sendTelegramURLStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramURLSticker
-}#inModule
+                $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
+            } #it
+        } #context_success
+    } #describe_Send-TelegramURLSticker
+} #inModule

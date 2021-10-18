@@ -26,7 +26,7 @@
     $sendTelegramTextMessageSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
-        Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)'
+        Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://www.techthoughts.info/)'
         ParseMode           = 'MarkdownV2'
         DisablePreview      = $true
         DisableNotification = $true
@@ -127,12 +127,10 @@
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6+, 7+
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
+
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
@@ -160,26 +158,30 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramTextMessage {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Text of the message to be sent')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$Message,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
@@ -194,41 +196,50 @@ function Send-TelegramTextMessage {
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables link previews')]
         [switch]$DisablePreview, #set to false by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $payload = @{
         chat_id                  = $ChatID
         text                     = $Message
         parse_mode               = $ParseMode
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
-    }#payload
+    } #payload
+
     if ($Keyboard) {
         $payload.Add('reply_markup', $Keyboard)
     }
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendMessage' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
+    Write-Verbose -Message 'Sending message...'
     $invokeRestMethodSplat = @{
-        Uri         = ('https://api.telegram.org/bot{0}/sendMessage' -f $BotToken)
+        Uri         = $uri
         Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload -Depth 50)))
         ErrorAction = 'Stop'
         ContentType = 'application/json'
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     try {
-        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
-        $results = $false
-    }#catch_messageSend
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
+    } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
-}#function_Send-TelegramTextMessage
+} #function_Send-TelegramTextMessage

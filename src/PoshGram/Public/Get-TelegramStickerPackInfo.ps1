@@ -12,13 +12,10 @@
 .PARAMETER StickerSetName
     Name of the sticker set
 .OUTPUTS
-    System.Management.Automation.PSCustomObject (if successful)
-    System.Boolean (on failure)
+    System.Management.Automation.PSCustomObject
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-    This works with PowerShell Version: 6.1+
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
@@ -48,58 +45,54 @@
     https://core.telegram.org/bots/api#getstickerset
 .LINK
     https://core.telegram.org/bots/api#sticker
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Get-TelegramStickerPackInfo {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Sticker pack name')]
         [ValidateNotNullOrEmpty()]
         [string]$StickerSetName
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/getStickerSet"
 
-    $Form = @{
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
+    $form = @{
         name = $StickerSetName
-    }#form
-    #------------------------------------------------------------------------
+    } #form
+
+    $uri = 'https://api.telegram.org/bot{0}/getStickerSet' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
+    Write-Verbose -Message 'Retrieving sticker information...'
     $invokeRestMethodSplat = @{
-        Uri         = $Uri
+        Uri         = $uri
         ErrorAction = 'Stop'
-        Form        = $Form
+        Form        = $form
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
-    Write-Verbose -Message 'Retrieving sticker information...'
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
-    }#try_messageSend
+    } #try_messageSend
     catch {
-        $theError = $_
-        $errorEval = $theError.ErrorDetails.Message
-        if ($errorEval) {
-            $errorEval = $theError.ErrorDetails.Message | ConvertFrom-Json
-        }
-        if ($errorEval -like "*STICKERSET_INVALID*") {
-            Write-Warning -Message 'STICKERSET_INVALID'
+        Write-Warning -Message 'An error was encountered getting the Telegram sticker info:'
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+            return $results
         }
         else {
-            Write-Warning -Message 'An error was encountered retrieving sticker information:'
-            Write-Error $_
+            throw $_
         }
-        $results = $false
-        return $results
-    }#catch_messageSend
-    #------------------------------------------------------------------------
+    } #catch_messageSend
+
     Write-Verbose -Message 'Sticker information found. Processing emoji information...'
     Write-Verbose -Message "Asset path: $script:assetPath"
     $je = Get-Content -Path $script:assetPath
@@ -122,5 +115,6 @@ function Get-TelegramStickerPackInfo {
         $emoji | Add-Member -Type NoteProperty -Name Shortcode -Value $name -Force
         $stickerData += $emoji
     }
+
     return $stickerData
-}#function_Get-TelegramStickerPackInfo
+} #function_Get-TelegramStickerPackInfo

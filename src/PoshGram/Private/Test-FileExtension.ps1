@@ -38,14 +38,13 @@
 .OUTPUTS
     System.Boolean
 .NOTES
-    Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+    Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 #>
 function Test-FileExtension {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Path to file that will be evaluated')]
         [ValidateNotNull()]
@@ -84,20 +83,20 @@ function Test-FileExtension {
     switch ($Type) {
         Photo {
             $extType = $supportedPhotoExtensions
-        }#photo
+        } #photo
         Video {
             $extType = $supportedVideoExtensions
-        }#video
+        } #video
         Audio {
             $extType = $supportedAudioExtensions
-        }#audio
+        } #audio
         Animation {
             $extType = $supportedAnimationExtensions
-        }#animation
+        } #animation
         Sticker {
             $extType = $supportedStickerExtensions
         }
-    }#switch_Type
+    } #switch_Type
     Write-Verbose -Message "Validating type: $Type"
     #------------------------------------------------------------
     [bool]$results = $true #assume the best.
@@ -114,7 +113,7 @@ function Test-FileExtension {
         default {
             Write-Warning -Message "The specified file is not a supported $Type extension."
             $results = $false
-        }#default
-    }#switch_extension
+        } #default
+    } #switch_extension
     return $results
-}#function_Test-FileExtension
+} #function_Test-FileExtension

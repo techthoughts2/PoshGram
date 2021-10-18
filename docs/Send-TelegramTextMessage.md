@@ -53,7 +53,7 @@ $chat = '-nnnnnnnnn'
 $sendTelegramTextMessageSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
-    Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://techthoughts.info/)'
+    Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://www.techthoughts.info/)'
     ParseMode           = 'MarkdownV2'
     DisablePreview      = $true
     DisableNotification = $true
@@ -128,17 +128,11 @@ $row1 = @(
     @{
         text = "`u{1F513} Unlock"
     }
-    # @{
-    #     text = 'button2'
-    # }
 )
 $row2 = @(
     @{
         text = "`u{1F512} Lock"
     }
-    # @{
-    #     text = 'button2'
-    # }
 )
 $customKeyboard = @{
     keyboard          = @(
@@ -276,12 +270,10 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject (if successful)
-### System.Boolean (on failure)
+### System.Management.Automation.PSCustomObject
 ## NOTES
-Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
-This works with PowerShell Versions: 5.1, 6+, 7+
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
+
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
@@ -302,4 +294,6 @@ Certain characters in Telegram must be escaped with the preceding character '\' 
 [https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
 
 [https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

@@ -4,9 +4,9 @@
 // ${workspaceRoot}: the root folder of the team
 // ${file}: the current opened file
 // ${relativeFile}: the current opened file relative to workspaceRoot
-// ${fileBasename}: the current opened file's basename
-// ${fileDirname}: the current opened file's dirname
-// ${fileExtname}: the current opened file's extension
+// ${fileBasename}: the current opened file\"s basename
+// ${fileDirname}: the current opened file\"s dirname
+// ${fileExtname}: the current opened file\"s extension
 // ${cwd}: the current working directory of the spawned process
 {
     "version": "2.0.0",
@@ -47,6 +47,12 @@
             }
         }
     },
+    "options": {
+        "env": {
+            // EDIT THE MODULE NAME FOR YOUR PROJECT
+            "MODULE_NAME": "PoshGram"
+        }
+    },
     "tasks": [
         {
             "label": "PesterTest",
@@ -54,13 +60,13 @@
             "problemMatcher": [
                 "$pester"
             ],
-            "command": "Invoke-Pester '${workspaceFolder}/src/Tests/Unit' -PesterOption @{IncludeVSCodeMarker=$true}",
+            "command": "Invoke-Pester \"${workspaceFolder}/src/Tests/Unit\" -PesterOption @{IncludeVSCodeMarker=$true}",
         },
         {
             "label": ".",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "$PSVersionTable;Invoke-Build -Task . -File './src/PoshGram.build.ps1'",
+            "command": "$PSVersionTable;Invoke-Build -Task . -File ${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\"",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -70,67 +76,98 @@
             "label": "TestLocal",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task TestLocal -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task TestLocal -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "HelpLocal",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task HelpLocal -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task HelpLocal -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "Clean",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task Clean -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task Clean -File \"${workspaceFolder}/src/$env:MODULE_NAME.build.ps1"
         },
         {
             "label": "ValidateRequirements",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task ValidateRequirements -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task ValidateRequirements -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "Analyze",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task Analyze -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task Analyze -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "AnalyzeTests",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task AnalyzeTests -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task AnalyzeTests -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "FormattingCheck",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task FormattingCheck -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task FormattingCheck -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "Test",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task Test -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task Test -File \"${workspaceFolder}/src/$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "DevCC",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task DevCC -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task DevCC -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "Build",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task Build -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task Build -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
+        },
+        {
+            "label": "BuildNoInfra",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "command": "Invoke-Build -Task BuildNoInfra -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
         },
         {
             "label": "InfraTest",
             "type": "shell",
             "problemMatcher": "$msCompile",
-            "command": "Invoke-Build -Task InfraTest -File './src/PoshGram.build.ps1'"
+            "command": "Invoke-Build -Task InfraTest -File \"${workspaceFolder}/src//$env:MODULE_NAME.build.ps1\""
+        },
+        {
+            "label": "Pester-Single-Coverage",
+            "type": "shell",
+            "command": "Import-Module -Name \"${workspaceFolder}\\src\\$env:MODULE_NAME\\$env:MODULE_NAME.psm1\";Invoke-Pester \"${workspaceFolder}\\src\\Tests\\Unit\\${input:functionName}.Tests.ps1\" -CodeCoverage \"${workspaceFolder}\\src\\$env:MODULE_NAME\\*\\${input:functionName}.ps1\"",
+            "problemMatcher": []
+        },
+        {
+            "label": "Pester-Single-Detailed",
+            "type": "shell",
+            "command": "Import-Module -Name \"${workspaceFolder}\\src\\$env:MODULE_NAME\\$env:MODULE_NAME.psm1\";Invoke-Pester \"${workspaceFolder}\\src\\Tests\\Unit\\${input:functionName}.Tests.ps1\" -Output Detailed",
+            "problemMatcher": []
+        },
+        {
+            "label": "DevCC-Single",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "command": "Import-Module -Name \"${workspaceFolder}\\src\\$env:MODULE_NAME\\$env:MODULE_NAME.psm1\";Invoke-Pester \"${workspaceFolder}\\src\\Tests\\Unit\\${input:functionName}.Tests.ps1\" -CodeCoverage \"${workspaceFolder}\\src\\$env:MODULE_NAME\\*\\${input:functionName}.ps1\" -CodeCoverageOutputFile \"${workspaceFolder}\\cov.xml\""
+        }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "functionName",
+            "description": "Name of PowerShell function you want to test"
         }
     ]
 }

@@ -10,27 +10,25 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
-
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Send-TelegramContact' -Tag Unit {
-        $phone = '1-222-222-2222'
-        $firstName = 'Jake'
-        $lastName = 'Morrison'
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
+        BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            $chat = '-nnnnnnnnn'
+            $phone = '1-222-222-2222'
+            $firstName = 'Jake'
+            $lastName = 'Morrison'
+        } #before_each
+
         Context 'Error' {
-            It 'should return false if an error is encountered sending the contact' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+            It 'should throw if an error is encountered with no specific exception' {
+                Mock Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -39,12 +37,72 @@ InModuleScope PoshGram {
                     LastName            = $lastName
                     DisableNotification = $true
                 }
-                Send-TelegramContact @sendTelegramContactSplat | Should -Be $false
-            }#it
-        }#context_error
+                { Send-TelegramContact @sendTelegramContactSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramContactSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhoneNumber         = $phone
+                    FirstName           = $firstName
+                    LastName            = $lastName
+                    DisableNotification = $true
+                }
+                { Send-TelegramContact @sendTelegramContactSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramContactSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhoneNumber         = $phone
+                    FirstName           = $firstName
+                    LastName            = $lastName
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramContact @sendTelegramContactSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
+            } #it
+        } #context_error
         Context 'Success' {
-            It 'should return a custom PSCustomObject if successful' {
-                mock Invoke-RestMethod -MockWith {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendContact*' }
+                $sendTelegramContactSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    PhoneNumber         = $phone
+                    FirstName           = $firstName
+                    LastName            = $lastName
+                    DisableNotification = $true
+                }
+                Send-TelegramContact @sendTelegramContactSplat
+                Assert-VerifiableMock
+            } #it
+
+            It 'should return expected results if successful' {
+                Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
                         ok     = 'True'
                         result = @{
@@ -55,7 +113,7 @@ InModuleScope PoshGram {
                             contact    = '@{phone_number=12222222222; first_name=Jake}'
                         }
                     }
-                }#endMock
+                } #endMock
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -64,8 +122,10 @@ InModuleScope PoshGram {
                     LastName            = $lastName
                     DisableNotification = $true
                 }
-                Send-TelegramContact @sendTelegramContactSplat | Should -BeOfType System.Management.Automation.PSCustomObject
-            }#it
-        }#context_success
-    }#describe_Send-TelegramContact
-}#inModule
+                $eval = Send-TelegramContact @sendTelegramContactSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
+            } #it
+        } #context_success
+    } #describe_Send-TelegramContact
+} #inModule

@@ -10,19 +10,15 @@ if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 }
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
-$WarningPreference = 'SilentlyContinue'
-#-------------------------------------------------------------------------
-#Import-Module $moduleNamePath -Force
 
 InModuleScope PoshGram {
-    #-------------------------------------------------------------------------
-    $WarningPreference = 'SilentlyContinue'
-    $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    function Write-Error {
-    }
-    #-------------------------------------------------------------------------
     Describe 'Get-TelegramStickerPackInfo' -Tag Unit {
+        BeforeAll {
+            $WarningPreference = 'SilentlyContinue'
+            $ErrorActionPreference = 'SilentlyContinue'
+        } #beforeAll
         BeforeEach {
+            $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             Mock Test-PollOptions { $true }
             Mock Invoke-RestMethod -MockWith {
                 [PSCustomObject]@{
@@ -47,7 +43,7 @@ InModuleScope PoshGram {
                         }
                     }
                 }
-            }#endMock
+            } #endMock
             Mock Get-Content -MockWith {
                 '[
                     {
@@ -64,37 +60,70 @@ InModuleScope PoshGram {
                     }
                 ]'
             }
-        }#before_each
+        } #before_each
+
         Context 'Error' {
-            It 'should return false if an error is encountered getting sticker pack information' {
-                mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
-                }#endMock
+            It 'should throw if an error is encountered with no specific exception' {
+                Mock Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
                 $getTelegramStickerPackInfoSplat = @{
                     BotToken       = $token
                     StickerSetName = 'STPicard'
                 }
-                Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
-            }#it
-        }#context_Error
-        Context 'Success' {
-            It 'should return $false if the sticker pack is not found' {
-                Mock Invoke-RestMethod -MockWith {
-                    [System.Exception]$exception = "The remote server returned an error: (400) Bad Request."
-                    [System.String]$errorId = 'BadRequest'
-                    [Management.Automation.ErrorCategory]$errorCategory = [Management.Automation.ErrorCategory]::InvalidOperation
-                    [System.Object]$target = 'Whatevs'
-                    $errorRecord = New-Object Management.Automation.ErrorRecord ($exception, $errorID, $errorCategory, $target)
-                    [System.Management.Automation.ErrorDetails]$errorDetails = '{"ok":false,"error_code":400,"description":"Bad Request: STICKERSET_INVALID"}'
-                    $errorRecord.ErrorDetails = $errorDetails
-                    throw $errorRecord
-                }
+                { Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
                 $getTelegramStickerPackInfoSplat = @{
                     BotToken       = $token
-                    StickerSetName = 'Nope'
+                    StickerSetName = 'STPicard'
                 }
-                Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat | Should -Be $false
-            }#it
+                { Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $getTelegramStickerPackInfoSplat = @{
+                    BotToken       = $token
+                    StickerSetName = 'STPicard'
+                }
+                $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
+            } #it
+        } #context_Error
+
+        Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*getStickerSet*' }
+                $getTelegramStickerPackInfoSplat = @{
+                    BotToken       = $token
+                    StickerSetName = 'STPicard'
+                }
+                Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $getTelegramStickerPackInfoSplat = @{
                     BotToken       = $token
@@ -111,7 +140,7 @@ InModuleScope PoshGram {
                 $eval.file_size   | Should -BeExactly '18356'
                 $eval.Code        | Should -BeExactly 'U+1F642'
                 $eval.Shortcode   | Should -BeExactly ':slightly_smiling_face:'
-            }#it
-        }#context_Success
-    }#describe_Get-TelegramStickerPackInfo
-}#inModule
+            } #it
+        } #context_Success
+    } #describe_Get-TelegramStickerPackInfo
+} #inModule

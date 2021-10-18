@@ -163,10 +163,9 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject (if successful)
-### System.Boolean (on failure)
+### System.Management.Automation.PSCustomObject
 ## NOTES
-Author: Jake Morrison - @jakemorrison - https://techthoughts.info/
+Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 This works with PowerShell Version: 6.1+
 
 The following photo types are supported:
@@ -192,4 +191,6 @@ This was really hard to make.
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md)
 
 [https://core.telegram.org/bots/api#sendmediagroup](https://core.telegram.org/bots/api#sendmediagroup)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
