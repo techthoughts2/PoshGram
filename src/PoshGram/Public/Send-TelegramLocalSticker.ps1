@@ -58,8 +58,7 @@
 #>
 function Send-TelegramLocalSticker {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -82,6 +81,8 @@ function Send-TelegramLocalSticker {
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
+
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
 
     Write-Verbose -Message 'Verifying presence of sticker...'
     if (-not(Test-Path -Path $StickerPath)) {
@@ -109,6 +110,7 @@ function Send-TelegramLocalSticker {
         Write-Verbose -Message 'File size verified.'
     } #else_stickerSize
 
+    Write-Verbose -Message 'Getting sticker file...'
     try {
         $fileObject = Get-Item $StickerPath -ErrorAction Stop
     } #try_Get-ItemSticker
@@ -126,6 +128,7 @@ function Send-TelegramLocalSticker {
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending sticker...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

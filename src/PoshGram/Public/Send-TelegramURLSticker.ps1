@@ -55,8 +55,7 @@
 #>
 function Send-TelegramURLSticker {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -79,6 +78,8 @@ function Send-TelegramURLSticker {
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
+
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
 
     Write-Verbose -Message 'Verifying URL leads to supported sticker extension...'
     $fileTypeEval = Test-URLExtension -URL $StickerURL -Type Sticker
@@ -107,6 +108,7 @@ function Send-TelegramURLSticker {
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending sticker...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)

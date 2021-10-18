@@ -65,8 +65,7 @@
 #>
 function Send-TelegramContact {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -99,6 +98,8 @@ function Send-TelegramContact {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $form = @{
         chat_id              = $ChatID
         phone_number         = $PhoneNumber
@@ -110,6 +111,7 @@ function Send-TelegramContact {
     $uri = 'https://api.telegram.org/bot{0}/sendContact' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending contact...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

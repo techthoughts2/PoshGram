@@ -84,8 +84,7 @@
 #>
 function Send-TelegramURLPhoto {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -118,6 +117,8 @@ function Send-TelegramURLPhoto {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying URL leads to supported photo extension...'
     $fileTypeEval = Test-URLExtension -URL $PhotoURL -Type Photo
     if ($fileTypeEval -eq $false) {
@@ -147,6 +148,7 @@ function Send-TelegramURLPhoto {
     $uri = 'https://api.telegram.org/bot{0}/sendphoto' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending photo...'
     $invokeRestMethodSplat = @{
         Uri         = ('https://api.telegram.org/bot{0}/sendphoto' -f $BotToken)
         Body        = (ConvertTo-Json -Compress -InputObject $payload)

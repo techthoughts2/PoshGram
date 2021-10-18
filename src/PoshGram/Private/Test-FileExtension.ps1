@@ -44,8 +44,7 @@
 #>
 function Test-FileExtension {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Path to file that will be evaluated')]
         [ValidateNotNull()]

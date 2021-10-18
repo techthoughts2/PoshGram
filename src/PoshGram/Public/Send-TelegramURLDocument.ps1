@@ -86,8 +86,7 @@
 #>
 function Send-TelegramURLDocument {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -124,6 +123,8 @@ function Send-TelegramURLDocument {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying URL leads to supported document extension...'
     $fileTypeEval = Test-URLExtension -URL $FileURL -Type Document
     if ($fileTypeEval -eq $false) {
@@ -154,6 +155,7 @@ function Send-TelegramURLDocument {
     $uri = 'https://api.telegram.org/bot{0}/sendDocument' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending document...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)

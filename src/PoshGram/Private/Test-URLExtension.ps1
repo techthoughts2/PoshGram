@@ -42,8 +42,7 @@
 #>
 function Test-URLExtension {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'URL string of document')]
         [ValidateNotNull()]

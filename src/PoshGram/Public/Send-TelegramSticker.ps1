@@ -84,8 +84,7 @@
 #>
 function Send-TelegramSticker {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(ParameterSetName = 'FileIDG')]
         [Parameter(ParameterSetName = 'FileEmojiG')]
         [Parameter(Mandatory = $true,
@@ -1770,6 +1769,8 @@ function Send-TelegramSticker {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     if ($FileID) {
         Write-Verbose -Message 'sticker file_id provided.'
         $sticker = $FileID
@@ -1800,6 +1801,7 @@ function Send-TelegramSticker {
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending sticker...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

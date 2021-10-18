@@ -18,7 +18,7 @@
 #>
 function Confirm-URL {
     [CmdletBinding()]
-    param(
+    param (
         ## The URI to resolve
         [Parameter(Mandatory = $true,
             HelpMessage = 'Uri you wish to resolve')]

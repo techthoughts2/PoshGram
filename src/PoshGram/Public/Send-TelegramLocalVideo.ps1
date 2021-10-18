@@ -107,8 +107,7 @@
 #>
 function Send-TelegramLocalVideo {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -167,6 +166,8 @@ function Send-TelegramLocalVideo {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying presence of file...'
     if (-not(Test-Path -Path $Video)) {
         throw ('The specified video file: {0} was not found.' -f $Video)
@@ -193,6 +194,7 @@ function Send-TelegramLocalVideo {
         Write-Verbose -Message 'File size verified.'
     } #else_videoSize
 
+    Write-Verbose -Message 'Getting video file...'
     try {
         $fileObject = Get-Item $Video -ErrorAction Stop
     } #try_Get-ItemVideo
@@ -217,6 +219,7 @@ function Send-TelegramLocalVideo {
     $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending video...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

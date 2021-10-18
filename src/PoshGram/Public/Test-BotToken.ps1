@@ -39,8 +39,7 @@
 #>
 function Test-BotToken {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -48,17 +47,18 @@ function Test-BotToken {
         [string]$BotToken
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $uri = 'https://api.telegram.org/bot{0}/getMe' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Testing Bot Token...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'
         Method      = 'Get'
     }
-
     try {
-        Write-Verbose -Message 'Testing Bot Token...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend
     catch {

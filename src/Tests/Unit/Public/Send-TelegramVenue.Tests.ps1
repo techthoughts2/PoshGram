@@ -37,6 +37,53 @@ InModuleScope PoshGram {
                 }
                 { Send-TelegramVenue @sendTelegramVenueSplat } | Should -Throw
             } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramVenueSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
+                    DisableNotification = $true
+                }
+                { Send-TelegramVenue @sendTelegramVenueSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramVenueSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramVenue @sendTelegramVenueSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
+            } #it
         } #context_error
         Context 'Success' {
             It 'should call the API with the expected parameters' {

@@ -104,8 +104,7 @@
 #>
 function Send-TelegramURLAudio {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -154,6 +153,8 @@ function Send-TelegramURLAudio {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying URL leads to supported audio extension...'
     $fileTypeEval = Test-URLExtension -URL $AudioURL -Type Audio
     if ($fileTypeEval -eq $false) {
@@ -187,6 +188,7 @@ function Send-TelegramURLAudio {
     $uri = 'https://api.telegram.org/bot{0}/sendAudio' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending audio...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)

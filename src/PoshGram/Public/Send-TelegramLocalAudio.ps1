@@ -106,8 +106,7 @@
 #>
 function Send-TelegramLocalAudio {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -156,6 +155,8 @@ function Send-TelegramLocalAudio {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying presence of file...'
     if (-not(Test-Path -Path $Audio)) {
         throw ('The specified file was not found {0}' -f $Audio)
@@ -182,6 +183,7 @@ function Send-TelegramLocalAudio {
         Write-Verbose -Message 'File size verified.'
     } #else_audioSize
 
+    Write-Verbose -Message 'Getting audio file...'
     try {
         $fileObject = Get-Item $Audio -ErrorAction Stop
     } #try_Get-ItemAudio
@@ -205,6 +207,7 @@ function Send-TelegramLocalAudio {
     $uri = 'https://api.telegram.org/bot{0}/sendAudio' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending audio...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

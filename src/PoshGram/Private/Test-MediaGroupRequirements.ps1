@@ -21,8 +21,7 @@
 #>
 function Test-MediaGroupRequirements {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Type of media to send')]
         [ValidateSet('Photo', 'Video', 'Document', 'Audio')]

@@ -55,8 +55,7 @@
 #>
 function Send-TelegramDice {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -78,6 +77,9 @@ function Send-TelegramDice {
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
+
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     switch ($Emoji) {
         dice {
             $emojiSend = '🎲'
@@ -108,6 +110,7 @@ function Send-TelegramDice {
     $uri = 'https://api.telegram.org/bot{0}/sendDice' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending dice...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

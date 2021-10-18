@@ -87,8 +87,7 @@
 #>
 function Send-TelegramLocalPhoto {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -121,6 +120,8 @@ function Send-TelegramLocalPhoto {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying presence of photo...'
     if (-not(Test-Path -Path $PhotoPath)) {
         throw ('The specified photo path: {0} was not found.' -f $PhotoPath)
@@ -147,6 +148,7 @@ function Send-TelegramLocalPhoto {
         Write-Verbose -Message 'File size verified.'
     } #else_photoSize
 
+    Write-Verbose -Message 'Getting photo file...'
     try {
         $fileObject = Get-Item $PhotoPath -ErrorAction Stop
     } #try_Get-ItemPhoto
@@ -166,6 +168,7 @@ function Send-TelegramLocalPhoto {
     $uri = 'https://api.telegram.org/bot{0}/sendphoto' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending photo...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

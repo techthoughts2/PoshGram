@@ -19,8 +19,7 @@
 #>
 function Test-Explanation {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Quiz explanation text')]
         [string]$Explanation

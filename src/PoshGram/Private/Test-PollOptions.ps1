@@ -23,8 +23,7 @@
 #>
 function Test-PollOptions {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Poll Options for eval')]
         [string[]]$PollOptions

@@ -179,8 +179,7 @@
 #>
 function Send-TelegramPoll {
     [CmdletBinding(DefaultParameterSetName = 'default')]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -245,11 +244,15 @@ function Send-TelegramPoll {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
+    Write-Verbose -Message 'Testing poll options...'
     $optionEval = Test-PollOptions -PollOptions $Options
     if ($optionEval -eq $false) {
         throw 'Poll options do not meet Telegram requirements'
     }
 
+    Write-Verbose -Message 'Converting options to json format...'
     $Options = $Options | ConvertTo-Json
     $form = @{
         chat_id                 = $ChatID
@@ -262,6 +265,7 @@ function Send-TelegramPoll {
     } #form
 
     if ($PollType -eq 'quiz') {
+        Write-Verbose -Message 'Processing quiz...'
         if ($null -eq $QuizAnswer -or $QuizAnswer -lt 1 -or $QuizAnswer -gt 10) {
             throw 'When PollType is quiz, you must supply a QuizAnswer desginator.'
         }
@@ -289,6 +293,7 @@ function Send-TelegramPoll {
     $uri = 'https://api.telegram.org/bot{0}/sendPoll' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending poll...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

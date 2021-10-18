@@ -23,8 +23,7 @@
 #>
 function Test-URLFileSize {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'URL address to file')]
         [ValidateNotNull()]

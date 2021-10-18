@@ -73,8 +73,7 @@
 #>
 function Send-TelegramVenue {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -112,6 +111,8 @@ function Send-TelegramVenue {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $form = @{
         chat_id              = $ChatID
         latitude             = $Latitude
@@ -124,6 +125,7 @@ function Send-TelegramVenue {
     $uri = 'https://api.telegram.org/bot{0}/sendVenue' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending venue...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

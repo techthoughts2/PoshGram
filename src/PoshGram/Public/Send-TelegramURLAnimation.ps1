@@ -83,8 +83,7 @@
 #>
 function Send-TelegramURLAnimation {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -117,6 +116,8 @@ function Send-TelegramURLAnimation {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying URL leads to supported animation extension...'
     $fileTypeEval = Test-URLExtension -URL $AnimationURL -Type Animation
     if ($fileTypeEval -eq $false) {
@@ -146,6 +147,7 @@ function Send-TelegramURLAnimation {
     $uri = 'https://api.telegram.org/bot{0}/sendAnimation' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending animation...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)

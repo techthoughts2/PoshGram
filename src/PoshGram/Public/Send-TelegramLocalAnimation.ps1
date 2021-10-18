@@ -89,8 +89,7 @@
 #>
 function Send-TelegramLocalAnimation {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -123,6 +122,8 @@ function Send-TelegramLocalAnimation {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying presence of animation...'
     if (-not(Test-Path -Path $AnimationPath)) {
         throw ('The specified animation path: {0} was not found.' -f $AnimationPath)
@@ -149,6 +150,7 @@ function Send-TelegramLocalAnimation {
         Write-Verbose -Message 'File size verified.'
     } #else_animationSize
 
+    Write-Verbose -Message 'Getting animation file...'
     try {
         $fileObject = Get-Item $AnimationPath -ErrorAction Stop
     } #try_Get-ItemAnimation
@@ -168,6 +170,7 @@ function Send-TelegramLocalAnimation {
     $uri = 'https://api.telegram.org/bot{0}/sendAnimation' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending animation...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

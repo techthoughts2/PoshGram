@@ -94,8 +94,7 @@
 #>
 function Send-TelegramMediaGroup {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -124,9 +123,12 @@ function Send-TelegramMediaGroup {
         [switch]$DisableNotification
     )
 
-    $MediaType = $MediaType.ToLower()
-    Write-Verbose -Message "You have specified a media type of: $MediaType"
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
 
+    $MediaType = $MediaType.ToLower()
+    Write-Verbose -Message ('You have specified a media type of: {0}' -f $MediaType)
+
+    Write-Verbose -Message 'Testing if media group meets requirements...'
     $mediaGroupReqsEval = Test-MediaGroupRequirements -MediaType $MediaType -FilePath $FilePaths
     if (-not $mediaGroupReqsEval) {
         throw 'Telegram media group requirements not met'
@@ -169,6 +171,7 @@ function Send-TelegramMediaGroup {
     $uri = 'https://api.telegram.org/bot{0}/sendMediaGroup' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending media...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'

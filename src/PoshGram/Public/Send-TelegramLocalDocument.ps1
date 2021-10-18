@@ -86,8 +86,7 @@
 #>
 function Send-TelegramLocalDocument {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -124,6 +123,8 @@ function Send-TelegramLocalDocument {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying presence of file...'
     if (-not(Test-Path -Path $File)) {
         throw ('The specified file was not found: {0}' -f $AnimationPath)
@@ -141,6 +142,7 @@ function Send-TelegramLocalDocument {
         Write-Verbose -Message 'File size verified.'
     } #else_fileSize
 
+    Write-Verbose -Message 'Getting document file...'
     try {
         $fileObject = Get-Item $File -ErrorAction Stop
     } #try_Get-Item
@@ -161,13 +163,13 @@ function Send-TelegramLocalDocument {
     $uri = 'https://api.telegram.org/bot{0}/sendDocument' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending document...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'
         Form        = $form
         Method      = 'Post'
     }
-
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend

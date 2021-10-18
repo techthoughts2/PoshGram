@@ -109,8 +109,7 @@
 #>
 function Send-TelegramURLVideo {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -169,6 +168,8 @@ function Send-TelegramURLVideo {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     Write-Verbose -Message 'Verifying URL leads to supported document extension...'
     $fileTypeEval = Test-URLExtension -URL $VideoURL -Type Video
     if ($fileTypeEval -eq $false) {
@@ -203,6 +204,7 @@ function Send-TelegramURLVideo {
     $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending video...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
@@ -210,7 +212,6 @@ function Send-TelegramURLVideo {
         ContentType = 'application/json'
         Method      = 'Post'
     }
-
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat

@@ -163,8 +163,7 @@
 #>
 function Send-TelegramTextMessage {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -203,6 +202,8 @@ function Send-TelegramTextMessage {
         [switch]$DisableNotification
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $payload = @{
         chat_id                  = $ChatID
         text                     = $Message
@@ -218,6 +219,7 @@ function Send-TelegramTextMessage {
     $uri = 'https://api.telegram.org/bot{0}/sendMessage' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Sending message...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload -Depth 50)))
@@ -225,9 +227,7 @@ function Send-TelegramTextMessage {
         ContentType = 'application/json'
         Method      = 'Post'
     }
-
     try {
-        Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend
     catch {

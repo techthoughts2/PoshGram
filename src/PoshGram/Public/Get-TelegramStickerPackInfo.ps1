@@ -50,8 +50,7 @@
 #>
 function Get-TelegramStickerPackInfo {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx')]
         [ValidateNotNull()]
@@ -64,6 +63,8 @@ function Get-TelegramStickerPackInfo {
         [string]$StickerSetName
     )
 
+    Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
+
     $form = @{
         name = $StickerSetName
     } #form
@@ -71,14 +72,13 @@ function Get-TelegramStickerPackInfo {
     $uri = 'https://api.telegram.org/bot{0}/getStickerSet' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
 
+    Write-Verbose -Message 'Retrieving sticker information...'
     $invokeRestMethodSplat = @{
         Uri         = $uri
         ErrorAction = 'Stop'
         Form        = $form
         Method      = 'Post'
     }
-
-    Write-Verbose -Message 'Retrieving sticker information...'
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend

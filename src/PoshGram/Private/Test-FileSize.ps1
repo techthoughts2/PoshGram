@@ -23,8 +23,7 @@
 #>
 function Test-FileSize {
     [CmdletBinding()]
-    Param
-    (
+    param (
         [Parameter(Mandatory = $true,
             HelpMessage = 'Path to file')]
         [ValidateNotNull()]
