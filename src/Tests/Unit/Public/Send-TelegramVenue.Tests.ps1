@@ -22,9 +22,9 @@ InModuleScope PoshGram {
             $chat = '-nnnnnnnnn'
         } #before_each
         Context 'Error' {
-            It 'should return false if an error is encountered sending the venue' {
+            It 'should throw if an error is encountered sending the location' {
                 Mock Invoke-RestMethod {
-                    throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramVenueSplat = @{
                     BotToken            = $token
@@ -35,10 +35,26 @@ InModuleScope PoshGram {
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
                 }
-                Send-TelegramVenue @sendTelegramVenueSplat | Should -Be $false
+                { Send-TelegramVenue @sendTelegramVenueSplat } | Should -Throw
             } #it
         } #context_error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendVenue*' }
+                $sendTelegramVenueSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Latitude            = 37.621313
+                    Longitude           = '-122.378955'
+                    Title               = 'Star Fleet Headquarters'
+                    Address             = 'San Francisco, CA 94128'
+                    DisableNotification = $true
+                }
+                Send-TelegramVenue @sendTelegramVenueSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 Mock Invoke-RestMethod -MockWith {
                     [PSCustomObject]@{
@@ -63,7 +79,9 @@ InModuleScope PoshGram {
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
                 }
-                Send-TelegramVenue @sendTelegramVenueSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval = Send-TelegramVenue @sendTelegramVenueSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
             } #it
         } #context_success
     } #describe_Send-TelegramVenue

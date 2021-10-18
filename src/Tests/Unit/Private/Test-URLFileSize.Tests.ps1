@@ -50,7 +50,7 @@ InModuleScope PoshGram {
 
         It 'should return false when an error is encountered' {
             Mock Invoke-WebRequest -MockWith {
-                Throw 'Bullshit Error'
+                throw 'Fake Error'
             } #endMock
             Test-URLFileSize -URL $fileURL | Should -Be $false
         } #it

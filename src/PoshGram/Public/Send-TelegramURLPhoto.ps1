@@ -56,9 +56,7 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 .COMPONENT
@@ -81,6 +79,8 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramURLPhoto {
     [CmdletBinding()]
@@ -91,50 +91,51 @@ function Send-TelegramURLPhoto {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'URL path to photo')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$PhotoURL,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Photo caption')]
         [string]$Caption,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying URL leads to supported photo extension...'
     $fileTypeEval = Test-URLExtension -URL $PhotoURL -Type Photo
     if ($fileTypeEval -eq $false) {
-        $results = $false
-        return $results
+        throw ('The specified photo URL: {0} does not contain a supported extension.' -f $AnimationURL)
     } #if_photoExtension
     else {
         Write-Verbose -Message 'Extension supported.'
     } #else_photoExtension
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $PhotoURL
     if ($fileSizeEval -eq $false) {
-        $results = $false
-        return $results
+        throw 'File size does not meet Telegram requirements'
     } #if_photoSize
     else {
         Write-Verbose -Message 'File size verified.'
     } #else_photoSize
-    #------------------------------------------------------------------------
+
     $payload = @{
         chat_id              = $ChatID
         photo                = $PhotoURL
@@ -142,7 +143,10 @@ function Send-TelegramURLPhoto {
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification.IsPresent
     } #payload
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendphoto' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
         Uri         = ('https://api.telegram.org/bot{0}/sendphoto' -f $BotToken)
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
@@ -150,7 +154,6 @@ function Send-TelegramURLPhoto {
         ContentType = 'application/json'
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
@@ -158,8 +161,13 @@ function Send-TelegramURLPhoto {
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramURLPhoto

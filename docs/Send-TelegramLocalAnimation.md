@@ -173,15 +173,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
-### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-This works with PowerShell Version: 6.1+
 
 The following animation types are supported:
 GIF
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
@@ -200,4 +197,6 @@ Get creative by sending Gifs with your bot!
 [https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
 
 [https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

@@ -56,11 +56,9 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Version: 6.1+
 
     Bots can currently send files of up to 50 MB in size, this limit may be changed in the future.
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 .COMPONENT
@@ -83,6 +81,8 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramLocalDocument {
     [CmdletBinding()]
@@ -93,64 +93,63 @@ function Send-TelegramLocalDocument {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Local path to file you wish to send')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$File,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
         [string]$Caption = '', #set to false by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables automatic server-side content type detection')]
         [switch]$DisableContentTypeDetection,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying presence of file...'
-    if (!(Test-Path -Path $File)) {
-        Write-Warning -Message "The specified file: $File was not found."
-        $results = $false
-        return $results
+    if (-not(Test-Path -Path $File)) {
+        throw ('The specified file was not found: {0}' -f $AnimationPath)
     } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
     } #else_testPath
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $File
     if ($fileSizeEval -eq $false) {
-        $results = $false
-        return $results
-    } #if_photoSize
+        throw 'File size does not meet Telegram requirements'
+    } #if_fileSize
     else {
         Write-Verbose -Message 'File size verified.'
-    } #else_photoSize
-    #------------------------------------------------------------------------
+    } #else_fileSize
+
     try {
         $fileObject = Get-Item $File -ErrorAction Stop
-    } #try_Get-ItemPhoto
+    } #try_Get-Item
     catch {
         Write-Warning -Message 'The specified file could not be interpreted properly.'
-        $results = $false
-        return $results
-    } #catch_Get-ItemPhoto
-    #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/sendDocument"
-    $Form = @{
+        throw $_
+    } #catch_Get-Item
+
+    $form = @{
         chat_id                        = $ChatID
         document                       = $fileObject
         caption                        = $Caption
@@ -158,22 +157,30 @@ function Send-TelegramLocalDocument {
         disable_content_type_detection = $DisableContentTypeDetection.IsPresent
         disable_notification           = $DisableNotification.IsPresent
     } #form
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendDocument' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = $Uri
+        Uri         = $uri
         ErrorAction = 'Stop'
-        Form        = $Form
+        Form        = $form
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
+
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram document message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramLocalDocument

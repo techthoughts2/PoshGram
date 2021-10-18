@@ -40,7 +40,7 @@ InModuleScope PoshGram {
         } #it
         It 'should return false when an error is encountered' {
             Mock Get-ChildItem -MockWith {
-                Throw 'Bullshit Error'
+                throw 'Fake Error'
             } #endMock
             Test-FileSize -Path 'C:\videos\video.mp4' | Should -Be $false
         } #it

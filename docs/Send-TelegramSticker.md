@@ -262,11 +262,9 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
-### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-This works with PowerShell Versions: 5.1, 6.0, 6.1+
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
@@ -282,4 +280,6 @@ This function will make a best attempt to look up the sticker pack you specify a
 [https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

@@ -39,7 +39,7 @@ InModuleScope PoshGram {
             } #endMock
         } #before_each
         Context 'Error' {
-            It 'should return false if the document extension is not supported' {
+            It 'should throw if the document extension is not supported' {
                 Mock Test-URLExtension { $false }
                 $sendTelegramURLDocumentSplat = @{
                     BotToken = $token
@@ -47,7 +47,7 @@ InModuleScope PoshGram {
                     FileURL  = $fileURL
                     Caption  = 'TechThoughts Logo'
                 }
-                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
+                { Send-TelegramURLDocument @sendTelegramURLDocumentSplat } | Should -Throw
             } #it
 
             It 'should return false if the file is too large' {
@@ -58,12 +58,12 @@ InModuleScope PoshGram {
                     FileURL  = $fileURL
                     Caption  = 'TechThoughts Logo'
                 }
-                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
+                { Send-TelegramURLDocument @sendTelegramURLDocumentSplat } | Should -Throw
             } #it
 
-            It 'should return false if an error is encountered' {
+            It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
-                    throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramURLDocumentSplat = @{
                     BotToken            = $token
@@ -74,10 +74,72 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
-                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -Be $false
+                { Send-TelegramURLDocument @sendTelegramURLDocumentSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileURL             = $fileURL
+                    Caption             = 'TechThoughts Logo'
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                { Send-TelegramURLDocument @sendTelegramURLDocumentSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileURL             = $fileURL
+                    Caption             = 'TechThoughts Logo'
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ErrorAction         = 'SilentlyContinue'
+                }
+                $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
             } #it
         } #context_error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendDocument*' }
+                $sendTelegramURLDocumentSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    FileURL             = $fileURL
+                    Caption             = 'TechThoughts Logo'
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                }
+                Send-TelegramURLDocument @sendTelegramURLDocumentSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramURLDocumentSplat = @{
                     BotToken            = $token
@@ -87,7 +149,9 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                 }
-                Send-TelegramURLDocument @sendTelegramURLDocumentSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
             } #it
         } #context_success
     } #describe_Send-TelegramURLDocument

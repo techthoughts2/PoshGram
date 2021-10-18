@@ -49,7 +49,7 @@ InModuleScope PoshGram {
             } #endMock
         } #before_each
         Context 'Error' {
-            It 'should return false if the MediaGroup requirements are not met' {
+            It 'should throw if the MediaGroup requirements are not met' {
                 Mock Test-MediaGroupRequirements { $false }
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
@@ -57,12 +57,12 @@ InModuleScope PoshGram {
                     MediaType = 'Photo'
                     FilePaths = $justRight
                 }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
+                { Send-TelegramMediaGroup @sendTelegramMediaGroupSplat } | Should -Throw
             } #it
 
-            It 'should return false if it cannot successfuly get the file' {
+            It 'should throw if it cannot successfuly get the file' {
                 Mock Get-Item {
-                    throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
@@ -70,12 +70,12 @@ InModuleScope PoshGram {
                     MediaType = 'Photo'
                     FilePaths = $justRight
                 }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
+                { Send-TelegramMediaGroup @sendTelegramMediaGroupSplat } | Should -Throw
             } #it
 
-            It 'should return false if an error is encountered sending the message' {
+            It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
-                    throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramMediaGroupSplat = @{
                     BotToken  = $token
@@ -83,10 +83,65 @@ InModuleScope PoshGram {
                     MediaType = 'Photo'
                     FilePaths = $justRight
                 }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -Be $false
+                { Send-TelegramMediaGroup @sendTelegramMediaGroupSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                { Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken  = $token
+                    ChatID    = $chat
+                    MediaType = 'Photo'
+                    FilePaths = $justRight
+                }
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
             } #it
         } #context_error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendMediaGroup*' }
+                $sendTelegramMediaGroupSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    MediaType           = 'Photo'
+                    FilePaths           = $justRight
+                    DisableNotification = $true
+                }
+                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
@@ -95,7 +150,9 @@ InModuleScope PoshGram {
                     FilePaths           = $justRight
                     DisableNotification = $true
                 }
-                Send-TelegramMediaGroup @sendTelegramMediaGroupSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
             } #it
         } #context_success
     } #describe_Send-TelegramMediaGroup

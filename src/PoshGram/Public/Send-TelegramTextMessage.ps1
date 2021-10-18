@@ -130,8 +130,7 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6+, 7+
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
@@ -159,6 +158,8 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramTextMessage {
     [CmdletBinding()]
@@ -169,16 +170,19 @@ function Send-TelegramTextMessage {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Text of the message to be sent')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$Message,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
@@ -193,13 +197,12 @@ function Send-TelegramTextMessage {
         [Parameter(Mandatory = $false,
             HelpMessage = 'Disables link previews')]
         [switch]$DisablePreview, #set to false by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     $payload = @{
         chat_id                  = $ChatID
         text                     = $Message
@@ -207,18 +210,22 @@ function Send-TelegramTextMessage {
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
     } #payload
+
     if ($Keyboard) {
         $payload.Add('reply_markup', $Keyboard)
     }
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendMessage' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = ('https://api.telegram.org/bot{0}/sendMessage' -f $BotToken)
+        Uri         = $uri
         Body        = ([System.Text.Encoding]::UTF8.GetBytes((ConvertTo-Json -Compress -InputObject $payload -Depth 50)))
         ErrorAction = 'Stop'
         ContentType = 'application/json'
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
+
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
@@ -226,8 +233,13 @@ function Send-TelegramTextMessage {
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramTextMessage

@@ -89,6 +89,8 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md
 .LINK
     https://core.telegram.org/bots/api#sendmediagroup
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramMediaGroup {
     [CmdletBinding()]
@@ -99,39 +101,39 @@ function Send-TelegramMediaGroup {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Type of media to send')]
         [ValidateSet('Photo', 'Video', 'Document', 'Audio')]
         [string]$MediaType,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'List of filepaths for media you want to send')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string[]]$FilePaths,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
+
     $MediaType = $MediaType.ToLower()
     Write-Verbose -Message "You have specified a media type of: $MediaType"
-    #------------------------------------------------------------------------
-    # Testing logic needs to be placed here
+
     $mediaGroupReqsEval = Test-MediaGroupRequirements -MediaType $MediaType -FilePath $FilePaths
     if (-not $mediaGroupReqsEval) {
-        $results = $false
-        return $results
+        throw 'Telegram media group requirements not met'
     }
-    #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/sendMediaGroup"
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Forming serialzied JSON for all media files...'
-    $Form = @{
+    $form = @{
         chat_id              = $ChatID;
         disable_notification = $DisableNotification.IsPresent
         media                = ''
@@ -148,9 +150,7 @@ function Send-TelegramMediaGroup {
             $fInfo = Get-Item -Path $file -ErrorAction Stop
         }
         catch {
-            Write-Warning -Message "An issue was encountered retrieving data from: $file"
-            $results = $false
-            return $results
+            throw ('An issue was encountered retrieving data from: {0}' -f $file)
         }
         $Form += @{"$MediaType$i" = $fInfo }
         $json += "{`"type`":`"$MediaType`",`"`media`":`"attach://$MediaType$i`"},"
@@ -165,14 +165,16 @@ function Send-TelegramMediaGroup {
 
     $Form.media = $json
     Write-Verbose -Message 'JSON formation completed.'
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendMediaGroup' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = $Uri
+        Uri         = $uri
         ErrorAction = 'Stop'
-        Form        = $Form
+        Form        = $form
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     Write-Verbose -Message 'Sending media...'
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
@@ -181,8 +183,13 @@ function Send-TelegramMediaGroup {
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramMediaGroup

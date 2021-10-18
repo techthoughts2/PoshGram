@@ -52,7 +52,7 @@ InModuleScope PoshGram {
                     )
                 )
 
-                mock Invoke-WebRequest -MockWith {
+                Mock Invoke-WebRequest -MockWith {
                     [PSCustomObject]@{
                         StatusCode        = "200"
                         StatusDescription = "OK"

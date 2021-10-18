@@ -72,12 +72,10 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 
@@ -106,6 +104,8 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramURLVideo {
     [CmdletBinding()]
@@ -116,71 +116,77 @@ function Send-TelegramURLVideo {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'URL to file you wish to send')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$VideoURL,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Duration of video in seconds')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Duration,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Video width')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Width,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Video height')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Height,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Original File Name')]
         [string]$FileName,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
         [string]$Caption = '', #set to false by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying URL leads to supported document extension...'
     $fileTypeEval = Test-URLExtension -URL $VideoURL -Type Video
     if ($fileTypeEval -eq $false) {
-        $results = $false
-        return $results
-    } #if_documentExtension
+        throw ('The specified Video URL: {0} does not contain a supported extension.' -f $VideoURL)
+    } #if_videoExtension
     else {
         Write-Verbose -Message 'Extension supported.'
-    } #else_documentExtension
-    #------------------------------------------------------------------------
+    } #else_videoExtension
+
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $VideoURL
     if ($fileSizeEval -eq $false) {
-        $results = $false
-        return $results
-    } #if_documentSize
+        throw 'File size does not meet Telegram requirements'
+    } #if_videoSize
     else {
         Write-Verbose -Message 'File size verified.'
-    } #else_documentSize
-    #------------------------------------------------------------------------
+    } #else_videoSize
+
     $payload = @{
         chat_id              = $ChatID
         video                = $VideoURL
@@ -193,15 +199,18 @@ function Send-TelegramURLVideo {
         supports_streaming   = $Streaming
         disable_notification = $DisableNotification.IsPresent
     } #payload
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = ('https://api.telegram.org/bot{0}/sendVideo' -f $BotToken)
+        Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = 'application/json'
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
+
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
@@ -209,8 +218,13 @@ function Send-TelegramURLVideo {
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramURLVideo

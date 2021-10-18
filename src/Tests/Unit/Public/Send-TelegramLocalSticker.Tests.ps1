@@ -45,51 +45,51 @@ InModuleScope PoshGram {
             } #endMock
         } #before_each
         Context 'Error' {
-            It 'should return false if the sticker can not be found' {
+            It 'should throw if the sticker can not be found' {
                 Mock Test-Path { $false }
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
                     StickerPath = 'c:\bs\sticker.webp'
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat } | Should -Throw
             } #it
 
-            It 'should return false if the sticker extension is not supported' {
+            It 'should throw if the sticker extension is not supported' {
                 Mock Test-FileExtension { $false }
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
                     StickerPath = 'c:\bs\sticker.webp'
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat } | Should -Throw
             } #it
 
-            It 'should return false if the sticker is too large' {
+            It 'should throw if the sticker is too large' {
                 Mock Test-FileSize { $false }
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
                     StickerPath = 'c:\bs\sticker.webp'
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat } | Should -Throw
             } #it
 
-            It 'should return false if it cannot successfuly get the file' {
+            It 'should throw if it cannot successfuly get the file' {
                 Mock Get-Item {
-                    Throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
                     ChatID      = $chat
                     StickerPath = 'c:\bs\sticker.webp'
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat } | Should -Throw
             } #it
 
-            It 'should return false if an error is encountered sending the message' {
+            It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
-                    Throw 'Bullshit Error'
+                    throw 'Fake Error'
                 } #endMock
                 $sendTelegramLocalStickerSplat = @{
                     BotToken    = $token
@@ -97,10 +97,64 @@ InModuleScope PoshGram {
                     StickerPath = 'c:\bs\sticker.webp'
                     ErrorAction = 'SilentlyContinue'
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -Be $false
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = 'c:\bs\sticker.webp'
+                    ErrorAction = 'SilentlyContinue'
+                }
+                { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken    = $token
+                    ChatID      = $chat
+                    StickerPath = 'c:\bs\sticker.webp'
+                    ErrorAction = 'SilentlyContinue'
+                }
+                $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
             } #it
         } #context_Error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendSticker*' }
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    StickerPath         = 'c:\bs\sticker.webp'
+                    DisableNotification = $true
+                }
+                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return a custom PSCustomObject if successful' {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken            = $token
@@ -108,7 +162,9 @@ InModuleScope PoshGram {
                     StickerPath         = 'c:\bs\sticker.webp'
                     DisableNotification = $true
                 }
-                Send-TelegramLocalSticker @sendTelegramLocalStickerSplat | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
             } #it
         } #context_Success
     } #describe_Send-TelegramLocalSticker

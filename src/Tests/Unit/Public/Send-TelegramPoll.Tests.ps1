@@ -58,7 +58,7 @@ InModuleScope PoshGram {
             } #endMock
         } #before_each
         Context 'Error' {
-            It 'should return false if poll options do not meet Telegram requirements' {
+            It 'should throw if poll options do not meet Telegram requirements' {
                 Mock Test-PollOptions { $false }
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
@@ -67,24 +67,10 @@ InModuleScope PoshGram {
                     Options             = $opt
                     DisableNotification = $true
                 }
-                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
+                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
 
-            It 'should return false if an error is encountered sending the poll' {
-                Mock Invoke-RestMethod {
-                    throw 'Bullshit Error'
-                } #endMock
-                $sendTelegramPollSplat = @{
-                    BotToken            = $token
-                    ChatID              = $chat
-                    Question            = $question
-                    Options             = $opt
-                    DisableNotification = $true
-                }
-                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
-            } #it
-
-            It 'should return false if a quiz type poll is sent without a quiz answer' {
+            It 'should throw if a quiz type poll is sent without a quiz answer' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -93,10 +79,10 @@ InModuleScope PoshGram {
                     DisableNotification = $true
                     PollType            = 'quiz'
                 }
-                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
+                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
 
-            It 'should return false if a quiz type poll is sent with an out of bound quiz answer designator' {
+            It 'should throw if a quiz type poll is sent with an out of bound quiz answer designator' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -106,10 +92,10 @@ InModuleScope PoshGram {
                     PollType            = 'quiz'
                     QuizAnswer          = 11
                 }
-                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
+                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
 
-            It 'should return false if a quiz type poll has an explanation that does not meet requirements' {
+            It 'should throw if a quiz type poll has an explanation that does not meet requirements' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
@@ -120,10 +106,83 @@ InModuleScope PoshGram {
                     PollType            = 'quiz'
                     QuizAnswer          = 1
                 }
-                Send-TelegramPoll @sendTelegramPollSplat | Should -Be $false
+                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
+            } #it
+
+            It 'should throw if an error is encountered with no specific exception' {
+                Mock Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                $sendTelegramPollSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Question            = $question
+                    Options             = $opt
+                    DisableNotification = $true
+                }
+                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
+            } #it
+
+            It 'should run the expected commands if an error is encountered' {
+                Mock -CommandName Invoke-RestMethod {
+                    throw 'Fake Error'
+                } #endMock
+                Mock -CommandName Write-Warning { }
+                $sendTelegramPollSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Question            = $question
+                    Options             = $opt
+                    DisableNotification = $true
+                }
+                { Send-TelegramPoll @sendTelegramPollSplat
+                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+            } #it
+
+            It 'should return the exception if the API returns an error' {
+                Mock -CommandName Invoke-RestMethod {
+                    $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
+                    $statusCode = 429
+                    $response = New-Object System.Net.Http.HttpResponseMessage $statusCode
+                    $exception = New-Object Microsoft.PowerShell.Commands.HttpResponseException "$statusCode ($($response.ReasonPhrase))", $response
+
+                    $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation
+
+                    $errorID = 'WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+                    $targetObject = $null
+                    $errorRecord = New-Object Management.Automation.ErrorRecord $exception, $errorID, $errorCategory, $targetObject
+                    $errorRecord.ErrorDetails = $errorDetails
+                    throw $errorRecord
+                } #endMock
+                $sendTelegramPollSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Question            = $question
+                    Options             = $opt
+                    DisableNotification = $true
+                }
+                $eval = Send-TelegramPoll @sendTelegramPollSplat
+                $eval.ok | Should -BeExactly 'False'
+                $eval.error_code | Should -BeExactly '429'
             } #it
         } #context_Error
         Context 'Success' {
+            It 'should call the API with the expected parameters' {
+                Mock -CommandName Invoke-RestMethod {
+                } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendPoll*' }
+                $sendTelegramPollSplat = @{
+                    BotToken            = $token
+                    ChatID              = $chat
+                    Question            = $question
+                    Options             = $opt
+                    IsAnonymous         = $true
+                    PollType            = 'regular'
+                    DisableNotification = $true
+                }
+                Send-TelegramPoll @sendTelegramPollSplat
+                Assert-VerifiableMock
+            } #it
+
             It 'should return expected results if successful with a typical poll' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token

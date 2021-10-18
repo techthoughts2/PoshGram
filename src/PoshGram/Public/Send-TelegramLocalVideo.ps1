@@ -73,12 +73,10 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Version: 6.1+
 
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 .COMPONENT
@@ -104,6 +102,8 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramLocalVideo {
     [CmdletBinding()]
@@ -114,92 +114,94 @@ function Send-TelegramLocalVideo {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'Local path to file you wish to send')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$Video,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Duration of video in seconds')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Duration,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Video width')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Width,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Video height')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [Int32]$Height,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Original File Name')]
         [string]$FileName,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Caption for file')]
         [string]$Caption = '', #set to false by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying presence of file...'
-    if (!(Test-Path -Path $Video)) {
-        Write-Warning -Message "The specified file: $Video was not found."
-        $results = $false
-        return $results
+    if (-not(Test-Path -Path $Video)) {
+        throw ('The specified video file: {0} was not found.' -f $Video)
     } #if_testPath
     else {
         Write-Verbose -Message 'Path verified.'
     } #else_testPath
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying extension type...'
     $fileTypeEval = Test-FileExtension -FilePath $Video -Type Video
     if ($fileTypeEval -eq $false) {
-        $results = $false
-        return $results
+        throw 'File extension is not a supported Video type'
     } #if_videoExtension
     else {
         Write-Verbose -Message 'Extension supported.'
     } #else_videoExtension
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying file size...'
     $fileSizeEval = Test-FileSize -Path $Video
     if ($fileSizeEval -eq $false) {
-        $results = $false
-        return $results
+        throw 'File size does not meet Telegram requirements'
     } #if_videoSize
     else {
         Write-Verbose -Message 'File size verified.'
     } #else_videoSize
-    #------------------------------------------------------------------------
+
     try {
         $fileObject = Get-Item $Video -ErrorAction Stop
     } #try_Get-ItemVideo
     catch {
-        Write-Warning -Message 'The specified file could not be interpreted properly.'
-        $results = $false
-        return $results
+        Write-Warning -Message 'The specified video file could not be interpreted properly.'
+        throw $_
     } #catch_Get-ItemVideo
-    #------------------------------------------------------------------------
-    $uri = "https://api.telegram.org/bot$BotToken/sendVideo"
-    $Form = @{
+
+    $form = @{
         chat_id              = $ChatID
         video                = $fileObject
         duration             = $Duration
@@ -211,22 +213,29 @@ function Send-TelegramLocalVideo {
         supports_streaming   = $Streaming.IsPresent
         disable_notification = $DisableNotification.IsPresent
     } #form
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = $Uri
+        Uri         = $uri
         ErrorAction = 'Stop'
-        Form        = $Form
+        Form        = $form
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     try {
         $results = Invoke-RestMethod @invokeRestMethodSplat
     } #try_messageSend
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram video message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramLocalVideo

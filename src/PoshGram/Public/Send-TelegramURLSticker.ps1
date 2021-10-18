@@ -36,9 +36,7 @@
     System.Management.Automation.PSCustomObject
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-    This works with PowerShell Versions: 5.1, 6.0, 6.1+
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 .COMPONENT
@@ -52,6 +50,8 @@
     https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
+.LINK
+    https://core.telegram.org/bots/api
 #>
 function Send-TelegramURLSticker {
     [CmdletBinding()]
@@ -62,57 +62,58 @@ function Send-TelegramURLSticker {
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$BotToken, #you could set a token right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = '-#########')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$ChatID, #you could set a Chat ID right here if you wanted
+
         [Parameter(Mandatory = $true,
             HelpMessage = 'URL path to sticker')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [string]$StickerURL,
+
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification
     )
-    #------------------------------------------------------------------------
-    $results = $true #assume the best
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying URL leads to supported sticker extension...'
     $fileTypeEval = Test-URLExtension -URL $StickerURL -Type Sticker
     if ($fileTypeEval -eq $false) {
-        $results = $false
-        return $results
+        throw ('The specified sticker URL: {0} does not contain a supported extension.' -f $StickerURL)
     } #if_stickerExtension
     else {
         Write-Verbose -Message 'Extension supported.'
     } #else_stickerExtension
-    #------------------------------------------------------------------------
+
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $StickerURL
     if ($fileSizeEval -eq $false) {
-        $results = $false
-        return $results
+        throw 'File extension is not a supported Sticker type'
     } #if_stickerSize
     else {
         Write-Verbose -Message 'File size verified.'
     } #else_stickerSize
-    #------------------------------------------------------------------------
+
     $payload = @{
         chat_id              = $ChatID
         sticker              = $StickerURL
         disable_notification = $DisableNotification.IsPresent
     } #payload
-    #------------------------------------------------------------------------
+
+    $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken
+    Write-Debug -Message ('Base URI: {0}' -f $uri)
+
     $invokeRestMethodSplat = @{
-        Uri         = ('https://api.telegram.org/bot{0}/sendSticker' -f $BotToken)
+        Uri         = $uri
         Body        = (ConvertTo-Json -Compress -InputObject $payload)
         ErrorAction = 'Stop'
         ContentType = 'application/json'
         Method      = 'Post'
     }
-    #------------------------------------------------------------------------
     try {
         Write-Verbose -Message 'Sending message...'
         $results = Invoke-RestMethod @invokeRestMethodSplat
@@ -120,8 +121,13 @@ function Send-TelegramURLSticker {
     catch {
         Write-Warning -Message 'An error was encountered sending the Telegram message:'
         Write-Error $_
-        $results = $false
+        if ($_.ErrorDetails) {
+            $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
+        }
+        else {
+            throw $_
+        }
     } #catch_messageSend
+
     return $results
-    #------------------------------------------------------------------------
 } #function_Send-TelegramURLSticker

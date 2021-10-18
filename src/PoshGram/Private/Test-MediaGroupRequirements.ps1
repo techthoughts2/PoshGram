@@ -51,7 +51,7 @@ function Test-MediaGroupRequirements {
         $fileTypeEval = $null
         $fileSizeEval = $null
         Write-Verbose -Message 'Verifying presence of media...'
-        if (!(Test-Path -Path $file)) {
+        if (-not(Test-Path -Path $file)) {
             Write-Warning -Message "The specified media path: $file was not found."
             $results = $false
             return $results

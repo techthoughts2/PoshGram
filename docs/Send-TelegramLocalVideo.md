@@ -257,15 +257,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ### System.Management.Automation.PSCustomObject
-### System.Boolean (on failure)
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
-This works with PowerShell Version: 6.1+
 
 Telegram clients support mp4 videos (other formats may be sent as Document)
 Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 How do I get my channel ID?
 Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
 How do I set up a bot and get a token?
@@ -282,4 +279,6 @@ Use the BotFather https://t.me/BotFather
 [https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
 
 [https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
+
+[https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 
