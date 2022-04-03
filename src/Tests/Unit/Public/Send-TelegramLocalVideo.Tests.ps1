@@ -156,6 +156,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                 Assert-VerifiableMock
@@ -174,6 +175,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

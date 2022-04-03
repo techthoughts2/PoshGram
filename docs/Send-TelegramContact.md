@@ -14,7 +14,7 @@ Sends Telegram phone contact message via BOT API.
 
 ```
 Send-TelegramContact [-BotToken] <String> [-ChatID] <String> [-PhoneNumber] <String> [-FirstName] <String>
- [[-LastName] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-LastName] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,6 +47,7 @@ $sendTelegramContactSplat = @{
     FirstName           = $firstName
     LastName            = $lastName
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramContact @sendTelegramContactSplat
@@ -134,6 +135,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

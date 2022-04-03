@@ -154,6 +154,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this photo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                 Assert-VerifiableMock
@@ -167,6 +168,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this photo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

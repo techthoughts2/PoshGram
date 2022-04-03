@@ -138,6 +138,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     DisablePreview      = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     Keyboard            = $inlineKeyboard
                 }
                 $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat

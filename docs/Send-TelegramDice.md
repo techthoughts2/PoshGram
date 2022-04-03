@@ -14,7 +14,7 @@ Sends Telegram animated emoji that will display a random value.
 
 ```
 Send-TelegramDice [-BotToken] <String> [-ChatID] <String> [-Emoji] <String> [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,6 +41,7 @@ $sendTelegramDiceSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
     Emoji               = $emoji
 }
@@ -99,6 +100,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

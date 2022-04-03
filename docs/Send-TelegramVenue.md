@@ -14,7 +14,7 @@ Sends Telegram information about a venue.
 
 ```
 Send-TelegramVenue [-BotToken] <String> [-ChatID] <String> [-Latitude] <Single> [-Longitude] <Single>
- [-Title] <String> [-Address] <String> [-DisableNotification] [<CommonParameters>]
+ [-Title] <String> [-Address] <String> [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,6 +51,7 @@ $sendTelegramVenueSplat = @{
     Title               = $title
     Address             = $address
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramVenue @sendTelegramVenueSplat
@@ -153,6 +154,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

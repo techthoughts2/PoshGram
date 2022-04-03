@@ -66,6 +66,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
@@ -77,6 +78,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                     PollType            = 'quiz'
                 }
                 { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
@@ -89,6 +91,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                     PollType            = 'quiz'
                     QuizAnswer          = 11
                 }
@@ -102,6 +105,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                     Explanation         = 'Space: the final frontier. These are the voyages of the starship Enterprise. Its five-year mission: to explore strange new worlds. To seek out new life and new civilizations. To boldly go where no man has gone before!'
                     PollType            = 'quiz'
                     QuizAnswer          = 1
@@ -119,6 +123,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
@@ -134,6 +139,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramPoll @sendTelegramPollSplat
                     Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
@@ -160,6 +166,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval.ok | Should -BeExactly 'False'
@@ -178,6 +185,7 @@ InModuleScope PoshGram {
                     IsAnonymous         = $true
                     PollType            = 'regular'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramPoll @sendTelegramPollSplat
                 Assert-VerifiableMock
@@ -192,6 +200,7 @@ InModuleScope PoshGram {
                     IsAnonymous         = $true
                     PollType            = 'regular'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
@@ -208,6 +217,7 @@ InModuleScope PoshGram {
                     PollType            = 'quiz'
                     QuizAnswer          = $answer
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramPoll @sendTelegramPollSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

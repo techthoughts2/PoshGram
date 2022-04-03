@@ -72,6 +72,7 @@ InModuleScope PoshGram {
                     Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLDocument @sendTelegramURLDocumentSplat } | Should -Throw
@@ -89,6 +90,7 @@ InModuleScope PoshGram {
                     Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLDocument @sendTelegramURLDocumentSplat
@@ -117,6 +119,7 @@ InModuleScope PoshGram {
                     Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
@@ -135,6 +138,7 @@ InModuleScope PoshGram {
                     Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                 Assert-VerifiableMock
@@ -148,6 +152,7 @@ InModuleScope PoshGram {
                     Caption             = 'TechThoughts Logo'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

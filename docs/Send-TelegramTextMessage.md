@@ -14,7 +14,7 @@ Sends Telegram text message via Bot API
 
 ```
 Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <String> [[-ParseMode] <String>]
- [[-Keyboard] <PSObject>] [-DisablePreview] [-DisableNotification] [<CommonParameters>]
+ [[-Keyboard] <PSObject>] [-DisablePreview] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -153,6 +153,19 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 Sends text message with a custom keyboard.
 See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
 
+### EXAMPLE 8
+```
+$sendTelegramTextMessageSplat = @{
+    BotToken        = $botToken
+    ChatID          = $chat
+    Message         = 'Sending a protected content message'
+    ProtectContent  = $true
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+Sends text message via Telegram API with protected content.
+
 ## PARAMETERS
 
 ### -BotToken
@@ -249,6 +262,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

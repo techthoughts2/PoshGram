@@ -15,7 +15,7 @@ Sends Telegram video message via Bot API from locally sourced file
 ```
 Send-TelegramLocalVideo [-BotToken] <String> [-ChatID] <String> [-Video] <String> [[-Duration] <Int32>]
  [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
- [-Streaming] [-DisableNotification] [<CommonParameters>]
+ [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +53,7 @@ $sendTelegramLocalVideoSplat = @{
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
@@ -235,6 +236,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

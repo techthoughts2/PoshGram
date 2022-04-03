@@ -48,6 +48,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAnimation @sendTelegramURLAnimationSplat } | Should -Throw
@@ -62,6 +63,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAnimation @sendTelegramURLAnimationSplat } | Should -Throw
@@ -78,6 +80,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAnimation @sendTelegramURLAnimationSplat } | Should -Throw
@@ -95,6 +98,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
@@ -123,6 +127,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
@@ -141,6 +146,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                 Assert-VerifiableMock
@@ -154,6 +160,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

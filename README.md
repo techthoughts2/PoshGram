@@ -1,12 +1,11 @@
 # PoshGram
 
-[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell)
-[![PowerShell Gallery][psgallery-img]][psgallery-site]
-![Cross Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey)
+[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell) [![PowerShell Gallery][psgallery-img]][psgallery-site] ![Cross Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey) [![License][license-badge]](LICENSE)
 
 [psgallery-img]:   https://img.shields.io/powershellgallery/dt/PoshGram.svg
 [psgallery-site]:  https://www.powershellgallery.com/packages/PoshGram
-[psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram/0.8.1
+[psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram
+[license-badge]:   https://img.shields.io/github/license/techthoughts2/PoshGram
 
 Branch | Windows | MacOS | Linux
 --- | --- | --- | --- |

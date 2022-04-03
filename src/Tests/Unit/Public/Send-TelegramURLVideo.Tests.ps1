@@ -51,6 +51,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                     Caption             = $false
                 }
@@ -69,6 +70,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                     Caption             = $false
                 }
@@ -89,6 +91,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                     Caption             = $false
                 }
@@ -110,6 +113,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                     Caption             = $false
                 }
@@ -142,6 +146,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                     Caption             = $false
                 }
@@ -165,6 +170,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     Caption             = $false
                 }
                 Send-TelegramURLVideo @sendTelegramURLVideoSplat
@@ -183,6 +189,7 @@ InModuleScope PoshGram {
                     ParseMode           = 'MarkdownV2'
                     Streaming           = $true
                     DisableNotification = $true
+                    ProtectContent      = $true
                     Caption             = $false
                 }
                 $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat

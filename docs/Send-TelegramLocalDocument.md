@@ -14,7 +14,8 @@ Sends Telegram document message via Bot API from locally sourced file
 
 ```
 Send-TelegramLocalDocument [-BotToken] <String> [-ChatID] <String> [-File] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableContentTypeDetection] [-DisableNotification] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableContentTypeDetection] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +47,7 @@ $sendTelegramLocalDocumentSplat = @{
     Caption             = 'Check out this file'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
@@ -166,6 +168,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

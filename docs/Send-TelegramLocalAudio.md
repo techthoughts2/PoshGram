@@ -15,7 +15,7 @@ Sends Telegram audio message via Bot API from locally sourced file
 ```
 Send-TelegramLocalAudio [-BotToken] <String> [-ChatID] <String> [-Audio] <String> [[-Caption] <String>]
  [[-ParseMode] <String>] [[-Duration] <Int32>] [[-Performer] <String>] [[-Title] <String>]
- [[-FileName] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-FileName] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +52,7 @@ $sendTelegramLocalAudioSplat = @{
     Title               = 'Halo On Fire'
     FileName            = 'halo_on_fire.mp3'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
@@ -220,6 +221,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

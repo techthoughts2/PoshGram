@@ -51,6 +51,7 @@ InModuleScope PoshGram {
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAudio @sendTelegramURLAudioSplat } | Should -Throw
@@ -68,6 +69,7 @@ InModuleScope PoshGram {
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAudio @sendTelegramURLAudioSplat } | Should -Throw
@@ -87,6 +89,7 @@ InModuleScope PoshGram {
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAudio @sendTelegramURLAudioSplat } | Should -Throw
@@ -107,6 +110,7 @@ InModuleScope PoshGram {
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLAudio @sendTelegramURLAudioSplat
@@ -138,6 +142,7 @@ InModuleScope PoshGram {
                     Performer           = 'Metallica'
                     Title               = 'Halo On Fire'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
@@ -160,6 +165,7 @@ InModuleScope PoshGram {
                     Title               = 'Halo On Fire'
                     FileName            = 'audio.mp3'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramURLAudio @sendTelegramURLAudioSplat
                 Assert-VerifiableMock
@@ -177,6 +183,7 @@ InModuleScope PoshGram {
                     Title               = 'Halo On Fire'
                     FileName            = 'audio.mp3'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

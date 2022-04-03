@@ -14,7 +14,7 @@ Sends Telegram animation message via Bot API from locally sourced animation
 
 ```
 Send-TelegramLocalAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationPath] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,7 @@ $sendTelegramLocalAnimationSplat = @{
     Caption             = 'Check out this animation'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
@@ -151,6 +152,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

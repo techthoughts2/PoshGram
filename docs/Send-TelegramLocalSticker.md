@@ -14,7 +14,7 @@ Sends Telegram sticker message via Bot API from locally sourced sticker image
 
 ```
 Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String>
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +43,7 @@ $sendTelegramLocalStickerSplat = @{
     ChatID              = $chat
     StickerPath         = $sticker
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
@@ -100,6 +101,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

@@ -15,25 +15,25 @@ Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 ### FileEmojiG
 ```
 Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-Shortcode <String>]
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ### FileIDG
 ```
 Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-FileID <String>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### ByFileID
 ```
 Send-TelegramSticker -BotToken <String> -ChatID <String> -FileID <String> [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### BySPShortCode
 ```
 Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -Shortcode <String>
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,6 +66,7 @@ $sendTelegramStickerSplat = @{
     ChatID              = $chat
     FileID              = $sticker
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramSticker @sendTelegramStickerSplat
@@ -92,6 +93,7 @@ $sendTelegramStickerSplat = @{
     StickerSetName      = 'STPicard'
     Shortcode           = ':slightly_smiling_face:'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramSticker @sendTelegramStickerSplat
@@ -240,6 +242,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

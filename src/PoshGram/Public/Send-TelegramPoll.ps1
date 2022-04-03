@@ -32,6 +32,7 @@
         Question            = $question
         Options             = $opt
         DisableNotification = $true
+        ProtectContent      = $true
         IsAnonymous         = $true
         PollType            = 'regular'
         MultipleAnswers     = $false
@@ -144,6 +145,8 @@
     Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -241,7 +244,11 @@ function Send-TelegramPoll {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -258,6 +265,7 @@ function Send-TelegramPoll {
         chat_id                 = $ChatID
         question                = $Question
         disable_notification    = $DisableNotification.IsPresent
+        protect_content         = $ProtectContent.IsPresent
         options                 = $Options
         is_anonymous            = $IsAnonymous
         type                    = $PollType

@@ -16,7 +16,8 @@ Sends Telegram native poll.
 ```
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
- [-Explanation <String>] [-ExplanationParseMode <String>] [-DisableNotification] [<CommonParameters>]
+ [-Explanation <String>] [-ExplanationParseMode <String>] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ### OpenPeriod
@@ -24,7 +25,7 @@ Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Option
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
  [-Explanation <String>] [-ExplanationParseMode <String>] [-OpenPeriod <Int32>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### OpenDate
@@ -32,7 +33,7 @@ Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Option
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
  [-Explanation <String>] [-ExplanationParseMode <String>] [-CloseDate <DateTime>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,6 +74,7 @@ $sendTelegramPollSplat = @{
     Question            = $question
     Options             = $opt
     DisableNotification = $true
+    ProtectContent      = $true
     IsAnonymous         = $true
     PollType            = 'regular'
     MultipleAnswers     = $false
@@ -357,6 +359,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

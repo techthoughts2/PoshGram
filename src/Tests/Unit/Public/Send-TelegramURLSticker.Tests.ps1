@@ -44,6 +44,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
@@ -56,6 +57,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
@@ -70,6 +72,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLSticker @sendTelegramURLStickerSplat } | Should -Throw
@@ -85,6 +88,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLSticker @sendTelegramURLStickerSplat
@@ -111,6 +115,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
@@ -127,6 +132,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramURLSticker @sendTelegramURLStickerSplat
                 Assert-VerifiableMock
@@ -138,6 +144,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

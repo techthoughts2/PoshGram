@@ -57,6 +57,7 @@ InModuleScope PoshGram {
                     StickerSetName      = 'STPicard'
                     Shortcode           = ":grinning:"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramSticker @sendTelegramStickerSplat } | Should -Throw
             } #it
@@ -70,6 +71,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramSticker @sendTelegramStickerSplat } | Should -Throw
             } #it
@@ -84,6 +86,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramSticker @sendTelegramStickerSplat
                     Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
@@ -109,6 +112,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval.ok | Should -BeExactly 'False'
@@ -125,6 +129,7 @@ InModuleScope PoshGram {
                     StickerSetName      = 'STPicard'
                     Shortcode           = ':slightly_smiling_face:'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramSticker @sendTelegramStickerSplat
                 Assert-VerifiableMock
@@ -137,6 +142,7 @@ InModuleScope PoshGram {
                     StickerSetName      = 'STPicard'
                     Shortcode           = ':grinning:'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramSticker @sendTelegramStickerSplat } | Should -Throw
             } #it
@@ -147,6 +153,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     FileID              = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
@@ -160,6 +167,7 @@ InModuleScope PoshGram {
                     StickerSetName      = 'STPicard'
                     Shortcode           = ':slightly_smiling_face:'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramSticker @sendTelegramStickerSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

@@ -14,7 +14,7 @@ Sends Telegram animation message via Bot API from URL sourced animation image
 
 ```
 Send-TelegramURLAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationURL] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,7 @@ $sendTelegramURLAnimationSplat = @{
     AnimationURL        = $AnimationURL
     Caption             = 'Live long, and prosper.'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
@@ -150,6 +151,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

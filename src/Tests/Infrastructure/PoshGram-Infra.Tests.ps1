@@ -219,6 +219,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -249,6 +250,7 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     Emoji               = 'dice'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -280,6 +282,7 @@ InModuleScope PoshGram {
                     AnimationPath       = $file5
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalAnimation</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -314,6 +317,7 @@ InModuleScope PoshGram {
                     Title               = 'Dusk'
                     FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -345,6 +349,7 @@ InModuleScope PoshGram {
                     File                = $file2
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalDocument</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -376,6 +381,7 @@ InModuleScope PoshGram {
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalPhoto</b>"
                     PhotoPath           = $file
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -406,6 +412,7 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     StickerPath         = $stickerFile
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -438,6 +445,7 @@ InModuleScope PoshGram {
                     FileName            = 'Intro.mp4'
                     Caption             = "I am a Pester test for <b>Send-TelegramLocalVideo</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -469,6 +477,7 @@ InModuleScope PoshGram {
                     Longitude           = $longitude
                     Latitude            = $latitude
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -500,6 +509,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Photo'
                     FilePaths           = $pFiles
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -530,6 +540,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Video'
                     FilePaths           = $vFiles
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -560,6 +571,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Audio'
                     FilePaths           = $aFiles
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -590,6 +602,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Document'
                     FilePaths           = $dFiles
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -621,6 +634,7 @@ InModuleScope PoshGram {
                     Question            = $question
                     Options             = $opt
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -653,6 +667,7 @@ InModuleScope PoshGram {
                     PollType            = 'quiz'
                     QuizAnswer          = $answer
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -717,6 +732,7 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     FileID              = $sticker
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -746,6 +762,7 @@ InModuleScope PoshGram {
                     StickerSetName      = 'STPicard'
                     Shortcode           = ':slightly_smiling_face:'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -776,6 +793,7 @@ InModuleScope PoshGram {
                     Message             = "I am a Pester test for <b>Send-TelegramTextMessage</b>"
                     ChatID              = $channel
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -805,6 +823,7 @@ InModuleScope PoshGram {
                     Message             = "I am a Pester test with special_characters not escaped"
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'Stop'
                 }
                 { Send-TelegramTextMessage @sendTelegramTextMessageSplat } | Should -Throw
@@ -817,6 +836,7 @@ InModuleScope PoshGram {
                     Message             = "I am a Pester test with __special\_characters__ escaped properly\."
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'Stop'
                 }
 
@@ -848,6 +868,7 @@ InModuleScope PoshGram {
                     Keyboard            = $inlineKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'Stop'
                 }
 
@@ -879,6 +900,7 @@ InModuleScope PoshGram {
                     Keyboard            = $customKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'Stop'
                 }
 
@@ -909,6 +931,7 @@ InModuleScope PoshGram {
                     Message             = "`u{1F192} Sending emojis is cool\! `u{1F49B}"
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'Stop'
                 }
 
@@ -942,6 +965,7 @@ InModuleScope PoshGram {
                     AnimationURL        = $animationURL
                     Caption             = "I am a Pester test for <b>Send-TelegramURLAnimation</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -976,6 +1000,7 @@ InModuleScope PoshGram {
                     FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
                     Caption             = "I am a Pester test for <b>Send-TelegramURLAudio</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -1008,6 +1033,7 @@ InModuleScope PoshGram {
                     FileURL             = $fileURL
                     Caption             = "I am a Pester test for <b>Send-TelegramURLDocument</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -1039,6 +1065,7 @@ InModuleScope PoshGram {
                     Caption             = "I am a Pester test for <b>Send-TelegramURLPhoto</b>"
                     PhotoURL            = $photoURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -1069,6 +1096,7 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     StickerURL          = $StickerURL
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -1101,6 +1129,7 @@ InModuleScope PoshGram {
                     FileName            = 'Intro.mp4'
                     Caption             = "I am a Pester test for <b>Send-TelegramURLVideo</b>"
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false
@@ -1134,6 +1163,7 @@ InModuleScope PoshGram {
                     Longitude           = $longitude
                     Latitude            = $latitude
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
 
                 $apiTest = $false

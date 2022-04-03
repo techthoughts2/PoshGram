@@ -14,7 +14,7 @@ Sends Telegram a group of photos, videos, documents, or audios as an album via B
 
 ```
 Send-TelegramMediaGroup [-BotToken] <String> [-ChatID] <String> [-MediaType] <String> [[-FilePaths] <String[]>]
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,6 +71,7 @@ $sendTelegramMediaGroupSplat = @{
     MediaType           = 'Video'
     FilePaths           = $vFiles
     DisableNotification = $true
+    ProtectContent      = $true
 }
 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 ```
@@ -142,6 +143,21 @@ Accept wildcard characters: False
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
 
 ```yaml
 Type: SwitchParameter

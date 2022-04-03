@@ -112,6 +112,16 @@
 
     Sends text message with a custom keyboard.
     See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
+.EXAMPLE
+    $sendTelegramTextMessageSplat = @{
+        BotToken        = $botToken
+        ChatID          = $chat
+        Message         = 'Sending a protected content message'
+        ProtectContent  = $true
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API with protected content.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -126,6 +136,8 @@
     Disables link previews for links in this message.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -199,7 +211,11 @@ function Send-TelegramTextMessage {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -210,6 +226,7 @@ function Send-TelegramTextMessage {
         parse_mode               = $ParseMode
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
+        protect_content          = $ProtectContent.IsPresent
     } #payload
 
     if ($Keyboard) {
