@@ -31,6 +31,7 @@ InModuleScope PoshGram {
                 'Star Trek: Discovery',
                 'Star Trek: Picard',
                 'Star Trek: Lower Decks'
+                'Star Trek: Prodigy'
             )
             $question2 = 'Who was the best Starfleet captain?'
             $opt2 = @(
@@ -44,12 +45,12 @@ InModuleScope PoshGram {
             $question3 = 'Which Star Trek captain has an artificial heart?'
             $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
             $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-            $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png"
-            $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip"
-            $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4"
-            $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-            $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif"
-            $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp"
+            $photoURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/techthoughts.png'
+            $fileURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/LogExample.zip'
+            $videoURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Intro.mp4'
+            $audioURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+            $animationURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/jean.gif'
+            $stickerURL = 'https://s3-us-west-2.amazonaws.com/poshgram-url-tests/picard.webp'
             $inlineRow1 = @(
                 @{
                     text = "`u{1F517} Visit"
@@ -102,13 +103,13 @@ InModuleScope PoshGram {
             #//////////////////////////////////////////////////////////////////////////
             #referenced by AWS CodeBuild
             if ($PSVersionTable.Platform -eq 'Win32NT') {
-                $file = "C:\Test\Photos\Photo.jpg"
-                $file2 = "C:\Test\Documents\customlog.txt"
-                $file7 = "C:\Test\Documents\customlog2.txt"
-                $file3 = "C:\Test\Videos\Intro.mp4"
-                $file4 = "C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-                $file6 = "C:\Test\Audio\TestAudio.mp3"
-                $file5 = "C:\Test\Animation\jean.gif"
+                $file = 'C:\Test\Photos\Photo.jpg'
+                $file2 = 'C:\Test\Documents\customlog.txt'
+                $file7 = 'C:\Test\Documents\customlog2.txt'
+                $file3 = 'C:\Test\Videos\Intro.mp4'
+                $file4 = 'C:\Test\Audio\Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+                $file6 = 'C:\Test\Audio\TestAudio.mp3'
+                $file5 = 'C:\Test\Animation\jean.gif'
                 $pPath = 'C:\Test\PhotoGroup'
                 $pFiles = @(
                     "$pPath\picard.jpg",
@@ -136,13 +137,13 @@ InModuleScope PoshGram {
                 $stickerFile = 'C:\Test\Stickers\picard.webp'
             } #if_windows
             elseif ($PSVersionTable.Platform -eq 'Unix') {
-                $file = "/Test/Photos/Photo.jpg"
-                $file2 = "/Test/Documents/customlog.txt"
-                $file7 = "/Test/Documents/customlog2.txt"
-                $file3 = "/Test/Videos/Intro.mp4"
-                $file4 = "/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-                $file6 = "/Test/Audio/TestAudio.mp3"
-                $file5 = "/Test/Animation/jean.gif"
+                $file = '/Test/Photos/Photo.jpg'
+                $file2 = '/Test/Documents/customlog.txt'
+                $file7 = '/Test/Documents/customlog2.txt'
+                $file3 = '/Test/Videos/Intro.mp4'
+                $file4 = '/Test/Audio/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+                $file6 = '/Test/Audio/TestAudio.mp3'
+                $file5 = '/Test/Animation/jean.gif'
                 $pPath = '/Test/PhotoGroup'
                 $pFiles = @(
                     "$pPath/picard.jpg",
@@ -167,7 +168,7 @@ InModuleScope PoshGram {
                     $file2,
                     $file7
                 )
-                $stickerFile = "/Test/Stickers/picard.webp"
+                $stickerFile = '/Test/Stickers/picard.webp'
             } #elseif_Linux
             else {
                 throw
@@ -210,7 +211,7 @@ InModuleScope PoshGram {
             } #it
         } #context_Get-TelegramStickerPackInfo
 
-        Context "Send-TelegramContact" {
+        Context 'Send-TelegramContact' {
             It 'Should return with ok:true when a contact is successfully sent' {
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
@@ -280,7 +281,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     AnimationPath       = $file5
-                    Caption             = "I am a Pester test for <b>Send-TelegramLocalAnimation</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalAnimation</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -312,7 +313,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     Audio               = $file4
-                    Caption             = "I am a Pester test for <b>Send-TelegramLocalAudio</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalAudio</b>'
                     Performer           = 'Tobu & Syndec'
                     Title               = 'Dusk'
                     FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
@@ -347,7 +348,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     File                = $file2
-                    Caption             = "I am a Pester test for <b>Send-TelegramLocalDocument</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalDocument</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -378,7 +379,7 @@ InModuleScope PoshGram {
                 $sendTelegramLocalPhotoSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Caption             = "I am a Pester test for <b>Send-TelegramLocalPhoto</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalPhoto</b>'
                     PhotoPath           = $file
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -443,7 +444,7 @@ InModuleScope PoshGram {
                     ChatID              = $channel
                     Video               = $file3
                     FileName            = 'Intro.mp4'
-                    Caption             = "I am a Pester test for <b>Send-TelegramLocalVideo</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalVideo</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -790,7 +791,7 @@ InModuleScope PoshGram {
             It 'Should return with ok:true when a typical message is successfully sent' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
-                    Message             = "I am a Pester test for <b>Send-TelegramTextMessage</b>"
+                    Message             = 'I am a Pester test for <b>Send-TelegramTextMessage</b>'
                     ChatID              = $channel
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -820,7 +821,7 @@ InModuleScope PoshGram {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "I am a Pester test with special_characters not escaped"
+                    Message             = 'I am a Pester test with special_characters not escaped'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -833,7 +834,7 @@ InModuleScope PoshGram {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "I am a Pester test with __special\_characters__ escaped properly\."
+                    Message             = 'I am a Pester test with __special\_characters__ escaped properly\.'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -947,7 +948,7 @@ with MarkdownV2 style formatting'
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "Inline keyboard pester test\."
+                    Message             = 'Inline keyboard pester test\.'
                     Keyboard            = $inlineKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
@@ -979,7 +980,7 @@ with MarkdownV2 style formatting'
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Message             = "Custom keyboard pester test\."
+                    Message             = 'Custom keyboard pester test\.'
                     Keyboard            = $customKeyboard
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
@@ -1046,7 +1047,7 @@ with MarkdownV2 style formatting'
                     BotToken            = $token
                     ChatID              = $channel
                     AnimationURL        = $animationURL
-                    Caption             = "I am a Pester test for <b>Send-TelegramURLAnimation</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramURLAnimation</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -1081,7 +1082,7 @@ with MarkdownV2 style formatting'
                     Performer           = 'Tobu & Syndec'
                     Title               = 'Dusk'
                     FileName            = 'Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
-                    Caption             = "I am a Pester test for <b>Send-TelegramURLAudio</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramURLAudio</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -1114,7 +1115,7 @@ with MarkdownV2 style formatting'
                     BotToken            = $token
                     ChatID              = $channel
                     FileURL             = $fileURL
-                    Caption             = "I am a Pester test for <b>Send-TelegramURLDocument</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramURLDocument</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -1145,7 +1146,7 @@ with MarkdownV2 style formatting'
                 $sendTelegramURLPhotoSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    Caption             = "I am a Pester test for <b>Send-TelegramURLPhoto</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramURLPhoto</b>'
                     PhotoURL            = $photoURL
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -1210,7 +1211,7 @@ with MarkdownV2 style formatting'
                     ChatID              = $channel
                     VideoURL            = $videoURL
                     FileName            = 'Intro.mp4'
-                    Caption             = "I am a Pester test for <b>Send-TelegramURLVideo</b>"
+                    Caption             = 'I am a Pester test for <b>Send-TelegramURLVideo</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }

@@ -31,6 +31,7 @@ InModuleScope PoshGram {
                 'Star Trek: Discovery',
                 'Star Trek: Picard',
                 'Star Trek: Lower Decks'
+                'Star Trek: Prodigy'
             )
             $question2 = 'Who was the best Starfleet captain?'
             $opt2 = @(

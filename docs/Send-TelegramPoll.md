@@ -56,6 +56,7 @@ $opt = @(
     'Star Trek: Discovery',
     'Star Trek: Picard',
     'Star Trek: Lower Decks'
+    'Star Trek: Prodigy'
 )
 Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 ```
