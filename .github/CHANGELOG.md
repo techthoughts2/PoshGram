@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ```Send-TelegramMediaGroup```
   - ```Send-TelegramPoll```
   - ```Send-TelegramVenue```
+- Added better examples of how to use text formatting with HTML and MarkdownV2 styling
+  - Also added a section to the FAQ covering this
 - Build/dev improvements
   - Bumped module versions to latest available
   - ```buildspec_windows.yml```

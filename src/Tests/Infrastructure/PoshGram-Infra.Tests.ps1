@@ -860,6 +860,89 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
             } #it
 
+            It 'should return ok:true when a message is sent with properly formed HTML formatting' {
+                $message = 'This is how to use:
+<b>bold</b>,
+<i>italic</i>,
+<u>underline</u>,
+<s>strikethrough</s>,
+<tg-spoiler>spoiler</tg-spoiler>,
+<a href="http://www.example.com/">inline URL</a>,
+<code>inline fixed-width code</code>,
+<pre>pre-formatted fixed-width code block</pre>,
+with default HTML formatting.'
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Message             = $message
+                    DisableNotification = $true
+                    ProtectContent      = $true
+                    ErrorAction         = 'Stop'
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 15
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+            } #it
+
+            It 'should return ok:true when a message is sent with properly formed MarkdownV2 formatting' {
+                $message = 'This is how to use:
+*bold*,
+_italic_,
+__underline__,
+~strikethrough~,
+||spoiler||,
+[inline URL](http://www.example.com/),
+`inline fixed-width code`,
+```
+pre-formatted fixed-width code block
+```,
+with MarkdownV2 style formatting'
+                $sendTelegramTextMessageSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Message             = $message
+                    ParseMode           = 'MarkdownV2'
+                    DisableNotification = $true
+                    ProtectContent      = $true
+                    ErrorAction         = 'Stop'
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 15
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+            } #it
+
             It 'should return ok:true when a message is sent with an inline keyboard' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
