@@ -103,7 +103,6 @@ InModuleScope PoshGram {
             #//////////////////////////////////////////////////////////////////////////
             #referenced by AWS CodeBuild
             if ($PSVersionTable.Platform -eq 'Win32NT') {
-                Start-Sleep -Seconds 120 # wait for linux CodeBuild to finish
                 $file = 'C:\Test\Photos\Photo.jpg'
                 $file2 = 'C:\Test\Documents\customlog.txt'
                 $file7 = 'C:\Test\Documents\customlog2.txt'
