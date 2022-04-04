@@ -599,7 +599,7 @@ Resources:
         ReportBuildStatus: true
         # SourceIdentifier:
         Type: GITHUB
-      # SourceVersion:
+      SourceVersion: refs/heads/Enhancements
       TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
       Triggers:
         Webhook: true
@@ -765,7 +765,7 @@ Resources:
         ReportBuildStatus: true
         # SourceIdentifier:
         Type: GITHUB
-      # SourceVersion:
+      SourceVersion: refs/heads/Enhancements
       TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
       Triggers:
         Webhook: true
