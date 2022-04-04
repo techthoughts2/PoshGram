@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Build file
     - Raised code coverage requirement to 95
     - Updated unit test path reference to ```$script:UnitTestsPath```
+  - Converted build resources from manual deployment to CloudFormation
 - Updated README
   - Added License badge
   - Adjusted formatting
