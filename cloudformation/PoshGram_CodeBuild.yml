@@ -310,10 +310,10 @@ Resources:
       #   ObjectLockConfiguration
       # ObjectLockEnabled: Boolean
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
-        BlockPublicPolicy: true
-        IgnorePublicAcls: true
-        RestrictPublicBuckets: true
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
       # ReplicationConfiguration:
       #   ReplicationConfiguration
       Tags:

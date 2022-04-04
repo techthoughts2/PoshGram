@@ -45,12 +45,12 @@ InModuleScope PoshGram {
             $question3 = 'Which Star Trek captain has an artificial heart?'
             $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
             $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-            $photoURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/techthoughts.png"
-            $fileURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/LogExample.zip"
-            $videoURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/Intro.mp4"
-            $audioURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-            $animationURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/jean.gif"
-            $stickerURL = "https://s3-us-west-2.amazonaws.com/poshgram-poshgramurltestfiles-1euifmqh9v6kr/picard.webp"
+            $photoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/techthoughts.png"
+            $fileURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/LogExample.zip"
+            $videoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Intro.mp4"
+            $audioURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+            $animationURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/jean.gif"
+            $stickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/picard.webp"
             $inlineRow1 = @(
                 @{
                     text = "`u{1F517} Visit"
