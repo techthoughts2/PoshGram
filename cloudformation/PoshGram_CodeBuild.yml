@@ -461,6 +461,8 @@ Resources:
                   - !Sub 'arn:aws:s3:::${PoshGramTestFiles}/*'
                   - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}'
                   - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}/*'
+                  - 'arn:aws:s3:::ps-invoke-modules'
+                  - 'arn:aws:s3:::ps-invoke-modules/*'
 
   # The CodeBuild Project configuration
   # https://docs.aws.amazon.com/AWScloudformation/latest/UserGuide/aws-resource-codebuild-project.html
