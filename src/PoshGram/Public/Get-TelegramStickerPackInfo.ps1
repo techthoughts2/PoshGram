@@ -40,7 +40,7 @@
     Parameter               Type                    Required    Description
     name                    String                  Yes         Name of the sticker set
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md
 .LINK
     https://core.telegram.org/bots/api#getstickerset
 .LINK

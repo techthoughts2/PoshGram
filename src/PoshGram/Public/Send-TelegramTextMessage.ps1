@@ -177,7 +177,7 @@
     reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
     reply_markup                KeyboardMarkup      Optional    Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
 .LINK
     https://core.telegram.org/bots/api#sendmessage
 .LINK

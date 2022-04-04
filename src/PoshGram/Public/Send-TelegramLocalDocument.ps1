@@ -75,7 +75,7 @@
     disable_content_type_detection  Boolean                 Optional    Disables automatic server-side content type detection for files uploaded using multipart/form-data
     disable_notification            Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md
 .LINK
     https://core.telegram.org/bots/api#senddocument
 .LINK

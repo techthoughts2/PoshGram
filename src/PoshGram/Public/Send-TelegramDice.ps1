@@ -50,7 +50,7 @@
     emoji                   String                  Optional    Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, or “🏀”. Dice can have values 1-6 for “🎲” and “🎯”, and values 1-5 for “🏀”. Defaults to “🎲”
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md
 .LINK
     https://core.telegram.org/bots/api#senddice
 .LINK

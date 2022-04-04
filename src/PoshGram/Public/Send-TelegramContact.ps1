@@ -60,7 +60,7 @@
     first_name              String                  Yes         Contact's first name
     last_name               String                  Optional    Contact's last name
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md
 .LINK
     https://core.telegram.org/bots/api#sendcontact
 .LINK

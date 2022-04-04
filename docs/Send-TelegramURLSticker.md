@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md
 schema: 2.0.0
 ---
 
@@ -27,7 +27,7 @@ The sticker will be sourced from the provided URL and sent to Telegram.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
 Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 ```
 
@@ -37,7 +37,7 @@ Sends sticker message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
 $sendTelegramURLStickerSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -148,7 +148,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

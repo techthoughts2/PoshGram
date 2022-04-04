@@ -6,14 +6,14 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -50,7 +50,7 @@
     sticker                 InputFile or String     Yes         Sticker to send.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK

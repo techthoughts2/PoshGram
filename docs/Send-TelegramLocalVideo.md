@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
 schema: 2.0.0
 ---
 
@@ -286,7 +286,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 

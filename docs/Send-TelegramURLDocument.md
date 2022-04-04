@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md
 schema: 2.0.0
 ---
 
@@ -30,7 +30,7 @@ Only works for gif, pdf and zip files.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
 ```
 
@@ -40,7 +40,7 @@ Sends document message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -60,7 +60,7 @@ Sends document message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -218,7 +218,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
 

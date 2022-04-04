@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md
 schema: 2.0.0
 ---
 
@@ -271,7 +271,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
 

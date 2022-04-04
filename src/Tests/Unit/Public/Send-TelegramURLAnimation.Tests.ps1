@@ -18,7 +18,7 @@ InModuleScope PoshGram {
             $ErrorActionPreference = 'SilentlyContinue'
         } #beforeAll
         BeforeEach {
-            $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
+            $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
             Mock Test-URLExtension { $true }

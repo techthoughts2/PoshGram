@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md
 schema: 2.0.0
 ---
 
@@ -97,7 +97,7 @@ This will provide a link which contains the sticker pack name.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md)
 
 [https://core.telegram.org/bots/api#getstickerset](https://core.telegram.org/bots/api#getstickerset)
 

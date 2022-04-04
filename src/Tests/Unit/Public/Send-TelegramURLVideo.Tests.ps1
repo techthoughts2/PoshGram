@@ -18,7 +18,7 @@ InModuleScope PoshGram {
             $ErrorActionPreference = 'SilentlyContinue'
         } #beforeAll
         BeforeEach {
-            $videoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+            $videoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
             Mock Test-URLExtension { $true }

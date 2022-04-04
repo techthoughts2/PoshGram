@@ -169,10 +169,10 @@
             ProjectUri   = 'https://github.com/techthoughts2/PoshGram'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
+            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/main/media/PoshGram.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/master/.github/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/main/.github/CHANGELOG.md'
 
         } # End of PSData hashtable
 

@@ -55,7 +55,7 @@
     longitude               Float number            Yes         Longitude of the location
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocation.md
 .LINK
     https://core.telegram.org/bots/api#sendlocation
 .LINK

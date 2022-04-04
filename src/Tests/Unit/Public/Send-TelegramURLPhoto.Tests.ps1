@@ -18,7 +18,7 @@ InModuleScope PoshGram {
             $ErrorActionPreference = 'SilentlyContinue'
         } #beforeAll
         BeforeEach {
-            $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+            $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
             Mock Test-URLExtension { $true }

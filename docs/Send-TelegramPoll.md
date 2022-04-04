@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
 schema: 2.0.0
 ---
 
@@ -410,7 +410,7 @@ Telegram currently supports 2-10 options 1-100 characters each
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
 

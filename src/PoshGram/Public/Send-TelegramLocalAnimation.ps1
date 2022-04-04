@@ -78,7 +78,7 @@
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md
 .LINK
     https://core.telegram.org/bots/api#sendanimation
 .LINK

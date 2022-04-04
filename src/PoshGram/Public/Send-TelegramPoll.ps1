@@ -175,7 +175,7 @@
     close_date              Integer                 Optional    Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
 .LINK
     https://core.telegram.org/bots/api#sendpoll
 .LINK

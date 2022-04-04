@@ -20,7 +20,7 @@ InModuleScope PoshGram {
         BeforeEach {
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
-            $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+            $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
             Mock Test-URLExtension { $true }
             Mock Test-URLFileSize { $true }
             Mock Invoke-RestMethod -MockWith {

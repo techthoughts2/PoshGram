@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
 schema: 2.0.0
 ---
 
@@ -294,7 +294,7 @@ This function will make a best attempt to look up the sticker pack you specify a
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md
 schema: 2.0.0
 ---
 
@@ -30,7 +30,7 @@ Only works for gif, pdf and zip files.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 ```
 
@@ -40,7 +40,7 @@ Sends video message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -65,7 +65,7 @@ Sends video message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -288,7 +288,7 @@ When using Markdown/Markdownv2 you must properly escape characters.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 

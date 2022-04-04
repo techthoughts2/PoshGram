@@ -95,7 +95,7 @@
     title                   String                  Optional    Track Name
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md
 .LINK
     https://core.telegram.org/bots/api#sendaudio
 .LINK

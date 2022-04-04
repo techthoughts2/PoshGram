@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md
 schema: 2.0.0
 ---
 
@@ -204,7 +204,7 @@ This was really hard to make.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md)
 
 [https://core.telegram.org/bots/api#sendmediagroup](https://core.telegram.org/bots/api#sendmediagroup)
 

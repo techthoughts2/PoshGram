@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
 schema: 2.0.0
 ---
 
@@ -329,7 +329,7 @@ Certain characters in Telegram must be escaped with the preceding character '\' 
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
 

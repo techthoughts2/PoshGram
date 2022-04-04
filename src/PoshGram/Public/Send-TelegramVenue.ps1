@@ -68,7 +68,7 @@
     address                 String                  Yes         Address of the venue
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md
 .LINK
     https://core.telegram.org/bots/api#sendvenue
 .LINK

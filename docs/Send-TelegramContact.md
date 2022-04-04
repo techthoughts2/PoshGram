@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md
 schema: 2.0.0
 ---
 
@@ -182,7 +182,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md)
 
 [https://core.telegram.org/bots/api#sendcontact](https://core.telegram.org/bots/api#sendcontact)
 

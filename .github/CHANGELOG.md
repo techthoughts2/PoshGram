@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added better examples of how to use text formatting with HTML and MarkdownV2 styling
   - Also added a section to the FAQ covering this
 - Build/dev improvements
+  - Added support for using new main branch instead of master
   - Bumped module versions to latest available
   - ```buildspec_windows.yml```
     - Updated to use .NET 5.0 and native pwsh install. Removed manual pwsh install logic.

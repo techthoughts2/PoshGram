@@ -4,7 +4,7 @@
 .DESCRIPTION
     Evaluates the specified URL path to determine if the file is at or below the supported Telegram file size
 .EXAMPLE
-    Test-URLFileSize -URL 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+    Test-URLFileSize -URL 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 
     Verifies if the file in the specified URL is at or below the Telegram maximum size
 .EXAMPLE

@@ -80,7 +80,7 @@
     chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     sticker                     InputFile or String Yes         Sticker to send.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK

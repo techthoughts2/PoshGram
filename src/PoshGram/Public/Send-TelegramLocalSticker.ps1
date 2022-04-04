@@ -53,7 +53,7 @@
     sticker                 InputFile or String     Yes         Sticker to send.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK

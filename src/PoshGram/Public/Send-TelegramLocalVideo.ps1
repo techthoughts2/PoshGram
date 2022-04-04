@@ -96,7 +96,7 @@
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
 .LINK
     https://core.telegram.org/bots/api#sendvideo
 .LINK
