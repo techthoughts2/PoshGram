@@ -6,20 +6,21 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
 
     Sends animation message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
+    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         AnimationURL        = $AnimationURL
         Caption             = 'Live long, and prosper.'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
@@ -28,7 +29,7 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
+    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -51,6 +52,8 @@
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -69,7 +72,7 @@
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAnimation.md
 .LINK
     https://core.telegram.org/bots/api#sendanimation
 .LINK
@@ -113,7 +116,11 @@ function Send-TelegramURLAnimation {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -142,6 +149,7 @@ function Send-TelegramURLAnimation {
         caption              = $Caption
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     $uri = 'https://api.telegram.org/bot{0}/sendAnimation' -f $BotToken

@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0]
+
+- Added Protected Content parameter:
+  - ```Send-TelegramTextMessage```
+  - ```Send-TelegramLocalPhoto```
+  - ```Send-TelegramURLPhoto```
+  - ```Send-TelegramLocalVideo```
+  - ```Send-TelegramURLVideo```
+  - ```Send-TelegramLocalAudio```
+  - ```Send-TelegramURLAudio```
+  - ```Send-TelegramLocalAnimation```
+  - ```Send-TelegramURLAnimation```
+  - ```Send-TelegramLocalDocument```
+  - ```Send-TelegramURLDocument```
+  - ```Send-TelegramSticker```
+  - ```Send-TelegramLocalSticker```
+  - ```Send-TelegramURLSticker```
+  - ```Send-TelegramContact```
+  - ```Send-TelegramDice```
+  - ```Send-TelegramLocation```
+  - ```Send-TelegramMediaGroup```
+  - ```Send-TelegramPoll```
+  - ```Send-TelegramVenue```
+- Added better examples of how to use text formatting with HTML and MarkdownV2 styling
+  - Also added a section to the FAQ covering this
+- Build/dev improvements
+  - Added support for using new main branch instead of master
+  - Bumped module versions to latest available
+  - ```buildspec_windows.yml```
+    - Updated to use .NET 5.0 and native pwsh install. Removed manual pwsh install logic.
+  - Build file
+    - Raised code coverage requirement to 95
+    - Updated unit test path reference to ```$script:UnitTestsPath```
+  - Converted build resources from manual deployment to CloudFormation
+- Updated README
+  - Added License badge
+  - Adjusted formatting
+
 ## [2.0.0]
 
 - Adjusted error control and error return behavior - ***potential* breaking change**
@@ -41,30 +79,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.16.0]
 
 - String literals throughout PoshGram now use single quotes (') instead of double quotes (")
-- Send-TelegramDice
+- ```Send-TelegramDice```
   - Now supports bowling emoji
 - Added FileName parameter to:
-  - Send-TelegramURLAudio
-  - Send-TelegramURLVideo
-  - Send-TelegramLocalAudio
-  - Send-TelegramLocalVideo
-- ***Added custom and inline keyboard support for Send-TelegramTextMessage***
-- Added more examples for Send-TelegramTextMessage help
+  - ```Send-TelegramURLAudio```
+  - ```Send-TelegramURLVideo```
+  - ```Send-TelegramLocalAudio```
+  - ```Send-TelegramLocalVideo```
+- ***Added custom and inline keyboard support for ```Send-TelegramTextMessage```***
+- Added more examples for ```Send-TelegramTextMessage``` help
 - Added additional documentation enhancements for emoji support and keyboards to FAQ.md
 
 ## [1.15.0]
 
-- Send-TelegramLocalAudio / Send-TelegramURLAudio
+- ```Send-TelegramLocalAudio``` / ```Send-TelegramURLAudio```
   - Audio now supports both MP3 and M4A file extensions
-- Send-TelegramDice
+- ```Send-TelegramDice```
   - Now supports soccer (football), and slot machine emoji
-- Send-TelegramLocalDocument / Send-TelegramURLDocument
+- ```Send-TelegramLocalDocument``` / ```Send-TelegramURLDocument```
   - Added DisableContentTypeDetection switch which disables automatic server-side content type detection
-- Send-TelegramPoll
+- ```Send-TelegramPoll```
   - Questions can now be 300 characters long
-- Send-TelegramMediaGroup
+- ```Send-TelegramMediaGroup```
   - Now supports both audio and document media group types
-  - Restructured logic of this cmdlet to engage a new private function: Test-MediaGroupRequirements
+  - Restructured logic of this cmdlet to engage a new private function: ```Test-MediaGroupRequirements```
 - Added more verbosity in verbose and warning outputs
 - Removed manifest release notes and linked changelog
 - Build Improvements
@@ -74,17 +112,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.14.0]
 
-- Added **Send-TelegramDice**
+- Added **```Send-TelegramDice```**
 - Updated help for all cmdlets to include splat examples
-- Updated help examples for Send-TelegramTextMessage to include properly formatted MarkdownV2 examples
-- Updated Send-TelegramPoll
+- Updated help examples for ```Send-TelegramTextMessage``` to include properly formatted MarkdownV2 examples
+- Updated ```Send-TelegramPoll```
   - Added newly supported parameters:
     - Explanation
     - ExplanationParseMode
     - OpenPeriod
     - CloseDate
-  - New private function Test-Explanation created to validate provided Explanation
-- Added help clarification to Get-TelegramStickerPackInfo for finding sticker pack name
+  - New private function ```Test-Explanation``` created to validate provided Explanation
+- Added help clarification to ```Get-TelegramStickerPackInfo``` for finding sticker pack name
 - Several module build improvements made
   - Updated PowerShell module references to latest versions
   - Infra tests converted to use splat expressions
@@ -119,18 +157,18 @@ No Version Change
 
 ## [1.10.1]
 
-- Fixed bug where DisableNotification had no effect when running Send-TelegramSticker
+- Fixed bug where DisableNotification had no effect when running ```Send-TelegramSticker```
 
 ## [1.10.0]
 
 - Significantly improved formatting of help for all functions
-- Added Send-TelegramURLSticker
-- Added Send-TelegramLocalSticker
-- Added Send-TelegramSticker
-- Added Get-TelegramStickerPackInfo
-- Added Send-TelegramPoll
-- Added Send-TelegramVenue
-- Added Send-TelegramContact
+- Added ```Send-TelegramURLSticker```
+- Added ```Send-TelegramLocalSticker```
+- Added ```Send-TelegramSticker```
+- Added ```Get-TelegramStickerPackInfo```
+- Added ```Send-TelegramPoll```
+- Added ```Send-TelegramVenue```
+- Added ```Send-TelegramContact```
 - Unit Tests split into separate function files
 - Build file
   - Separated Infrastructure tests into new task
@@ -138,29 +176,29 @@ No Version Change
 - Added full parameter references to unit tests
 - psd1 - Sorted functions and tags alphabetically
 - Parameter adjustments
-  - Send-TelegramLocalAnimation
+  - ```Send-TelegramLocalAnimation```
     - DisableNotification changed from bool to switch
-  - Send-TelegramLocalAudio
+  - ```Send-TelegramLocalAudio```
     - DisableNotification changed from bool to switch
-  - Send-TelegramLocalDocument
+  - ```Send-TelegramLocalDocument```
     - DisableNotification changed from bool to switch
-  - Send-TelegramLocalPhoto
+  - ```Send-TelegramLocalPhoto```
     - DisableNotification changed from bool to switch
-  - Send-TelegramLocalVideo
+  - ```Send-TelegramLocalVideo```
     - DisableNotification changed from bool to switch
     - Streaming changed from bool to switch
-  - Send-TelegramMediaGroup
+  - ```Send-TelegramMediaGroup```
     - DisableNotification changed from bool to switch
-  - Send-TelegramTextMessage
+  - ```Send-TelegramTextMessage```
     - Preview parameter renamed to DisablePreview and changed from bool to switch
     - DisableNotification changed from bool to switch
-  - Send-TelegramURLAnimation
+  - ```Send-TelegramURLAnimation```
     - DisableNotification changed from bool to switch
-  - Send-TelegramURLAudio
+  - ```Send-TelegramURLAudio```
     - DisableNotification changed from bool to switch
-  - Send-TelegramURLDocument
+  - ```Send-TelegramURLDocument```
     - DisableNotification changed from bool to switch
-  - Send-TelegramURLPhoto
+  - ```Send-TelegramURLPhoto```
     - DisableNotification changed from bool to switch
 
 ## [10/13/2019]
@@ -185,7 +223,7 @@ No Version Change
 
 ## [1.0.0]
 
-- Addressed bug in Send-TelegramTextMessage that was not handling underscores
+- Addressed bug in ```Send-TelegramTextMessage``` that was not handling underscores
 - Added code to support AWS Codebuild
 
 ## [0.9.0]
@@ -193,12 +231,12 @@ No Version Change
 - Restructured module for CI/CD Workflow
 - Added Invoke-Build capabilities to module
 - Added Animation functionality:
-  - Send-TelegramLocalAnimation
-  - Send-TelegramURLAnimation
+  - ```Send-TelegramLocalAnimation```
+  - ```Send-TelegramURLAnimation```
 - Added location functionality:
-  - Send-TelegramLocation
+  - ```Send-TelegramLocation```
 - Added multi-media functionality:
-  - Send-TelegramMediaGroup
+  - ```Send-TelegramMediaGroup```
 - Consolidated private support functions
 - Code Logic improvements
 

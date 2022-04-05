@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
 schema: 2.0.0
 ---
 
@@ -15,25 +15,25 @@ Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 ### FileEmojiG
 ```
 Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-Shortcode <String>]
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ### FileIDG
 ```
 Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-FileID <String>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### ByFileID
 ```
 Send-TelegramSticker -BotToken <String> -ChatID <String> -FileID <String> [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### BySPShortCode
 ```
 Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -Shortcode <String>
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,6 +66,7 @@ $sendTelegramStickerSplat = @{
     ChatID              = $chat
     FileID              = $sticker
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramSticker @sendTelegramStickerSplat
@@ -92,6 +93,7 @@ $sendTelegramStickerSplat = @{
     StickerSetName      = 'STPicard'
     Shortcode           = ':slightly_smiling_face:'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramSticker @sendTelegramStickerSplat
@@ -253,6 +255,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -277,7 +294,7 @@ This function will make a best attempt to look up the sticker pack you specify a
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

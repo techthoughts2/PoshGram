@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '2.0.0'
+    ModuleVersion     = '2.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -169,10 +169,10 @@
             ProjectUri   = 'https://github.com/techthoughts2/PoshGram'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/master/media/PoshGram.png'
+            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/main/media/PoshGram.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/master/.github/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/main/.github/CHANGELOG.md'
 
         } # End of PSData hashtable
 

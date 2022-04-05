@@ -36,6 +36,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramContact @sendTelegramContactSplat } | Should -Throw
             } #it
@@ -52,6 +53,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramContact @sendTelegramContactSplat
                     Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
@@ -79,6 +81,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramContact @sendTelegramContactSplat
                 $eval.ok | Should -BeExactly 'False'
@@ -96,6 +99,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramContact @sendTelegramContactSplat
                 Assert-VerifiableMock
@@ -121,6 +125,7 @@ InModuleScope PoshGram {
                     FirstName           = $firstName
                     LastName            = $lastName
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramContact @sendTelegramContactSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

@@ -6,14 +6,14 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
 
     Sends audio message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -25,6 +25,7 @@
         Title               = 'Halo On Fire'
         FileName            = 'halo_on_fire.mp3'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramURLAudio @sendTelegramURLAudioSplat
@@ -33,7 +34,7 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
+    $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -69,6 +70,8 @@
     Original File Name
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -92,7 +95,7 @@
     title                   String                  Optional    Track Name
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md
 .LINK
     https://core.telegram.org/bots/api#sendaudio
 .LINK
@@ -150,7 +153,11 @@ function Send-TelegramURLAudio {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -183,6 +190,7 @@ function Send-TelegramURLAudio {
         title                = $Title
         file_name            = $FileName
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     $uri = 'https://api.telegram.org/bot{0}/sendAudio' -f $BotToken

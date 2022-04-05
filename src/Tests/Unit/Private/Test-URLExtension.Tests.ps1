@@ -21,7 +21,7 @@ InModuleScope PoshGram {
                 $true
             } #endmock
             Mock Resolve-ShortLink {}
-            $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/jean.gif'
+            $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
             #-------------------------------------------------------------------------
             $supportedPhotoExtensions = @(
                 'JPG',

@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram text message via Bot API
 
 ```
 Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <String> [[-ParseMode] <String>]
- [[-Keyboard] <PSObject>] [-DisablePreview] [-DisableNotification] [<CommonParameters>]
+ [[-Keyboard] <PSObject>] [-DisablePreview] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,10 +36,20 @@ Sends text message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
+$message = 'This is how to use:
+<b>bold</b>,
+<i>italic</i>,
+<u>underline</u>,
+<s>strikethrough</s>,
+<tg-spoiler>spoiler</tg-spoiler>,
+<a href="http://www.example.com/">inline URL</a>,
+<code>inline fixed-width code</code>,
+<pre>pre-formatted fixed-width code block</pre>,
+with default HTML formatting.'
 $sendTelegramTextMessageSplat = @{
-    BotToken  = $botToken
-    ChatID    = $chat
-    Message   = 'This is how to use <b>bold</b>,<i>italic</i>,<u>underline</u>, and <s>strikethrough</s>, with default HTML formatting.'
+    BotToken = $botToken
+    ChatID   = $chat
+    Message  = $message
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
@@ -50,14 +60,20 @@ Sends text message via Telegram API with properly formatted default HTML syntax.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
+$message = 'This is how to use:
+*bold*,
+_italic_,
+__underline__,
+~strikethrough~,
+||spoiler||,
+[inline URL](http://www.example.com/),
+`inline fixed-width code`,
+with MarkdownV2 style formatting'
 $sendTelegramTextMessageSplat = @{
-    BotToken            = $botToken
-    ChatID              = $chat
-    Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://www.techthoughts.info/)'
-    ParseMode           = 'MarkdownV2'
-    DisablePreview      = $true
-    DisableNotification = $true
-    Verbose             = $true
+    BotToken  = $botToken
+    ChatID    = $chat
+    Message   = $message
+    ParseMode = 'MarkdownV2'
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
@@ -152,6 +168,19 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
 Sends text message with a custom keyboard.
 See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
+
+### EXAMPLE 8
+```
+$sendTelegramTextMessageSplat = @{
+    BotToken        = $botToken
+    ChatID          = $chat
+    Message         = 'Sending a protected content message'
+    ProtectContent  = $true
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+Sends text message via Telegram API with protected content.
 
 ## PARAMETERS
 
@@ -262,6 +291,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -285,7 +329,7 @@ Certain characters in Telegram must be escaped with the preceding character '\' 
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
 

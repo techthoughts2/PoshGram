@@ -29,6 +29,7 @@ InModuleScope PoshGram {
                         ChatID              = $chat
                         Emoji               = 'soccer'
                         DisableNotification = $true
+                        ProtectContent      = $true
                         ErrorAction         = 'SilentlyContinue'
                     }
                     Send-TelegramDice @sendTelegramDiceSplat
@@ -44,6 +45,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'basketball'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramDice @sendTelegramDiceSplat } | Should -Throw
@@ -59,6 +61,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'basketball'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramDice @sendTelegramDiceSplat
@@ -85,6 +88,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'basketball'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
@@ -101,6 +105,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'bowling'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramDice @sendTelegramDiceSplat
                 Assert-VerifiableMock
@@ -127,6 +132,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'dice'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
                 $sendTelegramDiceSplat = @{
@@ -134,6 +140,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'football'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
                 $sendTelegramDiceSplat = @{
@@ -141,6 +148,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'slotmachine'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramDice @sendTelegramDiceSplat | Should -BeOfType System.Management.Automation.PSCustomObject
                 $sendTelegramDiceSplat = @{
@@ -148,6 +156,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'dart'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
                 $eval.ok | Should -Be 'True'
@@ -157,6 +166,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Emoji               = 'bowling'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramDice @sendTelegramDiceSplat
                 $eval.ok | Should -Be 'True'

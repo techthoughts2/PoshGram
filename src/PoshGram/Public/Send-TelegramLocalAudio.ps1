@@ -25,6 +25,7 @@
         Title               = 'Halo On Fire'
         FileName            = 'halo_on_fire.mp3'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
@@ -69,6 +70,8 @@
     Original File Name
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -92,7 +95,7 @@
     title                   String                  Optional    Track Name
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md
 .LINK
     https://core.telegram.org/bots/api#sendaudio
 .LINK
@@ -152,7 +155,11 @@ function Send-TelegramLocalAudio {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -202,6 +209,7 @@ function Send-TelegramLocalAudio {
         title                = $Title
         file_name            = $FileName
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendAudio' -f $BotToken

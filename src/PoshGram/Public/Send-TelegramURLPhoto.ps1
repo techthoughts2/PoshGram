@@ -6,14 +6,14 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 
     Sends photo message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -21,6 +21,7 @@
         Caption             = 'DSC is a great technology'
         ParseMode           = 'MarkdownV2'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
@@ -29,7 +30,7 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+    $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
@@ -52,6 +53,8 @@
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -70,7 +73,7 @@
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md
 .LINK
     https://core.telegram.org/bots/api#sendphoto
 .LINK
@@ -114,7 +117,11 @@ function Send-TelegramURLPhoto {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -143,6 +150,7 @@ function Send-TelegramURLPhoto {
         caption              = $Caption
         parse_mode           = $ParseMode
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     $uri = 'https://api.telegram.org/bot{0}/sendphoto' -f $BotToken

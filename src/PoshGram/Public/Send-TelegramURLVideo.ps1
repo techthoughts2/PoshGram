@@ -6,14 +6,14 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
     Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 
     Sends video message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
@@ -26,6 +26,7 @@
         ParseMode           = 'MarkdownV2'
         Streaming           = $true
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramURLVideo @sendTelegramURLVideoSplat
@@ -34,7 +35,7 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+    $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken  = $botToken
         ChatID    = $chat
@@ -68,6 +69,8 @@
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -95,7 +98,7 @@
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md
 .LINK
     https://core.telegram.org/bots/api#sendvideo
 .LINK
@@ -165,7 +168,11 @@ function Send-TelegramURLVideo {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -199,6 +206,7 @@ function Send-TelegramURLVideo {
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken

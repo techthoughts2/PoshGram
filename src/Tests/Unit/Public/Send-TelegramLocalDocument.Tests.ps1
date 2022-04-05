@@ -143,6 +143,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this file'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                 Assert-VerifiableMock
@@ -156,6 +157,7 @@ InModuleScope PoshGram {
                     Caption             = 'Check out this file'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

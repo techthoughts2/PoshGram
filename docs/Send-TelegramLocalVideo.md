@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
 schema: 2.0.0
 ---
 
@@ -15,7 +15,7 @@ Sends Telegram video message via Bot API from locally sourced file
 ```
 Send-TelegramLocalVideo [-BotToken] <String> [-ChatID] <String> [-Video] <String> [[-Duration] <Int32>]
  [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
- [-Streaming] [-DisableNotification] [<CommonParameters>]
+ [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +53,7 @@ $sendTelegramLocalVideoSplat = @{
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
@@ -248,6 +249,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -270,7 +286,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 

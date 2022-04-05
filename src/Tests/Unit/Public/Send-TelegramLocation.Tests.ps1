@@ -32,6 +32,7 @@ InModuleScope PoshGram {
                     Latitude            = 37.621313
                     Longitude           = '-122.378955'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramLocation @sendTelegramLocationSplat } | Should -Throw
@@ -48,6 +49,7 @@ InModuleScope PoshGram {
                     Latitude            = 37.621313
                     Longitude           = '-122.378955'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramLocation @sendTelegramLocationSplat
@@ -75,6 +77,7 @@ InModuleScope PoshGram {
                     Latitude            = 37.621313
                     Longitude           = '-122.378955'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramLocation @sendTelegramLocationSplat
@@ -92,6 +95,7 @@ InModuleScope PoshGram {
                     Latitude            = 37.621313
                     Longitude           = '-122.378955'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocation @sendTelegramLocationSplat
                 Assert-VerifiableMock
@@ -118,6 +122,7 @@ InModuleScope PoshGram {
                     Latitude            = 37.621313
                     Longitude           = '-122.378955'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocation @sendTelegramLocationSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

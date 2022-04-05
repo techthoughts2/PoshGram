@@ -26,6 +26,7 @@
         ParseMode           = 'MarkdownV2'
         Streaming           = $true
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
@@ -69,6 +70,8 @@
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -93,7 +96,7 @@
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
 .LINK
     https://core.telegram.org/bots/api#sendvideo
 .LINK
@@ -163,7 +166,11 @@ function Send-TelegramLocalVideo {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -214,6 +221,7 @@ function Send-TelegramLocalVideo {
         parse_mode           = $ParseMode
         supports_streaming   = $Streaming.IsPresent
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendVideo' -f $BotToken

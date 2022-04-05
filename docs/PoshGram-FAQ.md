@@ -7,6 +7,9 @@
       - [Preferred Method](#preferred-method)
       - [Alternative method](#alternative-method)
     - [How can I use PoshGram to have my bot send stickers?](#how-can-i-use-poshgram-to-have-my-bot-send-stickers)
+    - [How can I properly engage formatting text in messages?](#how-can-i-properly-engage-formatting-text-in-messages)
+      - [HTML Style (*Default*)](#html-style-default)
+      - [MarkdownV2 style](#markdownv2-style)
     - [How can I use PoshGram to send inline Emojis?](#how-can-i-use-poshgram-to-send-inline-emojis)
       - [Method 1](#method-1)
       - [Method 2](#method-2)
@@ -50,6 +53,54 @@ Forward a message from your channel to the getidsbot [https://telegram.me/getids
 
 [PoshGram-Sticker-Info](docs/PoshGram-Sticker-Info.md)
 
+### How can I properly engage formatting text in messages?
+
+All message types that support text can have text formatted using HTML or MarkdownV2 styling:
+
+#### HTML Style (*Default*)
+
+```powershell
+$message = 'This is how to use:
+<b>bold</b>,
+<i>italic</i>,
+<u>underline</u>,
+<s>strikethrough</s>,
+<tg-spoiler>spoiler</tg-spoiler>,
+<a href="http://www.example.com/">inline URL</a>,
+<code>inline fixed-width code</code>,
+<pre>pre-formatted fixed-width code block</pre>,
+with default HTML formatting.'
+
+$sendTelegramTextMessageSplat = @{
+    BotToken = $botToken
+    ChatID   = $chat
+    Message  = $message
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+#### MarkdownV2 style
+
+```powershell
+$message = 'This is how to use:
+*bold*,
+_italic_,
+__underline__,
+~strikethrough~,
+||spoiler||,
+[inline URL](http://www.example.com/),
+`inline fixed-width code`,
+with MarkdownV2 style formatting'
+
+$sendTelegramTextMessageSplat = @{
+    BotToken  = $botToken
+    ChatID    = $chat
+    Message   = $message
+    ParseMode = 'MarkdownV2'
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
 ### How can I use PoshGram to send inline Emojis?
 
 There isn't a super elegant way to send inline Emojis.
@@ -74,7 +125,7 @@ Send-TelegramTextMessage -BotToken $token -ChatID $channel -Message "This is a s
 #### Method 2
 
 1. Find the unicode of the desired emoji from the [Full Emoji List](https://unicode.org/emoji/charts/full-emoji-list.html)
-1. Convert it to HTML hexadicimal
+1. Convert it to HTML hexadecimal
     - ```U+1F601  --> &#x1F601```
 1. Send message with emoji
 

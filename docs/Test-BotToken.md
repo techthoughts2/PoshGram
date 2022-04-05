@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md
 schema: 2.0.0
 ---
 
@@ -79,7 +79,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md)
 
 [https://core.telegram.org/bots/api#getme](https://core.telegram.org/bots/api#getme)
 

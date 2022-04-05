@@ -21,6 +21,7 @@
         Caption             = 'Check out this file'
         ParseMode           = 'MarkdownV2'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
@@ -52,6 +53,8 @@
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -72,7 +75,7 @@
     disable_content_type_detection  Boolean                 Optional    Disables automatic server-side content type detection for files uploaded using multipart/form-data
     disable_notification            Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md
 .LINK
     https://core.telegram.org/bots/api#senddocument
 .LINK
@@ -120,7 +123,11 @@ function Send-TelegramLocalDocument {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -158,6 +165,7 @@ function Send-TelegramLocalDocument {
         parse_mode                     = $ParseMode
         disable_content_type_detection = $DisableContentTypeDetection.IsPresent
         disable_notification           = $DisableNotification.IsPresent
+        protect_content                = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendDocument' -f $BotToken

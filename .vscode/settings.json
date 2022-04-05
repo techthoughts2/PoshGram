@@ -1,4 +1,23 @@
 {
     "files.trimTrailingWhitespace": true,
-    "powershell.codeFormatting.preset":"Stroustrup"
+    "powershell.codeFormatting.preset": "Stroustrup",
+    "cSpell.words": [
+        "buildspec",
+        "cmdlets",
+        "customlog",
+        "geordi",
+        "getidsbot",
+        "markdownv",
+        "poshgram",
+        "pwsh",
+        "riker",
+        "shortcode",
+        "strikethrough",
+        "Stroustrup",
+        "Syndec",
+        "Tobu",
+        "troi",
+        "webp",
+        "worf"
+    ]
 }

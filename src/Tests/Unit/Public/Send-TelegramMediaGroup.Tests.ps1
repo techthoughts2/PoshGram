@@ -137,6 +137,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Photo'
                     FilePaths           = $justRight
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 Assert-VerifiableMock
@@ -149,6 +150,7 @@ InModuleScope PoshGram {
                     MediaType           = 'Photo'
                     FilePaths           = $justRight
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

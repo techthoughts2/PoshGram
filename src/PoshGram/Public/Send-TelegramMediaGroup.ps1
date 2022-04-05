@@ -44,6 +44,7 @@
         MediaType           = 'Video'
         FilePaths           = $vFiles
         DisableNotification = $true
+        ProtectContent      = $true
     }
     Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 
@@ -58,6 +59,8 @@
     List of filepaths for media you want to send
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -86,7 +89,7 @@
     media                 Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo  Yes         A JSON-serialized array describing photos and videos to be sent
     disable_notification  Boolean                                                                            Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md
 .LINK
     https://core.telegram.org/bots/api#sendmediagroup
 .LINK
@@ -120,7 +123,11 @@ function Send-TelegramMediaGroup {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -138,6 +145,7 @@ function Send-TelegramMediaGroup {
     $form = @{
         chat_id              = $ChatID;
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
         media                = ''
     }
     $json = @'

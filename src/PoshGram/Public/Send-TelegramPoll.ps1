@@ -17,6 +17,7 @@
         'Star Trek: Discovery',
         'Star Trek: Picard',
         'Star Trek: Lower Decks'
+        'Star Trek: Prodigy'
     )
     Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 
@@ -32,6 +33,7 @@
         Question            = $question
         Options             = $opt
         DisableNotification = $true
+        ProtectContent      = $true
         IsAnonymous         = $true
         PollType            = 'regular'
         MultipleAnswers     = $false
@@ -144,6 +146,8 @@
     Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -171,7 +175,7 @@
     close_date              Integer                 Optional    Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
 .LINK
     https://core.telegram.org/bots/api#sendpoll
 .LINK
@@ -241,7 +245,11 @@ function Send-TelegramPoll {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -258,6 +266,7 @@ function Send-TelegramPoll {
         chat_id                 = $ChatID
         question                = $Question
         disable_notification    = $DisableNotification.IsPresent
+        protect_content         = $ProtectContent.IsPresent
         options                 = $Options
         is_anonymous            = $IsAnonymous
         type                    = $PollType

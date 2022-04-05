@@ -18,7 +18,7 @@ InModuleScope PoshGram {
             $ErrorActionPreference = 'SilentlyContinue'
         } #beforeAll
         BeforeEach {
-            $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+            $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
             Mock Test-URLExtension { $true }
@@ -48,6 +48,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLPhoto @sendTelegramURLPhotoSplat } | Should -Throw
@@ -62,6 +63,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLPhoto @sendTelegramURLPhotoSplat } | Should -Throw
@@ -78,6 +80,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLPhoto @sendTelegramURLPhotoSplat } | Should -Throw
@@ -95,6 +98,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 { Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
@@ -123,6 +127,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
                 }
                 $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
@@ -141,6 +146,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                 Assert-VerifiableMock
@@ -154,6 +160,7 @@ InModuleScope PoshGram {
                     Caption             = 'DSC is a great technology'
                     ParseMode           = 'MarkdownV2'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

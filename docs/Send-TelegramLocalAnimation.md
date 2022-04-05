@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram animation message via Bot API from locally sourced animation
 
 ```
 Send-TelegramLocalAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationPath] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,7 @@ $sendTelegramLocalAnimationSplat = @{
     Caption             = 'Check out this animation'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
@@ -164,6 +165,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -188,7 +204,7 @@ Get creative by sending Gifs with your bot!
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md)
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
 

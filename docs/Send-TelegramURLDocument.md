@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,8 @@ Sends Telegram document message via Bot API from URL sourced file
 
 ```
 Send-TelegramURLDocument [-BotToken] <String> [-ChatID] <String> [-FileURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableContentTypeDetection] [-DisableNotification] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableContentTypeDetection] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +30,7 @@ Only works for gif, pdf and zip files.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
 ```
 
@@ -39,7 +40,7 @@ Sends document message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -47,6 +48,7 @@ $sendTelegramURLDocumentSplat = @{
     Caption             = 'Log Files'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramURLDocument @sendTelegramURLDocumentSplat
@@ -58,7 +60,7 @@ Sends document message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/LogExample.zip'
+$fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
 $sendTelegramURLDocumentSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -180,6 +182,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -201,7 +218,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
 

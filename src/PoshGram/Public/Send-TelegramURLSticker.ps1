@@ -6,19 +6,20 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
         ChatID              = $chat
         StickerURL          = $StickerURL
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramURLSticker @sendTelegramURLStickerSplat
@@ -32,6 +33,8 @@
     URL path to sticker
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -47,7 +50,7 @@
     sticker                 InputFile or String     Yes         Sticker to send.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK
@@ -76,7 +79,11 @@ function Send-TelegramURLSticker {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -103,6 +110,7 @@ function Send-TelegramURLSticker {
         chat_id              = $ChatID
         sticker              = $StickerURL
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken

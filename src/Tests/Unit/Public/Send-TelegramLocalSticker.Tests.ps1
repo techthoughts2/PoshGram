@@ -150,6 +150,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerPath         = 'c:\bs\sticker.webp'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                 Assert-VerifiableMock
@@ -161,6 +162,7 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     StickerPath         = 'c:\bs\sticker.webp'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

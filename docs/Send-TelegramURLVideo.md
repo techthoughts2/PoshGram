@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md
 schema: 2.0.0
 ---
 
@@ -15,7 +15,7 @@ Sends Telegram video message via Bot API from URL sourced file
 ```
 Send-TelegramURLVideo [-BotToken] <String> [-ChatID] <String> [-VideoURL] <String> [[-Duration] <Int32>]
  [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
- [-Streaming] [-DisableNotification] [<CommonParameters>]
+ [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,7 +30,7 @@ Only works for gif, pdf and zip files.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
 ```
 
@@ -40,7 +40,7 @@ Sends video message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -53,6 +53,7 @@ $sendTelegramURLVideoSplat = @{
     ParseMode           = 'MarkdownV2'
     Streaming           = $true
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramURLVideo @sendTelegramURLVideoSplat
@@ -64,7 +65,7 @@ Sends video message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$videourl = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/Intro.mp4'
+$videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
 $sendTelegramURLVideoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -247,6 +248,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -272,7 +288,7 @@ When using Markdown/Markdownv2 you must properly escape characters.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 

@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram photo message via Bot API from URL sourced photo image
 
 ```
 Send-TelegramURLPhoto [-BotToken] <String> [-ChatID] <String> [-PhotoURL] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +28,7 @@ Several options can be specified to adjust message parameters.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
 ```
 
@@ -38,7 +38,7 @@ Sends photo message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
@@ -46,6 +46,7 @@ $sendTelegramURLPhotoSplat = @{
     Caption             = 'DSC is a great technology'
     ParseMode           = 'MarkdownV2'
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
@@ -57,7 +58,7 @@ Sends photo message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.png'
+$photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken  = $botToken
     ChatID    = $chat
@@ -164,6 +165,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -183,7 +199,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
 

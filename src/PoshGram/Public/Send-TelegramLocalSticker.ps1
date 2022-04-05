@@ -19,6 +19,7 @@
         ChatID              = $chat
         StickerPath         = $sticker
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
@@ -32,6 +33,8 @@
     File path to the sticker you wish to send
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -50,7 +53,7 @@
     sticker                 InputFile or String     Yes         Sticker to send.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK
@@ -79,7 +82,11 @@ function Send-TelegramLocalSticker {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -123,6 +130,7 @@ function Send-TelegramLocalSticker {
         chat_id              = $ChatID
         sticker              = $fileObject
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken

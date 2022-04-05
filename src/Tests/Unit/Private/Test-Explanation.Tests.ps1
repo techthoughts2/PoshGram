@@ -33,6 +33,7 @@ Enterprise
 Discovery
 Picard
 Lower Decks
+Prodigy
 '@
             Test-Explanation -Explanation $explanation | Should -Be $false
         } #it

@@ -12,10 +12,20 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
+    $message = 'This is how to use:
+    <b>bold</b>,
+    <i>italic</i>,
+    <u>underline</u>,
+    <s>strikethrough</s>,
+    <tg-spoiler>spoiler</tg-spoiler>,
+    <a href="http://www.example.com/">inline URL</a>,
+    <code>inline fixed-width code</code>,
+    <pre>pre-formatted fixed-width code block</pre>,
+    with default HTML formatting.'
     $sendTelegramTextMessageSplat = @{
-        BotToken  = $botToken
-        ChatID    = $chat
-        Message   = 'This is how to use <b>bold</b>,<i>italic</i>,<u>underline</u>, and <s>strikethrough</s>, with default HTML formatting.'
+        BotToken = $botToken
+        ChatID   = $chat
+        Message  = $message
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
@@ -23,14 +33,20 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
+    $message = 'This is how to use:
+    *bold*,
+    _italic_,
+    __underline__,
+    ~strikethrough~,
+    ||spoiler||,
+    [inline URL](http://www.example.com/),
+    `inline fixed-width code`,
+    with MarkdownV2 style formatting'
     $sendTelegramTextMessageSplat = @{
-        BotToken            = $botToken
-        ChatID              = $chat
-        Message             = 'Hello *chat* _channel_, check out this link: [TechThoughts](https://www.techthoughts.info/)'
-        ParseMode           = 'MarkdownV2'
-        DisablePreview      = $true
-        DisableNotification = $true
-        Verbose             = $true
+        BotToken  = $botToken
+        ChatID    = $chat
+        Message   = $message
+        ParseMode = 'MarkdownV2'
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
@@ -112,6 +128,16 @@
 
     Sends text message with a custom keyboard.
     See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
+.EXAMPLE
+    $sendTelegramTextMessageSplat = @{
+        BotToken        = $botToken
+        ChatID          = $chat
+        Message         = 'Sending a protected content message'
+        ProtectContent  = $true
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram API with protected content.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -126,6 +152,8 @@
     Disables link previews for links in this message.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -149,7 +177,7 @@
     reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
     reply_markup                KeyboardMarkup      Optional    Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
 .LINK
     https://core.telegram.org/bots/api#sendmessage
 .LINK
@@ -199,7 +227,11 @@ function Send-TelegramTextMessage {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -210,6 +242,7 @@ function Send-TelegramTextMessage {
         parse_mode               = $ParseMode
         disable_web_page_preview = $DisablePreview.IsPresent
         disable_notification     = $DisableNotification.IsPresent
+        protect_content          = $ProtectContent.IsPresent
     } #payload
 
     if ($Keyboard) {

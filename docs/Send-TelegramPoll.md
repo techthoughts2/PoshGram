@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
 schema: 2.0.0
 ---
 
@@ -16,7 +16,8 @@ Sends Telegram native poll.
 ```
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
- [-Explanation <String>] [-ExplanationParseMode <String>] [-DisableNotification] [<CommonParameters>]
+ [-Explanation <String>] [-ExplanationParseMode <String>] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ### OpenPeriod
@@ -24,7 +25,7 @@ Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Option
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
  [-Explanation <String>] [-ExplanationParseMode <String>] [-OpenPeriod <Int32>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ### OpenDate
@@ -32,7 +33,7 @@ Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Option
 Send-TelegramPoll -BotToken <String> -ChatID <String> -Question <String> -Options <String[]>
  [-IsAnonymous <Boolean>] [-PollType <String>] [-MultipleAnswers <Boolean>] [-QuizAnswer <Int32>]
  [-Explanation <String>] [-ExplanationParseMode <String>] [-CloseDate <DateTime>] [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +56,7 @@ $opt = @(
     'Star Trek: Discovery',
     'Star Trek: Picard',
     'Star Trek: Lower Decks'
+    'Star Trek: Prodigy'
 )
 Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
 ```
@@ -73,6 +75,7 @@ $sendTelegramPollSplat = @{
     Question            = $question
     Options             = $opt
     DisableNotification = $true
+    ProtectContent      = $true
     IsAnonymous         = $true
     PollType            = 'regular'
     MultipleAnswers     = $false
@@ -370,6 +373,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -392,7 +410,7 @@ Telegram currently supports 2-10 options 1-100 characters each
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
 

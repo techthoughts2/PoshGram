@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram phone contact message via BOT API.
 
 ```
 Send-TelegramContact [-BotToken] <String> [-ChatID] <String> [-PhoneNumber] <String> [-FirstName] <String>
- [[-LastName] <String>] [-DisableNotification] [<CommonParameters>]
+ [[-LastName] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,6 +47,7 @@ $sendTelegramContactSplat = @{
     FirstName           = $firstName
     LastName            = $lastName
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramContact @sendTelegramContactSplat
@@ -147,6 +148,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -166,7 +182,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md)
 
 [https://core.telegram.org/bots/api#sendcontact](https://core.telegram.org/bots/api#sendcontact)
 

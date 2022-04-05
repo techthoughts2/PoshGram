@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram sticker message via Bot API from locally sourced sticker image
 
 ```
 Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String>
- [-DisableNotification] [<CommonParameters>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +43,7 @@ $sendTelegramLocalStickerSplat = @{
     ChatID              = $chat
     StickerPath         = $sticker
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
@@ -113,6 +114,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -135,7 +151,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

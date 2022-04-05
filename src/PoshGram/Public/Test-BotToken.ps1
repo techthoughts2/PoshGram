@@ -31,7 +31,7 @@
 .FUNCTIONALITY
     A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md
 .LINK
     https://core.telegram.org/bots/api#getme
 .LINK

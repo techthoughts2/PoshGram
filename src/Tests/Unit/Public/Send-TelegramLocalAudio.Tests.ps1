@@ -160,6 +160,7 @@ InModuleScope PoshGram {
                     Title               = 'Halo On Fire'
                     FileName            = 'audio.mp3'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                 Assert-VerifiableMock
@@ -177,6 +178,7 @@ InModuleScope PoshGram {
                     Title               = 'Halo On Fire'
                     FileName            = 'audio.mp3'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

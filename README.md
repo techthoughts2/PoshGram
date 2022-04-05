@@ -1,17 +1,16 @@
 # PoshGram
 
-[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell)
-[![PowerShell Gallery][psgallery-img]][psgallery-site]
-![Cross Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey)
+[![Minimum Supported PowerShell Version](https://img.shields.io/badge/PowerShell-6.1+-blue.svg)](https://github.com/PowerShell/PowerShell) [![PowerShell Gallery][psgallery-img]][psgallery-site] ![Cross Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey) [![License][license-badge]](LICENSE)
 
 [psgallery-img]:   https://img.shields.io/powershellgallery/dt/PoshGram.svg
 [psgallery-site]:  https://www.powershellgallery.com/packages/PoshGram
-[psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram/0.8.1
+[psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram
+[license-badge]:   https://img.shields.io/github/license/techthoughts2/PoshGram
 
 Branch | Windows | MacOS | Linux
 --- | --- | --- | --- |
-master | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTzUwaEdhMFVoTmNuRWRjdXkwQzVDU1I5Z2NOM1gvTit5bHM0NHU0VWI5QlZBZ2theGMzMUp1dEs3ZnV0MC9IMGZJVHZWRm1GRDdvV0FKZ0tGNHlwdVg0PSIsIml2UGFyYW1ldGVyU3BlYyI6IkF1VWthME1ENHRLSStjVlEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/master?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/master) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicEtidmZ5SkYrTXBDTXRmbjA0Smd4SFk3UG5PSzNzOUc1a2lGTnZMRnpXOThXUStGcVhpVnl2NENJS213SjhlYW1Fd2szdHNoMWtiQW0zN09EYUc4dE1BPSIsIml2UGFyYW1ldGVyU3BlYyI6IjJPVDVYUGVLUDY0dkVTbGkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) |
-Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoielUvRmdJVEdyVko4TkZON05jSlI4bFZkM1V2RStKWjg4eEQ5WFQ1T1hnRVhBamZJTi9XUXdlR2hhMDFtZEx2V0VGS0RwZFpTOUNTR3JqUzhxR1N1UjlRPSIsIml2UGFyYW1ldGVyU3BlYyI6Im53MlF1VldxVUxCNUFFNzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/Enhancements?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/Enhancements)| ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiM2NTYXFGQ1p2MDFqaE9oNmFRU0NqdGcxNEtDb3lpbXk0QVBXMHFqUzNFU3pQbjdsWjU0MmtuSDhYK2pNLzBaUDVrU2FKU05wM0VDUnNDcldGSFFka2xNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9YRTV2MHJka1Eya2k1bWQiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) |
+main | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiK2NkZ3hhMHpScFZocS9RME5rSDdkMUR0SHlTcXYrUHg4UHEzVE9HQ2czaHBDY2hVSTVraVpuRUFYdkNTUWhmNDN5eXd0Zzc5T3QwRlR0ZnhQbGpBOTBRPSIsIml2UGFyYW1ldGVyU3BlYyI6IlpBVmUvc3VtVWlhOUx4SVoiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/main?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/main) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNXZVVG9XUXhYUmZrSFk3dXI0RXlxSWNOY01pWlVYVEU5T3B2S2ZRQ2IvYjc1MUdoUUV1N1lYalZ4dWUyTTN4RldSb0t0NUFSc1IxaDZHT29DRlNzSzdFPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlvemtJTDBjb3BmSVJkTG0iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main) |
+Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiZFptMjNOYmk0SGQ0NW5GRE9pN1BPRS9INklCcmRzNnorZjEyQWZxVnJSSjU2djFRN2RST01yL0pvb1VMeXFIUDExVXNSWXgwa0pqcm10T0kyeEwyR1hrPSIsIml2UGFyYW1ldGVyU3BlYyI6ImxUUGh3SUw2RW51WWVrRWMiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/Enhancements?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/Enhancements)| ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiZzNabUY5aFlQU05Hbzd5dnVrVWtaSkMyamZuYVRhNzB5dHJpQ3pNbDBwOG5HYWFFL082anBGVzZhRDYwaWhXbm5PK0lycldHYmE2bitwSTNwcWxpMEhVPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik81V25ISzR1TCtybzFneTciLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=Enhancements) |
 
 ## Synopsis
 
@@ -23,30 +22,30 @@ PoshGram is a PowerShell module that enables you to send messages via the Telegr
 
 PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
-[PoshGram](https://github.com/techthoughts2/PoshGram/blob/master/docs/PoshGram.md) provides the following functions:
+[PoshGram](https://github.com/techthoughts2/PoshGram/blob/main/docs/PoshGram.md) provides the following functions:
 
-* [Get-TelegramStickerPackInfo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Get-TelegramStickerPackInfo.md)
-* [Send-TelegramContact](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramContact.md)
-* [Send-TelegramDice](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md)
-* [Send-TelegramLocalAnimation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAnimation.md)
-* [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalAudio.md)
-* [Send-TelegramLocalDocument](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalDocument.md)
-* [Send-TelegramLocalPhoto](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalPhoto.md)
-* [Send-TelegramLocalSticker](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalSticker.md)
-* [Send-TelegramLocalVideo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocalVideo.md)
-* [Send-TelegramLocation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramLocation.md)
-* [Send-TelegramMediaGroup](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramMediaGroup.md)
-* [Send-TelegramPoll](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramPoll.md)
-* [Send-TelegramSticker](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md)
-* [Send-TelegramTextMessage](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramTextMessage.md)
-* [Send-TelegramURLAnimation](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAnimation.md)
-* [Send-TelegramURLAudio](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLAudio.md)
-* [Send-TelegramURLDocument](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLDocument.md)
-* [Send-TelegramURLPhoto](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLPhoto.md)
-* [Send-TelegramURLSticker](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md)
-* [Send-TelegramURLVideo](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLVideo.md)
-* [Send-TelegramVenue](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramVenue.md)
-* [Test-BotToken](https://github.com/techthoughts2/PoshGram/blob/master/docs/Test-BotToken.md)
+* [Get-TelegramStickerPackInfo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md)
+* [Send-TelegramContact](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md)
+* [Send-TelegramDice](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md)
+* [Send-TelegramLocalAnimation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md)
+* [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md)
+* [Send-TelegramLocalDocument](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md)
+* [Send-TelegramLocalPhoto](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalPhoto.md)
+* [Send-TelegramLocalSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md)
+* [Send-TelegramLocalVideo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md)
+* [Send-TelegramLocation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocation.md)
+* [Send-TelegramMediaGroup](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md)
+* [Send-TelegramPoll](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
+* [Send-TelegramSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
+* [Send-TelegramTextMessage](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md)
+* [Send-TelegramURLAnimation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAnimation.md)
+* [Send-TelegramURLAudio](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md)
+* [Send-TelegramURLDocument](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md)
+* [Send-TelegramURLPhoto](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md)
+* [Send-TelegramURLSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md)
+* [Send-TelegramURLVideo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md)
+* [Send-TelegramVenue](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md)
+* [Test-BotToken](https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md)
 
 ## Why
 

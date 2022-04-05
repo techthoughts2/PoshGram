@@ -34,6 +34,7 @@ InModuleScope PoshGram {
                     Title               = 'Star Fleet Headquarters'
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramVenue @sendTelegramVenueSplat } | Should -Throw
             } #it
@@ -51,6 +52,7 @@ InModuleScope PoshGram {
                     Title               = 'Star Fleet Headquarters'
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 { Send-TelegramVenue @sendTelegramVenueSplat
                     Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
@@ -79,6 +81,7 @@ InModuleScope PoshGram {
                     Title               = 'Star Fleet Headquarters'
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramVenue @sendTelegramVenueSplat
                 $eval.ok | Should -BeExactly 'False'
@@ -97,6 +100,7 @@ InModuleScope PoshGram {
                     Title               = 'Star Fleet Headquarters'
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 Send-TelegramVenue @sendTelegramVenueSplat
                 Assert-VerifiableMock
@@ -125,6 +129,7 @@ InModuleScope PoshGram {
                     Title               = 'Star Fleet Headquarters'
                     Address             = 'San Francisco, CA 94128'
                     DisableNotification = $true
+                    ProtectContent      = $true
                 }
                 $eval = Send-TelegramVenue @sendTelegramVenueSplat
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject

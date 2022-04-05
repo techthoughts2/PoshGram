@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md
+online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram sticker message via Bot API from URL sourced sticker image
 
 ```
 Send-TelegramURLSticker [-BotToken] <String> [-ChatID] <String> [-StickerURL] <String> [-DisableNotification]
- [<CommonParameters>]
+ [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ The sticker will be sourced from the provided URL and sent to Telegram.
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
 Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 ```
 
@@ -37,12 +37,13 @@ Sends sticker message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chat = '-nnnnnnnnn'
-$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/master/test/SourceFiles/techthoughts.webp'
+$StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
 $sendTelegramURLStickerSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     StickerURL          = $StickerURL
     DisableNotification = $true
+    ProtectContent      = $true
     Verbose             = $true
 }
 Send-TelegramURLSticker @sendTelegramURLStickerSplat
@@ -113,6 +114,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProtectContent
+Protects the contents of the sent message from forwarding and saving
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -132,7 +148,7 @@ Use the BotFather https://t.me/BotFather
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramURLSticker.md)
+[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

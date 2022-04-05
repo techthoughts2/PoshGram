@@ -19,6 +19,7 @@
         ChatID              = $chat
         FileID              = $sticker
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramSticker @sendTelegramStickerSplat
@@ -39,6 +40,7 @@
         StickerSetName      = 'STPicard'
         Shortcode           = ':slightly_smiling_face:'
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
     }
     Send-TelegramSticker @sendTelegramStickerSplat
@@ -53,10 +55,12 @@
     If you do not know the file ID of a sticker, you can use Get-TelegramStickerPackInfo to determine it.
 .PARAMETER StickerSetName
     Name of the sticker set
-.PARAMETER DisableNotification
-    Send the message silently. Users will receive a notification with no sound.
 .PARAMETER Shortcode
     Emoji shortcode
+.PARAMETER DisableNotification
+    Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -76,7 +80,7 @@
     chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     sticker                     InputFile or String Yes         Sticker to send.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramSticker.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK
@@ -1766,7 +1770,11 @@ function Send-TelegramSticker {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -1796,6 +1804,7 @@ function Send-TelegramSticker {
         chat_id              = $ChatID
         sticker              = $sticker
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken

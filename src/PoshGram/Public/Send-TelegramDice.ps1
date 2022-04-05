@@ -18,6 +18,7 @@
         BotToken            = $botToken
         ChatID              = $chat
         DisableNotification = $true
+        ProtectContent      = $true
         Verbose             = $true
         Emoji               = $emoji
     }
@@ -32,6 +33,8 @@
     Emoji on which the dice throw animation is based.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
+.PARAMETER ProtectContent
+    Protects the contents of the sent message from forwarding and saving
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 .NOTES
@@ -47,7 +50,7 @@
     emoji                   String                  Optional    Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, or “🏀”. Dice can have values 1-6 for “🎲” and “🎯”, and values 1-5 for “🏀”. Defaults to “🎲”
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/master/docs/Send-TelegramDice.md
+    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md
 .LINK
     https://core.telegram.org/bots/api#senddice
 .LINK
@@ -75,7 +78,11 @@ function Send-TelegramDice {
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
-        [switch]$DisableNotification
+        [switch]$DisableNotification,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Protects the contents of the sent message from forwarding and saving')]
+        [switch]$ProtectContent
     )
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
@@ -105,6 +112,7 @@ function Send-TelegramDice {
         chat_id              = $ChatID
         emoji                = $emojiSend
         disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #form
 
     $uri = 'https://api.telegram.org/bot{0}/sendDice' -f $BotToken
