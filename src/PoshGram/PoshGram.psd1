@@ -30,7 +30,7 @@
     Copyright         = '(c) Jake Morrison. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.'
+    Description       = 'PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '6.1.0'

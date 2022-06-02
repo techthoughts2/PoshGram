@@ -212,7 +212,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
             } #it
 
-            It 'should return expected results if successfull with a quiz poll with additional options' {
+            It 'should return expected results if successful with a quiz poll with additional options' {
                 $sendTelegramPollSplat = @{
                     BotToken             = $token
                     ChatID               = $chat

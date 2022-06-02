@@ -214,7 +214,7 @@
         {
             "label": "Pester-Single-Coverage",
             "type": "shell",
-            "command": "Import-Module -Name '${workspaceFolder}/src/PoshGram/PoshGram.psm1';Invoke-Pester '${workspaceFolder}/src/Tests/Unit/${input:functionName}.Tests.ps1' -CodeCoverage '${workspaceFolder}/src/PoshGram/*/${input:functionName}.ps1'",
+            "command": "Import-Module -Name '${workspaceFolder}/src/PoshGram/PoshGram.psm1';$pesterConfiguration = New-PesterConfiguration;$pesterConfiguration.Run.Path = '${workspaceFolder}/src/Tests/Unit/${input:functionName}.Tests.ps1';$pesterConfiguration.CodeCoverage.Enabled = $true;$pesterConfiguration.CodeCoverage.Path = '${workspaceFolder}/src/PoshGram/*/${input:functionName}.ps1';Invoke-Pester -Configuration $pesterConfiguration",
             "problemMatcher": "$pester",
             "presentation": {
                 "echo": false,
@@ -236,7 +236,7 @@
         {
             "label": "DevCC-Single",
             "type": "shell",
-            "command": "Import-Module -Name '${workspaceFolder}/src/PoshGram/PoshGram.psm1';Invoke-Pester '${workspaceFolder}/src/Tests/Unit/${input:functionName}.Tests.ps1' -CodeCoverage '${workspaceFolder}/src/PoshGram/*/${input:functionName}.ps1' -CodeCoverageOutputFile '${workspaceFolder}/cov.xml'",
+            "command": "Import-Module -Name '${workspaceFolder}/src/PoshGram/PoshGram.psm1'; $pesterConfiguration = New-PesterConfiguration;$pesterConfiguration.Run.Path = '${workspaceFolder}/src/Tests/Unit/${input:functionName}.Tests.ps1';$pesterConfiguration.CodeCoverage.Enabled = $true;$pesterConfiguration.CodeCoverage.Path = '${workspaceFolder}/src/PoshGram/*/${input:functionName}.ps1';$pesterConfiguration.CodeCoverage.OutputPath = '${workspaceFolder}/cov.xml';Invoke-Pester -Configuration $pesterConfiguration",
             "problemMatcher": "$pester",
             "presentation": {
                 "echo": false,

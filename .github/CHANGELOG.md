@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.1]
+## [2.2.2]
 
 - Fixed ```Send-TelegramPoll``` bug where Quiz mode answer could not specify first option correctly.
+- Minor spelling corrections throughout
+- Build/dev improvements
+  - Changed Pester configuration from static property to ```New-PesterConfiguration```
+  - Updated VSCode tasks to no longer use legacy Pester parameters
 
 ## [2.2.0]
 

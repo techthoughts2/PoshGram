@@ -32,7 +32,7 @@ function Confirm-URL {
         Write-Verbose -Message 'Confirmed.'
     } #try_Invoke-WebRequest
     catch {
-        Write-Verbose -Message 'Catch on Invoke-WebRequest. This is not neccessarily a bad thing. Checking status code.'
+        Write-Verbose -Message 'Catch on Invoke-WebRequest. This is not necessarily a bad thing. Checking status code.'
         if ([int]$_.Exception.Response.StatusCode -eq 0) {
             Write-Warning -Message "$Uri"
             Write-Warning -Message 'The URL provided does not appear to be valid'

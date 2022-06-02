@@ -78,7 +78,7 @@ InModuleScope PoshGram {
                 { Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat } | Should -Throw
             } #it
 
-            It 'should throw if it cannot successfuly get the file' {
+            It 'should throw if it cannot successfully get the file' {
                 Mock Get-Item {
                     throw 'Fake Error'
                 } #endMock
