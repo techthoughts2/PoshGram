@@ -30,13 +30,13 @@ $galleryDownload = $false # set to false to download from S3
 $modulesToInstall = [System.Collections.ArrayList]::new()
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'Pester'
-            ModuleVersion = '5.3.1'
+            ModuleVersion = '5.3.3'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'InvokeBuild'
-            ModuleVersion = '5.9.7'
+            ModuleVersion = '5.9.10'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
@@ -54,13 +54,13 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'AWS.Tools.Common'
-            ModuleVersion = '4.1.30.0'
+            ModuleVersion = '4.1.98'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'AWS.Tools.SecretsManager'
-            ModuleVersion = '4.1.30.0'
+            ModuleVersion = '4.1.98'
             BucketName    = 'ps-invoke-modules'
             KeyPrefix     = ''
         }))

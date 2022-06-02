@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build/dev improvements
   - Changed Pester configuration from static property to ```New-PesterConfiguration```
   - Updated VSCode tasks to no longer use legacy Pester parameters
+  - Bumped module versions to latest available
 
 ## [2.2.0]
 
