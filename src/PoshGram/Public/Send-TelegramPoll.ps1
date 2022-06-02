@@ -158,6 +158,8 @@
 
     Telegram currently supports questions 1-300 characters
     Telegram currently supports 2-10 options 1-100 characters each
+
+    Quiz answers are 0-based. If the first answer is correct, the answer is 0. If the second answer is correct, the answer is 1, etc.
 .COMPONENT
     PoshGram - https://github.com/techthoughts2/PoshGram
 .FUNCTIONALITY
@@ -275,8 +277,9 @@ function Send-TelegramPoll {
 
     if ($PollType -eq 'quiz') {
         Write-Verbose -Message 'Processing quiz...'
-        if ($null -eq $QuizAnswer -or $QuizAnswer -lt 1 -or $QuizAnswer -gt 10) {
-            throw 'When PollType is quiz, you must supply a QuizAnswer desginator.'
+        Write-Verbose -Message ('Quiz answer: {0}' -f $QuizAnswer)
+        if (-not ($QuizAnswer -ge 0 -and $QuizAnswer -le 9)) {
+            throw 'When PollType is quiz, you must supply a QuizAnswer designator between 0-9.'
         }
         else {
             $Form += @{correct_option_id = $QuizAnswer }

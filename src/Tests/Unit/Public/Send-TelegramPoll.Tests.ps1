@@ -72,19 +72,6 @@ InModuleScope PoshGram {
                 { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
             } #it
 
-            It 'should throw if a quiz type poll is sent without a quiz answer' {
-                $sendTelegramPollSplat = @{
-                    BotToken            = $token
-                    ChatID              = $chat
-                    Question            = $question
-                    Options             = $opt
-                    DisableNotification = $true
-                    ProtectContent      = $true
-                    PollType            = 'quiz'
-                }
-                { Send-TelegramPoll @sendTelegramPollSplat } | Should -Throw
-            } #it
-
             It 'should throw if a quiz type poll is sent with an out of bound quiz answer designator' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
