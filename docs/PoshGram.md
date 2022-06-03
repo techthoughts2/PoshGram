@@ -2,13 +2,13 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 2.2.0
+Help Version: 2.2.2
 Locale: en-US
 ---
 
 # PoshGram Module
 ## Description
-PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Seperate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
+PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
 ## PoshGram Cmdlets
 ### [Get-TelegramStickerPackInfo](Get-TelegramStickerPackInfo.md)

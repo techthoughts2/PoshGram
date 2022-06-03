@@ -141,7 +141,7 @@ function Send-TelegramMediaGroup {
         throw 'Telegram media group requirements not met'
     }
 
-    Write-Verbose -Message 'Forming serialzied JSON for all media files...'
+    Write-Verbose -Message 'Forming serialized JSON for all media files...'
     $form = @{
         chat_id              = $ChatID;
         disable_notification = $DisableNotification.IsPresent

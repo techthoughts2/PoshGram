@@ -257,7 +257,7 @@ Add-BuildTask Test {
     }
     if (Test-Path -Path $script:UnitTestsPath) {
 
-        $pesterConfiguration = [PesterConfiguration]::new()
+        $pesterConfiguration = New-PesterConfiguration
         $pesterConfiguration.run.Path = $script:UnitTestsPath
         $pesterConfiguration.Run.PassThru = $true
         $pesterConfiguration.Run.Exit = $false
@@ -323,7 +323,7 @@ Add-BuildTask DevCC {
     Remove-Module -Name Pester -Force -ErrorAction SilentlyContinue # there are instances where some containers have Pester already in the session
     Import-Module -Name Pester -MinimumVersion $script:MinPesterVersion -MaximumVersion $script:MaxPesterVersion -ErrorAction 'Stop'
 
-    $pesterConfiguration = [PesterConfiguration]::new()
+    $pesterConfiguration = New-PesterConfiguration
     $pesterConfiguration.run.Path = $script:UnitTestsPath
     $pesterConfiguration.CodeCoverage.Enabled = $true
     $pesterConfiguration.CodeCoverage.Path = "$PSScriptRoot\$ModuleName\*\*.ps1"
@@ -515,7 +515,7 @@ Add-BuildTask InfraTest {
         Write-Build White "      Performing Pester Infrastructure Tests in $($invokePesterParams.path)"
 
 
-        $pesterConfiguration = [PesterConfiguration]::new()
+        $pesterConfiguration = New-PesterConfiguration
         $pesterConfiguration.run.Path = $script:InfraTestsPath
         $pesterConfiguration.Run.PassThru = $true
         $pesterConfiguration.Run.Exit = $false

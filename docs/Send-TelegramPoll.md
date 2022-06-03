@@ -408,6 +408,10 @@ Use the BotFather https://t.me/BotFather
 Telegram currently supports questions 1-300 characters
 Telegram currently supports 2-10 options 1-100 characters each
 
+Quiz answers are 0-based.
+If the first answer is correct, the answer is 0.
+If the second answer is correct, the answer is 1, etc.
+
 ## RELATED LINKS
 
 [https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
