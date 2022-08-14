@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.3.0]
 
-- Added support for WEBM stickers
+- Added support for WEBM stickers local
 - ```Send-TelegramURLSticker``` - updated error message if file size too big
 - Build/dev improvements
   - CodeBuild image updates:

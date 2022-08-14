@@ -55,34 +55,34 @@ function Test-URLExtension {
     )
     #------------------------------------------------------------
     $supportedPhotoExtensions = @(
-        'JPG',
-        'JPEG',
-        'PNG',
-        'GIF',
-        'BMP',
-        'WEBP',
-        'SVG',
+        'JPG'
+        'JPEG'
+        'PNG'
+        'GIF'
+        'BMP'
+        'WEBP'
+        'SVG'
         'TIFF'
     )
     $supportedVideoExtensions = @(
         'MP4'
     )
     $supportedAudioExtensions = @(
-        'MP3',
+        'MP3'
         'M4A'
     )
     $supportedAnimationExtensions = @(
         'GIF'
     )
     $supportedDocumentExtensions = @(
-        'PDF',
-        'GIF',
+        'PDF'
+        'GIF'
         'ZIP'
     )
     $supportedStickerExtensions = @(
-        'WEBP',
-        'TGS',
+        'WEBP'
         'WEBM'
+        #'TGS' #* doesn't seem to work for URL uploads
     )
     switch ($Type) {
         Photo {

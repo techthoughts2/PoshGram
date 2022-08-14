@@ -41,7 +41,7 @@
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
     The following sticker types are supported:
-    WEBP, TGS, WEBM
+    WEBP, WEBM
 
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
