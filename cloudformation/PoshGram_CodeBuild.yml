@@ -230,10 +230,10 @@ Resources:
             Effect: Allow
             Principal:
               AWS:
-                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
             Resource:
-              - !Sub 'arn:aws:s3:::${PoshGramTestFiles}'
-              - !Sub 'arn:aws:s3:::${PoshGramTestFiles}/*'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
           # - Sid: DenyUnEncryptedObjectUploads
           #   Effect: Deny
           #   Principal: '*'
@@ -251,12 +251,10 @@ Resources:
             Effect: Deny
             Principal: '*'
             Action: 's3:*'
-            Resource: !Join
-              - ''
-              - - !GetAtt
-                  - PoshGramTestFiles
-                  - Arn
-                - /*
+            Resource:
+              - !Sub
+                - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
+                - { Bucket: !Ref PoshGramTestFiles }
             Condition:
               Bool:
                 'aws:SecureTransport': false
@@ -338,10 +336,10 @@ Resources:
             Effect: Allow
             Principal:
               AWS:
-                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
             Resource:
-              - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}'
-              - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}/*'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}/*'
           # - Sid: DenyUnEncryptedObjectUploads
           #   Effect: Deny
           #   Principal: '*'
@@ -359,12 +357,10 @@ Resources:
             Effect: Deny
             Principal: '*'
             Action: 's3:*'
-            Resource: !Join
-              - ''
-              - - !GetAtt
-                  - PoshGramURLTestFiles
-                  - Arn
-                - /*
+            Resource:
+              - !Sub
+                - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
+                - { Bucket: !Ref PoshGramURLTestFiles }
             Condition:
               Bool:
                 'aws:SecureTransport': false
@@ -389,7 +385,7 @@ Resources:
       Path: /
       # PermissionsBoundary: String
       ManagedPolicyArns:
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/PoshGramTokenRetrieve'
+        - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/PoshGramTokenRetrieve'
       Policies:
         - PolicyName: CBCloudWatchPublishing
           PolicyDocument:
@@ -401,7 +397,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource:
-                  - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/PoshGram*"
+                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/PoshGram*"
         - PolicyName: CBReportAccess
           PolicyDocument:
             Version: '2012-10-17'
@@ -417,7 +413,7 @@ Resources:
                   - codebuild:BatchPutCodeCoverages
                   - codebuild:BatchPutTestCases
                 Resource:
-                  - !Sub 'arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/PoshGram*'
+                  - !Sub 'arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/PoshGram*'
         - PolicyName: PoshGramS3BucketAccess
           PolicyDocument:
             Version: '2012-10-17'
@@ -457,12 +453,12 @@ Resources:
                   - s3:GetBucketLocation
                   - s3:GetObjectVersion
                 Resource:
-                  - !Sub 'arn:aws:s3:::${PoshGramTestFiles}'
-                  - !Sub 'arn:aws:s3:::${PoshGramTestFiles}/*'
-                  - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}'
-                  - !Sub 'arn:aws:s3:::${PoshGramURLTestFiles}/*'
-                  - 'arn:aws:s3:::ps-invoke-modules'
-                  - 'arn:aws:s3:::ps-invoke-modules/*'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}/*'
+                  - !Sub 'arn:${AWS::Partition}:s3:::ps-invoke-modules'
+                  - !Sub 'arn:${AWS::Partition}:s3:::ps-invoke-modules/*'
 
   # The CodeBuild Project configuration
   # https://docs.aws.amazon.com/AWScloudformation/latest/UserGuide/aws-resource-codebuild-project.html
@@ -918,14 +914,7 @@ Outputs:
 
   MCBWpwshURL:
     Description: main Windows - PowerShell CodeBuild URL
-    Value:
-      Fn::Join:
-        - ""
-        - - https://console.aws.amazon.com/codebuild/home?region=
-          - Ref: AWS::Region
-          - "#/projects/"
-          - Ref: MCBWpwsh
-          - "/view"
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${MCBWpwsh}/view"
 
   MCBLpwshName:
     Description: The name of the main Linux - PowerShell CodeBuild Project.
@@ -933,14 +922,7 @@ Outputs:
 
   MCBLpwshURL:
     Description: main Linux - PowerShell CodeBuild URL
-    Value:
-      Fn::Join:
-        - ""
-        - - https://console.aws.amazon.com/codebuild/home?region=
-          - Ref: AWS::Region
-          - "#/projects/"
-          - Ref: MCBLpwsh
-          - "/view"
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${MCBLpwsh}/view"
 
   # -------------------------------------------------------------
   # ENHANCEMENTS
@@ -950,14 +932,7 @@ Outputs:
 
   ECBWpwshURL:
     Description: Enhancements Windows - PowerShell CodeBuild URL
-    Value:
-      Fn::Join:
-        - ""
-        - - https://console.aws.amazon.com/codebuild/home?region=
-          - Ref: AWS::Region
-          - "#/projects/"
-          - Ref: ECBWpwsh
-          - "/view"
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${ECBWpwsh}/view"
 
   ECBLpwshName:
     Description: The name of the Enhancements Linux - PowerShell CodeBuild Project.
@@ -965,12 +940,5 @@ Outputs:
 
   ECBLpwshURL:
     Description: Enhancements Linux - PowerShell CodeBuild URL
-    Value:
-      Fn::Join:
-        - ""
-        - - https://console.aws.amazon.com/codebuild/home?region=
-          - Ref: AWS::Region
-          - "#/projects/"
-          - Ref: ECBLpwsh
-          - "/view"
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${ECBLpwsh}/view"
   # -------------------------------------------------------------
