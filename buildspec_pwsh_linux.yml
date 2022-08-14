@@ -46,6 +46,9 @@ phases:
       - aws s3 cp s3://$TESTFILES_S3_BUCKET/root_beer.mp4 /Test/VideoGroup/root_beer.mp4 --quiet
       - aws s3 cp s3://$TESTFILES_S3_BUCKET/Intro.mp4 /Test/Videos/Intro.mp4 --quiet
       - aws s3 cp s3://$TESTFILES_S3_BUCKET/picard.webp /Test/Stickers/picard.webp --quiet
+      - aws s3 cp s3://$TESTFILES_S3_BUCKET/picard.webp /Test/Stickers/videosticker.webm --quiet
+      - aws s3 cp s3://$TESTFILES_S3_BUCKET/picard.webp /Test/Stickers/videosticker2.webm --quiet
+      - aws s3 cp s3://$TESTFILES_S3_BUCKET/picard.webp /Test/Stickers/animatedsticker.tgs --quiet
       #- pwsh -command 'Invoke-Build -File .\src\PoshGram.build.Settings.ps1 -Task ValidateUniqueModuleVersion'
   build:
     commands:
