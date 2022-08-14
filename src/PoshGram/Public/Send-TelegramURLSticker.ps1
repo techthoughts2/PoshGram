@@ -103,7 +103,7 @@ function Send-TelegramURLSticker {
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $StickerURL
     if ($fileSizeEval -eq $false) {
-        throw 'File extension is not a supported Sticker type'
+        throw 'File size does not meet Telegram requirements'
     } #if_stickerSize
     else {
         Write-Verbose -Message 'File size verified.'
