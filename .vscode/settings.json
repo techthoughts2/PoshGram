@@ -3,6 +3,7 @@
     "powershell.codeFormatting.preset": "Stroustrup",
     "cSpell.words": [
         "Allman",
+        "animatedsticker",
         "backoff",
         "botname",
         "buildspec",
@@ -12,6 +13,8 @@
         "customlog",
         "datetime",
         "diagvresults",
+        "fakefile",
+        "fakepath",
         "geordi",
         "getbytes",
         "getidsbot",
@@ -40,7 +43,9 @@
         "telegramx",
         "Tobu",
         "troi",
+        "videosticker",
         "videourl",
+        "WEBM",
         "webp",
         "wontfix",
         "worf"

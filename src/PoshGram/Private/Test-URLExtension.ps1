@@ -81,7 +81,8 @@ function Test-URLExtension {
     )
     $supportedStickerExtensions = @(
         'WEBP',
-        'TGS'
+        'TGS',
+        'WEBM'
     )
     switch ($Type) {
         Photo {

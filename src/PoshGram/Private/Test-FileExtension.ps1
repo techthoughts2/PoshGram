@@ -78,7 +78,8 @@ function Test-FileExtension {
     )
     $supportedStickerExtensions = @(
         'WEBP',
-        'TGS'
+        'TGS',
+        'WEBM'
     )
     switch ($Type) {
         Photo {

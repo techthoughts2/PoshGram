@@ -29,6 +29,7 @@ InModuleScope PoshGram {
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'sticker.webp'
+                    Extension     = 'webp'
                 }
             } #endMock
             Mock Invoke-RestMethod -MockWith {
