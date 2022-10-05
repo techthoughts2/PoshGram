@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Updated to use .NET 6.0
   - `buildspec_pwsh_linux.yml`
     - Updated to use .NET 6.0
+  - Minor testing updates
+    - Removed Assert-MockCalled references
 
 ## [2.2.2]
 
