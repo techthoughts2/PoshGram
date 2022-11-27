@@ -13,6 +13,22 @@ InModuleScope PoshGram {
     Describe 'Infrastructure Tests' -Tag Infrastructure {
         BeforeAll {
             #$WarningPreference = 'SilentlyContinue'
+            #//////////////////////////////////////////////////////////////////////////
+            if ($env:CODEBUILD_PROJECT_UUID) {
+                # we are in a CodeBuild environment
+                # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
+                Import-Module AWS.Tools.SecretsManager
+                $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
+                $sObj = $s.SecretString | ConvertFrom-Json
+                $token = $sObj.PoshBotToken
+                $channel = $sObj.PoshChannel
+            }
+            else {
+                # ! if running locally you must provide the bot token and chat id for these tests to run
+                # $token = ''
+                # $channel = ''
+            }
+            #//////////////////////////////////////////////////////////////////////////
             $latitude = 37.621313
             $longitude = -122.378955
             $phone = '1-222-222-2222'
@@ -51,6 +67,8 @@ InModuleScope PoshGram {
             $audioURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
             $animationURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/jean.gif"
             $stickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/picard.webp"
+            $animatedStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/animatedsticker.tgs"
+            $videoStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/videosticker.webm"
             $inlineRow1 = @(
                 @{
                     text = "`u{1F517} Visit"
@@ -92,16 +110,7 @@ InModuleScope PoshGram {
                 )
                 one_time_keyboard = $true
             }
-            #//////////////////////////////////////////////////////////////////////////
-            # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
-            # ! this section will need to be commented out if you want to run locally
-            Import-Module AWS.Tools.SecretsManager
-            $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-            $sObj = $s.SecretString | ConvertFrom-Json
-            $token = $sObj.PoshBotToken
-            $channel = $sObj.PoshChannel
-            #//////////////////////////////////////////////////////////////////////////
-            #referenced by AWS CodeBuild
+            # ! these infra tests require pre-populated LOCAL files to run successfully
             if ($PSVersionTable.Platform -eq 'Win32NT') {
                 $file = 'C:\Test\Photos\Photo.jpg'
                 $file2 = 'C:\Test\Documents\customlog.txt'
@@ -135,6 +144,8 @@ InModuleScope PoshGram {
                     $file7
                 )
                 $stickerFile = 'C:\Test\Stickers\picard.webp'
+                $animatedStickerFile = 'C:\Test\Stickers\animatedsticker.tgs'
+                $videoStickerFile = 'C:\Test\Stickers\videosticker.webm'
             } #if_windows
             elseif ($PSVersionTable.Platform -eq 'Unix') {
                 $file = '/Test/Photos/Photo.jpg'
@@ -169,19 +180,14 @@ InModuleScope PoshGram {
                     $file7
                 )
                 $stickerFile = '/Test/Stickers/picard.webp'
+                $animatedStickerFile = '/Test/Stickers/animatedsticker.tgs'
+                $videoStickerFile = '/Test/Stickers/videosticker.webm'
             } #elseif_Linux
             else {
                 throw
             } #else
 
         } #before_all
-
-        BeforeEach {
-            # ! these infra tests require pre-populated LOCAL files to run successfully
-            # ! you must also provide the bot token and chat id for these tests to run
-            #$token = ''
-            #$channel = ''
-        } #before_each
 
         Context 'Get-TelegramStickerPackInfo' {
             It 'Should return valid sticker pack information' {
@@ -407,6 +413,7 @@ InModuleScope PoshGram {
         } #context_Send-TelegramLocalPhoto
 
         Context 'Send-TelegramLocalSticker' {
+
             It 'Should return with ok:true when a local sticker message is successfully sent' {
                 $sendTelegramLocalStickerSplat = @{
                     BotToken            = $token
@@ -435,6 +442,65 @@ InModuleScope PoshGram {
 
                 $eval.ok | Should -Be 'True'
             } #it
+
+            It 'Should return with ok:true when a local animated sticker message is successfully sent' {
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    StickerPath         = $animatedStickerFile
+                    DisableNotification = $true
+                    ProtectContent      = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 20
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+            } #it
+
+            It 'Should return with ok:true when a local video sticker message is successfully sent' {
+                $sendTelegramLocalStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    StickerPath         = $videoStickerFile
+                    DisableNotification = $true
+                    ProtectContent      = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 20
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+            } #it
+
         } #context_Send-TelegramLocalSticker
 
         Context 'Send-TelegramLocalVideo' {
@@ -1174,6 +1240,7 @@ with MarkdownV2 style formatting'
         } #context_Send-TelegramLocalPhoto
 
         Context 'Send-TelegramURLSticker' {
+
             It 'Should return with ok:true when a sticker by URL is successfully sent' {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
@@ -1202,6 +1269,66 @@ with MarkdownV2 style formatting'
 
                 $eval.ok | Should -Be 'True'
             } #it
+
+            #* doesn't seem to work for URLs yet
+            # It 'Should return with ok:true when an animated sticker by URL is successfully sent' {
+            #     $sendTelegramURLStickerSplat = @{
+            #         BotToken            = $token
+            #         ChatID              = $channel
+            #         StickerURL          = $animatedStickerURL
+            #         DisableNotification = $true
+            #         ProtectContent      = $true
+            #     }
+
+            #     $apiTest = $false
+            #     $run = 0
+            #     do {
+            #         $run++
+            #         $eval = $null
+            #         $backoffTime = $null
+            #         $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
+            #         if ($eval.error_code -eq 429) {
+            #             $backoffTime = $eval.parameters.retry_after + 20
+            #             Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+            #             Start-Sleep -Seconds $backoffTime
+            #         }
+            #         else {
+            #             $apiTest = $true
+            #         }
+            #     } while ($apiTest -eq $false -and $run -le 3)
+
+            #     $eval.ok | Should -Be 'True'
+            # } #it
+
+            It 'Should return with ok:true when a video sticker by URL is successfully sent' {
+                $sendTelegramURLStickerSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    StickerURL          = $videoStickerURL
+                    DisableNotification = $true
+                    ProtectContent      = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 20
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+            } #it
+
         } #context_Send-TelegramURLSticker
 
         Context 'Send-TelegramURLVideo' {

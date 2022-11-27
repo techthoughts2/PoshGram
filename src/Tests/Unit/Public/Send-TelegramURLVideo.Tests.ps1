@@ -118,7 +118,7 @@ InModuleScope PoshGram {
                     Caption             = $false
                 }
                 { Send-TelegramURLVideo @sendTelegramURLVideoSplat
-                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+                    Should -Invoke -CommandName Write-Warning -Times 1 -Scope It }
             } #it
 
             It 'should return the exception if the API returns an error' {

@@ -187,6 +187,7 @@ $test = "I am a test"
 
 * [PoshGram Video Demo](https://youtu.be/OfyRVl7YThw)
 * [PoshGram Blog Write-up](https://www.techthoughts.info/poshgram-powershell-module-for-telegram/)
+* [Bot Code Examples](https://core.telegram.org/bots/samples)
 
 For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

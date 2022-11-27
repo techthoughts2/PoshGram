@@ -39,7 +39,8 @@ InModuleScope PoshGram {
             )
             $supportedStickerExtensions = @(
                 'WEBP',
-                'TGS'
+                'TGS',
+                'WEBM'
             )
         } #before_each
 
@@ -92,7 +93,7 @@ InModuleScope PoshGram {
             } #foreach
         } #context_Animation
 
-        Context 'Animation' {
+        Context 'Sticker' {
             foreach ($extension in $supportedStickerExtensions) {
                 It "should return true when $extension extension is provided" {
                     Test-FileExtension -FilePath c:\fakepath\fakefile.$extension `

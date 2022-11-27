@@ -57,13 +57,13 @@ function Test-FileExtension {
     )
     #------------------------------------------------------------
     $supportedPhotoExtensions = @(
-        'JPG',
-        'JPEG',
-        'PNG',
-        'GIF',
-        'BMP',
-        'WEBP',
-        'SVG',
+        'JPG'
+        'JPEG'
+        'PNG'
+        'GIF'
+        'BMP'
+        'WEBP'
+        'SVG'
         'TIFF'
     )
     $supportedVideoExtensions = @(
@@ -77,8 +77,9 @@ function Test-FileExtension {
         'GIF'
     )
     $supportedStickerExtensions = @(
-        'WEBP',
+        'WEBP'
         'TGS'
+        'WEBM'
     )
     switch ($Type) {
         Photo {

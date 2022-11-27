@@ -40,6 +40,9 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
+    The following sticker types are supported:
+    WEBP, WEBM
+
     How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
     How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
 .COMPONENT
@@ -100,7 +103,7 @@ function Send-TelegramURLSticker {
     Write-Verbose -Message 'Verifying URL presence and file size...'
     $fileSizeEval = Test-URLFileSize -URL $StickerURL
     if ($fileSizeEval -eq $false) {
-        throw 'File extension is not a supported Sticker type'
+        throw 'File size does not meet Telegram requirements'
     } #if_stickerSize
     else {
         Write-Verbose -Message 'File size verified.'

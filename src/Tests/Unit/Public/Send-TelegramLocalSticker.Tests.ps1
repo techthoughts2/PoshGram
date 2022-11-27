@@ -29,6 +29,7 @@ InModuleScope PoshGram {
                     LastWriteTime = '06/17/16     00:19'
                     Length        = '1902'
                     Name          = 'sticker.webp'
+                    Extension     = 'webp'
                 }
             } #endMock
             Mock Invoke-RestMethod -MockWith {
@@ -112,7 +113,7 @@ InModuleScope PoshGram {
                     ErrorAction = 'SilentlyContinue'
                 }
                 { Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
-                    Assert-MockCalled -CommandName Write-Warning -Times 1 -Scope It }
+                    Should -Invoke -CommandName Write-Warning -Times 1 -Scope It }
             } #it
 
             It 'should return the exception if the API returns an error' {

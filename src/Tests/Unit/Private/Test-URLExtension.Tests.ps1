@@ -49,8 +49,9 @@ InModuleScope PoshGram {
                 'GIF'
             )
             $supportedStickerExtensions = @(
-                'WEBP',
-                'TGS'
+                'WEBP'
+                'WEBM'
+                # 'TGS'
             )
             #-------------------------------------------------------------------------
         } #before_each
