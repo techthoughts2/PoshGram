@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - Updated CodeBuild containers from `aws/codebuild/standard:6.0` to `aws/codebuild/standard:7.0`
     - Moved `CHANGELOG.md` from `.github` to `docs`
     - `install_modules.ps1` - bumped module versions to latest
+    - All Infra/Infrastructure references changed to Integration
 - Misc
     - Updated `settings.json` for tab requirements to support Readthedocs
     - Added `SECURITY.md`

@@ -10,7 +10,7 @@ $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleNam
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 InModuleScope PoshGram {
-    Describe 'Infrastructure Tests' -Tag Infrastructure {
+    Describe 'Integration Tests' -Tag Infrastructure {
         BeforeAll {
             #$WarningPreference = 'SilentlyContinue'
             #//////////////////////////////////////////////////////////////////////////
@@ -1421,5 +1421,5 @@ with MarkdownV2 style formatting'
             } #it
         } #context_Test-BotToken
 
-    } #describe_InfraTests
+    } #describe_IntegrationTests
 } #scope_PoshGram
