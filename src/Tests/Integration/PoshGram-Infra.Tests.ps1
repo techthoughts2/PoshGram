@@ -18,9 +18,9 @@ InModuleScope PoshGram {
                 # we are in a CodeBuild environment
                 # AWS Systems Manager Parameter Store retrieval - for use in AWS Codebuild deployment
                 Import-Module AWS.Tools.SimpleSystemsManagement
-                $sToken = Get-SSMParameter -Name 'telegramtoken' -WithDecryption -Region us-west-2
+                $sToken = Get-SSMParameter -Name 'telegramtoken' -WithDecryption $true -Region us-west-2
                 $token = $sToken.Value
-                $sChannel = Get-SSMParameter -Name 'telegramchannel' -WithDecryption -Region us-west-2
+                $sChannel = Get-SSMParameter -Name 'telegramchannel' -WithDecryption $true -Region us-west-2
                 $channel = $sChannel.Value
             }
             else {
