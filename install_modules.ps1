@@ -59,7 +59,7 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
             KeyPrefix     = ''
         }))
 $null = $modulesToInstall.Add(([PSCustomObject]@{
-            ModuleName    = 'AWS.Tools.SecretsManager'
+            ModuleName    = 'AWS.Tools.SimpleSystemsManagement'
             ModuleVersion = '4.1.482'
             BucketName    = 'PSGallery'
             KeyPrefix     = ''

@@ -16,6 +16,13 @@ InModuleScope PoshGram {
             #//////////////////////////////////////////////////////////////////////////
             if ($env:CODEBUILD_PROJECT_UUID) {
                 # we are in a CodeBuild environment
+                # AWS Systems Manager Parameter Store retrieval - for use in AWS Codebuild deployment
+                Import-Module AWS.Tools.SSM
+                $s = Get-SSMParameter -Name 'telegramtoken' -WithDecryption -Region us-west-2
+                $token = $s.Value
+                $s = Get-SSMParameter -Name 'telegramchannel' -WithDecryption -Region us-west-2
+                $channel = $s.Value
+
                 # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
                 Import-Module AWS.Tools.SecretsManager
                 $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
