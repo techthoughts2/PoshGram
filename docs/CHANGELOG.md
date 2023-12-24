@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `install_modules.ps1` - bumped module versions to latest
 - Misc
     - Updated `settings.json` for tab requirements to support Readthedocs
+    - Added `SECURITY.md`
     - Updated `LICENSE` year
 
 ## [2.3.0]
