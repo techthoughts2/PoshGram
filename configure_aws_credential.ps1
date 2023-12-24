@@ -1,12 +1,12 @@
 <#
-    .SYNOPSIS
-    This script is used in AWS CodeBuild to configure the default AWS
-    Credentials for use by the AWS CLI and the AWS Powershell module.
-
-    By default, the AWS PowerShell Module does not know about looking up
-    an AWS Container's credentials path, so this works around that issue.
+.SYNOPSIS
+    This script is used in AWS CodeBuild to configure the default AWS Credentials for use by the AWS CLI and the AWS Powershell module.
+.DESCRIPTION
+    By default, the AWS PowerShell Module does not know about looking up an AWS Container's credentials path, so this works around that issue.
+.NOTES
+    This script enables AWSPowerShell cmdlets in your CodeBuild to interact with and access other AWS resources in your account.
 #>
-'Configurating AWS credentials'
+'Configuring AWS credentials'
 
 '  - Retrieving temporary credentials from metadata'
 $uri = 'http://169.254.170.2{0}' -f $env:AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
