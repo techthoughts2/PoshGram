@@ -410,6 +410,10 @@ Resources:
                 Resource:
                   - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/telegramchannel"
                   - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/telegramtoken"
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                Resource: !Sub "arn:${AWS::Partition}:kms:${AWS::Region}:${AWS::AccountId}:key/a4dbe70b-71be-4b49-920a-44dbe6e9405b"
         - PolicyName: CBReportAccess
           PolicyDocument:
             Version: '2012-10-17'
