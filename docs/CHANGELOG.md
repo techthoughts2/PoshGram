@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Module Changes
 - Build Updates
+    - AWS Deployment Updates
+        - Updated CodeBuild containers from `aws/codebuild/standard:6.0` to `aws/codebuild/standard:7.0`
     - Moved `CHANGELOG.md` from `.github` to `docs`
 - Misc
     - Updated `settings.json` for tab requirements to support Readthedocs
