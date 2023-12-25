@@ -21,3 +21,11 @@ install:
   - pwsh: . .\actions_bootstrap.ps1
 build_script:
   - pwsh: Invoke-Build -File .\src\PoshGram.build.ps1 -Task TestLocal
+
+# branch-specific build configuration
+# https://www.appveyor.com/docs/build-configuration/#branch-specific-build-configuration
+for:
+  branches:
+    only:
+      - main
+      - Enhancements
