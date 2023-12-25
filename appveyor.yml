@@ -4,6 +4,20 @@ version: 1.0.{build}
 # https://www.appveyor.com/docs/build-configuration/#specializing-matrix-job-configuration
 # https://www.appveyor.com/docs/appveyor-yml/
 
+branches:
+  only:
+    - main
+    - Enhancements
+
+# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea)
+skip_tags: true
+
+skip_commits:
+  files:
+    - docs/*
+    - media/*
+  message: /updated readme.*|update readme.*s/
+
 image:
   - macOS
 
@@ -13,22 +27,3 @@ install:
   - pwsh: . .\actions_bootstrap.ps1
 build_script:
   - pwsh: Invoke-Build -File .\src\PoshGram.build.ps1 -Task TestLocal
-
-# branch-specific build configuration
-# https://www.appveyor.com/docs/build-configuration/#branch-specific-build-configuration
-for:
--
-  matrix:
-    only:
-      - image: macOS
-
-  skip_commits:
-    files:
-      - docs/*
-      - media/*
-    message: /updated readme.*|update readme.*s/
-
-  branches:
-    only:
-      - main
-      - Enhancements
