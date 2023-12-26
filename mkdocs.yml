@@ -75,8 +75,8 @@ theme:
     #     name: Switch to light mode
 nav:
   - Home: index.md
-  - Usage:
-  - Functions:
-  - Getting An API Key:
+  # - Usage:
+  # - Functions:
+  # - Getting An API Key:
   - FAQ: PoshGram-FAQ.md
   - Change Log: CHANGELOG.md
