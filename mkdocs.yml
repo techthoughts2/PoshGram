@@ -75,8 +75,39 @@ theme:
     #     name: Switch to light mode
 nav:
   - Home: index.md
-  # - Usage:
-  # - Functions:
-  # - Getting An API Key:
+  - Usage:
+    - Telegram Basics: PoshGram-Basics.md
+    - Send stickers using PoshGram: PoshGram-Sticker-Info.md
+  - Functions:
+    - Send-TelegramTextMessage: Send-TelegramTextMessage.md
+    - Send-TelegramContact: Send-TelegramContact.md
+    - Send-TelegramDice: Send-TelegramDice.md
+    - Send-TelegramPoll: Send-TelegramPoll.md
+    - Send-TelegramLocation: Send-TelegramLocation.md
+    - Send-TelegramVenue: Send-TelegramVenue.md
+    - Test-BotToken: Test-BotToken.md
+    - Attachments:
+      - Send-TelegramMediaGroup: Send-TelegramMediaGroup.md
+      - Animation:
+        - Send-TelegramLocalAnimation: Send-TelegramLocalAnimation.md
+        - Send-TelegramURLAnimation: Send-TelegramURLAnimation.md
+      - Audio:
+        - Send-TelegramLocalAudio: Send-TelegramLocalAudio.md
+        - Send-TelegramURLAudio: Send-TelegramURLAudio.md
+      - Document:
+        - Send-TelegramLocalDocument: Send-TelegramLocalDocument.md
+        - Send-TelegramURLDocument: Send-TelegramURLDocument.md
+      - Photo:
+        - Send-TelegramLocalPhoto: Send-TelegramLocalPhoto.md
+        - Send-TelegramURLPhoto: Send-TelegramURLPhoto.md
+      - Video:
+        - Send-TelegramLocalVideo: Send-TelegramLocalVideo.md
+        - Send-TelegramURLVideo: Send-TelegramURLVideo.md
+    - Stickers:
+        - Get-TelegramStickerPackInfo: Get-TelegramStickerPackInfo.md
+        - Send-TelegramSticker: Send-TelegramSticker.md
+        - Send-TelegramLocalSticker: Send-TelegramLocalSticker.md
+        - Send-TelegramURLSticker: Send-TelegramURLSticker.md
+  - Getting An API Key: TelegramAPI.md
   - FAQ: PoshGram-FAQ.md
   - Change Log: CHANGELOG.md
