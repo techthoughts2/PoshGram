@@ -1,14 +1,16 @@
 <#
 .Synopsis
-    Sends Telegram text message via Bot API
+    Send a text message via Telegram Bot API.
 .DESCRIPTION
     Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
+
+    Interfaces with the Telegram Bot API to send text messages to a specified Telegram chat. It supports various messaging options, including different parse modes, message delivery options, and custom keyboards.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
     Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
-    Sends text message via Telegram API
+    Sends text message via Telegram Bot API.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
@@ -29,7 +31,7 @@
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API with properly formatted default HTML syntax.
+    Sends a text message through the Telegram Bot API using HTML for text formatting. This example illustrates how to apply various HTML tags like bold, italic, underline, strikethrough, and more to create richly formatted messages.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chat = '-nnnnnnnnn'
@@ -51,6 +53,8 @@
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
     Sends text message via Telegram API with properly formatted MarkdownV2 syntax.
+
+    Sends a text message via the Telegram Bot API using MarkdownV2 syntax for text formatting. This example showcases the use of various MarkdownV2 formatting options, such as bold, italic, underline, strikethrough, and more, to create richly formatted messages.
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
@@ -60,7 +64,7 @@
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API using MarkdownV2 with an underlined word and a properly escaped character.
+    Sends text message via Telegram Bot API using MarkdownV2 syntax for text formatting. This example showcases an underlined word and a properly escaped character.
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
@@ -70,7 +74,7 @@
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API with two properly escaped special character (!) and emojis.
+    Sends text message via Telegram Bot API using MarkdownV2 syntax for text formatting. This example showcases two properly escaped special character (!) and use of emojis.
 .EXAMPLE
     $inlineRow1 = @(
     @{
@@ -99,7 +103,6 @@
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
     Sends text message with an inline keyboard right next to the message it belongs to.
-    See https://core.telegram.org/bots/api#inlinekeyboardbutton for additional details for forming inline keyboards.
 .EXAMPLE
     $row1 = @(
         @{
@@ -127,7 +130,6 @@
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
     Sends text message with a custom keyboard.
-    See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken        = $botToken
@@ -137,7 +139,7 @@
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
-    Sends text message via Telegram API with protected content.
+    Sends text message via Telegram Bot API and enables the 'ProtectContent' feature. When 'ProtectContent' is set to $true, it prevents the message from being forwarded or saved. This is useful for sending sensitive or confidential information that should remain within the confines of the original chat.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -159,14 +161,17 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
     Markdown Style: This is a legacy mode, retained for backward compatibility.
     When using Markdown/Markdownv2 you must properly escape characters.
     Certain characters in Telegram must be escaped with the preceding character '\' - see examples.
+
+    See https://core.telegram.org/bots/api#inlinekeyboardbutton for additional details for forming inline keyboards.
+    See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters                  Type                Required    Description
     chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -177,7 +182,7 @@
     reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
     reply_markup                KeyboardMarkup      Optional    Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramTextMessage/
 .LINK
     https://core.telegram.org/bots/api#sendmessage
 .LINK
@@ -186,6 +191,10 @@
     https://core.telegram.org/bots/api#markdownv2-style
 .LINK
     https://core.telegram.org/bots/api#markdown-style
+.LINK
+    https://core.telegram.org/bots/api#inlinekeyboardbutton
+.LINK
+    https://core.telegram.org/bots/api#replykeyboardmarkup
 .LINK
     https://core.telegram.org/bots/api
 #>

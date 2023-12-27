@@ -1,14 +1,14 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramTextMessage/
 schema: 2.0.0
 ---
 
 # Send-TelegramTextMessage
 
 ## SYNOPSIS
-Sends Telegram text message via Bot API
+Send a text message via Telegram Bot API.
 
 ## SYNTAX
 
@@ -21,6 +21,9 @@ Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <Str
 Uses Telegram Bot API to send text message to specified Telegram chat.
 Several options can be specified to adjust message parameters.
 
+Interfaces with the Telegram Bot API to send text messages to a specified Telegram chat.
+It supports various messaging options, including different parse modes, message delivery options, and custom keyboards.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -30,7 +33,7 @@ $chat = '-nnnnnnnnn'
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
-Sends text message via Telegram API
+Sends text message via Telegram Bot API.
 
 ### EXAMPLE 2
 ```
@@ -54,7 +57,8 @@ $sendTelegramTextMessageSplat = @{
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
-Sends text message via Telegram API with properly formatted default HTML syntax.
+Sends a text message through the Telegram Bot API using HTML for text formatting.
+This example illustrates how to apply various HTML tags like bold, italic, underline, strikethrough, and more to create richly formatted messages.
 
 ### EXAMPLE 3
 ```
@@ -80,6 +84,9 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
 Sends text message via Telegram API with properly formatted MarkdownV2 syntax.
 
+Sends a text message via the Telegram Bot API using MarkdownV2 syntax for text formatting.
+This example showcases the use of various MarkdownV2 formatting options, such as bold, italic, underline, strikethrough, and more, to create richly formatted messages.
+
 ### EXAMPLE 4
 ```
 $sendTelegramTextMessageSplat = @{
@@ -91,7 +98,8 @@ $sendTelegramTextMessageSplat = @{
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
-Sends text message via Telegram API using MarkdownV2 with an underlined word and a properly escaped character.
+Sends text message via Telegram Bot API using MarkdownV2 syntax for text formatting.
+This example showcases an underlined word and a properly escaped character.
 
 ### EXAMPLE 5
 ```
@@ -104,7 +112,8 @@ $sendTelegramTextMessageSplat = @{
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
-Sends text message via Telegram API with two properly escaped special character (!) and emojis.
+Sends text message via Telegram Bot API using MarkdownV2 syntax for text formatting.
+This example showcases two properly escaped special character (!) and use of emojis.
 
 ### EXAMPLE 6
 ```
@@ -136,7 +145,6 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
 Sends text message with an inline keyboard right next to the message it belongs to.
-See https://core.telegram.org/bots/api#inlinekeyboardbutton for additional details for forming inline keyboards.
 
 ### EXAMPLE 7
 ```
@@ -167,7 +175,6 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
 Sends text message with a custom keyboard.
-See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
 
 ### EXAMPLE 8
 ```
@@ -180,7 +187,9 @@ $sendTelegramTextMessageSplat = @{
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
-Sends text message via Telegram API with protected content.
+Sends text message via Telegram Bot API and enables the 'ProtectContent' feature.
+When 'ProtectContent' is set to $true, it prevents the message from being forwarded or saved.
+This is useful for sending sensitive or confidential information that should remain within the confines of the original chat.
 
 ## PARAMETERS
 
@@ -318,18 +327,19 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Markdown Style: This is a legacy mode, retained for backward compatibility.
 When using Markdown/Markdownv2 you must properly escape characters.
 Certain characters in Telegram must be escaped with the preceding character '\' - see examples.
 
+See https://core.telegram.org/bots/api#inlinekeyboardbutton for additional details for forming inline keyboards.
+See https://core.telegram.org/bots/api#replykeyboardmarkup for additional details for forming custom keyboards.
+
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramTextMessage/](https://poshgram.readthedocs.io/en/latest/Send-TelegramTextMessage/)
 
 [https://core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage)
 
@@ -338,6 +348,10 @@ Certain characters in Telegram must be escaped with the preceding character '\' 
 [https://core.telegram.org/bots/api#markdownv2-style](https://core.telegram.org/bots/api#markdownv2-style)
 
 [https://core.telegram.org/bots/api#markdown-style](https://core.telegram.org/bots/api#markdown-style)
+
+[https://core.telegram.org/bots/api#inlinekeyboardbutton](https://core.telegram.org/bots/api#inlinekeyboardbutton)
+
+[https://core.telegram.org/bots/api#replykeyboardmarkup](https://core.telegram.org/bots/api#replykeyboardmarkup)
 
 [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 

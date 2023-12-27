@@ -6,6 +6,9 @@ TBD
 
 TBD
 
+   How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
+    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+
 ### How to get a Telegram Bot API Key
 
 - To learn how to create and set up a bot:
