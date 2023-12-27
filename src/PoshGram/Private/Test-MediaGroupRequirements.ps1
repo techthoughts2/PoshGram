@@ -17,7 +17,7 @@
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     Telegram currently supports a 50MB file size for bots
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 #>
 function Test-MediaGroupRequirements {
     [CmdletBinding()]

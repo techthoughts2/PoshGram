@@ -15,7 +15,7 @@
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
     Telegram currently supports 0-200 characters with at most 2 line feeds after entities parsing
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 #>
 function Test-Explanation {
     [CmdletBinding()]

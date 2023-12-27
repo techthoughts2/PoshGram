@@ -79,13 +79,13 @@
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
     Markdown Style: This is a legacy mode, retained for backward compatibility.
     When using Markdown/Markdownv2 you must properly escape characters.
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -98,7 +98,7 @@
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramURLVideo
 .LINK
     https://core.telegram.org/bots/api#sendvideo
 .LINK

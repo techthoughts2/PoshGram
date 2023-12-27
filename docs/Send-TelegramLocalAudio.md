@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAudio
 schema: 2.0.0
 ---
 
@@ -264,14 +264,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 Your audio must be in the .mp3 format.
 Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAudio](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAudio)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
 

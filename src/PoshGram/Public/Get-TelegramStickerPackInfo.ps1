@@ -16,8 +16,8 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
     Some sticker authors use the same emoji for several of their stickers.
 
@@ -35,12 +35,12 @@
 
     To find the name of a sticker pack use the telegram app to share the sticker pack. This will provide a link which contains the sticker pack name.
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameter               Type                    Required    Description
     name                    String                  Yes         Name of the sticker set
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md
+    https://poshgram.readthedocs.io/en/latest/Get-TelegramStickerPackInfo
 .LINK
     https://core.telegram.org/bots/api#getstickerset
 .LINK

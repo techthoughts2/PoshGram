@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramMediaGroup
 schema: 2.0.0
 ---
 
@@ -193,18 +193,15 @@ Telegram clients support mp4 videos
 The following audio types are supported:
 MP3, M4A
 
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ?
 This was really hard to make.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramMediaGroup](https://poshgram.readthedocs.io/en/latest/Send-TelegramMediaGroup)
 
 [https://core.telegram.org/bots/api#sendmediagroup](https://core.telegram.org/bots/api#sendmediagroup)
 

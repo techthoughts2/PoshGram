@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll
 schema: 2.0.0
 ---
 
@@ -400,10 +400,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Telegram currently supports questions 1-300 characters
 Telegram currently supports 2-10 options 1-100 characters each
@@ -414,7 +412,7 @@ If the second answer is correct, the answer is 1, etc.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll](https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
 

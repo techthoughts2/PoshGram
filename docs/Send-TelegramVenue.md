@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue
 schema: 2.0.0
 ---
 
@@ -194,14 +194,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue](https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue)
 
 [https://core.telegram.org/bots/api#sendvenue](https://core.telegram.org/bots/api#sendvenue)
 

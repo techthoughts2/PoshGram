@@ -76,20 +76,19 @@
     The following audio types are supported:
     MP3, M4A
 
-    For a description of the Bot API, see this page: https://core.telegram.org/bots/api
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
     ? This was really hard to make.
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters            Type                                                                              Required     Description
     chat_id               Integer or String                                                                  Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     media                 Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo  Yes         A JSON-serialized array describing photos and videos to be sent
     disable_notification  Boolean                                                                            Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramMediaGroup
 .LINK
     https://core.telegram.org/bots/api#sendmediagroup
 .LINK

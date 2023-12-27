@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker
 schema: 2.0.0
 ---
 
@@ -282,10 +282,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Sticker packs are controlled by their author
     Not every sticker has a corresponding emoji
@@ -294,7 +292,7 @@ This function will make a best attempt to look up the sticker pack you specify a
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker](https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 
