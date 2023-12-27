@@ -76,7 +76,8 @@ theme:
 nav:
   - Home: index.md
   - Usage:
-    - Telegram Basics: PoshGram-Basics.md
+    - PoshGram Basics: PoshGram-Basics.md
+    - PoshGram Advanced: PoshGram-Advanced.md
     - Send stickers using PoshGram: PoshGram-Sticker-Info.md
   - Functions:
     - Send-TelegramTextMessage: Send-TelegramTextMessage.md
