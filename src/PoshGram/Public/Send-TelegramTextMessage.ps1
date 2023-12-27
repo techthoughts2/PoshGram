@@ -179,6 +179,7 @@
     parse_mode                  String              Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
     disable_web_page_preview    Boolean             Optional    Disables link previews for links in this message
     disable_notification        Boolean             Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content             Boolean             Optional    Protects the contents of the sent message from forwarding and saving
     reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
     reply_markup                KeyboardMarkup      Optional    Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 .LINK
