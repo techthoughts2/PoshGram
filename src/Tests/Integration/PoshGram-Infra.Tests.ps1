@@ -10,7 +10,9 @@ $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleNam
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 InModuleScope PoshGram {
-    Describe 'Integration Tests' -Tag Infrastructure {
+
+    Describe 'Integration Tests' -Tag Integration {
+
         BeforeAll {
             #$WarningPreference = 'SilentlyContinue'
             #//////////////////////////////////////////////////////////////////////////
@@ -190,6 +192,7 @@ InModuleScope PoshGram {
         } #before_all
 
         Context 'Get-TelegramStickerPackInfo' {
+
             It 'Should return valid sticker pack information' {
                 $getTelegramStickerPackInfoSplat = @{
                     StickerSetName = 'CookieMonster'
@@ -215,6 +218,37 @@ InModuleScope PoshGram {
 
                 $eval.set_name | Should -BeExactly 'CookieMonster'
             } #it
+
+            It 'Should return enhanced emoji information for the sticker pack' {
+                $getTelegramStickerPackInfoSplat = @{
+                    StickerSetName = 'FriendlyFelines'
+                    BotToken       = $token
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 20
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.set_name | Should -BeExactly 'FriendlyFelines'
+                $heartSticker = $eval.result.stickers | Where-Object { $_.file_unique_id -eq 'AgADBAADlEXbHQ' }
+                $heartSticker.Group | Should -BeExactly 'Smileys & Emotion'
+                $heartSticker.SubGroup | Should -BeExactly 'heart'
+                $heartSticker.ShortCode | Should -BeExactly ':red_heart:'
+            } #it
+
         } #context_Get-TelegramStickerPackInfo
 
         Context 'Send-TelegramContact' {
@@ -1422,4 +1456,5 @@ with MarkdownV2 style formatting'
         } #context_Test-BotToken
 
     } #describe_IntegrationTests
+
 } #scope_PoshGram

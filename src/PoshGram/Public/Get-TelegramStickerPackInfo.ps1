@@ -1,16 +1,21 @@
 ﻿<#
-.Synopsis
-    Get information for specified Telegram sticker pack.
+.SYNOPSIS
+    Retrieve detailed information about a specified Telegram sticker pack.
 .DESCRIPTION
-    Uses Telegram Bot API to retrieve Telegram sticker pack information.
-    Displays emoji,emoji code, emoji shortcode, bytes, and file_id, and file information for each sticker in the sticker pack.
-    You will need the name of the sticker pack you want to retrieve information for.
-    To find the name of a sticker pack use the telegram app to share the sticker pack. This will provide a link which contains the sticker pack name.
+    This function connects to the Telegram Bot API to fetch detailed information about a specified sticker pack.
+    It is designed to help you explore the contents of a Telegram sticker pack by providing a variety of information for each sticker.
+    This includes details like the associated emoji, its group and subgroup classifications, Unicode code, shortcode, and the sticker's file ID.
+    It also leverages the capabilities of pwshEmojiExplorer to retrieve additional emoji information, enriching the data set provided.
+    To effectively use this function, you need the name of the sticker pack. You can find this by sharing the sticker pack within the Telegram app, which will generate a link containing the pack's name.
     More information is available in the links.
 .EXAMPLE
     Get-TelegramStickerPackInfo -BotToken $token -StickerSetName STPicard
 
     Retrieves information for the STPicard sticker pack from the Telegram Bot API.
+.EXAMPLE
+    Get-TelegramStickerPackInfo -BotToken $token -StickerSetName FriendlyFelines
+
+    Retrieves information for the FriendlyFelines sticker pack from the Telegram Bot API.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER StickerSetName
@@ -23,9 +28,9 @@
     Questions on how to set up a bot, get a token, or get your channel ID?
     Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
-    Some sticker authors use the same emoji for several of their stickers.
-
-
+    Note:
+        - Some sticker authors use the same emoji for several of their stickers.
+        - pwshEmojiExplorer is used to retrieve additional emoji information.
 .COMPONENT
     PoshGram
 .FUNCTIONALITY
@@ -88,26 +93,29 @@ function Get-TelegramStickerPackInfo {
     } #catch_messageSend
 
     Write-Verbose -Message 'Sticker information found. Processing emoji information...'
-    Write-Verbose -Message "Asset path: $script:assetPath"
-    $je = Get-Content -Path $script:assetPath
-    $psF = $je | ConvertFrom-Json
-    $stickerData = @()
+    $stickerData = New-Object System.Collections.Generic.List[Object]
     foreach ($emoji in $results.result.stickers) {
         #-------------------
         $emojiData = $null
-        $code = $null
-        $name = $null
         #-------------------
-        $bytes = [text.encoding]::unicode.getbytes($emoji.emoji)
-        # $actual = [System.Text.Encoding]::Unicode.GetString($bytes)
-        # $emoji | Add-Member -Type NoteProperty -Name ActualEmoji -Value $actual -Force
-        $emoji | Add-Member -Type NoteProperty -Name Bytes -Value $bytes -Force
-        $emojiData = $psf | Where-Object { $_.KDDI -eq $emoji.emoji }
-        $code = $emojiData.Sheet
-        $name = $emojiData.Google
-        $emoji | Add-Member -Type NoteProperty -Name Code -Value $code -Force
-        $emoji | Add-Member -Type NoteProperty -Name Shortcode -Value $name -Force
-        $stickerData += $emoji
+        try {
+            $emojiData = Get-Emoji -Emoji $emoji.emoji
+        }
+        catch {
+            Write-Warning -Message ('An error was encountered getting the emoji data for {0}' -f $emoji.emoji)
+            Write-Error $_
+        }
+
+        if ($emojiData) {
+            Write-Debug -Message ('Emoji data found for {0}' -f $emoji.emoji)
+            $emoji | Add-Member -Type NoteProperty -Name Group -Value $emojiData.Group -Force
+            $emoji | Add-Member -Type NoteProperty -Name SubGroup -Value $emojiData.SubGroup -Force
+            $emoji | Add-Member -Type NoteProperty -Name Code -Value $emojiData.UnicodeStandard -Force
+            $emoji | Add-Member -Type NoteProperty -Name pwshEscapedFormat -Value $emojiData.pwshEscapedFormat -Force
+            $emoji | Add-Member -Type NoteProperty -Name Shortcode -Value $emojiData.ShortCode -Force
+        }
+
+        [void]$stickerData.Add($emoji)
     }
 
     return $stickerData

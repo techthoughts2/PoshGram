@@ -16,6 +16,8 @@ InModuleScope PoshGram {
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
             $ErrorActionPreference = 'SilentlyContinue'
+            function Get-Emoji {
+            }
         } #beforeAll
         BeforeEach {
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -44,21 +46,19 @@ InModuleScope PoshGram {
                     }
                 }
             } #endMock
-            Mock Get-Content -MockWith {
-                '[
-                    {
-                        "KDDI": "🙂",
-                        "Softbank": "slightly smiling face",
-                        "Google": ":slightly_smiling_face:",
-                        "Sheet": "U+1F642",
-                        "FIELD11": "-",
-                        "FIELD12": "-",
-                        "FIELD13": "-",
-                        "FIELD14": "-",
-                        "FIELD15": "1f642.png",
-                        "FIELD16": "32,3"
-                    }
-                ]'
+            Mock Get-Emoji -MockWith {
+                [PSCustomObject]@{
+                    Group             = 'Smileys & Emotion'
+                    Subgroup          = 'face-smiling'
+                    HexCodePoint      = '1F642'
+                    Name              = '🙂'
+                    Description       = 'slightly smiling face'
+                    ShortCode         = ':slightly_smiling_face:'
+                    HexCodePointArray = @('1F642')
+                    UnicodeStandard   = @('U+1F642')
+                    pwshEscapedFormat = '`u{1F642}'
+                    Decimal           = @(128578)
+                }
             }
         } #before_each
 
@@ -130,16 +130,19 @@ InModuleScope PoshGram {
                     StickerSetName = 'STPicard'
                 }
                 $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
-                $eval.width       | Should -BeExactly '512'
-                $eval.height      | Should -BeExactly '512'
-                $eval.emoji       | Should -BeExactly '🙂'
-                $eval.set_name    | Should -BeExactly 'STPicard'
-                $eval.is_animated | Should -BeExactly 'False'
-                $eval.thumb       | Should -BeExactly '@{file_id=AAQCAAMMAAPdcBMXl0FGgL2-fdo_kOMNAAQBAAdtAAPeLQACFgQ; file_size=3810; width=128; height=128}'
-                $eval.file_id     | Should -BeExactly 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
-                $eval.file_size   | Should -BeExactly '18356'
-                $eval.Code        | Should -BeExactly 'U+1F642'
-                $eval.Shortcode   | Should -BeExactly ':slightly_smiling_face:'
+                $eval.width             | Should -BeExactly '512'
+                $eval.height            | Should -BeExactly '512'
+                $eval.emoji             | Should -BeExactly '🙂'
+                $eval.set_name          | Should -BeExactly 'STPicard'
+                $eval.is_animated       | Should -BeExactly 'False'
+                $eval.thumb             | Should -BeExactly '@{file_id=AAQCAAMMAAPdcBMXl0FGgL2-fdo_kOMNAAQBAAdtAAPeLQACFgQ; file_size=3810; width=128; height=128}'
+                $eval.file_id           | Should -BeExactly 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
+                $eval.file_size         | Should -BeExactly '18356'
+                $eval.Group             | Should -BeExactly 'Smileys & Emotion'
+                $eval.Subgroup          | Should -BeExactly 'face-smiling'
+                $eval.Code              | Should -Contain 'U+1F642'
+                $eval.pwshEscapedFormat | Should -BeExactly '`u{1F642}'
+                $eval.Shortcode         | Should -BeExactly ':slightly_smiling_face:'
             } #it
         } #context_Success
     } #describe_Get-TelegramStickerPackInfo

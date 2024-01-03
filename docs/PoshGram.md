@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 2.3.1
+Help Version: 3.0.0
 Locale: en-US
 ---
 
@@ -12,7 +12,7 @@ PoshGram provides functionality to send various message types to a specified Tel
 
 ## PoshGram Cmdlets
 ### [Get-TelegramStickerPackInfo](Get-TelegramStickerPackInfo.md)
-Get information for specified Telegram sticker pack.
+Retrieve detailed information about a specified Telegram sticker pack.
 
 ### [Send-TelegramContact](Send-TelegramContact.md)
 Sends Telegram phone contact message via BOT API.

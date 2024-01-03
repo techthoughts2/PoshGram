@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '2.3.1'
+    ModuleVersion     = '3.0.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -51,7 +51,12 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    RequiredModules   = @(
+        @{
+            ModuleName    = 'pwshEmojiExplorer';
+            ModuleVersion = '0.8.0'
+        }
+    )
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()

@@ -64,6 +64,12 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
             BucketName    = 'PSGallery'
             KeyPrefix     = ''
         }))
+$null = $modulesToInstall.Add(([PSCustomObject]@{
+            ModuleName    = 'pwshEmojiExplorer'
+            ModuleVersion = '0.8.0'
+            BucketName    = 'PSGallery'
+            KeyPrefix     = ''
+        }))
 
 if ($galleryDownload -eq $false) {
 

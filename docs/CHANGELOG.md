@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.0.0]
 
 - Module Changes
+    - Added dependency for `pwshEmojiExplorer` module
+    - `Get-TelegramStickerPackInfo` - ***potential* breaking change**
+        - This function no longer uses a static json list of emojis to retrieve emoji information. This approach was using an extremely outdated random list of emojis. This update now uses the `pwshEmojiExplorer` module to retrieve an updated standardized list of emoji information based on public Unicode data sets.
+        - Function now returns additional emoji property information:
+            - `Group`, `SubGroup`, `pwshEscapedFormat`
     - Updated help for all functions
 - Build Updates
     - AWS Deployment Updates
