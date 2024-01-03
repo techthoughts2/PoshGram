@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `install_modules.ps1` - bumped module versions to latest
     - All Infra/Infrastructure references changed to Integration
     - Updated CodeBuild jobs to retrieve secrets from Parameter Store instead of Secrets Manager
+    - Added support for readthedocs
 - Misc
     - Updated `settings.json` for tab requirements to support Readthedocs
     - Added `SECURITY.md`
