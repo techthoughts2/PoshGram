@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+        "ServiceName": "PoshGram",
+        "ArtifactS3Bucket": "will be replaced during CodeBuild process",
+        "ArtifactS3KeyPrefix": "will be replaced during CodeBuild process"
+    }
+}

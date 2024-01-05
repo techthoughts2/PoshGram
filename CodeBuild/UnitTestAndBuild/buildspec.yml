@@ -1,0 +1,78 @@
+# https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+# https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started-cli-create-build-spec.html
+# https://docs.aws.amazon.com/codebuild/latest/userguide/available-runtimes.html
+#
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 6.0
+      # python: 3.9
+
+    commands:
+      # Check PowerShell Version
+      - pwsh -command '$PSVersionTable'
+
+      # Check available variables in the build
+      # - pwsh -command 'Get-Variable'
+
+      # Check available environment variables in the build
+      # - pwsh -command 'Get-ChildItem env:'
+
+      # Configure AWS defaults using the configuration script added to the Docker Image.
+      - pwsh -command './CodeBuild/configure_aws_credential.ps1'
+
+      # Installing PowerShell Modules from PSGallery
+      - pwsh -command './CodeBuild/install_modules.ps1'
+
+      # Install Python packages
+      # - pip install pip -U
+      # - pip install -r ./lambdafunctions/python/requirements.txt
+
+  pre_build:
+    commands:
+      # https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script
+      # - pwsh -command '& ./CodeBuild/UnitTestAndBuild/dotnet-install.ps1 -Channel LTS'
+      # - ./CodeBuild/UnitTestAndBuild/dotnet-install.sh --channel LTS
+
+      # Validate CloudFormation Templates
+      - pwsh -command '
+          Import-Module Pester;
+          $pesterConfiguration = [PesterConfiguration]::new();
+          $pesterConfiguration.Run.Exit = $true;
+          $pesterConfiguration.Run.Path = "./CodeBuild/UnitTestAndBuild/Validate-CFNTemplates.Tests.ps1";
+          $pesterConfiguration.Output.Verbosity = "Detailed";
+          Invoke-Pester -Configuration $pesterConfiguration'
+
+      # Validate Json files
+      - pwsh -command '
+          Import-Module Pester;
+          $pesterConfiguration = [PesterConfiguration]::new();
+          $pesterConfiguration.Run.Exit = $true;
+          $pesterConfiguration.Run.Path = "./CodeBuild/UnitTestAndBuild/Validate-JSONConfigurations.Tests.ps1";
+          $pesterConfiguration.Output.Verbosity = "Detailed";
+          Invoke-Pester -Configuration $pesterConfiguration'
+  build:
+    commands:
+      # Run Python unit tests
+      # - python -m pytest lambdafunctions/python/tests -v
+
+      # Publish cloudformation templates to S3
+      - pwsh -command '& ./CodeBuild/UnitTestAndBuild/Publish-CFNTemplatesToS3.ps1'
+
+      # Running Invoke-Build against each PowerShell AWS Lambda Function
+      - pwsh -command 'Get-ChildItem -Path './lambdafunctions/PowerShell' -Filter '*.build.ps1' -File -Recurse | ForEach-Object {Invoke-Build -File $_.FullName}'
+
+      - cd $CODEBUILD_SRC_DIR/cloudformation
+      - aws cloudformation package --template-file controlplane.yml --s3-bucket $ARTIFACT_S3_BUCKET --output-template-file controlplane-packaged.yml
+
+  post_build:
+    commands:
+      - echo THE POSTBUILD
+
+artifacts:
+  files:
+    - cloudformation/**/*
+    - CodeBuild/**/*

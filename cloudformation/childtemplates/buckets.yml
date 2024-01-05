@@ -1,0 +1,262 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'AUTOMATED: PoshGram - S3 infrastructure resource deployment'
+
+# Transform: 'AWS::Serverless-2016-10-31'
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The name of the service being deployed. Used for Developer AWS Account Resource Names.
+
+  ResourceType:
+    Type: String
+    Description: Determine the type of resource that will be deployed
+    AllowedValues:
+      - core
+      - dev
+      - test
+      - prod
+
+Resources:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-lifecycleconfiguration.html
+  PoshGramTestFiles:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-ModulesBucket
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      LifecycleConfiguration:
+        Rules:
+          - Id: OneZoneRule
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 30
+                StorageClass: ONEZONE_IA
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramTestFilesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramTestFiles
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PSCCModulesBucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !Sub
+                - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
+                - { Bucket: !Ref PoshGramTestFiles }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-lifecycleconfiguration.html
+  PoshGramURLTestFiles:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-ModulesBucket
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      LifecycleConfiguration:
+        Rules:
+          - Id: OneZoneRule
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 30
+                StorageClass: ONEZONE_IA
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramURLTestFilesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramURLTestFiles
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PSCCModulesBucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !Sub
+                - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
+                - { Bucket: !Ref PoshGramURLTestFiles }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+Outputs:
+  PoshGramTestFilesBucketName:
+    Description: Name of the PoshGramTestFiles Amazon S3 bucket
+    Value: !Ref PoshGramTestFiles
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramTestFiles
+
+  PoshGramTestFilesBucketARN:
+    Description: ARN of the PoshGramTestFiles Amazon S3 bucket
+    Value: !GetAtt PoshGramTestFiles.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramTestFilesARN
+
+  PoshGramURLTestFilesBucketName:
+    Description: Name of the PoshGramURLTestFiles Amazon S3 bucket
+    Value: !Ref PoshGramURLTestFiles
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramURLTestFiles
+
+  PoshGramURLTestFilesARN:
+    Description: ARN of the PoshGramURLTestFiles Amazon S3 bucket
+    Value: !GetAtt PoshGramURLTestFiles.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramURLTestFilesARN

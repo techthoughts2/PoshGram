@@ -1,0 +1,69 @@
+# Master Control Plane cloudformation Template - Used to deploy the service to child AWS Accounts.
+# This control plane does the actual DEPLOYING, but it does so by referencing the child templates via AWS::cloudformation::Stack
+# Hi - you want a new parameter - great!
+# 1 - Update the parameter JSONS (ControlPlane-Parameters\*.json)
+# 2 - Update two locations in ControlPlane
+# 3 - Update two locations in ChildTemplates
+
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: "PoshGram: Control Plane"
+
+Parameters:
+
+  ServiceName:
+    Type: String
+    Description: The name of the service being deployed.
+
+  # LMFunctionS3KeypwshEEUnicodeVersionMonitor:
+  #   Type: String
+  #   Description: S3 Key for the PubXMLMonitor Lambda function(s) zip file
+
+  # LMFunctionHandlerpwshEEUnicodeVersionMonitor:
+  #   Type: String
+  #   Description: PubXMLMonitor Lambda HANDLER provided by New-AWSPowerShellLambdaPackage during build
+
+  ArtifactS3Bucket:
+    Type: String
+    Description: S3 Bucket for CodePipeline Artifacts
+
+  ArtifactS3KeyPrefix:
+    Type: String
+    Description: S3 Key Prefix for CodePipeline Artifacts
+
+Resources:
+  # Logical ID should be the same as the (child) nested template name - not required, but makes it easy to line things up and read
+
+  # Deploys the serverless logic solution for PoshGram data gathering
+  PoshGramMediaBuckets:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./childtemplates/buckets.yml
+      TimeoutInMinutes: 25 #make sure it can actually complete in this time period
+      Parameters: #much match the parameters of nested template
+        ServiceName: !Ref ServiceName
+        ResourceType: prod
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+
+  # PoshGramAlarm:
+  #   Type: AWS::CloudFormation::Stack
+  #   DependsOn: PSEE
+  #   Properties:
+  #     TemplateURL: ./childtemplates/alarms.yml
+  #     TimeoutInMinutes: 15 #make sure it can actually complete in this time period
+  #     Parameters: #much match the parameters of nested template
+  #       ServiceName: !Ref ServiceName
+  #       LambdaS3BucketName: !Ref ArtifactS3Bucket
+  #       LMFunctionS3KeypwshEEUnicodeVersionMonitor: !Ref LMFunctionS3KeypwshEEUnicodeVersionMonitor
+  #       LMFunctionHandlerpwshEEUnicodeVersionMonitor: !Ref LMFunctionHandlerpwshEEUnicodeVersionMonitor
+  #       ResourceType: prod
+  #     Tags:
+  #       - Key: ServiceName
+  #         Value: !Ref ServiceName
+  #       - Key: StackName
+  #         Value: !Ref AWS::StackName
