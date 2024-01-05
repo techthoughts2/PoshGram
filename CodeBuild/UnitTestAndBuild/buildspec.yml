@@ -63,7 +63,7 @@ phases:
       - pwsh -command '& ./CodeBuild/UnitTestAndBuild/Publish-CFNTemplatesToS3.ps1'
 
       # Running Invoke-Build against each PowerShell AWS Lambda Function
-      - pwsh -command 'Get-ChildItem -Path './lambdafunctions/PowerShell' -Filter '*.build.ps1' -File -Recurse | ForEach-Object {Invoke-Build -File $_.FullName}'
+      # - pwsh -command 'Get-ChildItem -Path './lambdafunctions/PowerShell' -Filter '*.build.ps1' -File -Recurse | ForEach-Object {Invoke-Build -File $_.FullName}'
 
       - cd $CODEBUILD_SRC_DIR/cloudformation
       - aws cloudformation package --template-file controlplane.yml --s3-bucket $ARTIFACT_S3_BUCKET --output-template-file controlplane-packaged.yml
