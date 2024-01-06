@@ -29,106 +29,6 @@ Parameters:
 
 Resources:
 
-  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
-  PoshGramCICDArtifactS3Bucket:
-    Type: AWS::S3::Bucket
-    DeletionPolicy: Delete
-    Properties:
-      # AccelerateConfiguration: AccelerateConfiguration
-      AccessControl: BucketOwnerFullControl
-      # AnalyticsConfigurations:
-      #   - AnalyticsConfiguration
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
-      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
-      # CorsConfiguration:
-      #   CorsConfiguration
-      # InventoryConfigurations:
-      #   - InventoryConfiguration
-      # LifecycleConfiguration:
-      #   Rules:
-      #       -
-      #         AbortIncompleteMultipartUpload:
-      #           DaysAfterInitiation: 7
-      #         Status: Enabled
-      #         Transitions:
-      #           -
-      #             StorageClass: GLACIER
-      #             TransitionInDays: 30
-      # LoggingConfiguration:
-      #   DestinationBucketName: !Ref S3BucketLogs
-      #   LogFilePrefix: '/logs/project/'
-      # MetricsConfigurations:
-      #   - MetricsConfiguration
-      # NotificationConfiguration:
-      #   TopicConfigurations:
-      #     -
-      #       Event: s3:ObjectCreated:*
-      #       Topic: !Ref UpdateSNSTopic
-      # ObjectLockConfiguration:
-      #   ObjectLockConfiguration
-      # ObjectLockEnabled: Boolean
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
-        BlockPublicPolicy: true
-        IgnorePublicAcls: true
-        RestrictPublicBuckets: true
-      # ReplicationConfiguration:
-      #   ReplicationConfiguration
-      Tags:
-        - Key: ServiceName
-          Value: !Ref ServiceName
-        - Key: StackName
-          Value: !Ref AWS::StackName
-        - Key: ResourceType
-          Value: !Ref ResourceType
-      # VersioningConfiguration:
-      #   VersioningConfiguration
-      # WebsiteConfiguration:
-      #   WebsiteConfiguration
-
-  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
-  PoshGramCICDArtifactS3BucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref PoshGramCICDArtifactS3Bucket
-      PolicyDocument:
-        Statement:
-          - Action:
-              - 's3:*'
-            Effect: Allow
-            Principal:
-              AWS:
-                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
-            Resource:
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}'
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}/*'
-          # - Sid: DenyUnEncryptedObjectUploads
-          #   Effect: Deny
-          #   Principal: '*'
-          #   Action: 's3:PutObject'
-          #   Resource: !Join
-          #     - ''
-          #     - - !GetAtt
-          #         - PoshGramArtifactS3Bucket
-          #         - Arn
-          #       - /*
-          #   Condition:
-          #     StringNotEquals:
-          #       's3:x-amz-server-side-encryption': 'aws:kms'
-          - Sid: DenyInsecureConnections
-            Effect: Deny
-            Principal: '*'
-            Action: 's3:*'
-            Resource: !Sub
-              - '${BucketArn}/*'
-              - { BucketArn: !GetAtt [PoshGramCICDArtifactS3Bucket, Arn] }
-            Condition:
-              Bool:
-                'aws:SecureTransport': false
-
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
   PoshGramCodePipelineCodeBuildRole:
     Type: AWS::IAM::Role
@@ -171,8 +71,22 @@ Resources:
                 Action:
                   - s3:*
                 Resource:
-                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}'
-                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}/*'
+                  - !Sub
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
+                  - !Sub
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
+                  - !Sub
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
+                  - !Sub
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
               - Effect: Allow
                 Action:
                   - iam:ListRoles
@@ -214,7 +128,9 @@ Resources:
     Properties:
       ArtifactStore:
         Type: S3
-        Location: !Ref PoshGramCICDArtifactS3Bucket
+        Location:
+          Fn::ImportValue:
+            !Sub "${ServiceName}-PoshGramCICDEnhancementsArtifactS3Bucket"
       # ArtifactStores:
       #   - ArtifactStoreMap
       # DisableInboundStageTransitions:
@@ -296,14 +212,6 @@ Resources:
 
 Outputs:
 
-  PoshGramCICDArtifactS3BucketName:
-    Description: Name of the PoshGramCICDArtifactS3Bucket Amazon S3 bucket
-    Value: !Ref PoshGramCICDArtifactS3Bucket
-    Export:
-      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3Bucket
-
-  PoshGramCICDArtifactS3BucketARN:
-    Description: ARN of the PoshGramCICDArtifactS3Bucket Amazon S3 bucket
-    Value: !GetAtt PoshGramCICDArtifactS3Bucket.Arn
-    Export:
-      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3BucketARN
+  PoshGramEnhancementsCICDPipelineName:
+    Description: The name of the PoshGram Enhancements CICD Pipeline
+    Value: !Ref PoshGramEnhancementsCICDPipeline
