@@ -135,7 +135,7 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       # AccelerateConfiguration: AccelerateConfiguration
-      AccessControl: BucketOwnerFullControl
+      # AccessControl: BucketOwnerFullControl
       # AnalyticsConfigurations:
       #   - AnalyticsConfiguration
       BucketEncryption:
