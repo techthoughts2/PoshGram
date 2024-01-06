@@ -82,6 +82,12 @@ Describe -Name 'Infrastructure Tests' -Fixture {
             $assertion | Should -BeLike $expected
         } #it
 
+        It -Name 'Should create a PoshGrammainCICDPipelineName' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PoshGrammainCICDPipelineName" }).Value
+            $expected = "$ServiceName-main-CodePipeline"
+            $assertion | Should -BeLike $expected
+        } #it
+
     } #context_codepipeline.yml
 
 } #describe_infra_tests
