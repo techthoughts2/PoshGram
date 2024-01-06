@@ -135,7 +135,7 @@ Resources:
       #   - ArtifactStoreMap
       # DisableInboundStageTransitions:
       #   - StageTransition
-      Name: !Sub '${ServiceName}-Enhancements-CICD-CodePipeline'
+      Name: !Sub '${ServiceName}-Enhancements-CodePipeline'
       RestartExecutionOnUpdate: false
       RoleArn: !GetAtt PoshGramCodePipelineCodeBuildRole.Arn
       Tags:
@@ -173,9 +173,9 @@ Resources:
               # Region: String
               # RoleArn: String
               RunOrder: 1
-        - Name: CIValidation
+        - Name: Enhancements-Validation
           Actions:
-            - Name: EnhancementsCBLinux
+            - Name: Enhancements-CB-Linux
               InputArtifacts:
                 - Name: GitHubSource
               ActionTypeId:
@@ -192,7 +192,7 @@ Resources:
               # Region: String
               # RoleArn: String
               RunOrder: 1
-            - Name: EnhancementCBWindows
+            - Name: Enhancements-CB-Windows
               InputArtifacts:
                 - Name: GitHubSource
               ActionTypeId:
