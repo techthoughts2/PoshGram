@@ -271,269 +271,336 @@ Resources:
         - Key: ResourceType
           Value: !Ref ResourceType
 
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  EnhancementCBWindowspwshLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Retain
+    Properties:
+      # DataProtectionPolicy: Json
+      # KmsKeyId: String
+      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      RetentionInDays: 7
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
 
-  # # The CodeBuild Project configuration
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
-  # # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
-  # EnhancementCBWindowspwsh:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Artifacts:
-  #       Type: NO_ARTIFACTS
-  #     BadgeEnabled: !Ref CodeBuildBadgeEnabled
-  #     # BuildBatchConfig:
-  #     #   ProjectBuildBatchConfig
-  #     # Cache:
-  #     #   ProjectCache
-  #     # ConcurrentBuildLimit: Integer
-  #     Description: PoshGram - Enhancement Branch Windows Container pwsh CodeBuild Project
-  #     # EncryptionKey: !GetAtt KMSKey.Arn
-  #     Environment:
-  #       # Certificate:
-  #       ComputeType: BUILD_GENERAL1_MEDIUM
-  #       Type: WINDOWS_SERVER_2019_CONTAINER
-  #       Image: aws/codebuild/windows-base:2019-2.0
-  #       EnvironmentVariables:
-  #         - Name: TESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramTestFiles' }
-  #         - Name: URLTESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
-  #     # LogsConfig:
-  #     Name: !Sub '${ServiceName}-Enhancements-windows-pwsh'
-  #     # QueuedTimeoutInMinutes: Integer
-  #     # SecondaryArtifacts:
-  #     #   - Artifacts
-  #     # SecondarySources:
-  #     #   - Source
-  #     # SecondarySourceVersions:
-  #     #   - ProjectSourceVersion
-  #     ServiceRole: !GetAtt CodeBuildServiceRole.Arn
-  #     Source:
-  #       Auth:
-  #         Type: OAUTH
-  #       BuildSpec: buildspec_pwsh_windows.yml
-  #       # GitCloneDepth: Integer
-  #       # GitSubmodulesConfig:
-  #       #   GitSubmodulesConfig
-  #       # InsecureSsl: Boolean
-  #       Location: !Ref RepositoryUrl
-  #       ReportBuildStatus: true
-  #       # SourceIdentifier:
-  #       Type: GITHUB
-  #     SourceVersion: refs/heads/Enhancements
-  #     TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/Enhancements$
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/Enhancements$
-  #           - Type: FILE_PATH
-  #             Pattern: "^README.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^cloudformation.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^lambdafunctions.*"
-  #             ExcludeMatchedPattern: true
-  #     # Visibility: String
-  #     # VpcConfig:
-  #     Tags:
-  #       - Key: ServiceName
-  #         Value: !Ref ServiceName
-  #       - Key: StackName
-  #         Value: !Ref AWS::StackName
-  #       - Key: ResourceType
-  #         Value: !Ref ResourceType
+  # The CodeBuild Project configuration
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
+  # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
+  EnhancementCBWindowspwsh:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: !Ref CodeBuildBadgeEnabled
+      # BuildBatchConfig:
+      #   ProjectBuildBatchConfig
+      # Cache:
+      #   ProjectCache
+      # ConcurrentBuildLimit: Integer
+      Description: PoshGram - Enhancement Branch Windows Container pwsh CodeBuild Project
+      # EncryptionKey: !GetAtt KMSKey.Arn
+      Environment:
+        # Certificate:
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Type: WINDOWS_SERVER_2019_CONTAINER
+        Image: aws/codebuild/windows-base:2019-2.0
+        EnvironmentVariables:
+          - Name: TESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramTestFiles"
+          - Name: URLTESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramURLTestFiles"
+      # LogsConfig:
+      Name: !Sub '${ServiceName}-Enhancements-windows-pwsh'
+      # QueuedTimeoutInMinutes: Integer
+      # SecondaryArtifacts:
+      #   - Artifacts
+      # SecondarySources:
+      #   - Source
+      # SecondarySourceVersions:
+      #   - ProjectSourceVersion
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref EnhancementCBWindowspwshLogGroup
+          Status: ENABLED
+          # StreamName: String
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Source:
+        # Auth:
+        #   Type: OAUTH
+        BuildSpec: buildspec_pwsh_windows.yml
+        # GitCloneDepth: Integer
+        # GitSubmodulesConfig:
+        #   GitSubmodulesConfig
+        # InsecureSsl: Boolean
+        Location: !Ref RepositoryUrl
+        ReportBuildStatus: true
+        # SourceIdentifier:
+        Type: GITHUB
+      SourceVersion: refs/heads/Enhancements
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      # Triggers:
+      #   Webhook: true
+      #   FilterGroups:
+      #     - - Type: EVENT
+      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/Enhancements$
+      #     - - Type: EVENT
+      #         Pattern: PUSH
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/Enhancements$
+      #       - Type: FILE_PATH
+      #         Pattern: "^README.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^cloudformation.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^lambdafunctions.*"
+      #         ExcludeMatchedPattern: true
+      # Visibility: String
+      # VpcConfig:
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  MainCBLinuxpwshLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Retain
+    Properties:
+      # DataProtectionPolicy: Json
+      # KmsKeyId: String
+      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      RetentionInDays: 7
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # The CodeBuild Project configuration
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
+  # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
+  MainCBLinuxpwsh:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: !Ref CodeBuildBadgeEnabled
+      # BuildBatchConfig:
+      #   ProjectBuildBatchConfig
+      # Cache:
+      #   ProjectCache
+      # ConcurrentBuildLimit: Integer
+      Description: PoshGram - Main Branch Linux Container pwsh CodeBuild Project
+      # EncryptionKey: !GetAtt KMSKey.Arn
+      Environment:
+        #ComputeType: !Ref CodeBuildComputeType
+        ComputeType: BUILD_GENERAL1_SMALL
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:7.0
+        EnvironmentVariables:
+          - Name: TESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramTestFiles"
+          - Name: URLTESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramURLTestFiles"
+      # LogsConfig:
+      Name: !Sub '${ServiceName}-main-linux-pwsh'
+      # QueuedTimeoutInMinutes: Integer
+      # SecondaryArtifacts:
+      #   - Artifacts
+      # SecondarySources:
+      #   - Source
+      # SecondarySourceVersions:
+      #   - ProjectSourceVersion
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref MainCBLinuxpwshLogGroup
+          Status: ENABLED
+          # StreamName: String
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Source:
+        # Auth:
+        #   Type: OAUTH
+        BuildSpec: buildspec_pwsh_linux.yml
+        # GitCloneDepth: Integer
+        # GitSubmodulesConfig:
+        #   GitSubmodulesConfig
+        # InsecureSsl: Boolean
+        Location: !Ref RepositoryUrl
+        ReportBuildStatus: true
+        # SourceIdentifier:
+        Type: GITHUB
+      # SourceVersion:
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      # Triggers:
+      #   Webhook: true
+      #   FilterGroups:
+      #     - - Type: EVENT
+      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/main$
+      #     - - Type: EVENT
+      #         Pattern: PUSH
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/main$
+      #       - Type: FILE_PATH
+      #         Pattern: "^README.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^cloudformation.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^lambdafunctions.*"
+      #         ExcludeMatchedPattern: true
+      # Visibility: String
+      # VpcConfig:
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
 
 
-  # # The CodeBuild Project configuration
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
-  # # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
-  # MainCBLinuxpwsh:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Artifacts:
-  #       Type: NO_ARTIFACTS
-  #     BadgeEnabled: !Ref CodeBuildBadgeEnabled
-  #     # BuildBatchConfig:
-  #     #   ProjectBuildBatchConfig
-  #     # Cache:
-  #     #   ProjectCache
-  #     # ConcurrentBuildLimit: Integer
-  #     Description: PoshGram - Main Branch Linux Container pwsh CodeBuild Project
-  #     # EncryptionKey: !GetAtt KMSKey.Arn
-  #     Environment:
-  #       #ComputeType: !Ref CodeBuildComputeType
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       Type: LINUX_CONTAINER
-  #       Image: aws/codebuild/standard:7.0
-  #       EnvironmentVariables:
-  #         - Name: TESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramTestFiles' }
-  #         - Name: URLTESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
-  #     # LogsConfig:
-  #     Name: !Sub '${ServiceName}-main-linux-pwsh'
-  #     # QueuedTimeoutInMinutes: Integer
-  #     # SecondaryArtifacts:
-  #     #   - Artifacts
-  #     # SecondarySources:
-  #     #   - Source
-  #     # SecondarySourceVersions:
-  #     #   - ProjectSourceVersion
-  #     ServiceRole: !GetAtt CodeBuildServiceRole.Arn
-  #     Source:
-  #       Auth:
-  #         Type: OAUTH
-  #       BuildSpec: buildspec_pwsh_linux.yml
-  #       # GitCloneDepth: Integer
-  #       # GitSubmodulesConfig:
-  #       #   GitSubmodulesConfig
-  #       # InsecureSsl: Boolean
-  #       Location: !Ref RepositoryUrl
-  #       ReportBuildStatus: true
-  #       # SourceIdentifier:
-  #       Type: GITHUB
-  #     # SourceVersion:
-  #     TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/main$
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/main$
-  #           - Type: FILE_PATH
-  #             Pattern: "^README.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^cloudformation.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^lambdafunctions.*"
-  #             ExcludeMatchedPattern: true
-  #     # Visibility: String
-  #     # VpcConfig:
-  #     Tags:
-  #       - Key: ServiceName
-  #         Value: !Ref ServiceName
-  #       - Key: StackName
-  #         Value: !Ref AWS::StackName
-  #       - Key: ResourceType
-  #         Value: !Ref ResourceType
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  EnhancementsCBLinuxpwshLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Retain
+    Properties:
+      # DataProtectionPolicy: Json
+      # KmsKeyId: String
+      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      RetentionInDays: 7
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
 
-
-  # # The CodeBuild Project configuration
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
-  # # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
-  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
-  # # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
-  # EnhancementsCBLinuxpwsh:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Artifacts:
-  #       Type: NO_ARTIFACTS
-  #     BadgeEnabled: !Ref CodeBuildBadgeEnabled
-  #     # BuildBatchConfig:
-  #     #   ProjectBuildBatchConfig
-  #     # Cache:
-  #     #   ProjectCache
-  #     # ConcurrentBuildLimit: Integer
-  #     Description: PoshGram - Enhancements Branch Linux Container pwsh CodeBuild Project
-  #     # EncryptionKey: !GetAtt KMSKey.Arn
-  #     Environment:
-  #       #ComputeType: !Ref CodeBuildComputeType
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       Type: LINUX_CONTAINER
-  #       Image: aws/codebuild/standard:7.0
-  #       EnvironmentVariables:
-  #         - Name: TESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramTestFiles' }
-  #         - Name: URLTESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
-  #     # LogsConfig:
-  #     Name: !Sub '${ServiceName}-Enhancements-linux-pwsh'
-  #     # QueuedTimeoutInMinutes: Integer
-  #     # SecondaryArtifacts:
-  #     #   - Artifacts
-  #     # SecondarySources:
-  #     #   - Source
-  #     # SecondarySourceVersions:
-  #     #   - ProjectSourceVersion
-  #     ServiceRole: !GetAtt CodeBuildServiceRole.Arn
-  #     Source:
-  #       Auth:
-  #         Type: OAUTH
-  #       BuildSpec: buildspec_pwsh_linux.yml
-  #       # GitCloneDepth: Integer
-  #       # GitSubmodulesConfig:
-  #       #   GitSubmodulesConfig
-  #       # InsecureSsl: Boolean
-  #       Location: !Ref RepositoryUrl
-  #       ReportBuildStatus: true
-  #       # SourceIdentifier:
-  #       Type: GITHUB
-  #     SourceVersion: refs/heads/Enhancements
-  #     TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/Enhancements$
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/Enhancements$
-  #           - Type: FILE_PATH
-  #             Pattern: "^README.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^cloudformation.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^lambdafunctions.*"
-  #             ExcludeMatchedPattern: true
-  #     Tags:
-  #       - Key: ServiceName
-  #         Value: !Ref ServiceName
-  #       - Key: StackName
-  #         Value: !Ref AWS::StackName
-  #       - Key: ResourceType
-  #         Value: !Ref ResourceType
+  # The CodeBuild Project configuration
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
+  # https://docs.amazonaws.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-webhookfilter.html
+  EnhancementsCBLinuxpwsh:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: NO_ARTIFACTS
+      BadgeEnabled: !Ref CodeBuildBadgeEnabled
+      # BuildBatchConfig:
+      #   ProjectBuildBatchConfig
+      # Cache:
+      #   ProjectCache
+      # ConcurrentBuildLimit: Integer
+      Description: PoshGram - Enhancements Branch Linux Container pwsh CodeBuild Project
+      # EncryptionKey: !GetAtt KMSKey.Arn
+      Environment:
+        #ComputeType: !Ref CodeBuildComputeType
+        ComputeType: BUILD_GENERAL1_SMALL
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:7.0
+        EnvironmentVariables:
+          - Name: TESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramTestFiles"
+          - Name: URLTESTFILES_S3_BUCKET
+            Value:
+              Fn::ImportValue:
+                !Sub "${ServiceName}-PoshGramURLTestFiles"
+      # LogsConfig:
+      Name: !Sub '${ServiceName}-Enhancements-linux-pwsh'
+      # QueuedTimeoutInMinutes: Integer
+      # SecondaryArtifacts:
+      #   - Artifacts
+      # SecondarySources:
+      #   - Source
+      # SecondarySourceVersions:
+      #   - ProjectSourceVersion
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref EnhancementsCBLinuxpwshLogGroup
+          Status: ENABLED
+          # StreamName: String
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Source:
+        # Auth:
+        #   Type: OAUTH
+        BuildSpec: buildspec_pwsh_linux.yml
+        # GitCloneDepth: Integer
+        # GitSubmodulesConfig:
+        #   GitSubmodulesConfig
+        # InsecureSsl: Boolean
+        Location: !Ref RepositoryUrl
+        ReportBuildStatus: true
+        # SourceIdentifier:
+        Type: GITHUB
+      SourceVersion: refs/heads/Enhancements
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      # Triggers:
+      #   Webhook: true
+      #   FilterGroups:
+      #     - - Type: EVENT
+      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/Enhancements$
+      #     - - Type: EVENT
+      #         Pattern: PUSH
+      #       - Type: HEAD_REF
+      #         Pattern: ^refs/heads/Enhancements$
+      #       - Type: FILE_PATH
+      #         Pattern: "^README.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^cloudformation.*"
+      #         ExcludeMatchedPattern: true
+      #       - Type: FILE_PATH
+      #         Pattern: "^lambdafunctions.*"
+      #         ExcludeMatchedPattern: true
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
 
 # Outputs:
