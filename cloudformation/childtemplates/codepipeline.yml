@@ -1,0 +1,215 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'AUTOMATED: PoshGram - CodePipeline infrastructure resource deployment'
+
+# Transform: 'AWS::Serverless-2016-10-31'
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The name of the service being deployed. Used for Developer AWS Account Resource Names.
+
+  ResourceType:
+    Type: String
+    Description: Determine the type of resource that will be deployed
+    AllowedValues:
+      - core
+      - dev
+      - test
+      - prod
+
+Resources:
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  PoshGramCICDArtifactS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramCICDArtifactS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramCICDArtifactS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PoshGramArtifactS3Bucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: !Sub
+              - '${BucketArn}/*'
+              - { BucketArn: !GetAtt [PoshGramCICDArtifactS3Bucket, Arn] }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
+  PoshGramCodePipelineCodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ServiceName}-CodePipelineCodeBuildBRole'
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codepipeline.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: IAM Role for CodePipeline GitHub project
+      # ManagedPolicyArns:
+      #   - String
+      # MaxSessionDuration: Integer
+      Path: /
+      # PermissionsBoundary: String
+      Policies:
+        - PolicyName: !Sub '${ServiceName}-CodePipelineCodeBuildPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # -
+              #   Effect: Allow
+              #   Action:
+              #     - sns:Publish
+              #   Resource:
+              #     - !Ref PoshGramPipelineStatusUpdates
+              - Effect: Allow
+                Action:
+                  - s3:*
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDArtifactS3Bucket}/*'
+              - Effect: Allow
+                Action:
+                  - iam:ListRoles
+                  - iam:PassRole
+                  - sts:AssumeRole
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                Resource:
+                  - Fn::ImportValue:
+                      !Sub "${ServiceName}-MainCBWindowspwshARN"
+                  - Fn::ImportValue:
+                      !Sub "${ServiceName}-MainCBLinuxpwshARN"
+                  - Fn::ImportValue:
+                      !Sub "${ServiceName}-EnhancementCBWindowspwshARN"
+                  - Fn::ImportValue:
+                      !Sub "${ServiceName}-EnhancementsCBLinuxpwshARN"
+              # - Effect: Allow
+              #   Action:
+              #     - kms:*
+              #   Resource: !GetAtt KMSKey.Arn
+              - Effect: Allow
+                Action:
+                  - codestar-connections:GetConnection
+                  - codestar-connections:ListConnections
+                  - codestar-connections:GetInstallationUrl
+                  - codestar-connections:GetIndividualAccessToken
+                  - codestar-connections:ListInstallationTargets
+                  - codestar-connections:StartOAuthHandshake
+                  - codestar-connections:UseConnection
+                Resource: !Sub 'arn:${AWS::Partition}:codestar-connections:${AWS::Region}:${AWS::AccountId}:connection/ecfb22c8-ac43-49d4-9980-0345f9fd0ae2'
+
+Outputs:
+
+  PoshGramCICDArtifactS3BucketName:
+    Description: Name of the PoshGramCICDArtifactS3Bucket Amazon S3 bucket
+    Value: !Ref PoshGramCICDArtifactS3Bucket
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3Bucket
+
+  PoshGramCICDArtifactS3BucketARN:
+    Description: ARN of the PoshGramCICDArtifactS3Bucket Amazon S3 bucket
+    Value: !GetAtt PoshGramCICDArtifactS3Bucket.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3Bucket

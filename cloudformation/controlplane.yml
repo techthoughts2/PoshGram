@@ -53,7 +53,7 @@ Parameters:
 Resources:
   # Logical ID should be the same as the (child) nested template name - not required, but makes it easy to line things up and read
 
-  # Deploys the serverless logic solution for PoshGram data gathering
+  # Deploys the CodePipeline infrastructure for CICD builds of PoshGram
   PoshGramMediaBuckets:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -80,6 +80,21 @@ Resources:
         CodeBuildBadgeEnabled: !Ref CodeBuildBadgeEnabled
         RepositoryUrl: !Ref RepositoryUrl
         CodeBuildTimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+
+  PoshGramCodePipeline:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: PoshGramCodeBuild
+    Properties:
+      TemplateURL: ./childtemplates/codepipeline.yml
+      TimeoutInMinutes: 25 #make sure it can actually complete in this time period
+      Parameters: #much match the parameters of nested template
+        ServiceName: !Ref ServiceName
+        ResourceType: prod
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName
