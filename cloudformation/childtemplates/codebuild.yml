@@ -71,7 +71,10 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource:
-                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/PoshGram*"
+                  - !GetAtt MainCBWindowspwshLogGroup.Arn
+                  - !GetAtt MainCBLinuxpwshLogGroup.Arn
+                  - !GetAtt EnhancementCBWindowspwshLogGroup.Arn
+                  - !GetAtt EnhancementsCBLinuxpwshLogGroup.Arn
         - PolicyName: ParameterStoreAccess
           PolicyDocument:
             Version: "2012-10-17"
