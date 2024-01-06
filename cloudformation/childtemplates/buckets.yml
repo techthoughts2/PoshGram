@@ -88,52 +88,52 @@ Resources:
       #   WebsiteConfiguration
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
-  PoshGramTestFilesBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref PoshGramTestFiles
-      PolicyDocument:
-        Statement:
-          - Action:
-              - 's3:*'
-            Effect: Allow
-            Principal:
-              AWS:
-                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
-            Resource:
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
-          - Sid: PublicReadForObject
-            Effect: Allow
-            Principal: '*'
-            Action:
-              - 's3:GetObject'
-            Resource:
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
-          # - Sid: DenyUnEncryptedObjectUploads
-          #   Effect: Deny
-          #   Principal: '*'
-          #   Action: 's3:PutObject'
-          #   Resource: !Join
-          #     - ''
-          #     - - !GetAtt
-          #         - PSCCModulesBucket
-          #         - Arn
-          #       - /*
-          #   Condition:
-          #     StringNotEquals:
-          #       's3:x-amz-server-side-encryption': 'aws:kms'
-          - Sid: DenyInsecureConnections
-            Effect: Deny
-            Principal: '*'
-            Action: 's3:*'
-            Resource:
-              - !Sub
-                - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
-                - { Bucket: !Ref PoshGramTestFiles }
-            Condition:
-              Bool:
-                'aws:SecureTransport': false
+  # PoshGramTestFilesBucketPolicy:
+  #   Type: AWS::S3::BucketPolicy
+  #   Properties:
+  #     Bucket: !Ref PoshGramTestFiles
+  #     PolicyDocument:
+  #       Statement:
+  #         - Action:
+  #             - 's3:*'
+  #           Effect: Allow
+  #           Principal:
+  #             AWS:
+  #               - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+  #           Resource:
+  #             - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+  #             - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+  #         - Sid: PublicReadForObject
+  #           Effect: Allow
+  #           Principal: '*'
+  #           Action:
+  #             - 's3:GetObject'
+  #           Resource:
+  #             - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+  #         # - Sid: DenyUnEncryptedObjectUploads
+  #         #   Effect: Deny
+  #         #   Principal: '*'
+  #         #   Action: 's3:PutObject'
+  #         #   Resource: !Join
+  #         #     - ''
+  #         #     - - !GetAtt
+  #         #         - PSCCModulesBucket
+  #         #         - Arn
+  #         #       - /*
+  #         #   Condition:
+  #         #     StringNotEquals:
+  #         #       's3:x-amz-server-side-encryption': 'aws:kms'
+  #         - Sid: DenyInsecureConnections
+  #           Effect: Deny
+  #           Principal: '*'
+  #           Action: 's3:*'
+  #           Resource:
+  #             - !Sub
+  #               - 'arn:${AWS::Partition}:s3:::${Bucket}/*'
+  #               - { Bucket: !Ref PoshGramTestFiles }
+  #           Condition:
+  #             Bool:
+  #               'aws:SecureTransport': false
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-lifecycleconfiguration.html
