@@ -32,6 +32,62 @@ Describe -Name 'Infrastructure Tests' -Fixture {
             $assertion | Should -BeLike $expected
         } #it
 
+        It -Name 'Should create a PoshGramCICDEnhancementsArtifactS3BucketARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PoshGramCICDEnhancementsArtifactS3BucketARN" }).Value
+            $expected = 'arn:aws:s3::*'
+            $assertion | Should -BeLike $expected
+        } #it
+
+        It -Name 'Should create a PoshGramCICDMainArtifactS3BucketARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PoshGramCICDMainArtifactS3BucketARN" }).Value
+            $expected = 'arn:aws:s3::*'
+            $assertion | Should -BeLike $expected
+        } #it
+
     } #context_buckets.yml
+
+    Context -Name 'codebuild.yml' -Fixture {
+
+        It -Name 'Should create a EnhancementCBWindowspwshArn' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-EnhancementCBWindowspwshArn" }).Value
+            $expected = "arn:aws:codebuild:*"
+            $assertion | Should -BeLike $expected
+        } #it
+
+        It -Name 'Should create a EnhancementsCBLinuxpwshARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-EnhancementsCBLinuxpwshARN" }).Value
+            $expected = "arn:aws:codebuild:*"
+            $assertion | Should -BeLike $expected
+        } #it
+
+        It -Name 'Should create a MainCBWindowspwshARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-MainCBWindowspwshARN" }).Value
+            $expected = "arn:aws:codebuild:*"
+            $assertion | Should -BeLike $expected
+        } #it
+
+        It -Name 'Should create a MainCBLinuxpwshARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-MainCBLinuxpwshARN" }).Value
+            $expected = "arn:aws:codebuild:*"
+            $assertion | Should -BeLike $expected
+        } #it
+
+    } #context_codebuild.yml
+
+    Context -Name 'codepipeline.yml' -Fixture {
+
+        It -Name 'Should create a PoshGramEnhancementsCICDPipelineName' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PoshGramEnhancementsCICDPipelineName" }).Value
+            $expected = "arn:aws:codepipeline:*"
+            $assertion | Should -BeLike $expected
+        } #it
+
+        It -Name 'Should create a PoshGramCICDMainPipelineARN' -Test {
+            $assertion = ($cfnExports | Where-Object { $_.Name -eq "$ServiceName-PoshGramCICDMainPipelineARN" }).Value
+            $expected = "$service_name-Enhancements-CICD-CodePipeline"
+            $assertion | Should -BeLike $expected
+        } #it
+
+    } #context_codepipeline.yml
 
 } #describe_infra_tests

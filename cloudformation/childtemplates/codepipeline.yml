@@ -215,3 +215,5 @@ Outputs:
   PoshGramEnhancementsCICDPipelineName:
     Description: The name of the PoshGram Enhancements CICD Pipeline
     Value: !Ref PoshGramEnhancementsCICDPipeline
+    Export:
+      Name: !Sub '${ServiceName}-PoshGramEnhancementsCICDPipelineName'
