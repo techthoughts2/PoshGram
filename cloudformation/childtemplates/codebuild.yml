@@ -610,6 +610,8 @@ Outputs:
   MainCBWindowspwshName:
     Description: The name of the main Windows - pwsh CodeBuild Project.
     Value: !Ref MainCBWindowspwsh
+    Export:
+      Name: !Sub "${ServiceName}-MainCBWindowspwshName"
 
   MainCBWindowspwshURL:
     Description: main Windows - pwsh CodeBuild URL
@@ -624,6 +626,8 @@ Outputs:
   MainCBLinuxpwshName:
     Description: The name of the main Linux - pwsh CodeBuild Project.
     Value: !Ref MainCBLinuxpwsh
+    Export:
+      Name: !Sub "${ServiceName}-MainCBLinuxpwshName"
 
   MainCBLinuxpwshURL:
     Description: main Linux - pwsh CodeBuild URL
@@ -640,6 +644,8 @@ Outputs:
   EnhancementCBWindowspwshName:
     Description: The name of the Enhancements Windows - pwsh CodeBuild Project.
     Value: !Ref EnhancementCBWindowspwsh
+    Export:
+      Name: !Sub "${ServiceName}-EnhancementCBWindowspwshName"
 
   EnhancementCBWindowspwshURL:
     Description: Enhancements Windows - pwsh CodeBuild URL
@@ -654,6 +660,8 @@ Outputs:
   EnhancementsCBLinuxpwshName:
     Description: The name of the Enhancements Linux - pwsh CodeBuild Project.
     Value: !Ref EnhancementsCBLinuxpwsh
+    Export:
+      Name: !Sub "${ServiceName}-EnhancementsCBLinuxpwshName"
 
   EnhancementsCBLinuxpwshURL:
     Description: Enhancements Linux - pwsh CodeBuild URL

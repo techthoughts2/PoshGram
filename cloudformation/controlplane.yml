@@ -50,6 +50,14 @@ Parameters:
     Default: 30
     Description: The number of minutes before a CodeBuild build will timeout.
 
+  GitHubRepositoryName:
+    Type: String
+    Description: The name of the GitHub repository that code-pipeline will source from
+
+  GitHubOwner:
+    Type: String
+    Description: The name of the GitHub user or organization who owns the GitHub repository.
+
 Resources:
   # Logical ID should be the same as the (child) nested template name - not required, but makes it easy to line things up and read
 
@@ -95,6 +103,8 @@ Resources:
       Parameters: #much match the parameters of nested template
         ServiceName: !Ref ServiceName
         ResourceType: prod
+        GitHubRepositoryName: !Ref GitHubRepositoryName
+        GitHubOwner: !Ref GitHubOwner
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName

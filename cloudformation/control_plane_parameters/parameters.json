@@ -4,6 +4,8 @@
         "ArtifactS3Bucket": "will be replaced during CodeBuild process",
         "ArtifactS3KeyPrefix": "will be replaced during CodeBuild process",
         "CodeBuildBadgeEnabled": "true",
+        "GitHubOwner": "techthoughts2",
+        "GitHubRepositoryName": "PoshGram",
         "RepositoryUrl": "https://github.com/techthoughts2/PoshGram",
         "CodeBuildTimeoutInMinutes": "60"
     }

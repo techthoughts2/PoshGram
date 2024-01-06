@@ -19,6 +19,14 @@ Parameters:
       - test
       - prod
 
+  GitHubRepositoryName:
+    Type: String
+    Description: The name of the GitHub repository that code-pipeline will source from
+
+  GitHubOwner:
+    Type: String
+    Description: The name of the GitHub user or organization who owns the GitHub repository.
+
 Resources:
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
@@ -199,6 +207,92 @@ Resources:
                   - codestar-connections:StartOAuthHandshake
                   - codestar-connections:UseConnection
                 Resource: !Sub 'arn:${AWS::Partition}:codestar-connections:${AWS::Region}:${AWS::AccountId}:connection/ecfb22c8-ac43-49d4-9980-0345f9fd0ae2'
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codepipeline-pipeline.html
+  PoshGramEnhancementsCICDPipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      ArtifactStore:
+        Type: S3
+        Location: !Ref PoshGramCICDArtifactS3Bucket
+      # ArtifactStores:
+      #   - ArtifactStoreMap
+      # DisableInboundStageTransitions:
+      #   - StageTransition
+      Name: !Sub '${ServiceName}-Enhancements-CICD-CodePipeline'
+      RestartExecutionOnUpdate: false
+      RoleArn: !GetAtt PoshGramCodePipelineCodeBuildRole.Arn
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages.html
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages-actions.html
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages-actions-actiontypeid.html
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#actions-valid-providers
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-GitHub.html
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html#update-change-detection-cfn-github
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Version: '1'
+                Owner: AWS
+                Category: Source
+                Provider: CodeStarSourceConnection
+              Configuration:
+                ConnectionArn: !Sub 'arn:${AWS::Partition}:codestar-connections:${AWS::Region}:${AWS::AccountId}:connection/ecfb22c8-ac43-49d4-9980-0345f9fd0ae2'
+                FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepositoryName}'
+                BranchName: Enhancements
+              # InputArtifacts:
+              #   - InputArtifact
+              # Namespace: String
+              # OutputArtifactFormat: "CODE_ZIP"
+              OutputArtifacts:
+                - Name: GitHubSource
+              # Region: String
+              # RoleArn: String
+              RunOrder: 1
+        - Name: CIValidation
+          Actions:
+            - Name: EnhancementsCBLinux
+              InputArtifacts:
+                - Name: GitHubSource
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: '1'
+                Provider: CodeBuild
+              # OutputArtifacts:
+              #   - Name: CFNTemplateArtifact
+              Configuration:
+                ProjectName:
+                  Fn::ImportValue: !Sub "${ServiceName}-EnhancementsCBLinuxpwshName"
+              # Namespace: String
+              # Region: String
+              # RoleArn: String
+              RunOrder: 1
+            - Name: EnhancementCBWindows
+              InputArtifacts:
+                - Name: GitHubSource
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: '1'
+                Provider: CodeBuild
+              # OutputArtifacts:
+              #   - Name: CFNTemplateArtifact
+              Configuration:
+                ProjectName:
+                  Fn::ImportValue: !Sub "${ServiceName}-EnhancementsCBLinuxpwshName"
+              # Namespace: String
+              # Region: String
+              # RoleArn: String
+              RunOrder: 1
 
 Outputs:
 
