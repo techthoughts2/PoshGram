@@ -244,7 +244,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval[0].set_name | Should -BeExactly 'FriendlyFelines'
-                $heartSticker = $eval.result.stickers | Where-Object { $_.file_unique_id -eq 'AgADBAADlEXbHQ' }
+                $heartSticker = $eval | Where-Object { $_.file_unique_id -eq 'AgADBAADlEXbHQ' }
                 $heartSticker.Group | Should -BeExactly 'Smileys & Emotion'
                 $heartSticker.SubGroup | Should -BeExactly 'heart'
                 $heartSticker.ShortCode | Should -BeExactly ':red_heart:'
