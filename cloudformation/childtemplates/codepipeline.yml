@@ -212,4 +212,4 @@ Outputs:
     Description: ARN of the PoshGramCICDArtifactS3Bucket Amazon S3 bucket
     Value: !GetAtt PoshGramCICDArtifactS3Bucket.Arn
     Export:
-      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3Bucket
+      Name: !Sub ${ServiceName}-PoshGramCICDArtifactS3BucketARN
