@@ -63,14 +63,14 @@ InModuleScope PoshGram {
             $question3 = 'Which Star Trek captain has an artificial heart?'
             $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
             $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-            $photoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/techthoughts.png"
-            $fileURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/LogExample.zip"
-            $videoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Intro.mp4"
-            $audioURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-            $animationURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/jean.gif"
-            $stickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/picard.webp"
-            $animatedStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/animatedsticker.tgs"
-            $videoStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/videosticker.webm"
+            $photoURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/techthoughts.png"
+            $fileURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/LogExample.zip"
+            $videoURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/Intro.mp4"
+            $audioURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+            $animationURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/jean.gif"
+            $stickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/picard.webp"
+            $animatedStickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/animatedsticker.tgs"
+            $videoStickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/videosticker.webm"
             $inlineRow1 = @(
                 @{
                     text = "`u{1F517} Visit"
