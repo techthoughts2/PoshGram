@@ -279,7 +279,7 @@ Resources:
     Properties:
       # DataProtectionPolicy: Json
       # KmsKeyId: String
-      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      LogGroupName: !Sub '${ServiceName}-enhancements-windows-pwsh'
       RetentionInDays: 7
       Tags:
         - Key: ServiceName
@@ -390,7 +390,7 @@ Resources:
     Properties:
       # DataProtectionPolicy: Json
       # KmsKeyId: String
-      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      LogGroupName: !Sub '${ServiceName}-main-linux-pwsh'
       RetentionInDays: 7
       Tags:
         - Key: ServiceName
@@ -502,7 +502,7 @@ Resources:
     Properties:
       # DataProtectionPolicy: Json
       # KmsKeyId: String
-      LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+      LogGroupName: !Sub '${ServiceName}-enhancements-linux-pwsh'
       RetentionInDays: 7
       Tags:
         - Key: ServiceName
