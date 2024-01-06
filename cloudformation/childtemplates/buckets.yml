@@ -27,7 +27,7 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       # AccelerateConfiguration: AccelerateConfiguration
-      AccessControl: BucketOwnerFullControl
+      # AccessControl: BucketOwnerFullControl
       # AnalyticsConfigurations:
       #   - AnalyticsConfiguration
       BucketEncryption:
@@ -94,15 +94,15 @@ Resources:
       Bucket: !Ref PoshGramTestFiles
       PolicyDocument:
         Statement:
-          - Action:
-              - 's3:*'
-            Effect: Allow
-            Principal:
-              AWS:
-                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
-            Resource:
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
-              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+          # - Action:
+          #     - 's3:*'
+          #   Effect: Allow
+          #   Principal:
+          #     AWS:
+          #       - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+          #   Resource:
+          #     - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+          #     - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
           # - Sid: DenyUnEncryptedObjectUploads
           #   Effect: Deny
           #   Principal: '*'
