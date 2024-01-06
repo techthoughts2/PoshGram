@@ -649,7 +649,7 @@ Outputs:
     Description: Enhancements Windows - pwsh CodeBuild ARN
     Value: !GetAtt EnhancementCBWindowspwsh.Arn
     Export:
-      Name: !Sub "${ServiceName}-EnhancementCBWindowspwsh"
+      Name: !Sub "${ServiceName}-EnhancementCBWindowspwshARN"
 
   EnhancementsCBLinuxpwshName:
     Description: The name of the Enhancements Linux - pwsh CodeBuild Project.
