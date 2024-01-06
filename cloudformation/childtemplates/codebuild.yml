@@ -144,17 +144,39 @@ Resources:
                   - s3:GetObjectVersion
                 Resource:
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${BucketName}'
-                    - { BucketName: !ImportValue '${ServiceName}-PoshGramTestFiles' }
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramTestFiles'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${BucketName}/*'
-                    - { BucketName: !ImportValue '${ServiceName}-PoshGramTestFiles' }
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramTestFiles'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${BucketName}'
-                    - { BucketName: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramURLTestFiles'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${BucketName}/*'
-                    - { BucketName: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
+                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
+                    - ImportedBucketName: !ImportValue
+                        'Fn::Sub': '${ServiceName}-PoshGramURLTestFiles'
+
+  # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  # MainCBWindowspwshLogGroup:
+  #   Type: AWS::Logs::LogGroup
+  #   DeletionPolicy: Delete
+  #   UpdateReplacePolicy: Retain
+  #   Properties:
+  #     # DataProtectionPolicy: Json
+  #     # KmsKeyId: String
+  #     LogGroupName: !Sub '${ServiceName}-main-windows-pwsh'
+  #     RetentionInDays: 7
+  #     Tags:
+  #       - Key: ServiceName
+  #         Value: !Ref ServiceName
+  #       - Key: StackName
+  #         Value: !Ref AWS::StackName
+  #       - Key: ResourceType
+  #         Value: !Ref ResourceType
 
   # # The CodeBuild Project configuration
   # # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
@@ -183,13 +205,13 @@ Resources:
   #       Image: aws/codebuild/windows-base:2019-2.0
   #       EnvironmentVariables:
   #         - Name: TESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramTestFiles' }
+  #           Value:
+  #             Fn::ImportValue:
+  #               !Sub "${ServiceName}-PoshGramTestFiles"
   #         - Name: URLTESTFILES_S3_BUCKET
-  #           Value: !Sub
-  #             - '${ImportedValue}'
-  #             - { ImportedValue: !ImportValue '${ServiceName}-PoshGramURLTestFiles' }
+  #           Value:
+  #             Fn::ImportValue:
+  #               !Sub "${ServiceName}-PoshGramURLTestFiles"
   #     # LogsConfig:
   #     Name: !Sub '${ServiceName}-main-windows-pwsh'
   #     # QueuedTimeoutInMinutes: Integer
@@ -199,10 +221,15 @@ Resources:
   #     #   - Source
   #     # SecondarySourceVersions:
   #     #   - ProjectSourceVersion
+  #     LogsConfig:
+  #       CloudWatchLogs:
+  #         GroupName: !Ref MainCBWindowspwshLogGroup
+  #         Status: ENABLED
+  #         # StreamName: String
   #     ServiceRole: !GetAtt CodeBuildServiceRole.Arn
   #     Source:
-  #       Auth:
-  #         Type: OAUTH
+  #       # Auth:
+  #       #   Type: OAUTH
   #       BuildSpec: buildspec_pwsh_windows.yml
   #       # GitCloneDepth: Integer
   #       # GitSubmodulesConfig:
@@ -214,26 +241,26 @@ Resources:
   #       Type: GITHUB
   #     # SourceVersion:
   #     TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-  #     Triggers:
-  #       Webhook: true
-  #       FilterGroups:
-  #         - - Type: EVENT
-  #             Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/main$
-  #         - - Type: EVENT
-  #             Pattern: PUSH
-  #           - Type: HEAD_REF
-  #             Pattern: ^refs/heads/main$
-  #           - Type: FILE_PATH
-  #             Pattern: "^README.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^cloudformation.*"
-  #             ExcludeMatchedPattern: true
-  #           - Type: FILE_PATH
-  #             Pattern: "^lambdafunctions.*"
-  #             ExcludeMatchedPattern: true
+  #     # Triggers:
+  #     #   Webhook: true
+  #     #   FilterGroups:
+  #     #     - - Type: EVENT
+  #     #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+  #     #       - Type: HEAD_REF
+  #     #         Pattern: ^refs/heads/main$
+  #     #     - - Type: EVENT
+  #     #         Pattern: PUSH
+  #     #       - Type: HEAD_REF
+  #     #         Pattern: ^refs/heads/main$
+  #     #       - Type: FILE_PATH
+  #     #         Pattern: "^README.*"
+  #     #         ExcludeMatchedPattern: true
+  #     #       - Type: FILE_PATH
+  #     #         Pattern: "^cloudformation.*"
+  #     #         ExcludeMatchedPattern: true
+  #     #       - Type: FILE_PATH
+  #     #         Pattern: "^lambdafunctions.*"
+  #     #         ExcludeMatchedPattern: true
   #     # Visibility: String
   #     # VpcConfig:
   #     Tags:
