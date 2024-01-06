@@ -34,7 +34,7 @@ Resources:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
-      BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
       # CorsConfiguration:
       #   CorsConfiguration
       # InventoryConfigurations:
