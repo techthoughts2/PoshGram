@@ -211,6 +211,13 @@ Resources:
             Resource:
               - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}'
               - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}/*'
+          - Sid: AddPerm
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:GetObject'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:::${PoshGramURLTestFiles}/*'
           # - Sid: DenyUnEncryptedObjectUploads
           #   Effect: Deny
           #   Principal: '*'
