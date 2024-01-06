@@ -32,6 +32,24 @@ Parameters:
     Type: String
     Description: S3 Key Prefix for CodePipeline Artifacts
 
+  CodeBuildBadgeEnabled:
+    Type: String
+    Default: 'true'
+    Description: Selects whether to enable CodeBuild Build Badges.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  RepositoryUrl:
+    Description: "HTTPS Clone URL of the repository in GitHub. Example: 'https://github.com/owner/repo.git'"
+    Type: String
+    Default: https://github.com/techthoughts2/PoshGram
+
+  CodeBuildTimeoutInMinutes:
+    Type: Number
+    Default: 30
+    Description: The number of minutes before a CodeBuild build will timeout.
+
 Resources:
   # Logical ID should be the same as the (child) nested template name - not required, but makes it easy to line things up and read
 
@@ -50,20 +68,20 @@ Resources:
         - Key: StackName
           Value: !Ref AWS::StackName
 
-  # PoshGramAlarm:
-  #   Type: AWS::CloudFormation::Stack
-  #   DependsOn: PSEE
-  #   Properties:
-  #     TemplateURL: ./childtemplates/alarms.yml
-  #     TimeoutInMinutes: 15 #make sure it can actually complete in this time period
-  #     Parameters: #much match the parameters of nested template
-  #       ServiceName: !Ref ServiceName
-  #       LambdaS3BucketName: !Ref ArtifactS3Bucket
-  #       LMFunctionS3KeypwshEEUnicodeVersionMonitor: !Ref LMFunctionS3KeypwshEEUnicodeVersionMonitor
-  #       LMFunctionHandlerpwshEEUnicodeVersionMonitor: !Ref LMFunctionHandlerpwshEEUnicodeVersionMonitor
-  #       ResourceType: prod
-  #     Tags:
-  #       - Key: ServiceName
-  #         Value: !Ref ServiceName
-  #       - Key: StackName
-  #         Value: !Ref AWS::StackName
+  PoshGramCodeBuild:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: PoshGramMediaBuckets
+    Properties:
+      TemplateURL: ./childtemplates/codebuild.yml
+      TimeoutInMinutes: 15 #make sure it can actually complete in this time period
+      Parameters: #much match the parameters of nested template
+        ServiceName: !Ref ServiceName
+        ResourceType: prod
+        CodeBuildBadgeEnabled: !Ref CodeBuildBadgeEnabled
+        RepositoryUrl: !Ref RepositoryUrl
+        CodeBuildTimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName

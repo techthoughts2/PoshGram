@@ -2,6 +2,9 @@
     "Parameters": {
         "ServiceName": "PoshGram",
         "ArtifactS3Bucket": "will be replaced during CodeBuild process",
-        "ArtifactS3KeyPrefix": "will be replaced during CodeBuild process"
+        "ArtifactS3KeyPrefix": "will be replaced during CodeBuild process",
+        "CodeBuildBadgeEnabled": "true",
+        "RepositoryUrl": "https://github.com/techthoughts2/PoshGram",
+        "CodeBuildTimeoutInMinutes": 60
     }
 }
