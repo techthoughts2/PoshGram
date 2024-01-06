@@ -603,4 +603,65 @@ Resources:
         - Key: ResourceType
           Value: !Ref ResourceType
 
-# Outputs:
+Outputs:
+
+  # -------------------------------------------------------------
+  # MAIN
+  MainCBWindowspwshName:
+    Description: The name of the main Windows - pwsh CodeBuild Project.
+    Value: !Ref MainCBWindowspwsh
+
+  MainCBWindowspwshURL:
+    Description: main Windows - pwsh CodeBuild URL
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${MainCBWindowspwsh}/view"
+
+  MainCBWindowspwshARN:
+    Description: main Windows - pwsh CodeBuild ARN
+    Value: !GetAtt MainCBWindowspwsh.Arn
+    Export:
+      Name: !Sub "${ServiceName}-MainCBWindowspwshARN"
+
+  MainCBLinuxpwshName:
+    Description: The name of the main Linux - pwsh CodeBuild Project.
+    Value: !Ref MainCBLinuxpwsh
+
+  MainCBLinuxpwshURL:
+    Description: main Linux - pwsh CodeBuild URL
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${MainCBLinuxpwsh}/view"
+
+  MainCBLinuxpwshARN:
+    Description: main Linux - pwsh CodeBuild ARN
+    Value: !GetAtt MainCBLinuxpwsh.Arn
+    Export:
+      Name: !Sub "${ServiceName}-MainCBLinuxpwshARN"
+
+  # -------------------------------------------------------------
+  # ENHANCEMENTS
+  EnhancementCBWindowspwshName:
+    Description: The name of the Enhancements Windows - pwsh CodeBuild Project.
+    Value: !Ref EnhancementCBWindowspwsh
+
+  EnhancementCBWindowspwshURL:
+    Description: Enhancements Windows - pwsh CodeBuild URL
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${EnhancementCBWindowspwsh}/view"
+
+  EnhancementCBWindowspwshARN:
+    Description: Enhancements Windows - pwsh CodeBuild ARN
+    Value: !GetAtt EnhancementCBWindowspwsh.Arn
+    Export:
+      Name: !Sub "${ServiceName}-EnhancementCBWindowspwsh"
+
+  EnhancementsCBLinuxpwshName:
+    Description: The name of the Enhancements Linux - pwsh CodeBuild Project.
+    Value: !Ref EnhancementsCBLinuxpwsh
+
+  EnhancementsCBLinuxpwshURL:
+    Description: Enhancements Linux - pwsh CodeBuild URL
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${EnhancementsCBLinuxpwsh}/view"
+
+  EnhancementsCBLinuxpwshARN:
+    Description: Enhancements Linux - pwsh CodeBuild ARN
+    Value: !GetAtt EnhancementsCBLinuxpwsh.Arn
+    Export:
+      Name: !Sub "${ServiceName}-EnhancementsCBLinuxpwshARN"
+  # -------------------------------------------------------------
