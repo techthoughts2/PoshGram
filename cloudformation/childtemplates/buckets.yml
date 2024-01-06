@@ -94,6 +94,15 @@ Resources:
       Bucket: !Ref PoshGramTestFiles
       PolicyDocument:
         Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
           - Sid: PublicReadForObject
             Effect: Allow
             Principal: '*'
@@ -101,6 +110,19 @@ Resources:
               - 's3:GetObject'
             Resource:
               - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramTestFiles}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PSCCModulesBucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
           - Sid: DenyInsecureConnections
             Effect: Deny
             Principal: '*'
