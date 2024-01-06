@@ -72,20 +72,20 @@ Resources:
                   - s3:*
                 Resource:
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
-                    - ImportedBucketName: !ImportValue
+                    - '${ImportedBucketARN}'
+                    - ImportedBucketARN: !ImportValue
                         'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
-                    - ImportedBucketName: !ImportValue
+                    - '${ImportedBucketARN}/*'
+                    - ImportedBucketARN: !ImportValue
                         'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}'
-                    - ImportedBucketName: !ImportValue
+                    - '${ImportedBucketARN}'
+                    - ImportedBucketARN: !ImportValue
                         'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
                   - !Sub
-                    - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
-                    - ImportedBucketName: !ImportValue
+                    - '${ImportedBucketARN}/*'
+                    - ImportedBucketARN: !ImportValue
                         'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
               - Effect: Allow
                 Action:
