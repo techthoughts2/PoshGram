@@ -4,6 +4,10 @@
     "recommendations": [
         "ms-vscode.PowerShell",
         "ryanluker.vscode-coverage-gutters",
-        "DavidAnson.vscode-markdownlint"
+        "DavidAnson.vscode-markdownlint",
+        "aaron-bond.better-comments",
+        "aws-scripting-guy.cform",
+        "kddejong.vscode-cfn-lint",
+        "redhat.vscode-yaml"
     ]
 }
