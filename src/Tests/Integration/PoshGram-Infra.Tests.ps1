@@ -1172,7 +1172,7 @@ with MarkdownV2 style formatting'
         } #context_Send-TelegramTextMessage
 
         Context 'Send-TelegramURLAnimation' {
-            It 'Should return with ok:true when a location is successfully sent' {
+            It 'Should return with ok:true when a URL animation is successfully sent' {
                 $sendTelegramURLAnimationSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
