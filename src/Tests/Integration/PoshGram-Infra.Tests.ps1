@@ -14,7 +14,7 @@ InModuleScope PoshGram {
     Describe 'Integration Tests' -Tag Integration {
 
         BeforeAll {
-            #$WarningPreference = 'SilentlyContinue'
+            $WarningPreference = 'Continue'
             #//////////////////////////////////////////////////////////////////////////
             if ($env:CODEBUILD_PROJECT_UUID) {
                 # we are in a CodeBuild environment
@@ -27,8 +27,8 @@ InModuleScope PoshGram {
             }
             else {
                 # ! if running locally you must provide the bot token and chat id for these tests to run
-                $token = '515383114:AAEcQZTagZhpbX4iIIfgTVCZ1FFTi_skykM'
-                $channel = '-192990862'
+                # $token = ''
+                # $channel = ''
             }
             #//////////////////////////////////////////////////////////////////////////
             $latitude = 37.621313
@@ -255,6 +255,7 @@ InModuleScope PoshGram {
         } #context_Get-TelegramStickerPackInfo
 
         Context 'Send-TelegramContact' {
+
             It 'Should return with ok:true when a contact is successfully sent' {
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
@@ -286,9 +287,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramContact
 
         Context 'Send-TelegramDice' {
+
             It 'Should return with ok:true when a dice is successfully sent' {
                 $sendTelegramDiceSplat = @{
                     BotToken            = $token
@@ -318,9 +321,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramDice
 
         Context 'Send-TelegramLocalAnimation' {
+
             It 'Should return with ok:true when a local animation is successfully sent' {
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken            = $token
@@ -351,9 +356,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocalAnimation
 
         Context 'Send-TelegramLocalAudio' {
+
             It 'Should return with ok:true when a local audio message is successfully sent' {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken            = $token
@@ -387,9 +394,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocalAudio
 
         Context 'Send-TelegramLocalDocument' {
+
             It 'Should return with ok:true when a local document message is successfully sent' {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken            = $token
@@ -420,9 +429,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocalDocument
 
         Context 'Send-TelegramLocalPhoto' {
+
             It 'Should return with ok:true when a local photo message is successfully sent' {
                 $sendTelegramLocalPhotoSplat = @{
                     BotToken            = $token
@@ -453,6 +464,7 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocalPhoto
 
         Context 'Send-TelegramLocalSticker' {
@@ -550,6 +562,7 @@ InModuleScope PoshGram {
         } #context_Send-TelegramLocalSticker
 
         Context 'Send-TelegramLocalVideo' {
+
             It 'Should return with ok:true when a local video message is successfully sent' {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken            = $token
@@ -581,9 +594,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocalVideo
 
         Context 'Send-TelegramLocation' {
+
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramLocationSplat = @{
                     BotToken            = $token
@@ -614,11 +629,13 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramLocation
 
         Context 'Send-TelegramMediaGroup' {
+
             It 'Should return with ok:true when a group of photos is successfully sent' {
-                Start-Sleep -Seconds 15
+                Start-Sleep -Seconds 30
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -744,9 +761,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
-        } #context_Send-TelegramURLAnimation
+
+        } #context_Send-TelegramMediaGroup
 
         Context 'Send-TelegramPoll' {
+
             It 'Should return with ok:true when a typical poll is successfully sent' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
@@ -846,9 +865,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramPoll
 
         Context 'Send-TelegramSticker' {
+
             It 'Should return with ok:true when a sticker is sent by file_id' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
@@ -909,9 +930,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramSticker
 
         Context 'Send-TelegramTextMessage' {
+
             It 'Should return with ok:true when a typical message is successfully sent' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -1173,6 +1196,7 @@ with MarkdownV2 style formatting'
         } #context_Send-TelegramTextMessage
 
         Context 'Send-TelegramURLAnimation' {
+
             It 'Should return with ok:true when a URL animation is successfully sent' {
                 $sendTelegramURLAnimationSplat = @{
                     BotToken            = $token
@@ -1203,9 +1227,11 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramURLAnimation
 
         Context 'Send-TelegramURLAudio' {
+
             It 'Should return with ok:true when a URL audio message is successfully sent' {
                 $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
@@ -1239,9 +1265,11 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramURLAudio
 
         Context 'Send-TelegramURLDocument' {
+
             It 'Should return with ok:true when a URL document message is successfully sent' {
                 Start-Sleep -Seconds 20
                 $sendTelegramURLDocumentSplat = @{
@@ -1273,9 +1301,11 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramURLDocument
 
         Context 'Send-TelegramURLPhoto' {
+
             It 'Should return with ok:true when a photo url message is successfully sent' {
                 $sendTelegramURLPhotoSplat = @{
                     BotToken            = $token
@@ -1306,7 +1336,8 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
-        } #context_Send-TelegramLocalPhoto
+
+        } #context_Send-TelegramURLPhoto
 
         Context 'Send-TelegramURLSticker' {
 
@@ -1403,6 +1434,7 @@ with MarkdownV2 style formatting'
         } #context_Send-TelegramURLSticker
 
         Context 'Send-TelegramURLVideo' {
+
             It 'Should return with ok:true when a URL video message is successfully sent' {
                 $sendTelegramURLVideoSplat = @{
                     BotToken            = $token
@@ -1434,9 +1466,11 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramURLVideo
 
         Context 'Send-TelegramVenue' {
+
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
                     BotToken            = $token
@@ -1469,9 +1503,11 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Milliseconds 2500
             } #it
+
         } #context_Send-TelegramVenue
 
         Context 'Test-BotToken' {
+
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $apiTest = $false
                 $run = 0
@@ -1493,6 +1529,7 @@ with MarkdownV2 style formatting'
                 $eval.ok | Should -Be 'True'
                 Start-Sleep -Seconds 5
             } #it
+
         } #context_Test-BotToken
 
     } #describe_IntegrationTests
