@@ -162,22 +162,6 @@ Resources:
                     - 'arn:${AWS::Partition}:s3:::${ImportedBucketName}/*'
                     - ImportedBucketName: !ImportValue
                         'Fn::Sub': '${ServiceName}-PoshGramURLTestFiles'
-                  - !Sub
-                    - '${ImportedBucketARN}'
-                    - ImportedBucketARN: !ImportValue
-                        'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
-                  - !Sub
-                    - '${ImportedBucketARN}/*'
-                    - ImportedBucketARN: !ImportValue
-                        'Fn::Sub': '${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN'
-                  - !Sub
-                    - '${ImportedBucketARN}'
-                    - ImportedBucketARN: !ImportValue
-                        'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
-                  - !Sub
-                    - '${ImportedBucketARN}/*'
-                    - ImportedBucketARN: !ImportValue
-                        'Fn::Sub': '${ServiceName}-PoshGramCICDMainArtifactS3BucketARN'
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
   MainCBWindowspwshLogGroup:
@@ -231,7 +215,12 @@ Resources:
             Value:
               Fn::ImportValue:
                 !Sub "${ServiceName}-PoshGramURLTestFiles"
-      # LogsConfig:
+      # FileSystemLocations:
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref MainCBWindowspwshLogGroup
+          Status: ENABLED
+          # StreamName: String
       Name: !Sub '${ServiceName}-main-windows-pwsh'
       # QueuedTimeoutInMinutes: Integer
       # SecondaryArtifacts:
@@ -240,15 +229,10 @@ Resources:
       #   - Source
       # SecondarySourceVersions:
       #   - ProjectSourceVersion
-      LogsConfig:
-        CloudWatchLogs:
-          GroupName: !Ref MainCBWindowspwshLogGroup
-          Status: ENABLED
-          # StreamName: String
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
-        # Auth:
-        #   Type: OAUTH
+        Auth:
+          Type: OAUTH
         BuildSpec: buildspec_pwsh_windows.yml
         # GitCloneDepth: Integer
         # GitSubmodulesConfig:
@@ -259,29 +243,6 @@ Resources:
         # SourceIdentifier:
         Type: GITHUB
       # SourceVersion:
-      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-      # Triggers:
-      #   Webhook: true
-      #   FilterGroups:
-      #     - - Type: EVENT
-      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/main$
-      #     - - Type: EVENT
-      #         Pattern: PUSH
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/main$
-      #       - Type: FILE_PATH
-      #         Pattern: "^README.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^cloudformation.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^lambdafunctions.*"
-      #         ExcludeMatchedPattern: true
-      # Visibility: String
-      # VpcConfig:
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName
@@ -289,6 +250,33 @@ Resources:
           Value: !Ref AWS::StackName
         - Key: ResourceType
           Value: !Ref ResourceType
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/main$
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/main$
+            - Type: FILE_PATH
+              Pattern: "^README.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^cloudformation.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^lambdafunctions.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^docs.*"
+              ExcludeMatchedPattern: true
+      Visibility: PRIVATE
+      # VpcConfig:
+
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
   EnhancementCBWindowspwshLogGroup:
@@ -342,24 +330,25 @@ Resources:
             Value:
               Fn::ImportValue:
                 !Sub "${ServiceName}-PoshGramURLTestFiles"
-      # LogsConfig:
+      # FileSystemLocations:
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref EnhancementCBWindowspwshLogGroup
+          Status: ENABLED
+          # StreamName: String
       Name: !Sub '${ServiceName}-Enhancements-windows-pwsh'
       # QueuedTimeoutInMinutes: Integer
+      # ResourceAccessRole: String
       # SecondaryArtifacts:
       #   - Artifacts
       # SecondarySources:
       #   - Source
       # SecondarySourceVersions:
       #   - ProjectSourceVersion
-      LogsConfig:
-        CloudWatchLogs:
-          GroupName: !Ref EnhancementCBWindowspwshLogGroup
-          Status: ENABLED
-          # StreamName: String
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
-        # Auth:
-        #   Type: OAUTH
+        Auth:
+          Type: OAUTH
         BuildSpec: buildspec_pwsh_windows.yml
         # GitCloneDepth: Integer
         # GitSubmodulesConfig:
@@ -370,29 +359,6 @@ Resources:
         # SourceIdentifier:
         Type: GITHUB
       SourceVersion: refs/heads/Enhancements
-      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-      # Triggers:
-      #   Webhook: true
-      #   FilterGroups:
-      #     - - Type: EVENT
-      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/Enhancements$
-      #     - - Type: EVENT
-      #         Pattern: PUSH
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/Enhancements$
-      #       - Type: FILE_PATH
-      #         Pattern: "^README.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^cloudformation.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^lambdafunctions.*"
-      #         ExcludeMatchedPattern: true
-      # Visibility: String
-      # VpcConfig:
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName
@@ -400,6 +366,33 @@ Resources:
           Value: !Ref AWS::StackName
         - Key: ResourceType
           Value: !Ref ResourceType
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/Enhancements$
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/Enhancements$
+            - Type: FILE_PATH
+              Pattern: "^README.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^cloudformation.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^lambdafunctions.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^docs.*"
+              ExcludeMatchedPattern: true
+      Visibility: PRIVATE
+      # VpcConfig:
+
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
   MainCBLinuxpwshLogGroup:
@@ -453,24 +446,25 @@ Resources:
             Value:
               Fn::ImportValue:
                 !Sub "${ServiceName}-PoshGramURLTestFiles"
-      # LogsConfig:
+      # FileSystemLocations:
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref MainCBLinuxpwshLogGroup
+          Status: ENABLED
+          # StreamName: String
       Name: !Sub '${ServiceName}-main-linux-pwsh'
       # QueuedTimeoutInMinutes: Integer
+      # ResourceAccessRole: String
       # SecondaryArtifacts:
       #   - Artifacts
       # SecondarySources:
       #   - Source
       # SecondarySourceVersions:
       #   - ProjectSourceVersion
-      LogsConfig:
-        CloudWatchLogs:
-          GroupName: !Ref MainCBLinuxpwshLogGroup
-          Status: ENABLED
-          # StreamName: String
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
-        # Auth:
-        #   Type: OAUTH
+        Auth:
+          Type: OAUTH
         BuildSpec: buildspec_pwsh_linux.yml
         # GitCloneDepth: Integer
         # GitSubmodulesConfig:
@@ -481,29 +475,6 @@ Resources:
         # SourceIdentifier:
         Type: GITHUB
       # SourceVersion:
-      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-      # Triggers:
-      #   Webhook: true
-      #   FilterGroups:
-      #     - - Type: EVENT
-      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/main$
-      #     - - Type: EVENT
-      #         Pattern: PUSH
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/main$
-      #       - Type: FILE_PATH
-      #         Pattern: "^README.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^cloudformation.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^lambdafunctions.*"
-      #         ExcludeMatchedPattern: true
-      # Visibility: String
-      # VpcConfig:
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName
@@ -511,6 +482,32 @@ Resources:
           Value: !Ref AWS::StackName
         - Key: ResourceType
           Value: !Ref ResourceType
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/main$
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/main$
+            - Type: FILE_PATH
+              Pattern: "^README.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^cloudformation.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^lambdafunctions.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^docs.*"
+              ExcludeMatchedPattern: true
+      Visibility: PRIVATE
+      # VpcConfig:
 
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
@@ -565,24 +562,25 @@ Resources:
             Value:
               Fn::ImportValue:
                 !Sub "${ServiceName}-PoshGramURLTestFiles"
-      # LogsConfig:
+      # FileSystemLocations:
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref EnhancementsCBLinuxpwshLogGroup
+          Status: ENABLED
+          # StreamName: String
       Name: !Sub '${ServiceName}-Enhancements-linux-pwsh'
       # QueuedTimeoutInMinutes: Integer
+      # ResourceAccessRole: String
       # SecondaryArtifacts:
       #   - Artifacts
       # SecondarySources:
       #   - Source
       # SecondarySourceVersions:
       #   - ProjectSourceVersion
-      LogsConfig:
-        CloudWatchLogs:
-          GroupName: !Ref EnhancementsCBLinuxpwshLogGroup
-          Status: ENABLED
-          # StreamName: String
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
-        # Auth:
-        #   Type: OAUTH
+        Auth:
+          Type: OAUTH
         BuildSpec: buildspec_pwsh_linux.yml
         # GitCloneDepth: Integer
         # GitSubmodulesConfig:
@@ -593,27 +591,6 @@ Resources:
         # SourceIdentifier:
         Type: GITHUB
       SourceVersion: refs/heads/Enhancements
-      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
-      # Triggers:
-      #   Webhook: true
-      #   FilterGroups:
-      #     - - Type: EVENT
-      #         Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/Enhancements$
-      #     - - Type: EVENT
-      #         Pattern: PUSH
-      #       - Type: HEAD_REF
-      #         Pattern: ^refs/heads/Enhancements$
-      #       - Type: FILE_PATH
-      #         Pattern: "^README.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^cloudformation.*"
-      #         ExcludeMatchedPattern: true
-      #       - Type: FILE_PATH
-      #         Pattern: "^lambdafunctions.*"
-      #         ExcludeMatchedPattern: true
       Tags:
         - Key: ServiceName
           Value: !Ref ServiceName
@@ -621,6 +598,32 @@ Resources:
           Value: !Ref AWS::StackName
         - Key: ResourceType
           Value: !Ref ResourceType
+      TimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/Enhancements$
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/Enhancements$
+            - Type: FILE_PATH
+              Pattern: "^README.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^cloudformation.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^lambdafunctions.*"
+              ExcludeMatchedPattern: true
+            - Type: FILE_PATH
+              Pattern: "^docs.*"
+              ExcludeMatchedPattern: true
+      Visibility: PRIVATE
+      # VpcConfig:
 
 Outputs:
 
