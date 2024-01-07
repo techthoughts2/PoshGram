@@ -243,6 +243,205 @@ Resources:
   #             Bool:
   #               'aws:SecureTransport': false
 
+
+  PoshGramCICDEnhancementsArtifactS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramCICDEnhancementsArtifactS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramCICDEnhancementsArtifactS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDEnhancementsArtifactS3Bucket}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDEnhancementsArtifactS3Bucket}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PoshGramArtifactS3Bucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: !Sub
+              - '${BucketArn}/*'
+              - { BucketArn: !GetAtt [PoshGramCICDEnhancementsArtifactS3Bucket, Arn] }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+  PoshGramCICDMainArtifactS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      # BucketName: !Sub ${ServiceName}-${AWS::AccountId}-cicd-artifacts
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramCICDMainArtifactS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramCICDMainArtifactS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDMainArtifactS3Bucket}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramCICDMainArtifactS3Bucket}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PoshGramArtifactS3Bucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: !Sub
+              - '${BucketArn}/*'
+              - { BucketArn: !GetAtt [PoshGramCICDMainArtifactS3Bucket, Arn] }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
 Outputs:
   PoshGramTestFilesBucketName:
     Description: Name of the PoshGramTestFiles Amazon S3 bucket
@@ -267,3 +466,27 @@ Outputs:
     Value: !GetAtt PoshGramURLTestFiles.Arn
     Export:
       Name: !Sub ${ServiceName}-PoshGramURLTestFilesARN
+
+  PoshGramCICDEnhancementsArtifactS3BucketName:
+    Description: Name of the PoshGramCICDEnhancementsArtifactS3Bucket Amazon S3 bucket
+    Value: !Ref PoshGramCICDEnhancementsArtifactS3Bucket
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDEnhancementsArtifactS3Bucket
+
+  PoshGramCICDEnhancementsArtifactS3BucketARN:
+    Description: ARN of the PoshGramCICDEnhancementsArtifactS3Bucket Amazon S3 bucket
+    Value: !GetAtt PoshGramCICDEnhancementsArtifactS3Bucket.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDEnhancementsArtifactS3BucketARN
+
+  PoshGramCICDMainArtifactS3BucketName:
+    Description: Name of the PoshGramCICDMainArtifactS3Bucket Amazon S3 bucket
+    Value: !Ref PoshGramCICDMainArtifactS3Bucket
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDMainArtifactS3Bucket
+
+  PoshGramCICDMainArtifactS3BucketARN:
+    Description: ARN of the PoshGramCICDMainArtifactS3Bucket Amazon S3 bucket
+    Value: !GetAtt PoshGramCICDMainArtifactS3Bucket.Arn
+    Export:
+      Name: !Sub ${ServiceName}-PoshGramCICDMainArtifactS3BucketARN
