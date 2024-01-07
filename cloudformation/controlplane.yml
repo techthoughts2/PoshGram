@@ -94,19 +94,19 @@ Resources:
         - Key: StackName
           Value: !Ref AWS::StackName
 
-  PoshGramCodePipeline:
-    Type: AWS::CloudFormation::Stack
-    DependsOn: PoshGramCodeBuild
-    Properties:
-      TemplateURL: ./childtemplates/codepipeline.yml
-      TimeoutInMinutes: 25 #make sure it can actually complete in this time period
-      Parameters: #much match the parameters of nested template
-        ServiceName: !Ref ServiceName
-        ResourceType: prod
-        GitHubRepositoryName: !Ref GitHubRepositoryName
-        GitHubOwner: !Ref GitHubOwner
-      Tags:
-        - Key: ServiceName
-          Value: !Ref ServiceName
-        - Key: StackName
-          Value: !Ref AWS::StackName
+  # PoshGramCodePipeline:
+  #   Type: AWS::CloudFormation::Stack
+  #   DependsOn: PoshGramCodeBuild
+  #   Properties:
+  #     TemplateURL: ./childtemplates/codepipeline.yml
+  #     TimeoutInMinutes: 25 #make sure it can actually complete in this time period
+  #     Parameters: #much match the parameters of nested template
+  #       ServiceName: !Ref ServiceName
+  #       ResourceType: prod
+  #       GitHubRepositoryName: !Ref GitHubRepositoryName
+  #       GitHubOwner: !Ref GitHubOwner
+  #     Tags:
+  #       - Key: ServiceName
+  #         Value: !Ref ServiceName
+  #       - Key: StackName
+  #         Value: !Ref AWS::StackName
