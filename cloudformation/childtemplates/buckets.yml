@@ -217,7 +217,7 @@ Resources:
             Action:
               - 's3:GetObject'
             Resource:
-              - !Sub 'arn:${AWS::Partition}:::${PoshGramURLTestFiles}/*'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramURLTestFiles}/*'
           # - Sid: DenyUnEncryptedObjectUploads
           #   Effect: Deny
           #   Principal: '*'
