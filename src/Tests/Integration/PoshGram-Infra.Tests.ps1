@@ -27,8 +27,8 @@ InModuleScope PoshGram {
             }
             else {
                 # ! if running locally you must provide the bot token and chat id for these tests to run
-                # $token = ''
-                # $channel = ''
+                $token = '515383114:AAEcQZTagZhpbX4iIIfgTVCZ1FFTi_skykM'
+                $channel = '-192990862'
             }
             #//////////////////////////////////////////////////////////////////////////
             $latitude = 37.621313
@@ -245,8 +245,9 @@ InModuleScope PoshGram {
 
                 $eval[0].set_name | Should -BeExactly 'FriendlyFelines'
                 $heartSticker = $eval | Where-Object { $_.file_unique_id -eq 'AgADBAADlEXbHQ' }
-                $heartSticker.Group | Should -BeExactly 'Smileys & Emotion'
-                $heartSticker.SubGroup | Should -BeExactly 'heart'
+                $heartSticker           | Should -Not -BeNullOrEmpty
+                $heartSticker.Group     | Should -BeExactly 'Smileys & Emotion'
+                $heartSticker.SubGroup  | Should -BeExactly 'heart'
                 $heartSticker.ShortCode | Should -BeExactly ':red_heart:'
                 Start-Sleep -Milliseconds 2500
             } #it
