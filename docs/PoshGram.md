@@ -11,6 +11,9 @@ Locale: en-US
 PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
 ## PoshGram Cmdlets
+### [Get-TelegramCustomEmojiStickerInfo](Get-TelegramCustomEmojiStickerInfo.md)
+Retrieve information about Telegram custom emoji stickers using their identifiers.
+
 ### [Get-TelegramStickerPackInfo](Get-TelegramStickerPackInfo.md)
 Retrieve detailed information about a specified Telegram sticker pack.
 
