@@ -27,6 +27,11 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'PSScriptAnalyzer'
             ModuleVersion = '1.21.0'
         }))
+# https://github.com/techthoughts2/pwshEmojiExplorer
+$null = $modulesToInstall.Add(([PSCustomObject]@{
+            ModuleName    = 'pwshEmojiExplorer'
+            ModuleVersion = '0.8.0'
+        }))
 # https://github.com/PowerShell/platyPS
 # older version used due to: https://github.com/PowerShell/platyPS/issues/457
 $null = $modulesToInstall.Add(([PSCustomObject]@{
