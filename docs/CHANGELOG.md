@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             - `Group`, `SubGroup`, `pwshEscapedFormat`
     - Added new function: `Get-TelegramCustomEmojiStickerInfo` which is currently experimental.
     - Added `-HasSpoiler` switch to `Send-TelegramLocalPhoto`, `Send-TelegramLocalVideo`, `Send-TelegramLocalAnimation`
+    - Added `-Emoji` parameter to `Send-TelegramLocalSticker` which enables you to specify an emoji for a newly uploaded sticker.
     - Updated help for all functions
 - Build Updates
     - AWS Deployment Updates

@@ -13,7 +13,7 @@ Sends Telegram sticker message via Bot API from locally sourced sticker image
 ## SYNTAX
 
 ```
-Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String>
+Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String> [[-Emoji] <String>]
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -42,6 +42,7 @@ $sendTelegramLocalStickerSplat = @{
     BotToken            = $botToken
     ChatID              = $chat
     StickerPath         = $sticker
+    Emoji               = '😀'
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -93,6 +94,21 @@ Aliases:
 
 Required: True
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Emoji
+Emoji associated with the sticker
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

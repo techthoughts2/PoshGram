@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------
+﻿#-------------------------------------------------------------------------
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
@@ -536,6 +536,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     StickerPath         = $stickerFile
+                    Emoji               = '🖖'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }

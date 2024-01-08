@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------
+﻿#-------------------------------------------------------------------------
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
@@ -12,14 +12,16 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 
 InModuleScope PoshGram {
+
     Describe 'Send-TelegramLocalSticker' -Tag Unit {
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
             $ErrorActionPreference = 'SilentlyContinue'
-        } #beforeAll
-        BeforeEach {
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
+        } #beforeAll
+
+        BeforeEach {
             Mock Test-Path { $true }
             Mock Test-FileExtension { $true }
             Mock Test-FileSize { $true }
@@ -45,7 +47,9 @@ InModuleScope PoshGram {
                 }
             } #endMock
         } #before_each
+
         Context 'Error' {
+
             It 'should throw if the sticker can not be found' {
                 Mock Test-Path { $false }
                 $sendTelegramLocalStickerSplat = @{
@@ -117,6 +121,7 @@ InModuleScope PoshGram {
             } #it
 
             It 'should return the exception if the API returns an error' {
+                Mock -CommandName Test-Path { $true }
                 Mock -CommandName Invoke-RestMethod {
                     $errorDetails = '{ "ok":false, "error_code":429, "description":"Too Many Requests: retry after 10", "parameters": { "retry_after":10 } }'
                     $statusCode = 429
@@ -142,7 +147,9 @@ InModuleScope PoshGram {
                 $eval.error_code | Should -BeExactly '429'
             } #it
         } #context_Error
+
         Context 'Success' {
+
             It 'should call the API with the expected parameters' {
                 Mock -CommandName Invoke-RestMethod {
                 } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendSticker*' }
@@ -150,6 +157,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     StickerPath         = 'c:\bs\sticker.webp'
+                    Emoji               = '😀'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -162,6 +170,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $chat
                     StickerPath         = 'c:\bs\sticker.webp'
+                    Emoji               = '😀'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -169,6 +178,9 @@ InModuleScope PoshGram {
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
                 $eval.ok | Should -BeExactly 'True'
             } #it
+
         } #context_Success
+
     } #describe_Send-TelegramLocalSticker
+
 } #inModule

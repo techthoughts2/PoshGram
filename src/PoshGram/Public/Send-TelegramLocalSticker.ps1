@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
     Sends Telegram sticker message via Bot API from locally sourced sticker image
 .DESCRIPTION
@@ -18,6 +18,7 @@
         BotToken            = $botToken
         ChatID              = $chat
         StickerPath         = $sticker
+        Emoji               = '😀'
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true
@@ -31,6 +32,8 @@
     Unique identifier for the target chat
 .PARAMETER StickerPath
     File path to the sticker you wish to send
+.PARAMETER Emoji
+    Emoji associated with the sticker
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .PARAMETER ProtectContent
@@ -51,7 +54,9 @@
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     sticker                 InputFile or String     Yes         Sticker to send.
+    emoji                   String                  Optional    Emoji associated with the sticker; only for just uploaded stickers
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content         Boolean                 Optional    Protects the contents of the sent message from forwarding and saving
 .LINK
     https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalSticker
 .LINK
@@ -81,6 +86,11 @@ function Send-TelegramLocalSticker {
         [string]$StickerPath,
 
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Emoji associated with the sticker')]
+        [ValidatePattern('\p{So}|\p{Cs}')]
+        [string]$Emoji,
+
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
         [switch]$DisableNotification,
 
@@ -92,6 +102,8 @@ function Send-TelegramLocalSticker {
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
 
     Write-Verbose -Message 'Verifying presence of sticker...'
+    $pathEval = Test-Path -Path $StickerPath
+    Write-Verbose -Message ('Path Evaluated Outcome: {0}' -f $pathEval)
     if (-not(Test-Path -Path $StickerPath)) {
         throw ('The specified sticker path: {0} was not found.' -f $AnimationPath)
     } #if_testPath
@@ -132,6 +144,10 @@ function Send-TelegramLocalSticker {
         disable_notification = $DisableNotification.IsPresent
         protect_content      = $ProtectContent.IsPresent
     } #form
+
+    if ($Emoji) {
+        $form.Add('emoji', $Emoji)
+    } #if_emoji
 
     $uri = 'https://api.telegram.org/bot{0}/sendSticker' -f $BotToken
     Write-Debug -Message ('Base URI: {0}' -f $uri)
