@@ -1288,6 +1288,37 @@ with MarkdownV2 style formatting'
                 Start-Sleep -Milliseconds 4000
             } #it
 
+            It 'should return ok:true when a message is sent with link preview controls' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken             = $token
+                    ChatID               = $channel
+                    Message              = 'Sending a message with a link preview'
+                    LinkPreviewURL       = 'https://www.techthoughts.info'
+                    LinkPreviewOption    = 'Small'
+                    LinkPreviewAboveText = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 25
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+                Start-Sleep -Milliseconds 4000
+            } #it
+
         } #context_Send-TelegramTextMessage
 
         Context 'Send-TelegramURLAnimation' {

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Module Changes
     - Added dependency for `pwshEmojiExplorer` module
+    - `Send-TelegramTextMessage` = **BREAKING CHANGES INTRODUCED**
+        - Replaced the `DisablePreview` parameter with three new parameters due to Telegram replacing the field *disable_web_page_preview* with *link_preview_options*
+            1. `LinkPreviewURL`
+            2. `LinkPreviewOption`
+            3. `LinkPreviewAboveText`
     - `Get-TelegramStickerPackInfo` - ***potential* breaking change**
         - This function no longer uses a static json list of emojis to retrieve emoji information. This approach was using an extremely outdated random list of emojis. This update now uses the `pwshEmojiExplorer` module to retrieve an updated standardized list of emoji information based on public Unicode data sets.
         - Function now returns additional emoji property information:

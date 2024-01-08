@@ -140,6 +140,18 @@
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
     Sends text message via Telegram Bot API and enables the 'ProtectContent' feature. When 'ProtectContent' is set to $true, it prevents the message from being forwarded or saved. This is useful for sending sensitive or confidential information that should remain within the confines of the original chat.
+.EXAMPLE
+    $sendTelegramTextMessageSplat = @{
+        BotToken             = $botToken
+        ChatID               = $chat
+        Message              = 'Sending a message with a link preview'
+        LinkPreviewURL       = 'https://www.techthoughts.info'
+        LinkPreviewOption    = 'Small'
+        LinkPreviewAboveText = $true
+    }
+    Send-TelegramTextMessage @sendTelegramTextMessageSplat
+
+    Sends text message via Telegram Bot API and enables the 'LinkPreview' feature. When 'LinkPreview' is set to Small, it will generate a small link preview for the provided url. When 'LinkPreviewAboveText' is set to $true, it will display the link preview above the message text.
 .PARAMETER BotToken
     Use this token to access the HTTP API
 .PARAMETER ChatID
@@ -148,10 +160,14 @@
     Text of the message to be sent
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
+.PARAMETER LinkPreviewURL
+    URL to use for the link preview. If empty, then the first URL found in the message text will be used. Has no effect if LinkPreviewOption is Disabled.
+.PARAMETER LinkPreviewOption
+    Choose how link previews are shown. Default is Disabled.
+.PARAMETER LinkPreviewAboveText
+    Use if the link preview must be shown above the message text. Has no effect if LinkPreviewOption is Disabled.
 .PARAMETER Keyboard
     Custom or inline keyboard object
-.PARAMETER DisablePreview
-    Disables link previews for links in this message.
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .PARAMETER ProtectContent
@@ -177,11 +193,9 @@
     chat_id                     Integer or String   Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     text                        String              Yes         Text of the message to be sent, 1-4096 characters after entities parsing
     parse_mode                  String              Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
-    disable_web_page_preview    Boolean             Optional    Disables link previews for links in this message
+    link_preview_options        LinkPreviewOptions  Optional    Link preview generation options for the message
     disable_notification        Boolean             Optional    Sends the message silently. Users will receive a notification with no sound.
     protect_content             Boolean             Optional    Protects the contents of the sent message from forwarding and saving
-    reply_to_message_id         Integer             Optional    If the message is a reply, ID of the original message
-    reply_markup                KeyboardMarkup      Optional    Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 .LINK
     https://poshgram.readthedocs.io/en/latest/Send-TelegramTextMessage/
 .LINK
@@ -226,14 +240,24 @@ function Send-TelegramTextMessage {
         [string]$ParseMode = 'HTML', #set to HTML by default
 
         [Parameter(Mandatory = $false,
+            HelpMessage = 'URL to use for the link preview')]
+        [ValidatePattern('^(http|https)://[a-zA-Z0-9-\.]+(\.[a-zA-Z]{2,})?(:[0-9]+)?(/.*)?$')]
+        [string]$LinkPreviewURL,
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Choose how link previews are shown')]
+        [ValidateSet('Disabled', 'Small', 'Large')]
+        [string]$LinkPreviewOption = 'Disabled', #set to Disabled by default
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Use if the link preview must be shown above the message text')]
+        [switch]$LinkPreviewAboveText,
+
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Custom or inline keyboard object')]
         [ValidateNotNull()]
         [ValidateNotNullOrEmpty()]
         [psobject]$Keyboard,
-
-        [Parameter(Mandatory = $false,
-            HelpMessage = 'Disables link previews')]
-        [switch]$DisablePreview, #set to false by default
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
@@ -246,13 +270,40 @@ function Send-TelegramTextMessage {
 
     Write-Verbose -Message ('Starting: {0}' -f $MyInvocation.Mycommand)
 
+    $linkPreviewOptionsObj = @{
+        is_disabled        = $false
+        prefer_small_media = $true
+        prefer_large_media = $true
+        show_above_text    = $false
+    }
+
+    if ($LinkPreviewOption -eq 'Disabled') {
+        $linkPreviewOptionsObj.is_disabled = $true
+    }
+    elseif ($LinkPreviewOption -eq 'Small') {
+        $linkPreviewOptionsObj.prefer_small_media = $true
+        $linkPreviewOptionsObj.prefer_large_media = $false
+    }
+    elseif ($LinkPreviewOption -eq 'Large') {
+        $linkPreviewOptionsObj.prefer_small_media = $false
+        $linkPreviewOptionsObj.prefer_large_media = $true
+    }
+
+    if ($LinkPreviewAboveText.IsPresent) {
+        $linkPreviewOptionsObj.show_above_text = $true
+    }
+
+    if ($LinkPreviewURL) {
+        $linkPreviewOptionsObj.Add('url', $LinkPreviewURL)
+    }
+
     $payload = @{
-        chat_id                  = $ChatID
-        text                     = $Message
-        parse_mode               = $ParseMode
-        disable_web_page_preview = $DisablePreview.IsPresent
-        disable_notification     = $DisableNotification.IsPresent
-        protect_content          = $ProtectContent.IsPresent
+        chat_id              = $ChatID
+        text                 = $Message
+        parse_mode           = $ParseMode
+        link_preview_options = $linkPreviewOptionsObj
+        disable_notification = $DisableNotification.IsPresent
+        protect_content      = $ProtectContent.IsPresent
     } #payload
 
     if ($Keyboard) {

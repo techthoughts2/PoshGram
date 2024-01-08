@@ -14,7 +14,8 @@ Send a text message via Telegram Bot API.
 
 ```
 Send-TelegramTextMessage [-BotToken] <String> [-ChatID] <String> [-Message] <String> [[-ParseMode] <String>]
- [[-Keyboard] <PSObject>] [-DisablePreview] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [[-LinkPreviewURL] <String>] [[-LinkPreviewOption] <String>] [-LinkPreviewAboveText] [[-Keyboard] <PSObject>]
+ [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -191,6 +192,23 @@ Sends text message via Telegram Bot API and enables the 'ProtectContent' feature
 When 'ProtectContent' is set to $true, it prevents the message from being forwarded or saved.
 This is useful for sending sensitive or confidential information that should remain within the confines of the original chat.
 
+### EXAMPLE 9
+```
+$sendTelegramTextMessageSplat = @{
+    BotToken             = $botToken
+    ChatID               = $chat
+    Message              = 'Sending a message with a link preview'
+    LinkPreviewURL       = 'https://www.techthoughts.info'
+    LinkPreviewOption    = 'Small'
+    LinkPreviewAboveText = $true
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
+Sends text message via Telegram Bot API and enables the 'LinkPreview' feature.
+When 'LinkPreview' is set to Small, it will generate a small link preview for the provided url.
+When 'LinkPreviewAboveText' is set to $true, it will display the link preview above the message text.
+
 ## PARAMETERS
 
 ### -BotToken
@@ -254,11 +272,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Keyboard
-Custom or inline keyboard object
+### -LinkPreviewURL
+URL to use for the link preview.
+If empty, then the first URL found in the message text will be used.
+Has no effect if LinkPreviewOption is Disabled.
 
 ```yaml
-Type: PSObject
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -269,8 +289,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DisablePreview
-Disables link previews for links in this message.
+### -LinkPreviewOption
+Choose how link previews are shown.
+Default is Disabled.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: Disabled
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LinkPreviewAboveText
+Use if the link preview must be shown above the message text.
+Has no effect if LinkPreviewOption is Disabled.
 
 ```yaml
 Type: SwitchParameter
@@ -280,6 +317,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Keyboard
+Custom or inline keyboard object
+
+```yaml
+Type: PSObject
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
