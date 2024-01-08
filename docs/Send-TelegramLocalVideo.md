@@ -15,7 +15,7 @@ Sends Telegram video message via Bot API from locally sourced file
 ```
 Send-TelegramLocalVideo [-BotToken] <String> [-ChatID] <String> [-Video] <String> [[-Duration] <Int32>]
  [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
- [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [-HasSpoiler] [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,6 +51,7 @@ $sendTelegramLocalVideoSplat = @{
     FileName            = 'video.mp4'
     Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     Streaming           = $true
     DisableNotification = $true
     ProtectContent      = $true
@@ -214,6 +215,21 @@ Aliases:
 Required: False
 Position: 9
 Default value: HTML
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HasSpoiler
+Video needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

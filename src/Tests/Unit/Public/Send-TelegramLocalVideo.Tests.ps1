@@ -154,6 +154,7 @@ InModuleScope PoshGram {
                     FileName            = 'video.mp4'
                     Caption             = 'Check out this video'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     Streaming           = $true
                     DisableNotification = $true
                     ProtectContent      = $true
@@ -173,6 +174,7 @@ InModuleScope PoshGram {
                     FileName            = 'video.mp4'
                     Caption             = 'Check out this video'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     Streaming           = $true
                     DisableNotification = $true
                     ProtectContent      = $true

@@ -154,6 +154,7 @@ InModuleScope PoshGram {
                     AnimationPath       = 'C:\bs\animation.gif'
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -168,6 +169,7 @@ InModuleScope PoshGram {
                     AnimationPath       = 'C:\bs\animation.gif'
                     Caption             = 'Check out this animation'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     DisableNotification = $true
                     ProtectContent      = $true
                 }

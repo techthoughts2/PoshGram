@@ -20,6 +20,7 @@
         AnimationPath       = $animation
         Caption             = 'Check out this animation'
         ParseMode           = 'MarkdownV2'
+        HasSpoiler          = $true
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true
@@ -51,6 +52,8 @@
     Brief title or explanation for media
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
+.PARAMETER HasSpoiler
+    Animation needs to be covered with a spoiler animation
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .PARAMETER ProtectContent
@@ -76,7 +79,9 @@
         pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More info on Sending Files
     caption                 String                  Optional    Animation caption (may also be used when resending animation by file_id), 0-1024 characters
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    has_spoiler             Boolean                 Optional    Pass True if the animation needs to be covered with a spoiler animation
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content         Boolean                 Optional    Protects the contents of the sent message from forwarding and saving
 .LINK
     https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAnimation
 .LINK
@@ -119,6 +124,10 @@ function Send-TelegramLocalAnimation {
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Animation needs to be covered with a spoiler animation')]
+        [switch]$HasSpoiler,
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
@@ -171,6 +180,7 @@ function Send-TelegramLocalAnimation {
         animation            = $fileObject
         caption              = $Caption
         parse_mode           = $ParseMode
+        has_spoiler          = $HasSpoiler.IsPresent
         disable_notification = $DisableNotification.IsPresent
         protect_content      = $ProtectContent.IsPresent
     } #form

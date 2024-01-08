@@ -357,6 +357,37 @@ InModuleScope PoshGram {
                 Start-Sleep -Milliseconds 2500
             } #it
 
+            It 'Should return with ok:true when a local animation is successfully sent with a spoiler' {
+                $sendTelegramLocalAnimationSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    AnimationPath       = $file5
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalAnimation</b>'
+                    DisableNotification = $true
+                    HasSpoiler          = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 25
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+                Start-Sleep -Milliseconds 2500
+            } #it
+
         } #context_Send-TelegramLocalAnimation
 
         Context 'Send-TelegramLocalAudio' {
@@ -442,6 +473,37 @@ InModuleScope PoshGram {
                     PhotoPath           = $file
                     DisableNotification = $true
                     ProtectContent      = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 25
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+                Start-Sleep -Milliseconds 2500
+            } #it
+
+            It 'Should return with ok:true when a local photo message is successfully sent with a spoiler' {
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalPhoto</b> with a spoiler.'
+                    PhotoPath           = $file
+                    DisableNotification = $true
+                    HasSpoiler          = $true
                 }
 
                 $apiTest = $false
@@ -572,6 +634,38 @@ InModuleScope PoshGram {
                     Caption             = 'I am a Pester test for <b>Send-TelegramLocalVideo</b>'
                     DisableNotification = $true
                     ProtectContent      = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 25
+                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+                Start-Sleep -Milliseconds 2500
+            } #it
+
+            It 'Should return with ok:true when a local video message is successfully sent with a spoiler' {
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Video               = $file3
+                    FileName            = 'Intro.mp4'
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalVideo</b>'
+                    DisableNotification = $true
+                    HasSpoiler          = $true
                 }
 
                 $apiTest = $false

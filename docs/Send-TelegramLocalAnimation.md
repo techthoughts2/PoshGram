@@ -14,7 +14,8 @@ Sends Telegram animation message via Bot API from locally sourced animation
 
 ```
 Send-TelegramLocalAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationPath] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-HasSpoiler] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +46,7 @@ $sendTelegramLocalAnimationSplat = @{
     AnimationPath       = $animation
     Caption             = 'Check out this animation'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -145,6 +147,21 @@ Aliases:
 Required: False
 Position: 5
 Default value: HTML
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HasSpoiler
+Animation needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

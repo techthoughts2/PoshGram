@@ -24,6 +24,7 @@
         FileName            = 'video.mp4'
         Caption             = 'Check out this video'
         ParseMode           = 'MarkdownV2'
+        HasSpoiler          = $true
         Streaming           = $true
         DisableNotification = $true
         ProtectContent      = $true
@@ -66,6 +67,8 @@
     Brief title or explanation for media
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
+.PARAMETER HasSpoiler
+    Video needs to be covered with a spoiler animation
 .PARAMETER Streaming
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
@@ -93,8 +96,10 @@
     height                  Integer                 Optional    Video height
     caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    has_spoiler             Boolean                 Optional    Pass True if the video needs to be covered with a spoiler animation
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content         Boolean                 Optional    Protects the contents of the sent message from forwarding and saving
 .LINK
     https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalVideo
 .LINK
@@ -161,6 +166,10 @@ function Send-TelegramLocalVideo {
         [string]$ParseMode = 'HTML', #set to HTML by default
 
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Video needs to be covered with a spoiler animation')]
+        [switch]$HasSpoiler,
+
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,
 
@@ -219,6 +228,7 @@ function Send-TelegramLocalVideo {
         file_name            = $FileName
         caption              = $Caption
         parse_mode           = $ParseMode
+        has_spoiler          = $HasSpoiler.IsPresent
         supports_streaming   = $Streaming.IsPresent
         disable_notification = $DisableNotification.IsPresent
         protect_content      = $ProtectContent.IsPresent

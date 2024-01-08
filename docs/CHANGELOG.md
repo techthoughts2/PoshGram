@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - Function now returns additional emoji property information:
             - `Group`, `SubGroup`, `pwshEscapedFormat`
     - Added new function: `Get-TelegramCustomEmojiStickerInfo` which is currently experimental.
+    - Added `-HasSpoiler` switch to `Send-TelegramLocalPhoto`, `Send-TelegramLocalVideo`, `Send-TelegramLocalAnimation`
     - Updated help for all functions
 - Build Updates
     - AWS Deployment Updates

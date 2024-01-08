@@ -14,7 +14,7 @@ Sends Telegram photo message via Bot API from locally sourced photo image
 
 ```
 Send-TelegramLocalPhoto [-BotToken] <String> [-ChatID] <String> [-PhotoPath] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [[-ParseMode] <String>] [-HasSpoiler] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,7 @@ $sendTelegramLocalPhotoSplat = @{
     PhotoPath           = $photo
     Caption             = 'Check out this photo'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -145,6 +146,21 @@ Aliases:
 Required: False
 Position: 5
 Default value: HTML
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HasSpoiler
+Photo needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
