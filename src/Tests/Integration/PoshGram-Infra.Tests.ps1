@@ -217,7 +217,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval[0].set_name | Should -BeExactly 'MeWantCookie'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return enhanced emoji information for the sticker pack' {
@@ -249,7 +249,7 @@ InModuleScope PoshGram {
                 $heartSticker.Group     | Should -BeExactly 'Smileys & Emotion'
                 $heartSticker.SubGroup  | Should -BeExactly 'heart'
                 $heartSticker.ShortCode | Should -BeExactly ':red_heart:'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Get-TelegramStickerPackInfo
@@ -285,7 +285,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramContact
@@ -319,7 +319,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramDice
@@ -354,7 +354,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a local animation is successfully sent with a spoiler' {
@@ -385,7 +385,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalAnimation
@@ -423,7 +423,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalAudio
@@ -458,7 +458,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalDocument
@@ -493,7 +493,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a local photo message is successfully sent with a spoiler' {
@@ -524,7 +524,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalPhoto
@@ -558,7 +558,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a local animated sticker message is successfully sent' {
@@ -588,7 +588,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a local video sticker message is successfully sent' {
@@ -618,7 +618,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalSticker
@@ -654,7 +654,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a local video message is successfully sent with a spoiler' {
@@ -686,7 +686,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocalVideo
@@ -721,7 +721,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramLocation
@@ -729,7 +729,7 @@ InModuleScope PoshGram {
         Context 'Send-TelegramMediaGroup' {
 
             It 'Should return with ok:true when a group of photos is successfully sent' {
-                Start-Sleep -Seconds 30
+                Start-Sleep -Seconds 40
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -757,11 +757,11 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a group of videos is successfully sent' {
-                Start-Sleep -Seconds 66
+                Start-Sleep -Seconds 70
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -789,11 +789,11 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a group of audios is successfully sent' {
-                Start-Sleep -Seconds 66
+                Start-Sleep -Seconds 70
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -821,11 +821,11 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a group of documents is successfully sent' {
-                Start-Sleep -Seconds 66
+                Start-Sleep -Seconds 70
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -853,7 +853,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramMediaGroup
@@ -888,7 +888,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a quiz poll is successfully sent' {
@@ -922,7 +922,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a quiz poll is successfully sent with additional options' {
@@ -957,7 +957,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramPoll
@@ -991,7 +991,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
@@ -1022,7 +1022,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramSticker
@@ -1056,7 +1056,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should throw when a message is sent with markdown and characters are not properly escaped' {
@@ -1101,7 +1101,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should return ok:true when a message is sent with properly formed HTML formatting' {
@@ -1142,7 +1142,7 @@ with default HTML formatting.'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should return ok:true when a message is sent with properly formed MarkdownV2 formatting' {
@@ -1186,7 +1186,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should return ok:true when a message is sent with an inline keyboard' {
@@ -1219,7 +1219,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should return ok:true when a message is sent with a custom keyboard' {
@@ -1252,7 +1252,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             It 'should return ok:true when a message is sent with properly formed emojis' {
@@ -1284,7 +1284,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramTextMessage
@@ -1319,7 +1319,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLAnimation
@@ -1357,7 +1357,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLAudio
@@ -1393,7 +1393,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLDocument
@@ -1428,7 +1428,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLPhoto
@@ -1462,7 +1462,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
             #* doesn't seem to work for URLs yet
@@ -1522,7 +1522,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLSticker
@@ -1558,7 +1558,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramURLVideo
@@ -1595,7 +1595,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Milliseconds 2500
+                Start-Sleep -Milliseconds 4000
             } #it
 
         } #context_Send-TelegramVenue
@@ -1621,7 +1621,6 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
-                Start-Sleep -Seconds 5
             } #it
 
         } #context_Test-BotToken
