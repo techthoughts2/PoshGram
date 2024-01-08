@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             1. `LinkPreviewURL`
             2. `LinkPreviewOption`
             3. `LinkPreviewAboveText`
+        - Added examples for new *blockquote* entity parsing in MarkdownV2 and HTML parse modes.
     - `Get-TelegramStickerPackInfo` - ***potential* breaking change**
         - This function no longer uses a static json list of emojis to retrieve emoji information. This approach was using an extremely outdated random list of emojis. This update now uses the `pwshEmojiExplorer` module to retrieve an updated standardized list of emoji information based on public Unicode data sets.
         - Function now returns additional emoji property information:

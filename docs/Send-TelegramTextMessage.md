@@ -49,6 +49,8 @@ $message = 'This is how to use:
 <a href="http://www.example.com/">inline URL</a>,
 <code>inline fixed-width code</code>,
 <pre>pre-formatted fixed-width code block</pre>,
+<pre><code class="language-powershell">#pre-formatted fixed-width code block written in the PowerShell programming language</code></pre>
+<blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
 with default HTML formatting.'
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
@@ -72,7 +74,10 @@ __underline__,
 ~strikethrough~,
 ||spoiler||,
 [inline URL](http://www.example.com/),
-`inline fixed-width code`,
+`inline fixed-width code`,,
+>Block quotation started
+>Block quotation continued
+>The last line of the block quotation
 with MarkdownV2 style formatting'
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
