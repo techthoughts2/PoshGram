@@ -183,6 +183,7 @@ $customKeyboard = @{
         $row2
     )
     one_time_keyboard = $true
+    is_persistent     = $false
 }
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
