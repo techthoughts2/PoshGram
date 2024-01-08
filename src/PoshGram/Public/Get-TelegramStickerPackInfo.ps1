@@ -96,26 +96,10 @@ function Get-TelegramStickerPackInfo {
     $stickerData = New-Object System.Collections.Generic.List[Object]
     foreach ($emoji in $results.result.stickers) {
         #-------------------
-        $emojiData = $null
+        $enrichedEmoji = $null
         #-------------------
-        try {
-            $emojiData = Get-Emoji -Emoji $emoji.emoji
-        }
-        catch {
-            Write-Warning -Message ('An error was encountered getting the emoji data for {0}' -f $emoji.emoji)
-            Write-Error $_
-        }
-
-        if ($emojiData) {
-            Write-Debug -Message ('Emoji data found for {0}' -f $emoji.emoji)
-            $emoji | Add-Member -Type NoteProperty -Name Group -Value $emojiData.Group -Force
-            $emoji | Add-Member -Type NoteProperty -Name SubGroup -Value $emojiData.SubGroup -Force
-            $emoji | Add-Member -Type NoteProperty -Name Code -Value $emojiData.UnicodeStandard -Force
-            $emoji | Add-Member -Type NoteProperty -Name pwshEscapedFormat -Value $emojiData.pwshEscapedFormat -Force
-            $emoji | Add-Member -Type NoteProperty -Name Shortcode -Value $emojiData.ShortCode -Force
-        }
-
-        [void]$stickerData.Add($emoji)
+        $enrichedEmoji = Add-EmojiDetail -StickerObject $emoji
+        [void]$stickerData.Add($enrichedEmoji)
     }
 
     return $stickerData

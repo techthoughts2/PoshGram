@@ -12,6 +12,7 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 
 InModuleScope PoshGram {
+
     Describe 'Get-TelegramStickerPackInfo' -Tag Unit {
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
@@ -29,40 +30,52 @@ InModuleScope PoshGram {
                         Name           = 'STPicard'
                         title          = 'Picard'
                         is_animated    = 'False'
+                        is_video       = 'False'
+                        sticker_type   = 'regular'
                         contains_masks = 'False'
                         stickers       = [PSCustomObject]@{
-                            width       = '512'
-                            height      = '512'
-                            emoji       = '🙂'
-                            set_name    = 'STPicard'
-                            is_animated = 'False'
-                            thumb       = '@{file_id=AAQCAAMMAAPdcBMXl0FGgL2-fdo_kOMNAAQBAAdtAAPeLQACFgQ; file_size=3810; width=128; height=128}'
-                            file_id     = 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
-                            file_size   = '18356'
-                            Bytes       = '{61, 216, 66, 222}'
-                            Code        = 'U+1F642'
-                            Shortcode   = ':slightly_smiling_face:'
+                            width          = '512'
+                            height         = '512'
+                            emoji          = '🙂'
+                            set_name       = 'STPicard'
+                            is_animated    = 'False'
+                            is_video       = 'False'
+                            type           = 'regular'
+                            thumbnail      = '@{file_id=AAMCAgADFQABZZt1mm9pJGwg_HVF-Df8T9uL3AUAAgwAA91wExeXQUaAvb592gEAB20AAzQE; file_unique_id=AQADDAAD3XATF3I; file_size=3810; width=128; height=128}'
+                            thumb          = '@{file_id=AAMCAgADFQABZZt1mm9pJGwg_HVF-Df8T9uL3AUAAgwAA91wExeXQUaAvb592gEAB20AAzQE; file_unique_id=AQADDAAD3XATF3I; file_size=3810; width=128; height=128}'
+                            file_id        = 'CAACAgIAAxUAAWWbdZpvaSRsIPx1Rfg3_E_bi9wFAAIMAAPdcBMXl0FGgL2-fdo0BA'
+                            file_unique_id = 'AgADDAAD3XATFw'
+                            file_size      = '18356'
                         }
                     }
                 }
             } #endMock
-            Mock Get-Emoji -MockWith {
+            Mock Add-EmojiDetail -MockWith {
                 [PSCustomObject]@{
+                    width             = '512'
+                    height            = '512'
+                    emoji             = '🙂'
+                    set_name          = 'STPicard'
+                    is_animated       = 'False'
+                    is_video          = 'False'
+                    type              = 'regular'
+                    thumbnail         = '@{file_id=AAMCAgADFQABZZt1mm9pJGwg_HVF-Df8T9uL3AUAAgwAA91wExeXQUaAvb592gEAB20AAzQE; file_unique_id=AQADDAAD3XATF3I; file_size=3810; width=128; height=128}'
+                    thumb             = '@{file_id=AAMCAgADFQABZZt1mm9pJGwg_HVF-Df8T9uL3AUAAgwAA91wExeXQUaAvb592gEAB20AAzQE; file_unique_id=AQADDAAD3XATF3I; file_size=3810; width=128; height=128}'
+                    file_id           = 'CAACAgIAAxUAAWWbdZpvaSRsIPx1Rfg3_E_bi9wFAAIMAAPdcBMXl0FGgL2-fdo0BA'
+                    file_unique_id    = 'AgADDAAD3XATFw'
+                    file_size         = '18356'
                     Group             = 'Smileys & Emotion'
                     Subgroup          = 'face-smiling'
-                    HexCodePoint      = '1F642'
-                    Name              = '🙂'
-                    Description       = 'slightly smiling face'
-                    ShortCode         = ':slightly_smiling_face:'
-                    HexCodePointArray = @('1F642')
-                    UnicodeStandard   = @('U+1F642')
+                    Code              = @('U+1F642')
                     pwshEscapedFormat = '`u{1F642}'
-                    Decimal           = @(128578)
+                    ShortCode         = ':slightly_smiling_face:'
                 }
-            }
+            } #endMock
+
         } #before_each
 
         Context 'Error' {
+
             It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
                     throw 'Fake Error'
@@ -110,9 +123,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -BeExactly 'False'
                 $eval.error_code | Should -BeExactly '429'
             } #it
+
         } #context_Error
 
         Context 'Success' {
+
             It 'should call the API with the expected parameters' {
                 Mock -CommandName Invoke-RestMethod {
                 } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*getStickerSet*' }
@@ -135,8 +150,7 @@ InModuleScope PoshGram {
                 $eval.emoji             | Should -BeExactly '🙂'
                 $eval.set_name          | Should -BeExactly 'STPicard'
                 $eval.is_animated       | Should -BeExactly 'False'
-                $eval.thumb             | Should -BeExactly '@{file_id=AAQCAAMMAAPdcBMXl0FGgL2-fdo_kOMNAAQBAAdtAAPeLQACFgQ; file_size=3810; width=128; height=128}'
-                $eval.file_id           | Should -BeExactly 'CAADAgADDAAD3XATF5dBRoC9vn3aFgQ'
+                $eval.file_id           | Should -BeExactly 'CAACAgIAAxUAAWWbdZpvaSRsIPx1Rfg3_E_bi9wFAAIMAAPdcBMXl0FGgL2-fdo0BA'
                 $eval.file_size         | Should -BeExactly '18356'
                 $eval.Group             | Should -BeExactly 'Smileys & Emotion'
                 $eval.Subgroup          | Should -BeExactly 'face-smiling'
@@ -144,6 +158,7 @@ InModuleScope PoshGram {
                 $eval.pwshEscapedFormat | Should -BeExactly '`u{1F642}'
                 $eval.Shortcode         | Should -BeExactly ':slightly_smiling_face:'
             } #it
+
         } #context_Success
     } #describe_Get-TelegramStickerPackInfo
 } #inModule
