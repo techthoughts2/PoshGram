@@ -9,11 +9,13 @@
     To effectively use this function, you need the name of the sticker pack. You can find this by sharing the sticker pack within the Telegram app, which will generate a link containing the pack's name.
     More information is available in the links.
 .EXAMPLE
-    Get-TelegramStickerPackInfo -BotToken $token -StickerSetName STPicard
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName STPicard
 
     Retrieves information for the STPicard sticker pack from the Telegram Bot API.
 .EXAMPLE
-    Get-TelegramStickerPackInfo -BotToken $token -StickerSetName FriendlyFelines
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName FriendlyFelines
 
     Retrieves information for the FriendlyFelines sticker pack from the Telegram Bot API.
 .PARAMETER BotToken

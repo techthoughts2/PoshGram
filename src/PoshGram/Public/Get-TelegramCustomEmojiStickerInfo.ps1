@@ -5,11 +5,13 @@
     This function interacts with the Telegram Bot API to gather detailed information about custom emoji stickers
     specified by their unique identifiers. It can handle requests for up to 200 custom emoji IDs at a time
 .EXAMPLE
-    Get-TelegramCustomEmojiStickerInfo -BotToken $token -CustomEmojiIdentifier 5404870433939922908
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    Get-TelegramCustomEmojiStickerInfo -BotToken $botToken -CustomEmojiIdentifier 5404870433939922908
 
     Retrieves detailed information about the custom emoji sticker with identifier 5404870433939922908.
 .EXAMPLE
-    Get-TelegramCustomEmojiStickerInfo -BotToken $token -CustomEmojiIdentifier 5404870433939922908, 5368324170671202286
+    $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    Get-TelegramCustomEmojiStickerInfo -BotToken $botToken -CustomEmojiIdentifier 5404870433939922908, 5368324170671202286
 
     Fetches information for multiple custom emoji stickers, using their respective identifiers 5404870433939922908 and 5368324170671202286.
 .PARAMETER BotToken

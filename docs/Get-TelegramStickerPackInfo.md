@@ -29,14 +29,16 @@ More information is available in the links.
 
 ### EXAMPLE 1
 ```
-Get-TelegramStickerPackInfo -BotToken $token -StickerSetName STPicard
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName STPicard
 ```
 
 Retrieves information for the STPicard sticker pack from the Telegram Bot API.
 
 ### EXAMPLE 2
 ```
-Get-TelegramStickerPackInfo -BotToken $token -StickerSetName FriendlyFelines
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName FriendlyFelines
 ```
 
 Retrieves information for the FriendlyFelines sticker pack from the Telegram Bot API.
