@@ -14,7 +14,7 @@ Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 
 ### FileEmojiG
 ```
-Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-Shortcode <String>]
+Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-ShortCode <String>]
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ Send-TelegramSticker -BotToken <String> -ChatID <String> -FileID <String> [-Disa
 
 ### BySPShortCode
 ```
-Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -Shortcode <String>
+Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -ShortCode <String>
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -212,8 +212,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Shortcode
-Emoji shortcode
+### -ShortCode
+Specifies the shortcode of the emoji to retrieve.
 
 ```yaml
 Type: String

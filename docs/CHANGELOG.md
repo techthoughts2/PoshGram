@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - This function no longer uses a static json list of emojis to retrieve emoji information. This approach was using an extremely outdated random list of emojis. This update now uses the `pwshEmojiExplorer` module to retrieve an updated standardized list of emoji information based on public Unicode data sets.
         - Function now returns additional emoji property information:
             - `Group`, `SubGroup`, `pwshEscapedFormat`
+    - `Send-TelegramSticker` - ***potential* breaking change**
+        - Updated `ShortCode` to use ArgumentCompletions instead of a validate set with a new set of suggested emoji shortcode completions. The old validate set with old list of shortcodes has been removed.
     - Added new function: `Get-TelegramCustomEmojiStickerInfo` which is currently experimental.
     - Added `-HasSpoiler` switch to `Send-TelegramLocalPhoto`, `Send-TelegramLocalVideo`, `Send-TelegramLocalAnimation`
     - Added `-Emoji` parameter to `Send-TelegramLocalSticker` which enables you to specify an emoji for a newly uploaded sticker.
