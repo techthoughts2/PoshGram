@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that file size is supported by Telegram
 .DESCRIPTION
     Evaluates if the file is at or below the supported Telegram file size

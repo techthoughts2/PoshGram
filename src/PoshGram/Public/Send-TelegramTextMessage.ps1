@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Send a text message via Telegram Bot API.
 .DESCRIPTION
     Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.

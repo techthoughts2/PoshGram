@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram location to indicate point on map
 .DESCRIPTION
     Uses Telegram Bot API to send latitude and longitude points on map to specified Telegram chat.

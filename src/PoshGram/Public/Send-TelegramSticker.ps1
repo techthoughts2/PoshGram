@@ -1,5 +1,5 @@
 ﻿<#
-.Synopsis
+.SYNOPSIS
     Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 .DESCRIPTION
     Uses Telegram Bot API to send sticker message to specified Telegram chat. The file_id can be specified if you know it. Use Get-TelegramStickerPackInfo if you do not already know the file_id of the sticker. Alternatively you can specify the sticker pack name and an emoji shortcode. This function will make an attempt to find the sticker that corresponds with the specified emoji. See notes for details.

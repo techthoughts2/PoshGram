@@ -1,5 +1,5 @@
 ﻿<#
-.Synopsis
+.SYNOPSIS
     Sends Telegram animated emoji that will display a random value.
 .DESCRIPTION
     Uses Telegram Bot API to send animated emoji that will display a random value to specified Telegram chat.

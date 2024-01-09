@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Evaluates if the provided URL is reachable
 .DESCRIPTION
     Evaluates if the provided URL is reachable and returns a boolean based on results

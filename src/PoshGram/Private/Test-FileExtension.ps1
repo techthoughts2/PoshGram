@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that specified file is a supported Telegram extension type
 .DESCRIPTION
     Evaluates the specified file path to determine if the file is a supported extension type

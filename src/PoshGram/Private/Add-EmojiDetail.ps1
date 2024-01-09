@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Enriches the Telegram sticker object with additional emoji data.
 .DESCRIPTION
     Evaluates the emoji data for the specified emoji and adds it to the Telegram sticker object.

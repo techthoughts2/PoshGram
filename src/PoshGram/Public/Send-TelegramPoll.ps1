@@ -1,5 +1,5 @@
 ﻿<#
-.Synopsis
+.SYNOPSIS
     Sends Telegram native poll.
 .DESCRIPTION
     Uses Telegram Bot API to send a native poll with a question and several answer options.

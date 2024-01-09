@@ -1,5 +1,5 @@
 ﻿<#
-.Synopsis
+.SYNOPSIS
     Verifies that MediaGroup requirements are met.
 .DESCRIPTION
     Evaluates the provided files to determine if they met all MediaGroup requirements.

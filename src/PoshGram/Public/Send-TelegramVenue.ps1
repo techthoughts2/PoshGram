@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram information about a venue.
 .DESCRIPTION
     Uses Telegram Bot API to send latitude, longitude, title, and address information about a venue to specified Telegram chat.

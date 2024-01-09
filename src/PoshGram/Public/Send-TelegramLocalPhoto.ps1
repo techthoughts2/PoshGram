@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram photo message via Bot API from locally sourced photo image
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.

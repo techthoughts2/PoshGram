@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram a group of photos, videos, documents, or audios as an album via Bot API from locally sourced media
 .DESCRIPTION
     Uses Telegram Bot API to send a group of photos, videos, documents, or audios as an album message to specified Telegram chat.

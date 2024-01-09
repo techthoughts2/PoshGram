@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that provided quiz explanation matches Telegram requirements.
 .DESCRIPTION
     Evaluates if the provided quiz explanation meets the Telegram explanation requirements.

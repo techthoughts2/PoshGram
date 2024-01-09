@@ -376,7 +376,7 @@ Add-BuildTask CreateMarkdownHelp -After CreateHelpStart {
     $script:FunctionsToExport | ForEach-Object {
         Write-Build DarkGray "             Updating definition for the following function: $($_)"
         $TextToReplace = "{{Manually Enter $($_) Description Here}}"
-        $ReplacementText = (Get-Help -Detailed $_).Synopsis
+        $ReplacementText = (Get-Help -Detailed $_).SYNOPSIS
         $ModulePageFileContent = $ModulePageFileContent -replace $TextToReplace, $ReplacementText
     }
 

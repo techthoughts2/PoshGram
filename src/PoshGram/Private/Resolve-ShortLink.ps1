@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Resolve a URI to the URIs it redirects to
 .DESCRIPTION
     Resolves a URI provided to the URI it redirects to. If no redirect is in place, null is returned. This is useful for resolving shortlinks to try url file paths.

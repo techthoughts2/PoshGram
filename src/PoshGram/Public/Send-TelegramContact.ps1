@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram phone contact message via BOT API.
 .DESCRIPTION
     Uses Telegram Bot API to send contact information to specified Telegram chat.

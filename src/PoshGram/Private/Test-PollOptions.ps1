@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that poll options are supported by Telegram
 .DESCRIPTION
     Evaluates if the provided poll options meet the Telegram poll requirements.

@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that specified URL path contains a supported Telegram extension type
 .DESCRIPTION
     Evaluates the specified URL path to determine if the URL leads to a supported extension type
