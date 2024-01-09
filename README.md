@@ -88,84 +88,84 @@ Import-Module -Name "PoshGram"
 Test-BotToken -BotToken $botToken
 #------------------------------------------------------------------------------------------------
 #send a basic Text Message
-Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
+Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Hello"
 #------------------------------------------------------------------------------------------------
 #send a photo message from a local source
-Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
+Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
 #------------------------------------------------------------------------------------------------
 #send a photo message from a URL source
-Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photoURL
+Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photoURL
 #------------------------------------------------------------------------------------------------
 #send a file message from a local source
-Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
+Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
 #------------------------------------------------------------------------------------------------
 #send a file message from a URL source
-Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
 #------------------------------------------------------------------------------------------------
 #send a video message from a local source
-Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
+Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
 #------------------------------------------------------------------------------------------------
 #send a video message from a URL source
-Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videoURL
+Send-TelegramURLVideo -BotToken $botToken -ChatID $chatID -VideoURL $videoURL
 #------------------------------------------------------------------------------------------------
 #send an audio message from a local source
-Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
+Send-TelegramLocalAudio -BotToken $botToken -ChatID $chatID -Audio $audio
 #------------------------------------------------------------------------------------------------
 #send an audio message from a URL source
-Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
+Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
 #------------------------------------------------------------------------------------------------
 #send a map point location using Latitude and Longitude
-Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
+Send-TelegramLocation -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude
 #------------------------------------------------------------------------------------------------
 #send an animated gif from a local source
-Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
+Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
 #------------------------------------------------------------------------------------------------
 #send an animated gif from a URL source
-Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
+Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
 #------------------------------------------------------------------------------------------------
 #sends a group of photos or videos as an album from a local source
-Send-TelegramMediaGroup -BotToken $botToken -ChatID $chat -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
+Send-TelegramMediaGroup -BotToken $botToken -ChatID $chatID -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
 #------------------------------------------------------------------------------------------------
 #send a contact's information
-Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+Send-TelegramContact -BotToken $botToken -ChatID $chatID -PhoneNumber $phone -FirstName $firstName
 #------------------------------------------------------------------------------------------------
 #send information about a venue
-Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 #------------------------------------------------------------------------------------------------
 #send a poll with a question and options
-Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
+Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Options $opt
 #------------------------------------------------------------------------------------------------
 #get information for a Telegram sticker pack
 Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName STPicard
 #------------------------------------------------------------------------------------------------
 #sends Telegram sticker message from a local source
-Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
+Send-TelegramLocalSticker -BotToken $botToken -ChatID $chatID -StickerPath $sticker
 #------------------------------------------------------------------------------------------------
 #send Telegram sticker with known sticker file_id
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -FileID $sticker
 #send Telegram sticker (best effort) with sticker pack name and emoji shortcode
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 #------------------------------------------------------------------------------------------------
 #send a sticker message from a URL source
-Send-TelegramURLSticker -BotToken $botToken -ChatID $chat -StickerURL $StickerURL
+Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $StickerURL
 #------------------------------------------------------------------------------------------------
 #send an animated emoji that will display a random value
-Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
+Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
 #------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell
 ###########################################################################
 #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chatID = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 6.1+ to send Telegram Message via PoshGram" }
+& 'C:\Program Files\PowerShell\6\pwsh.exe' -command { Import-Module PoshGram;$botToken = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chatID = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Test from 5.1 calling 6.1+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 6.1+ from PowerShell 5.1 to send a Telegram message with PoshGram using dynamic variables in the message
-$token = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
-$chat = “-#########”
+$botToken = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
+$chatID = “-#########”
 $test = "I am a test"
-& '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message '$test';}"
+& '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chatID -Message '$test';}"
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 7+ from PowerShell 5.1 to send a Telegram message with PoshGram
-& 'C:\Program Files\PowerShell\7-preview\pwsh.exe' -command { Import-Module PoshGram;$token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chatID = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $token -ChatID $chat -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -command { Import-Module PoshGram;$botToken = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chatID = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }
 #--------------------------------------------------------------------------
 ```
 
