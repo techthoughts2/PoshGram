@@ -5,7 +5,7 @@
     Uses Telegram Bot API to send latitude and longitude points on map to specified Telegram chat.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $latitude = 37.621313
     $longitude = -122.378955
     Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
@@ -13,7 +13,7 @@
     Sends location via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocationSplat = @{
         BotToken            = $botToken

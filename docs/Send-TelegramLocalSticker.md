@@ -26,7 +26,7 @@ The sticker will be sourced from the local device and uploaded to telegram.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'C:\stickers\sticker.webp'
 Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
 ```
@@ -36,7 +36,7 @@ Sends sticker message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'C:\stickers\sticker.webp'
 $sendTelegramLocalStickerSplat = @{
     BotToken            = $botToken

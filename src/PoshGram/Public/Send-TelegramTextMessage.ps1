@@ -7,13 +7,13 @@
     Interfaces with the Telegram Bot API to send text messages to a specified Telegram chat. It supports various messaging options, including different parse modes, message delivery options, and custom keyboards.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
     Sends text message via Telegram Bot API.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $message = 'This is how to use:
     <b>bold</b>,
     <i>italic</i>,
@@ -36,7 +36,7 @@
     Sends a text message through the Telegram Bot API using HTML for text formatting. This example illustrates how to apply various HTML tags like bold, italic, underline, strikethrough, and more to create richly formatted messages.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $message = 'This is how to use:
     *bold*,
     _italic_,

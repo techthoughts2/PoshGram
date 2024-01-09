@@ -5,14 +5,14 @@
     Uses Telegram Bot API to send sticker message to specified Telegram chat. The file_id can be specified if you know it. Use Get-TelegramStickerPackInfo if you do not already know the file_id of the sticker. Alternatively you can specify the sticker pack name and an emoji shortcode. This function will make an attempt to find the sticker that corresponds with the specified emoji. See notes for details.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     $sendTelegramStickerSplat = @{
         BotToken            = $botToken
@@ -27,13 +27,13 @@
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $sendTelegramStickerSplat = @{
         BotToken            = $botToken
         ChatID              = $chat

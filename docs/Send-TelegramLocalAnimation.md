@@ -28,7 +28,7 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 ```
@@ -38,7 +38,7 @@ Sends AnimationPath message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken            = $botToken
@@ -59,7 +59,7 @@ Sends animation message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken      = $botToken

@@ -5,14 +5,14 @@
     Uses Telegram Bot API to send audio message to specified Telegram chat. The audio will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters. Telegram only supports mp3 audio.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $audio = 'C:\audio\halo_on_fire.mp3'
     Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
 
     Sends audio message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $audio = 'C:\audio\halo_on_fire.mp3'
     $sendTelegramLocalAudioSplat = @{
         BotToken            = $botToken
@@ -33,7 +33,7 @@
     Sends audio message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $audio = 'C:\audio\halo_on_fire.mp3'
     $sendTelegramLocalAudioSplat = @{
         BotToken  = $botToken

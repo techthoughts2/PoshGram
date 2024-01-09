@@ -5,14 +5,14 @@
     Uses Telegram Bot API to send document message to specified Telegram chat. The document will be sourced from the local device and uploaded to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $file = 'C:\Logs\Log1.txt'
     Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
 
     Sends document message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken            = $botToken
@@ -29,7 +29,7 @@
     Sends document message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken  = $botToken

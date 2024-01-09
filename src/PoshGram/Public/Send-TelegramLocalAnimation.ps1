@@ -5,14 +5,14 @@
     Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
     Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
 
     Sends AnimationPath message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken            = $botToken
@@ -30,7 +30,7 @@
     Sends animation message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken      = $botToken

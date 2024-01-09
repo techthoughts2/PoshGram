@@ -49,7 +49,7 @@ See notes for details.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
 ```
@@ -59,7 +59,7 @@ Sends sticker message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 $sendTelegramStickerSplat = @{
     BotToken            = $botToken
@@ -77,7 +77,7 @@ Sends sticker message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 ```
 
@@ -86,7 +86,7 @@ Sends sticker message via Telegram API
 ### EXAMPLE 4
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sendTelegramStickerSplat = @{
     BotToken            = $botToken
     ChatID              = $chat

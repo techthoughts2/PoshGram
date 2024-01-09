@@ -30,7 +30,7 @@ It supports various messaging options, including different parse modes, message 
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 ```
 
@@ -39,7 +39,7 @@ Sends text message via Telegram Bot API.
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $message = 'This is how to use:
 <b>bold</b>,
 <i>italic</i>,
@@ -66,7 +66,7 @@ This example illustrates how to apply various HTML tags like bold, italic, under
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $message = 'This is how to use:
 *bold*,
 _italic_,

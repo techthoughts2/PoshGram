@@ -20,7 +20,7 @@ Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
 
 ```powershell
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $message = 'This is how to use:
     <b>bold</b>,
     <i>italic</i>,
@@ -43,7 +43,7 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
 ```powershell
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $message = 'This is how to use:
     *bold*,
     _italic_,

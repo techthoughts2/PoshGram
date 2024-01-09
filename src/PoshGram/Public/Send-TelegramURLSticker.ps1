@@ -5,14 +5,14 @@
     Uses Telegram Bot API to send sticker message to specified Telegram chat. The sticker will be sourced from the provided URL and sent to Telegram.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
