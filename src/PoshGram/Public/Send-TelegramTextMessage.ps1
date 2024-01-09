@@ -2,9 +2,8 @@
 .SYNOPSIS
     Send a text message via Telegram Bot API.
 .DESCRIPTION
-    Uses Telegram Bot API to send text message to specified Telegram chat. Several options can be specified to adjust message parameters.
-
-    Interfaces with the Telegram Bot API to send text messages to a specified Telegram chat. It supports various messaging options, including different parse modes, message delivery options, and custom keyboards.
+    Sends text messages to a specified Telegram chat using the Telegram Bot API. Several options can be specified to adjust message parameters, including message delivery options.
+    Supports plain text, MarkdownV2, and HTML formats, allowing for rich text presentation. You can also incorporate custom or inline keyboards, link previews, and message protection options.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
