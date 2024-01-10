@@ -14,7 +14,7 @@ repo_url: https://github.com/techthoughts2/PoshGram
 # repo_name:
 # edit_uri: edit/main/docs/
 # edit_uri_template:
-site_description: PoshGram: A PowerShell Module for Telegram Bot API - Automate Messaging, Alerts, and Chat Interactions in PowerShell with Telegram. # meta tag to the generated HTML header
+site_description: PoshGram - A PowerShell Module for Telegram Bot API - Automate Messaging, Alerts, and Chat Interactions in PowerShell with Telegram. # meta tag to the generated HTML header
 site_author: Jake Morrison # meta tag to the generated HTML header
 copyright: "PoshGram is licensed under the <a href='https://github.com/techthoughts2/PoshGram/blob/main/LICENSE'>MIT license"
 # remote_branch:
