@@ -47,12 +47,12 @@ theme:
     # - navigation.tabs
     # - navigation.tabs.sticky
     # - navigation.path
-  # favicon:
+  favicon: assets/PoshGram_favicon_32x32.png
   # icon:
   #   repo:
   # font:
   #   text: Work Sans
-  # logo:
+  logo: assets/PoshGram_favicon_32x32.png
   # palette:
   #   primary: teal
   # palette:

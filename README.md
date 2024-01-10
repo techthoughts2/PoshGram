@@ -7,6 +7,10 @@
 [psgallery-v1]:    https://www.powershellgallery.com/packages/PoshGram
 [license-badge]:   https://img.shields.io/github/license/techthoughts2/PoshGram
 
+<p align="left">
+    <img src="docs/assets/PoshGram.png" alt="PoshGram Logo" >
+</p>
+
 Branch | Windows | MacOS | Linux
 --- | --- | --- | --- |
 main | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoibTI1bm9iZ0tRY3hGRzVUQzdKUzhyT0lGOUlCZHVySldHRCtyQlRRcVVKM0M4bExOMDgvdkMzdTR3MC83VGhzQzVBUVJ6ajFwNDFvVDUwQU5wK3BMNHUwPSIsIml2UGFyYW1ldGVyU3BlYyI6ImluRWp6VDA4eWYxNitqQ2giLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main) | [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/f0l0iiqfq6tua4l1/branch/main?svg=true)](https://ci.appveyor.com/project/techthoughts2/poshgram/branch/main) | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiZHFxQmNXamdSTVJzd2FUcTUraWRDalAwRlNBRWNGV2MzVExZRHdKb2VwbGdtUHdJME91c05tVzYyWXJWMythSWR0dkROYTJkdWxGZG1sUWVuTTB0WWI4PSIsIml2UGFyYW1ldGVyU3BlYyI6IjhReWlJdmNZQSt3bW9Mb3MiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main) |
@@ -15,8 +19,6 @@ Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?
 ## Synopsis
 
 PoshGram is a PowerShell module that enables you to send messages via the Telegram Bot API
-
-![PoshGram Gif Demo](docs/assets/PoshGram.gif "PoshGram in action")
 
 ## Description
 
@@ -55,6 +57,8 @@ Install-Module -Name 'PoshGram' -Repository PSGallery -Scope CurrentUser
 ```
 
 ## Quick start
+
+![PoshGram Gif Demo](docs/assets/PoshGram.gif "PoshGram in action")
 
 ```powershell
 #------------------------------------------------------------------------------------------------
