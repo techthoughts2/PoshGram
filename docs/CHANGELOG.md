@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Module Changes
     - Added dependency for `pwshEmojiExplorer` module
-    - `Send-TelegramTextMessage` = **BREAKING CHANGES INTRODUCED**
+    - `Send-TelegramTextMessage` - **BREAKING CHANGES INTRODUCED**
         - Replaced the `DisablePreview` parameter with three new parameters due to Telegram replacing the field *disable_web_page_preview* with *link_preview_options*
             1. `LinkPreviewURL`
             2. `LinkPreviewOption`
@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Updated `extensions.json` with recommended extensions for working with this repo
     - Added `SECURITY.md`
     - Updated `LICENSE` year
+    - Updated PoshGram icons and logo
 
 ## [2.3.0]
 
