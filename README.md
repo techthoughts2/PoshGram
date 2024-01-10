@@ -16,141 +16,125 @@ Enhancements | ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?
 
 PoshGram is a PowerShell module that enables you to send messages via the Telegram Bot API
 
-![PoshGram Gif Demo](media/PoshGram.gif "PoshGram in action")
+![PoshGram Gif Demo](docs/assets/PoshGram.gif "PoshGram in action")
 
 ## Description
 
 PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
-[PoshGram](https://github.com/techthoughts2/PoshGram/blob/main/docs/PoshGram.md) provides the following functions:
+## Features
 
-* [Get-TelegramStickerPackInfo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Get-TelegramStickerPackInfo.md)
-* [Send-TelegramContact](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md)
-* [Send-TelegramDice](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md)
-* [Send-TelegramLocalAnimation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md)
-* [Send-TelegramLocalAudio](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAudio.md)
-* [Send-TelegramLocalDocument](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md)
-* [Send-TelegramLocalPhoto](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalPhoto.md)
-* [Send-TelegramLocalSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md)
-* [Send-TelegramLocalVideo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md)
-* [Send-TelegramLocation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocation.md)
-* [Send-TelegramMediaGroup](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramMediaGroup.md)
-* [Send-TelegramPoll](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
-* [Send-TelegramSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
-* [Send-TelegramTextMessage](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramTextMessage.md)
-* [Send-TelegramURLAnimation](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAnimation.md)
-* [Send-TelegramURLAudio](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md)
-* [Send-TelegramURLDocument](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md)
-* [Send-TelegramURLPhoto](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md)
-* [Send-TelegramURLSticker](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md)
-* [Send-TelegramURLVideo](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLVideo.md)
-* [Send-TelegramVenue](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md)
-* [Test-BotToken](https://github.com/techthoughts2/PoshGram/blob/main/docs/Test-BotToken.md)
+- **Versatile Messaging**: Send a wide variety of message types, including text, contact, dice, animation, audio, document, photo, sticker, video, location, multi-media, poll, and venue messages. It also supports HTML and Markdown for rich text formatting.
+- **Interactive Elements**: Incorporate custom keyboards and inline buttons to make your messages interactive.
+Sticker Info**: Easily query sticker packs, get sticker information, and send stickers directly through PowerShell commands.
+- **Notification Control**: Opt to send messages silently or with notifications.
+- **Content Protection**: Enable features to protect messages from being forwarded or saved.
+- **Flexible Application**: Use in various scenarios like integrating with task schedulers, alert systems, serverless functions, or automating chat responses.
+- **User-Friendly Experience**: PoshGram is designed for easy use, suitable for PowerShell users at various skill levels. It offers a simpler way to leverage Telegram's messaging features, combining straightforward cmdlets with clear documentation, ideal for enhancing PowerShell tasks with Telegram's capabilities.
 
-## Why
+## Getting Started
 
-The Telegram Bot API requires very specific formatting and criteria for Bot messaging. The goal of this project is to abstract that complexity away in favor of simple and direct PowerShell commands.
+### Documentation
 
-PoshGram also opens up several programmatic use cases:
-
-* Load PoshGram into Azure functions to alert you of potential conditions
-* Load PoshGram into AWS Lambda to alert you of potential conditions
-* Custom scripts tied to task scheduler could alert you to potential system conditions
-  * *Test-LowDisk.ps1 tied to task scheduler --> leverages PoshGram to alert you if low disk condition found*
-* Enable a script to provide Telegram notifications
-* In a ForEach you could easily message multiple chat groups that your bot is a member of
-
-## Installation
+Documentation for PoshGram is available at: [https://poshgram.readthedocs.io](https://poshgram.readthedocs.io)
 
 ### Prerequisites
 
-* [PowerShell 6.1.0](https://github.com/PowerShell/PowerShell) *(or higher version)*
-* A Telegram Account
-* [Telegram Bot created](https://core.telegram.org/bots)
-* Chat ID number
-* Bot must be a member of the specified chat
+- [PowerShell](https://github.com/PowerShell/PowerShell) 6.1.0 (or higher version)
+- Telegram requirements
+    - A Telegram Account
+    - [Telegram Bot created](https://core.telegram.org/bots#how-do-i-create-a-bot)
+    - Chat ID number
+    - Bot must be a member of the specified chat
 
-### Installing PoshGram via PowerShell Gallery
+### Installation
 
 ```powershell
-#from a 6.1.0+ PowerShell session
-Install-Module -Name "PoshGram" -Scope CurrentUser
+# from a 6.1.0+ PowerShell session
+Install-Module -Name 'PoshGram' -Repository PSGallery -Scope CurrentUser
 ```
 
 ## Quick start
 
 ```powershell
 #------------------------------------------------------------------------------------------------
-#import the PoshGram module
-Import-Module -Name "PoshGram"
+# import the PoshGram module
+Import-Module -Name 'PoshGram'
+
+# set your bot token and chat channel id
+$botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+$chatID = '-nnnnnnnnn'
 #------------------------------------------------------------------------------------------------
-#easy way to validate your Bot token is functional
+# easy way to validate your Bot token is functional
 Test-BotToken -BotToken $botToken
 #------------------------------------------------------------------------------------------------
-#send a basic Text Message
-Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Hello"
+# send a basic Text Message
+Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message 'Hello'
 #------------------------------------------------------------------------------------------------
-#send a photo message from a local source
-Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
+# get information for a Telegram sticker pack
+Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName STPicard
 #------------------------------------------------------------------------------------------------
-#send a photo message from a URL source
-Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photoURL
+# get information about Telegram custom emoji stickers using their identifiers (experimental)
+Get-TelegramCustomEmojiStickerInfo -BotToken $botToken -CustomEmojiIdentifier 5404870433939922908
 #------------------------------------------------------------------------------------------------
-#send a file message from a local source
-Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
-#------------------------------------------------------------------------------------------------
-#send a file message from a URL source
-Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
-#------------------------------------------------------------------------------------------------
-#send a video message from a local source
-Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
-#------------------------------------------------------------------------------------------------
-#send a video message from a URL source
-Send-TelegramURLVideo -BotToken $botToken -ChatID $chatID -VideoURL $videoURL
-#------------------------------------------------------------------------------------------------
-#send an audio message from a local source
-Send-TelegramLocalAudio -BotToken $botToken -ChatID $chatID -Audio $audio
-#------------------------------------------------------------------------------------------------
-#send an audio message from a URL source
-Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
-#------------------------------------------------------------------------------------------------
-#send a map point location using Latitude and Longitude
-Send-TelegramLocation -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude
-#------------------------------------------------------------------------------------------------
-#send an animated gif from a local source
-Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
-#------------------------------------------------------------------------------------------------
-#send an animated gif from a URL source
-Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
-#------------------------------------------------------------------------------------------------
-#sends a group of photos or videos as an album from a local source
-Send-TelegramMediaGroup -BotToken $botToken -ChatID $chatID -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
-#------------------------------------------------------------------------------------------------
-#send a contact's information
+# send a contact's information
 Send-TelegramContact -BotToken $botToken -ChatID $chatID -PhoneNumber $phone -FirstName $firstName
 #------------------------------------------------------------------------------------------------
-#send information about a venue
-Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+#send an animated emoji that will display a random value
+Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
 #------------------------------------------------------------------------------------------------
-#send a poll with a question and options
-Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Options $opt
+# send an animated gif from a local source
+Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
 #------------------------------------------------------------------------------------------------
-#get information for a Telegram sticker pack
-Get-TelegramStickerPackInfo -BotToken $botToken -StickerSetName STPicard
+# send an audio message from a local source
+Send-TelegramLocalAudio -BotToken $botToken -ChatID $chatID -Audio $audio
+#------------------------------------------------------------------------------------------------
+# send a file message from a local source
+Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
+#------------------------------------------------------------------------------------------------
+# send a photo message from a local source
+Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
 #------------------------------------------------------------------------------------------------
 #sends Telegram sticker message from a local source
 Send-TelegramLocalSticker -BotToken $botToken -ChatID $chatID -StickerPath $sticker
+#------------------------------------------------------------------------------------------------
+# send a video message from a local source
+Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
+#------------------------------------------------------------------------------------------------
+# send a map point location using Latitude and Longitude
+Send-TelegramLocation -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude
+#------------------------------------------------------------------------------------------------
+# sends a group of photos or videos as an album from a local source
+Send-TelegramMediaGroup -BotToken $botToken -ChatID $chatID -FilePaths (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
+#------------------------------------------------------------------------------------------------
+# send a poll with a question and options
+Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Options $opt
 #------------------------------------------------------------------------------------------------
 #send Telegram sticker with known sticker file_id
 Send-TelegramSticker -BotToken $botToken -ChatID $chatID -FileID $sticker
 #send Telegram sticker (best effort) with sticker pack name and emoji shortcode
 Send-TelegramSticker -BotToken $botToken -ChatID $chatID -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 #------------------------------------------------------------------------------------------------
+# send an animated gif from a URL source
+Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
+#------------------------------------------------------------------------------------------------
+# send an audio message from a URL source
+Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
+#------------------------------------------------------------------------------------------------
+# send a file message from a URL source
+Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
+#------------------------------------------------------------------------------------------------
+# send a photo message from a URL source
+Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photoURL
+#------------------------------------------------------------------------------------------------
 #send a sticker message from a URL source
 Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $StickerURL
 #------------------------------------------------------------------------------------------------
-#send an animated emoji that will display a random value
-Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
+# send a video message from a URL source
+Send-TelegramURLVideo -BotToken $botToken -ChatID $chatID -VideoURL $videoURL
+#------------------------------------------------------------------------------------------------
+# send information about a venue
+Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 #------------------------------------------------------------------------------------------------
 ###########################################################################
 #sending a telegram message from older versions of powershell
@@ -169,34 +153,14 @@ $test = "I am a test"
 #--------------------------------------------------------------------------
 ```
 
-## FAQ
-
-**[PoshGram - FAQ](docs/PoshGram-FAQ.md)**
-
-## Author
-
-[Jake Morrison](https://twitter.com/JakeMorrison) - [https://www.techthoughts.info/](https://www.techthoughts.info/)
-
-## Contributors
-
-* [Justin Saylor](https://twitter.com/XJustinSaylorX) - Logo
-* [Mark Kraus](https://twitter.com/markekraus) - PowerShell 6.1 Form handling advice
-* [Andrew Pearce](https://twitter.com/austoonz) - CI/CD advice
-
 ## Notes
 
-* [PoshGram Video Demo](https://youtu.be/OfyRVl7YThw)
-* [PoshGram Blog Write-up](https://www.techthoughts.info/poshgram-powershell-module-for-telegram/)
-* [Bot Code Examples](https://core.telegram.org/bots/samples)
-
-For a description of the Bot API, see this page: [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
-
 This PowerShell project was created with [Catesta](https://github.com/techthoughts2/Catesta).
+
+## Contributing
+
+If you'd like to contribute to pwshEmojiExplorer, please see the [contribution guidelines](.github/CONTRIBUTING.md).
 
 ## License
 
 This project is [licensed under the MIT License](LICENSE).
-
-## Changelog
-
-Reference the [Changelog](.github/CHANGELOG.md)
