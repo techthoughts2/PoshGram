@@ -16,7 +16,7 @@
     $emoji = 'dice'
     $sendTelegramDiceSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true

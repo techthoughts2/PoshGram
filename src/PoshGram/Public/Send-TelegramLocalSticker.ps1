@@ -16,7 +16,7 @@
     $sticker = 'C:\stickers\sticker.webp'
     $sendTelegramLocalStickerSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         StickerPath         = $sticker
         Emoji               = '😀'
         DisableNotification = $true

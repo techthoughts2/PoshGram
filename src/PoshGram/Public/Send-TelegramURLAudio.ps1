@@ -16,7 +16,7 @@
     $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AudioURL            = $audioURL
         Caption             = 'Check out this audio track'
         ParseMode           = 'MarkdownV2'
@@ -37,7 +37,7 @@
     $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
     $sendTelegramURLAudioSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AudioURL            = $audioURL
         Title               = 'Halo On Fire'
         FileName            = 'halo_on_fire.mp3'

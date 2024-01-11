@@ -53,7 +53,7 @@ $message = 'This is how to use:
 with default HTML formatting.'
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
-    ChatID   = $chat
+    ChatID   = $chatID
     Message  = $message
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
@@ -80,7 +80,7 @@ __underline__,
 with MarkdownV2 style formatting'
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     Message   = $message
     ParseMode = 'MarkdownV2'
 }
@@ -96,7 +96,7 @@ This example showcases the use of various MarkdownV2 formatting options, such as
 ```
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     ParseMode = 'MarkdownV2'
     Message   = 'This is how to escape an __underscore__ in a message: \_'
 }
@@ -110,7 +110,7 @@ This example showcases an underlined word and a properly escaped character.
 ```
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     ParseMode = 'MarkdownV2'
     Message   = "`u{1F192} Sending emojis is cool\! `u{1F49B}"
 }
@@ -142,7 +142,7 @@ $inlineKeyboard = @{
 }
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     Message   = 'Sending an example of inline keyboard'
     Keyboard  = $inlineKeyboard
 }
@@ -172,7 +172,7 @@ $customKeyboard = @{
 }
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     Message   = 'Sending an example of a custom keyboard'
     Keyboard  = $customKeyboard
 }
@@ -185,7 +185,7 @@ Sends text message with a custom keyboard.
 ```
 $sendTelegramTextMessageSplat = @{
     BotToken        = $botToken
-    ChatID          = $chat
+    ChatID          = $chatID
     Message         = 'Sending a protected content message'
     ProtectContent  = $true
 }
@@ -200,7 +200,7 @@ This is useful for sending sensitive or confidential information that should rem
 ```
 $sendTelegramTextMessageSplat = @{
     BotToken             = $botToken
-    ChatID               = $chat
+    ChatID               = $chatID
     Message              = 'Sending a message with a link preview'
     LinkPreviewURL       = 'https://www.techthoughts.info'
     LinkPreviewOption    = 'Small'

@@ -16,7 +16,7 @@
     $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AnimationURL        = $AnimationURL
         Caption             = 'Live long, and prosper.'
         DisableNotification = $true
@@ -32,7 +32,7 @@
     $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AnimationURL        = $AnimationURL
         Caption             = 'Live __long__, and prosper\.'
         ParseMode           = 'MarkdownV2'

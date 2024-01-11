@@ -10,7 +10,7 @@
     $chatID = '-nnnnnnnnn'
     $sendTelegramMediaGroupSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         MediaType = 'Photo'
         FilePaths = 'C:\photo\photo1.jpg', 'C:\photo\photo2.jpg'
     }
@@ -22,7 +22,7 @@
     $chatID = '-nnnnnnnnn'
     $sendTelegramMediaGroupSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         MediaType = 'Photo'
         FilePaths = (Get-ChildItem C:\PhotoGroup | Select-Object -ExpandProperty FullName)
     }
@@ -40,7 +40,7 @@
     )
     $sendTelegramMediaGroupSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         MediaType           = 'Video'
         FilePaths           = $vFiles
         DisableNotification = $true

@@ -27,7 +27,7 @@
     with default HTML formatting.'
     $sendTelegramTextMessageSplat = @{
         BotToken = $botToken
-        ChatID   = $chat
+        ChatID   = $chatID
         Message  = $message
     }
     Send-TelegramTextMessage @sendTelegramTextMessageSplat
@@ -50,7 +50,7 @@
     with MarkdownV2 style formatting'
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Message   = $message
         ParseMode = 'MarkdownV2'
     }
@@ -62,7 +62,7 @@
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         ParseMode = 'MarkdownV2'
         Message   = 'This is how to escape an __underscore__ in a message: \_'
     }
@@ -72,7 +72,7 @@
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         ParseMode = 'MarkdownV2'
         Message   = "`u{1F192} Sending emojis is cool\! `u{1F49B}"
     }
@@ -100,7 +100,7 @@
     }
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Message   = 'Sending an example of inline keyboard'
         Keyboard  = $inlineKeyboard
     }
@@ -127,7 +127,7 @@
     }
     $sendTelegramTextMessageSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Message   = 'Sending an example of a custom keyboard'
         Keyboard  = $customKeyboard
     }
@@ -137,7 +137,7 @@
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken        = $botToken
-        ChatID          = $chat
+        ChatID          = $chatID
         Message         = 'Sending a protected content message'
         ProtectContent  = $true
     }
@@ -147,7 +147,7 @@
 .EXAMPLE
     $sendTelegramTextMessageSplat = @{
         BotToken             = $botToken
-        ChatID               = $chat
+        ChatID               = $chatID
         Message              = 'Sending a message with a link preview'
         LinkPreviewURL       = 'https://www.techthoughts.info'
         LinkPreviewOption    = 'Small'

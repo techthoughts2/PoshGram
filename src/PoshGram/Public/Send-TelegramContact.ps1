@@ -19,7 +19,7 @@
     $lastName = 'Picard'
     $sendTelegramContactSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         PhoneNumber         = $phone
         FirstName           = $firstName
         LastName            = $lastName

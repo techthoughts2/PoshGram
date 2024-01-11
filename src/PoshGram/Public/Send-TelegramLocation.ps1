@@ -17,7 +17,7 @@
     $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocationSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         Latitude            = $latitude
         Longitude           = $longitude
         DisableNotification = $true

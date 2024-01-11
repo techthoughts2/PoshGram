@@ -16,7 +16,7 @@
     $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
     $sendTelegramURLDocumentSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         FileURL             = $fileURL
         Caption             = 'Log Files'
         ParseMode           = 'MarkdownV2'
@@ -33,7 +33,7 @@
     $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
     $sendTelegramURLDocumentSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         FileURL   = $fileURL
         Caption   = 'Here are the __important__ Log Files\.'
         ParseMode = 'MarkdownV2'

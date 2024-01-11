@@ -16,7 +16,7 @@
     $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         VideoURL            = $videourl
         Duration            = 16
         Width               = 1920
@@ -38,7 +38,7 @@
     $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
     $sendTelegramURLVideoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         VideoURL  = $videourl
         ParseMode = 'MarkdownV2'
         FileName  = 'video.mp4'

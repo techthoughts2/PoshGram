@@ -16,7 +16,7 @@
     $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
     $sendTelegramStickerSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         FileID              = $sticker
         DisableNotification = $true
         ProtectContent      = $true
@@ -36,7 +36,7 @@
     $chatID = '-nnnnnnnnn'
     $sendTelegramStickerSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         StickerSetName      = 'STPicard'
         Shortcode           = ':slightly_smiling_face:'
         DisableNotification = $true

@@ -16,7 +16,7 @@
     $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         File                = $file
         Caption             = 'Check out this file'
         ParseMode           = 'MarkdownV2'
@@ -33,7 +33,7 @@
     $file = 'C:\Logs\Log1.txt'
     $sendTelegramLocalDocumentSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         File      = $file
         Caption   = 'Check out this __important__ file\.'
         ParseMode = 'MarkdownV2'

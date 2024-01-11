@@ -16,7 +16,7 @@
     $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         StickerURL          = $StickerURL
         DisableNotification = $true
         ProtectContent      = $true

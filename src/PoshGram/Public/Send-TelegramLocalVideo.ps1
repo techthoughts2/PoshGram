@@ -16,7 +16,7 @@
     $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         Video               = $video
         Duration            = 10
         Width               = 250
@@ -39,7 +39,7 @@
     $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Video     = $video
         Streaming = $true
         FileName  = 'video.mp4'

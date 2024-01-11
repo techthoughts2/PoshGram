@@ -16,7 +16,7 @@
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AnimationPath       = $animation
         Caption             = 'Check out this animation'
         ParseMode           = 'MarkdownV2'
@@ -34,7 +34,7 @@
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken      = $botToken
-        ChatID        = $chat
+        ChatID        = $chatID
         AnimationPath = $animation
         Caption       = 'Check out this __awesome__ animation\.'
         ParseMode     = 'MarkdownV2'

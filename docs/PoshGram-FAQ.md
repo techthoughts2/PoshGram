@@ -30,7 +30,7 @@ with default HTML formatting.'
 
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
-    ChatID   = $chat
+    ChatID   = $chatID
     Message  = $message
 }
 Send-TelegramTextMessage @sendTelegramTextMessageSplat
@@ -51,7 +51,7 @@ with MarkdownV2 style formatting'
 
 $sendTelegramTextMessageSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     Message   = $message
     ParseMode = 'MarkdownV2'
 }
@@ -157,7 +157,7 @@ $inlineKeyboard = @{
 }
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
-    ChatID   = $chat
+    ChatID   = $chatID
     Message  = 'Sending an example of inline keyboard'
     Keyboard = $inlineKeyboard
 }
@@ -187,7 +187,7 @@ $customKeyboard = @{
 }
 $sendTelegramTextMessageSplat = @{
     BotToken = $botToken
-    ChatID   = $chat
+    ChatID   = $chatID
     Message  = 'Sending an example of a custom keyboard'
     Keyboard = $customKeyboard
 }

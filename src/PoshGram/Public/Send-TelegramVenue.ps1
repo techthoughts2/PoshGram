@@ -22,7 +22,7 @@
     $address = 'San Francisco, CA 94128'
     $sendTelegramVenueSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         Latitude            = $latitude
         Longitude           = $longitude
         Title               = $title

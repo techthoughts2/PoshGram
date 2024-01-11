@@ -16,7 +16,7 @@
     $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocalPhotoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         PhotoPath           = $photo
         Caption             = 'Check out this photo'
         ParseMode           = 'MarkdownV2'
@@ -34,7 +34,7 @@
     $photo = 'C:\photos\aphoto.jpg'
     $sendTelegramLocalPhotoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         PhotoPath = $photo
         Caption   = 'Check out this __awesome__ photo\.'
         ParseMode = 'MarkdownV2'

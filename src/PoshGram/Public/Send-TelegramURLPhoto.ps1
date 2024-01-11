@@ -16,7 +16,7 @@
     $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         PhotoURL            = $photourl
         Caption             = 'DSC is a great technology'
         ParseMode           = 'MarkdownV2'
@@ -33,7 +33,7 @@
     $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         PhotoURL  = $photourl
         Caption   = "DSC is a __great__ technology\."
         ParseMode = 'MarkdownV2'

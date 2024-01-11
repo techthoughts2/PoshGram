@@ -29,7 +29,7 @@
     $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
     $sendTelegramPollSplat = @{
         BotToken            = $token
-        ChatID              = $chat
+        ChatID              = $chatID
         Question            = $question
         Options             = $opt
         DisableNotification = $true
@@ -55,7 +55,7 @@
     $answer = 1
     $sendTelegramPollSplat = @{
         BotToken    = $botToken
-        ChatID      = $chat
+        ChatID      = $chatID
         Question    = $question
         Options     = $opt
         IsAnonymous = $false

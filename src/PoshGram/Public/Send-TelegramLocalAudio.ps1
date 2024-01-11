@@ -16,7 +16,7 @@
     $audio = 'C:\audio\halo_on_fire.mp3'
     $sendTelegramLocalAudioSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         Audio               = $audio
         Caption             = 'Check out this audio track'
         ParseMode           = 'MarkdownV2'
@@ -37,7 +37,7 @@
     $audio = 'C:\audio\halo_on_fire.mp3'
     $sendTelegramLocalAudioSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Audio     = $audio
         Performer = 'Metallica'
         Title     = 'Halo On Fire'
