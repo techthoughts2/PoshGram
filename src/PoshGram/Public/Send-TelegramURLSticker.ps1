@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
-    Send-TelegramURLSticker -BotToken $botToken -ChatID $channel -StickerURL $StickerURL
+    Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $StickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
