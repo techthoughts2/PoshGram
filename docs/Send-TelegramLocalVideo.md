@@ -31,7 +31,7 @@ Telegram only supports mp4 videos.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $file = 'C:\videos\video.mp4'
-Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
+Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
 ```
 
 Sends video message via Telegram API

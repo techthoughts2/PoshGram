@@ -19,7 +19,7 @@
         'Star Trek: Lower Decks'
         'Star Trek: Prodigy'
     )
-    Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
+    Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Options $opt
 
     Sends poll via Telegram API
 .EXAMPLE
@@ -82,8 +82,8 @@
     $explanation = 'At 1,607.2 meters in length, 764.4 meters across, and 305.76 meters high, Invincible class is the largest starship class ever built by Starfleet.'
     $answer = 4
     $sendTelegramPollSplat = @{
-        BotToken    = $token
-        ChatID      = $channel
+        BotToken    = $botToken
+        ChatID      = $chatID
         Question    = $question
         Options     = $opt
         Explanation = $explanation
@@ -107,7 +107,7 @@
     $answer = 1
     $sendTelegramPollSplat = @{
         BotToken             = $token
-        ChatID               = $channel
+        ChatID               = $chatID
         Question             = $question
         Options              = $opt
         Explanation          = $explanation

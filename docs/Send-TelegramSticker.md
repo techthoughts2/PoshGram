@@ -51,7 +51,7 @@ See notes for details.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -FileID $sticker
 ```
 
 Sends sticker message via Telegram API
@@ -78,7 +78,7 @@ Sends sticker message via Telegram API
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 ```
 
 Sends sticker message via Telegram API

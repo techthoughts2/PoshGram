@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $sticker = 'C:\stickers\sticker.webp'
-    Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
+    Send-TelegramLocalSticker -BotToken $botToken -ChatID $chatID -StickerPath $sticker
 
     Sends sticker message via Telegram API
 .EXAMPLE

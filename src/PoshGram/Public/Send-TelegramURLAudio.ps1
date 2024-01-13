@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
-    Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
+    Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
 
     Sends audio message via Telegram API
 .EXAMPLE

@@ -10,7 +10,7 @@
     $longitude = -122.378955
     $title = 'Star Fleet Headquarters'
     $address = 'San Francisco, CA 94128'
-    Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+    Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 
     Sends venue information via Telegram API
 .EXAMPLE

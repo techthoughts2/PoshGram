@@ -29,7 +29,7 @@ Several options can be specified to adjust message parameters.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
-Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
+Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photourl
 ```
 
 Sends photo message via Telegram API

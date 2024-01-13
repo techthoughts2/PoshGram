@@ -30,7 +30,7 @@ Several options can be specified to adjust message parameters.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $file = 'C:\Logs\Log1.txt'
-Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
+Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
 ```
 
 Sends document message via Telegram API

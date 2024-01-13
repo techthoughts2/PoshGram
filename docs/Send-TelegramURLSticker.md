@@ -28,7 +28,7 @@ The sticker will be sourced from the provided URL and sent to Telegram.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
-Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
+Send-TelegramURLSticker -BotToken $botToken -ChatID $channel -StickerURL $StickerURL
 ```
 
 Sends sticker message via Telegram API

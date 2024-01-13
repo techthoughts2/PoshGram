@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $audio = 'C:\audio\halo_on_fire.mp3'
-    Send-TelegramLocalAudio -BotToken $botToken -ChatID $chat -Audio $audio
+    Send-TelegramLocalAudio -BotToken $botToken -ChatID $chatID -Audio $audio
 
     Sends audio message via Telegram API
 .EXAMPLE

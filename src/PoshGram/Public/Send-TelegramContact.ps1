@@ -8,7 +8,7 @@
     $chatID = '-nnnnnnnnn'
     $phone = '1-222-222-2222'
     $firstName = 'Jean-Luc'
-    Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+    Send-TelegramContact -BotToken $botToken -ChatID $chatID -PhoneNumber $phone -FirstName $firstName
 
     Sends contact via Telegram API
 .EXAMPLE

@@ -31,7 +31,7 @@ Only works for gif, pdf and zip files.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
-Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
 ```
 
 Sends document message via Telegram API

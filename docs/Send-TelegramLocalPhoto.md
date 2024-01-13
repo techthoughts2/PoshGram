@@ -29,7 +29,7 @@ Several options can be specified to adjust message parameters.
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $photo = 'C:\photos\aphoto.jpg'
-Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
+Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
 ```
 
 Sends photo message via Telegram API

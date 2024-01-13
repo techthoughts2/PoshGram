@@ -8,7 +8,7 @@
     $chatID = '-nnnnnnnnn'
     $latitude = 37.621313
     $longitude = -122.378955
-    Send-TelegramLocation -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude
+    Send-TelegramLocation -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude
 
     Sends location via Telegram API
 .EXAMPLE

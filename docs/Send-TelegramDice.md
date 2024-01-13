@@ -27,7 +27,7 @@ Uses Telegram Bot API to send animated emoji that will display a random value to
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
 $chatID = '-nnnnnnnnn'
 $emoji = 'basketball'
-Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
+Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
 ```
 
 Sends animated basketball emoji that displays a random value via Telegram API

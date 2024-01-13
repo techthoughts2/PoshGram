@@ -7,7 +7,7 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
-    Send-TelegramTextMessage -BotToken $botToken -ChatID $chat -Message "Hello"
+    Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Hello"
 
     Sends text message via Telegram Bot API.
 .EXAMPLE

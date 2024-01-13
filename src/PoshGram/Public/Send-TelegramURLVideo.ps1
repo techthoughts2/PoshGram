@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
-    Send-TelegramURLVideo -BotToken $botToken -ChatID $chat -VideoURL $videourl
+    Send-TelegramURLVideo -BotToken $botToken -ChatID $chatID -VideoURL $videourl
 
     Sends video message via Telegram API
 .EXAMPLE

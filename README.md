@@ -150,7 +150,7 @@ Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Long
 $botToken = “#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx”
 $chatID = “-#########”
 $test = "I am a test"
-& '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $token -ChatID $chatID -Message '$test';}"
+& '.\Program Files\PowerShell\6\pwsh.exe' -command "& {Import-Module PoshGram;Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message '$test';}"
 #--------------------------------------------------------------------------
 #here is an example of calling PowerShell 7+ from PowerShell 5.1 to send a Telegram message with PoshGram
 & 'C:\Program Files\PowerShell\7\pwsh.exe' -command { Import-Module PoshGram;$botToken = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx';$chatID = '-nnnnnnnnn';Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message "Test from 5.1 calling 7+ to send Telegram Message via PoshGram" }

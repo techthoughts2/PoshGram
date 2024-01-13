@@ -7,7 +7,7 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
-    Send-TelegramURLAnimation -BotToken $botToken -ChatID $chat -AnimationURL $AnimationURL
+    Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
 
     Sends animation message via Telegram API
 .EXAMPLE
