@@ -120,7 +120,7 @@ Send-TelegramSticker -BotToken $botToken -ChatID $chatID -FileID $sticker
 Send-TelegramSticker -BotToken $botToken -ChatID $chatID -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 #------------------------------------------------------------------------------------------------
 # send an animated gif from a URL source
-Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
+Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $animationURL
 #------------------------------------------------------------------------------------------------
 # send an audio message from a URL source
 Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
@@ -132,7 +132,7 @@ Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
 Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photoURL
 #------------------------------------------------------------------------------------------------
 #send a sticker message from a URL source
-Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $StickerURL
+Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $stickerURL
 #------------------------------------------------------------------------------------------------
 # send a video message from a URL source
 Send-TelegramURLVideo -BotToken $botToken -ChatID $chatID -VideoURL $videoURL

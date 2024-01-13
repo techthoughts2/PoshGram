@@ -14,6 +14,7 @@
     "powershell.codeFormatting.preset": "Stroustrup",
     "cSpell.words": [
         "Allman",
+        "alphanum",
         "animatedsticker",
         "backoff",
         "blockquote",
@@ -32,6 +33,7 @@
         "getidsbot",
         "Gifs",
         "hashtable",
+        "inlinekeyboardbutton",
         "jakemorrison",
         "Janeway",
         "markdownv",
@@ -43,6 +45,7 @@
         "poshgram",
         "psobject",
         "pwsh",
+        "replykeyboardmarkup",
         "riker",
         "shortcode",
         "shortlink",

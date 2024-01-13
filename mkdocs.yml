@@ -78,7 +78,7 @@ nav:
   - Usage:
     - PoshGram Basics: PoshGram-Basics.md
     - PoshGram Advanced: PoshGram-Advanced.md
-    - Send stickers using PoshGram: PoshGram-Sticker-Info.md
+    - PoshGram Stickers: PoshGram-Sticker-Info.md
   - Functions:
     - Send-TelegramTextMessage: Send-TelegramTextMessage.md
     - Send-TelegramContact: Send-TelegramContact.md
@@ -87,7 +87,7 @@ nav:
     - Send-TelegramLocation: Send-TelegramLocation.md
     - Send-TelegramVenue: Send-TelegramVenue.md
     - Test-BotToken: Test-BotToken.md
-    - Attachments:
+    - Media:
       - Send-TelegramMediaGroup: Send-TelegramMediaGroup.md
       - Animation:
         - Send-TelegramLocalAnimation: Send-TelegramLocalAnimation.md
@@ -110,6 +110,6 @@ nav:
         - Send-TelegramSticker: Send-TelegramSticker.md
         - Send-TelegramLocalSticker: Send-TelegramLocalSticker.md
         - Send-TelegramURLSticker: Send-TelegramURLSticker.md
-  - Getting An API Key: TelegramAPI.md
+  - Setting Up Telegram Bot: PoshGram-Telegram-API.md
   - FAQ: PoshGram-FAQ.md
   - Change Log: CHANGELOG.md
