@@ -6,18 +6,18 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
-    Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $StickerURL
+    $stickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
+    Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $stickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
+    $stickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
         ChatID              = $chatID
-        StickerURL          = $StickerURL
+        StickerURL          = $stickerURL
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true

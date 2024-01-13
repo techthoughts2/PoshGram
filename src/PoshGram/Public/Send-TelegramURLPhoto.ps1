@@ -129,7 +129,7 @@ function Send-TelegramURLPhoto {
     Write-Verbose -Message 'Verifying URL leads to supported photo extension...'
     $fileTypeEval = Test-URLExtension -URL $PhotoURL -Type Photo
     if ($fileTypeEval -eq $false) {
-        throw ('The specified photo URL: {0} does not contain a supported extension.' -f $AnimationURL)
+        throw ('The specified photo URL: {0} does not contain a supported extension.' -f $PhotoURL)
     } #if_photoExtension
     else {
         Write-Verbose -Message 'Extension supported.'

@@ -20,7 +20,7 @@
 
     Verifies if the URL path specified is a supported audio extension type
 .EXAMPLE
-    Test-URLExtension -URL $AnimationURL -Type Animation
+    Test-URLExtension -URL $animationURL -Type Animation
 
     Verifies if the URL path specified is a supported animation extension type
 .EXAMPLE
@@ -28,7 +28,7 @@
 
     Verifies if the URL path specified is a supported document extension type
 .EXAMPLE
-    Test-URLExtension -URL $StickerURL -Type Sticker
+    Test-URLExtension -URL $stickerURL -Type Sticker
 
     Verifies if the URL path specified is a supported sticker extension type
 .PARAMETER URL

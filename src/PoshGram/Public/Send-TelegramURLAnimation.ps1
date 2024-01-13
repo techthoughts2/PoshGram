@@ -7,17 +7,17 @@
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
     $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
-    Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $AnimationURL
+    Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $animationURL
 
     Sends animation message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
-    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
+    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chatID
-        AnimationURL        = $AnimationURL
+        AnimationURL        = $animationURL
         Caption             = 'Live long, and prosper.'
         DisableNotification = $true
         ProtectContent      = $true
@@ -29,11 +29,11 @@
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
     $chatID = '-nnnnnnnnn'
-    $AnimationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
+    $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
     $sendTelegramURLAnimationSplat = @{
         BotToken            = $botToken
         ChatID              = $chatID
-        AnimationURL        = $AnimationURL
+        AnimationURL        = $animationURL
         Caption             = 'Live __long__, and prosper\.'
         ParseMode           = 'MarkdownV2'
     }

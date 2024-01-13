@@ -1476,7 +1476,7 @@ with MarkdownV2 style formatting'
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
