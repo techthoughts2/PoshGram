@@ -48,7 +48,6 @@ $chatID = '-nnnnnnnnn'
 $question = 'What is your favorite Star Trek series?'
 $opt = @(
     'Star Trek: The Original Series',
-    'Star Trek: The Animated Series',
     'Star Trek: The Next Generation',
     'Star Trek: Deep Space Nine',
     'Star Trek: Voyager',
