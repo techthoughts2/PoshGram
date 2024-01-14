@@ -196,7 +196,7 @@ InModuleScope PoshGram {
 
         BeforeEach {
             $WarningPreference = 'Continue'
-            Start-Sleep -Milliseconds 4500
+            Start-Sleep -Milliseconds 5000
         }
 
         Context 'Get-TelegramStickerPackInfo' {
@@ -215,7 +215,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -242,7 +242,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -283,7 +283,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramContact @sendTelegramContactSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -317,7 +317,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramDice @sendTelegramDiceSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -352,7 +352,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -383,7 +383,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -421,7 +421,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -456,7 +456,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -491,7 +491,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -522,7 +522,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -557,7 +557,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -587,7 +587,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -617,7 +617,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -653,7 +653,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -685,7 +685,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -720,7 +720,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocation @sendTelegramLocationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -756,7 +756,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -787,7 +787,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -818,7 +818,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -849,7 +849,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -884,7 +884,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -918,7 +918,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -953,7 +953,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -987,7 +987,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramSticker @sendTelegramStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1018,7 +1018,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramSticker @sendTelegramStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1052,7 +1052,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1097,7 +1097,7 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1140,7 +1140,7 @@ with default HTML formatting.'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1187,7 +1187,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1220,7 +1220,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1253,7 +1253,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1285,7 +1285,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1316,7 +1316,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1351,7 +1351,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1389,7 +1389,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1425,7 +1425,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1460,7 +1460,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1494,7 +1494,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1525,7 +1525,7 @@ with MarkdownV2 style formatting'
             #         $backoffTime = $null
             #         $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
             #         if ($eval.error_code -eq 429) {
-            #             $backoffTime = $eval.parameters.retry_after + 10
+            #             $backoffTime = $eval.parameters.retry_after + 13
             #             Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
             #             Start-Sleep -Seconds $backoffTime
             #         }
@@ -1554,7 +1554,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1590,7 +1590,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1627,7 +1627,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramVenue @sendTelegramVenueSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
@@ -1653,7 +1653,7 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Test-BotToken -BotToken $token
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 10
+                        $backoffTime = $eval.parameters.retry_after + 13
                         Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
