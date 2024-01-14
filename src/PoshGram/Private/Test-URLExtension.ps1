@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that specified URL path contains a supported Telegram extension type
 .DESCRIPTION
     Evaluates the specified URL path to determine if the URL leads to a supported extension type
@@ -20,7 +20,7 @@
 
     Verifies if the URL path specified is a supported audio extension type
 .EXAMPLE
-    Test-URLExtension -URL $AnimationURL -Type Animation
+    Test-URLExtension -URL $animationURL -Type Animation
 
     Verifies if the URL path specified is a supported animation extension type
 .EXAMPLE
@@ -28,7 +28,7 @@
 
     Verifies if the URL path specified is a supported document extension type
 .EXAMPLE
-    Test-URLExtension -URL $StickerURL -Type Sticker
+    Test-URLExtension -URL $stickerURL -Type Sticker
 
     Verifies if the URL path specified is a supported sticker extension type
 .PARAMETER URL
@@ -38,7 +38,7 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 #>
 function Test-URLExtension {
     [CmdletBinding()]

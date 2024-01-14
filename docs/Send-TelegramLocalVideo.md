@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalVideo
 schema: 2.0.0
 ---
 
@@ -15,7 +15,7 @@ Sends Telegram video message via Bot API from locally sourced file
 ```
 Send-TelegramLocalVideo [-BotToken] <String> [-ChatID] <String> [-Video] <String> [[-Duration] <Int32>]
  [[-Width] <Int32>] [[-Height] <Int32>] [[-FileName] <String>] [[-Caption] <String>] [[-ParseMode] <String>]
- [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [-HasSpoiler] [-Streaming] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,9 +29,9 @@ Telegram only supports mp4 videos.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $file = 'C:\videos\video.mp4'
-Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
+Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
 ```
 
 Sends video message via Telegram API
@@ -39,11 +39,11 @@ Sends video message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $video = 'C:\videos\video.mp4'
 $sendTelegramLocalVideoSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     Video               = $video
     Duration            = 10
     Width               = 250
@@ -51,6 +51,7 @@ $sendTelegramLocalVideoSplat = @{
     FileName            = 'video.mp4'
     Caption             = 'Check out this video'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     Streaming           = $true
     DisableNotification = $true
     ProtectContent      = $true
@@ -64,11 +65,11 @@ Sends video message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $video = 'C:\videos\video.mp4'
 $sendTelegramLocalVideoSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     Video     = $video
     Streaming = $true
     FileName  = 'video.mp4'
@@ -218,6 +219,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HasSpoiler
+Video needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Streaming
 Use if the uploaded video is suitable for streaming
 
@@ -279,14 +295,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 Telegram clients support mp4 videos (other formats may be sent as Document)
 Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalVideo](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalVideo)
 
 [https://core.telegram.org/bots/api#sendvideo](https://core.telegram.org/bots/api#sendvideo)
 

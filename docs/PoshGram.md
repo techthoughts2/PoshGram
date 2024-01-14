@@ -2,7 +2,7 @@
 Module Name: PoshGram
 Module Guid: 277b92bc-0ea9-4659-8f6c-ed5a1dfdfda2
 Download Help Link: NA
-Help Version: 2.3.0
+Help Version: 3.0.0
 Locale: en-US
 ---
 
@@ -11,8 +11,11 @@ Locale: en-US
 PoshGram provides functionality to send various message types to a specified Telegram chat via the Telegram Bot API. Separate PowerShell functions are used for each message type. Checks are included to ensure that file extensions, and file size restrictions are adhered to based on Telegram requirements.
 
 ## PoshGram Cmdlets
+### [Get-TelegramCustomEmojiStickerInfo](Get-TelegramCustomEmojiStickerInfo.md)
+Retrieve information about Telegram custom emoji stickers using their identifiers.
+
 ### [Get-TelegramStickerPackInfo](Get-TelegramStickerPackInfo.md)
-Get information for specified Telegram sticker pack.
+Retrieve detailed information about a specified Telegram sticker pack.
 
 ### [Send-TelegramContact](Send-TelegramContact.md)
 Sends Telegram phone contact message via BOT API.
@@ -51,7 +54,7 @@ Sends Telegram native poll.
 Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 
 ### [Send-TelegramTextMessage](Send-TelegramTextMessage.md)
-Sends Telegram text message via Bot API
+Send a text message via Telegram Bot API.
 
 ### [Send-TelegramURLAnimation](Send-TelegramURLAnimation.md)
 Sends Telegram animation message via Bot API from URL sourced animation image

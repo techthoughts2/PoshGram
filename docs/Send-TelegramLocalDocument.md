@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalDocument
 schema: 2.0.0
 ---
 
@@ -28,9 +28,9 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $file = 'C:\Logs\Log1.txt'
-Send-TelegramLocalDocument -BotToken $botToken -ChatID $chat -File $file
+Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
 ```
 
 Sends document message via Telegram API
@@ -38,11 +38,11 @@ Sends document message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $file = 'C:\Logs\Log1.txt'
 $sendTelegramLocalDocumentSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     File                = $file
     Caption             = 'Check out this file'
     ParseMode           = 'MarkdownV2'
@@ -58,11 +58,11 @@ Sends document message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $file = 'C:\Logs\Log1.txt'
 $sendTelegramLocalDocumentSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     File      = $file
     Caption   = 'Check out this __important__ file\.'
     ParseMode = 'MarkdownV2'
@@ -210,14 +210,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
 Bots can currently send files of up to 50 MB in size, this limit may be changed in the future.
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalDocument.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalDocument](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalDocument)
 
 [https://core.telegram.org/bots/api#senddocument](https://core.telegram.org/bots/api#senddocument)
 

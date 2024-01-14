@@ -20,7 +20,7 @@ InModuleScope PoshGram {
         BeforeEach {
             $token = '#########:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
             $chat = '-nnnnnnnnn'
-            $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
+            $stickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
             Mock Test-URLExtension { $true }
             Mock Test-URLFileSize { $true }
             Mock Invoke-RestMethod -MockWith {
@@ -42,7 +42,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -55,7 +55,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -70,7 +70,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -86,7 +86,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -113,7 +113,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                     ErrorAction         = 'SilentlyContinue'
@@ -130,7 +130,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -142,7 +142,7 @@ InModuleScope PoshGram {
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $chat
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                 }

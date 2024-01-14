@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll
 schema: 2.0.0
 ---
 
@@ -44,11 +44,10 @@ Uses Telegram Bot API to send a native poll with a question and several answer o
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $question = 'What is your favorite Star Trek series?'
 $opt = @(
     'Star Trek: The Original Series',
-    'Star Trek: The Animated Series',
     'Star Trek: The Next Generation',
     'Star Trek: Deep Space Nine',
     'Star Trek: Voyager',
@@ -57,8 +56,9 @@ $opt = @(
     'Star Trek: Picard',
     'Star Trek: Lower Decks'
     'Star Trek: Prodigy'
+    'Star Trek: Strange New Worlds'
 )
-Send-TelegramPoll -BotToken $botToken -ChatID $chat -Question $question -Options $opt
+Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Options $opt
 ```
 
 Sends poll via Telegram API
@@ -66,12 +66,12 @@ Sends poll via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $question = 'Who is your favorite Star Fleet Captain?'
 $opt = 'Jean-Luc Picard','Jean-Luc Picard','Jean-Luc Picard'
 $sendTelegramPollSplat = @{
     BotToken            = $token
-    ChatID              = $chat
+    ChatID              = $chatID
     Question            = $question
     Options             = $opt
     DisableNotification = $true
@@ -88,7 +88,7 @@ Sends poll via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $question = 'Who was the best Starfleet captain?'
 $opt = @(
     'James Kirk',
@@ -96,11 +96,14 @@ $opt = @(
     'Benjamin Sisko',
     'Kathryn Janeway',
     'Jonathan Archer'
+    'Michael Burnham'
+    'Carol Freeman'
+    'Christopher Pike'
 )
 $answer = 1
 $sendTelegramPollSplat = @{
     BotToken    = $botToken
-    ChatID      = $chat
+    ChatID      = $chatID
     Question    = $question
     Options     = $opt
     IsAnonymous = $false
@@ -130,8 +133,8 @@ $opt = @(
 $explanation = 'At 1,607.2 meters in length, 764.4 meters across, and 305.76 meters high, Invincible class is the largest starship class ever built by Starfleet.'
 $answer = 4
 $sendTelegramPollSplat = @{
-    BotToken    = $token
-    ChatID      = $channel
+    BotToken    = $botToken
+    ChatID      = $chatID
     Question    = $question
     Options     = $opt
     Explanation = $explanation
@@ -158,7 +161,7 @@ $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after
 $answer = 1
 $sendTelegramPollSplat = @{
     BotToken             = $token
-    ChatID               = $channel
+    ChatID               = $chatID
     Question             = $question
     Options              = $opt
     Explanation          = $explanation
@@ -400,10 +403,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Telegram currently supports questions 1-300 characters
 Telegram currently supports 2-10 options 1-100 characters each
@@ -414,7 +415,7 @@ If the second answer is correct, the answer is 1, etc.
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramPoll.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll](https://poshgram.readthedocs.io/en/latest/Send-TelegramPoll)
 
 [https://core.telegram.org/bots/api#sendpoll](https://core.telegram.org/bots/api#sendpoll)
 

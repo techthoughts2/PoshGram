@@ -1,0 +1,115 @@
+# https://www.mkdocs.org/user-guide/configuration/
+# https://www.mkdocs.org/user-guide/writing-your-docs/
+# https://www.mkdocs.org/user-guide/writing-your-docs/#writing-with-markdown
+# https://mkdocs.readthedocs.io/en/0.15.2/user-guide/writing-your-docs/
+# https://mkdocs.readthedocs.io/en/0.15.2/user-guide/styling-your-docs/
+# https://example-mkdocs-basic.readthedocs.io/en/latest/
+# https://github.com/mkdocs/mkdocs/blob/master/mkdocs.yml
+# https://squidfunk.github.io/mkdocs-material/creating-your-site/
+# mkdocs.yml
+
+site_name: PoshGram
+# site_url:
+repo_url: https://github.com/techthoughts2/PoshGram
+# repo_name:
+# edit_uri: edit/main/docs/
+# edit_uri_template:
+site_description: PoshGram - A PowerShell Module for Telegram Bot API - Automate Messaging, Alerts, and Chat Interactions in PowerShell with Telegram. # meta tag to the generated HTML header
+site_author: Jake Morrison # meta tag to the generated HTML header
+copyright: "PoshGram is licensed under the <a href='https://github.com/techthoughts2/PoshGram/blob/main/LICENSE'>MIT license"
+# remote_branch:
+# remote_name:
+# docs_dir: docs
+# site_dir:
+# extra_css:
+# extra_javascript:
+markdown_extensions:
+  # Python Markdown
+  - admonition
+  - toc:
+      permalink: true
+  # code highlighting
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+# extra_templates:
+# extra:
+theme:
+  name: material
+  language: en
+  # custom_dir: overrides
+  features:
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    # - navigation.path
+  favicon: assets/PoshGram_favicon_32x32.png
+  # icon:
+  #   repo:
+  # font:
+  #   text: Work Sans
+  logo: assets/PoshGram_favicon_32x32.png
+  # palette:
+  #   primary: teal
+  # palette:
+  #   # Palette toggle for light mode
+  #   - media: "(prefers-color-scheme: light)"
+  #     scheme: default
+  #     primary: light blue
+  #     accent: pink
+  #     toggle:
+  #       icon: material/brightness-7
+  #       name: Switch to dark mode
+
+    # # Palette toggle for dark mode
+    # - media: "(prefers-color-scheme: dark)"
+    #   scheme: slate
+    #   primary: indigo
+    #   accent: pink
+    #   toggle:
+    #     icon: material/brightness-4
+    #     name: Switch to light mode
+nav:
+  - Home: index.md
+  - Usage:
+    - PoshGram Basics: PoshGram-Basics.md
+    - PoshGram Advanced: PoshGram-Advanced.md
+    - PoshGram Stickers: PoshGram-Sticker-Info.md
+  - Functions:
+    - Send-TelegramTextMessage: Send-TelegramTextMessage.md
+    - Send-TelegramContact: Send-TelegramContact.md
+    - Send-TelegramDice: Send-TelegramDice.md
+    - Send-TelegramPoll: Send-TelegramPoll.md
+    - Send-TelegramLocation: Send-TelegramLocation.md
+    - Send-TelegramVenue: Send-TelegramVenue.md
+    - Test-BotToken: Test-BotToken.md
+    - Media:
+      - Send-TelegramMediaGroup: Send-TelegramMediaGroup.md
+      - Animation:
+        - Send-TelegramLocalAnimation: Send-TelegramLocalAnimation.md
+        - Send-TelegramURLAnimation: Send-TelegramURLAnimation.md
+      - Audio:
+        - Send-TelegramLocalAudio: Send-TelegramLocalAudio.md
+        - Send-TelegramURLAudio: Send-TelegramURLAudio.md
+      - Document:
+        - Send-TelegramLocalDocument: Send-TelegramLocalDocument.md
+        - Send-TelegramURLDocument: Send-TelegramURLDocument.md
+      - Photo:
+        - Send-TelegramLocalPhoto: Send-TelegramLocalPhoto.md
+        - Send-TelegramURLPhoto: Send-TelegramURLPhoto.md
+      - Video:
+        - Send-TelegramLocalVideo: Send-TelegramLocalVideo.md
+        - Send-TelegramURLVideo: Send-TelegramURLVideo.md
+    - Stickers:
+        - Get-TelegramCustomEmojiStickerInfo: Get-TelegramCustomEmojiStickerInfo.md
+        - Get-TelegramStickerPackInfo: Get-TelegramStickerPackInfo.md
+        - Send-TelegramSticker: Send-TelegramSticker.md
+        - Send-TelegramLocalSticker: Send-TelegramLocalSticker.md
+        - Send-TelegramURLSticker: Send-TelegramURLSticker.md
+  - Setting Up Telegram Bot: PoshGram-Telegram-API.md
+  - FAQ: PoshGram-FAQ.md
+  - Change Log: CHANGELOG.md

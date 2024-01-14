@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '2.3.0'
+    ModuleVersion     = '3.0.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -51,7 +51,12 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    RequiredModules   = @(
+        @{
+            ModuleName    = 'pwshEmojiExplorer';
+            ModuleVersion = '0.8.0'
+        }
+    )
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
@@ -70,6 +75,7 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
+        'Get-TelegramCustomEmojiStickerInfo',
         'Get-TelegramStickerPackInfo',
         'Send-TelegramContact',
         'Send-TelegramDice',
@@ -163,16 +169,16 @@
             )
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri   = 'https://github.com/techthoughts2/PoshGram/blob/main/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri   = 'https://github.com/techthoughts2/PoshGram'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/main/media/PoshGram.png'
+            IconUri      = 'https://github.com/techthoughts2/PoshGram/raw/main/docs/assets/PoshGram_icon.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/main/.github/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/techthoughts2/PoshGram/blob/main/docs/CHANGELOG.md'
 
         } # End of PSData hashtable
 

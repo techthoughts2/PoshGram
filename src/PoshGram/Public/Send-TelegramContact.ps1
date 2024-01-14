@@ -1,25 +1,25 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram phone contact message via BOT API.
 .DESCRIPTION
     Uses Telegram Bot API to send contact information to specified Telegram chat.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $phone = '1-222-222-2222'
     $firstName = 'Jean-Luc'
-    Send-TelegramContact -BotToken $botToken -ChatID $chat -PhoneNumber $phone -FirstName $firstName
+    Send-TelegramContact -BotToken $botToken -ChatID $chatID -PhoneNumber $phone -FirstName $firstName
 
     Sends contact via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $phone = '1-222-222-2222'
     $firstName = 'Jean-Luc'
     $lastName = 'Picard'
     $sendTelegramContactSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         PhoneNumber         = $phone
         FirstName           = $firstName
         LastName            = $lastName
@@ -49,10 +49,10 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameter               Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -60,7 +60,7 @@
     first_name              String                  Yes         Contact's first name
     last_name               String                  Optional    Contact's last name
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramContact.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramContact
 .LINK
     https://core.telegram.org/bots/api#sendcontact
 .LINK

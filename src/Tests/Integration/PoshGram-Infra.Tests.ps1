@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------
+﻿#-------------------------------------------------------------------------
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'PoshGram'
@@ -10,18 +10,20 @@ $PathToManifest = [System.IO.Path]::Combine('..', '..', $ModuleName, "$ModuleNam
 Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 InModuleScope PoshGram {
-    Describe 'Infrastructure Tests' -Tag Infrastructure {
+
+    Describe 'Integration Tests' -Tag Integration {
+
         BeforeAll {
-            #$WarningPreference = 'SilentlyContinue'
+            $WarningPreference = 'Continue'
             #//////////////////////////////////////////////////////////////////////////
             if ($env:CODEBUILD_PROJECT_UUID) {
                 # we are in a CodeBuild environment
-                # AWS Secrets manager retrieval - for use in AWS Codebuild deployment
-                Import-Module AWS.Tools.SecretsManager
-                $s = Get-SECSecretValue -SecretId PoshGramTokens -Region us-west-2
-                $sObj = $s.SecretString | ConvertFrom-Json
-                $token = $sObj.PoshBotToken
-                $channel = $sObj.PoshChannel
+                # AWS Systems Manager Parameter Store retrieval - for use in AWS Codebuild deployment
+                Import-Module AWS.Tools.SimpleSystemsManagement
+                $sToken = Get-SSMParameter -Name 'telegramtoken' -WithDecryption $true -Region us-west-2
+                $token = $sToken.Value
+                $sChannel = Get-SSMParameter -Name 'telegramchannel' -WithDecryption $true -Region us-west-2
+                $channel = $sChannel.Value
             }
             else {
                 # ! if running locally you must provide the bot token and chat id for these tests to run
@@ -39,7 +41,6 @@ InModuleScope PoshGram {
             $question = 'What is your favorite Star Trek series?'
             $opt = @(
                 'Star Trek: The Original Series',
-                'Star Trek: The Animated Series',
                 'Star Trek: The Next Generation',
                 'Star Trek: Deep Space Nine',
                 'Star Trek: Voyager',
@@ -48,6 +49,7 @@ InModuleScope PoshGram {
                 'Star Trek: Picard',
                 'Star Trek: Lower Decks'
                 'Star Trek: Prodigy'
+                'Star Trek: Strange New Worlds'
             )
             $question2 = 'Who was the best Starfleet captain?'
             $opt2 = @(
@@ -56,19 +58,22 @@ InModuleScope PoshGram {
                 'Benjamin Sisko',
                 'Kathryn Janeway',
                 'Jonathan Archer'
+                'Michael Burnham'
+                'Carol Freeman'
+                'Christopher Pike'
             )
             $answer = 1
             $question3 = 'Which Star Trek captain has an artificial heart?'
             $explanation = 'In _2327_, Jean\-Luc Picard received an *artificial heart* after he was stabbed by a Nausicaan during a bar brawl\.'
             $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-            $photoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/techthoughts.png"
-            $fileURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/LogExample.zip"
-            $videoURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Intro.mp4"
-            $audioURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
-            $animationURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/jean.gif"
-            $stickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/picard.webp"
-            $animatedStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/animatedsticker.tgs"
-            $videoStickerURL = "https://s3-us-west-2.amazonaws.com/$env:URLTESTFILES_S3_BUCKET/videosticker.webm"
+            $photoURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/techthoughts.png"
+            $fileURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/LogExample.zip"
+            $videoURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/Intro.mp4"
+            $audioURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3"
+            $animationURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/jean.gif"
+            $stickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/picard.webp"
+            $animatedStickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/animatedsticker.tgs"
+            $videoStickerURL = "https://$env:URLTESTFILES_S3_BUCKET.s3.us-west-2.amazonaws.com/videosticker.webm"
             $inlineRow1 = @(
                 @{
                     text = "`u{1F517} Visit"
@@ -189,10 +194,16 @@ InModuleScope PoshGram {
 
         } #before_all
 
+        BeforeEach {
+            $WarningPreference = 'Continue'
+            Start-Sleep -Milliseconds 5000
+        }
+
         Context 'Get-TelegramStickerPackInfo' {
+
             It 'Should return valid sticker pack information' {
                 $getTelegramStickerPackInfoSplat = @{
-                    StickerSetName = 'CookieMonster'
+                    StickerSetName = 'MeWantCookie'
                     BotToken       = $token
                 }
 
@@ -204,8 +215,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -213,11 +224,46 @@ InModuleScope PoshGram {
                     }
                 } while ($apiTest -eq $false -and $run -le 3)
 
-                $eval.set_name | Should -BeExactly 'CookieMonster'
+                $eval[0].set_name | Should -BeExactly 'MeWantCookie'
+
             } #it
+
+            It 'Should return enhanced emoji information for the sticker pack' {
+                $getTelegramStickerPackInfoSplat = @{
+                    StickerSetName = 'FriendlyFelines'
+                    BotToken       = $token
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Get-TelegramStickerPackInfo @getTelegramStickerPackInfoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval[0].set_name | Should -BeExactly 'FriendlyFelines'
+                $heartSticker = $eval | Where-Object { $_.file_unique_id -eq 'AgADBAADlEXbHQ' }
+                $heartSticker           | Should -Not -BeNullOrEmpty
+                $heartSticker.Group     | Should -BeExactly 'Smileys & Emotion'
+                $heartSticker.SubGroup  | Should -BeExactly 'heart'
+                $heartSticker.ShortCode | Should -BeExactly ':red_heart:'
+
+            } #it
+
         } #context_Get-TelegramStickerPackInfo
 
         Context 'Send-TelegramContact' {
+
             It 'Should return with ok:true when a contact is successfully sent' {
                 $sendTelegramContactSplat = @{
                     BotToken            = $token
@@ -237,8 +283,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramContact @sendTelegramContactSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -247,10 +293,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramContact
 
         Context 'Send-TelegramDice' {
+
             It 'Should return with ok:true when a dice is successfully sent' {
                 $sendTelegramDiceSplat = @{
                     BotToken            = $token
@@ -268,8 +317,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramDice @sendTelegramDiceSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -278,10 +327,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramDice
 
         Context 'Send-TelegramLocalAnimation' {
+
             It 'Should return with ok:true when a local animation is successfully sent' {
                 $sendTelegramLocalAnimationSplat = @{
                     BotToken            = $token
@@ -300,8 +352,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -310,10 +362,44 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
+            It 'Should return with ok:true when a local animation is successfully sent with a spoiler' {
+                $sendTelegramLocalAnimationSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    AnimationPath       = $file5
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalAnimation</b>'
+                    DisableNotification = $true
+                    HasSpoiler          = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalAnimation @sendTelegramLocalAnimationSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+
+            } #it
+
         } #context_Send-TelegramLocalAnimation
 
         Context 'Send-TelegramLocalAudio' {
+
             It 'Should return with ok:true when a local audio message is successfully sent' {
                 $sendTelegramLocalAudioSplat = @{
                     BotToken            = $token
@@ -335,8 +421,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalAudio @sendTelegramLocalAudioSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -345,10 +431,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramLocalAudio
 
         Context 'Send-TelegramLocalDocument' {
+
             It 'Should return with ok:true when a local document message is successfully sent' {
                 $sendTelegramLocalDocumentSplat = @{
                     BotToken            = $token
@@ -367,8 +456,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalDocument @sendTelegramLocalDocumentSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -377,10 +466,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramLocalDocument
 
         Context 'Send-TelegramLocalPhoto' {
+
             It 'Should return with ok:true when a local photo message is successfully sent' {
                 $sendTelegramLocalPhotoSplat = @{
                     BotToken            = $token
@@ -399,8 +491,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -409,7 +501,40 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
+            It 'Should return with ok:true when a local photo message is successfully sent with a spoiler' {
+                $sendTelegramLocalPhotoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalPhoto</b> with a spoiler.'
+                    PhotoPath           = $file
+                    DisableNotification = $true
+                    HasSpoiler          = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalPhoto @sendTelegramLocalPhotoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+
+            } #it
+
         } #context_Send-TelegramLocalPhoto
 
         Context 'Send-TelegramLocalSticker' {
@@ -419,6 +544,7 @@ InModuleScope PoshGram {
                     BotToken            = $token
                     ChatID              = $channel
                     StickerPath         = $stickerFile
+                    Emoji               = '🖖'
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -431,8 +557,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -441,6 +567,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a local animated sticker message is successfully sent' {
@@ -460,8 +587,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -470,6 +597,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a local video sticker message is successfully sent' {
@@ -489,8 +617,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalSticker @sendTelegramLocalStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -499,11 +627,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
         } #context_Send-TelegramLocalSticker
 
         Context 'Send-TelegramLocalVideo' {
+
             It 'Should return with ok:true when a local video message is successfully sent' {
                 $sendTelegramLocalVideoSplat = @{
                     BotToken            = $token
@@ -523,8 +653,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -533,10 +663,45 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
+            It 'Should return with ok:true when a local video message is successfully sent with a spoiler' {
+                $sendTelegramLocalVideoSplat = @{
+                    BotToken            = $token
+                    ChatID              = $channel
+                    Video               = $file3
+                    FileName            = 'Intro.mp4'
+                    Caption             = 'I am a Pester test for <b>Send-TelegramLocalVideo</b>'
+                    DisableNotification = $true
+                    HasSpoiler          = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramLocalVideo @sendTelegramLocalVideoSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+
+            } #it
+
         } #context_Send-TelegramLocalVideo
 
         Context 'Send-TelegramLocation' {
+
             It 'Should return with ok:true when a location is successfully sent' {
                 $sendTelegramLocationSplat = @{
                     BotToken            = $token
@@ -555,8 +720,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramLocation @sendTelegramLocationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -565,11 +730,15 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramLocation
 
         Context 'Send-TelegramMediaGroup' {
+
             It 'Should return with ok:true when a group of photos is successfully sent' {
+                Start-Sleep -Seconds 40
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -587,8 +756,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -597,10 +766,10 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a group of videos is successfully sent' {
-                Start-Sleep -Seconds 60
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -618,8 +787,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -628,10 +797,10 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a group of audios is successfully sent' {
-                Start-Sleep -Seconds 60
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -649,8 +818,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -659,10 +828,10 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a group of documents is successfully sent' {
-                Start-Sleep -Seconds 60
                 $sendTelegramMediaGroupSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -680,8 +849,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -690,10 +859,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
-        } #context_Send-TelegramURLAnimation
+
+        } #context_Send-TelegramMediaGroup
 
         Context 'Send-TelegramPoll' {
+
             It 'Should return with ok:true when a typical poll is successfully sent' {
                 $sendTelegramPollSplat = @{
                     BotToken            = $token
@@ -712,8 +884,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -722,6 +894,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a quiz poll is successfully sent' {
@@ -745,8 +918,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -755,6 +928,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a quiz poll is successfully sent with additional options' {
@@ -779,8 +953,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramPoll @sendTelegramPollSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -789,10 +963,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramPoll
 
         Context 'Send-TelegramSticker' {
+
             It 'Should return with ok:true when a sticker is sent by file_id' {
                 $sendTelegramStickerSplat = @{
                     BotToken            = $token
@@ -810,8 +987,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramSticker @sendTelegramStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -820,6 +997,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'Should return with ok:true when a sticker is sent by sticker pack emoji shortcode' {
@@ -840,8 +1018,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramSticker @sendTelegramStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -850,10 +1028,13 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramSticker
 
         Context 'Send-TelegramTextMessage' {
+
             It 'Should return with ok:true when a typical message is successfully sent' {
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -871,8 +1052,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -881,6 +1062,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should throw when a message is sent with markdown and characters are not properly escaped' {
@@ -915,8 +1097,8 @@ InModuleScope PoshGram {
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -925,6 +1107,7 @@ InModuleScope PoshGram {
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should return ok:true when a message is sent with properly formed HTML formatting' {
@@ -937,6 +1120,8 @@ InModuleScope PoshGram {
 <a href="http://www.example.com/">inline URL</a>,
 <code>inline fixed-width code</code>,
 <pre>pre-formatted fixed-width code block</pre>,
+<pre><code class="language-powershell">#pre-formatted fixed-width code block written in the PowerShell programming language</code></pre>
+<blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
 with default HTML formatting.'
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -955,8 +1140,8 @@ with default HTML formatting.'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -965,6 +1150,7 @@ with default HTML formatting.'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should return ok:true when a message is sent with properly formed MarkdownV2 formatting' {
@@ -979,6 +1165,9 @@ __underline__,
 ```
 pre-formatted fixed-width code block
 ```,
+>Block quotation started
+>Block quotation continued
+>The last line of the block quotation
 with MarkdownV2 style formatting'
                 $sendTelegramTextMessageSplat = @{
                     BotToken            = $token
@@ -998,8 +1187,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1008,6 +1197,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should return ok:true when a message is sent with an inline keyboard' {
@@ -1030,8 +1220,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1040,6 +1230,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should return ok:true when a message is sent with a custom keyboard' {
@@ -1062,8 +1253,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1072,6 +1263,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             It 'should return ok:true when a message is sent with properly formed emojis' {
@@ -1093,8 +1285,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1103,12 +1295,45 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
+            } #it
+
+            It 'should return ok:true when a message is sent with link preview controls' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken             = $token
+                    ChatID               = $channel
+                    Message              = 'Sending a message with a link preview'
+                    LinkPreviewURL       = 'https://www.techthoughts.info'
+                    LinkPreviewOption    = 'Small'
+                    LinkPreviewAboveText = $true
+                }
+
+                $apiTest = $false
+                $run = 0
+                do {
+                    $run++
+                    $eval = $null
+                    $backoffTime = $null
+                    $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                    if ($eval.error_code -eq 429) {
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        Start-Sleep -Seconds $backoffTime
+                    }
+                    else {
+                        $apiTest = $true
+                    }
+                } while ($apiTest -eq $false -and $run -le 3)
+
+                $eval.ok | Should -Be 'True'
+
             } #it
 
         } #context_Send-TelegramTextMessage
 
         Context 'Send-TelegramURLAnimation' {
-            It 'Should return with ok:true when a location is successfully sent' {
+
+            It 'Should return with ok:true when a URL animation is successfully sent' {
                 $sendTelegramURLAnimationSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
@@ -1126,8 +1351,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLAnimation @sendTelegramURLAnimationSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1136,10 +1361,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramURLAnimation
 
         Context 'Send-TelegramURLAudio' {
+
             It 'Should return with ok:true when a URL audio message is successfully sent' {
                 $sendTelegramURLAudioSplat = @{
                     BotToken            = $token
@@ -1161,8 +1389,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLAudio @sendTelegramURLAudioSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1171,10 +1399,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramURLAudio
 
         Context 'Send-TelegramURLDocument' {
+
             It 'Should return with ok:true when a URL document message is successfully sent' {
                 Start-Sleep -Seconds 20
                 $sendTelegramURLDocumentSplat = @{
@@ -1194,8 +1425,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLDocument @sendTelegramURLDocumentSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1204,10 +1435,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramURLDocument
 
         Context 'Send-TelegramURLPhoto' {
+
             It 'Should return with ok:true when a photo url message is successfully sent' {
                 $sendTelegramURLPhotoSplat = @{
                     BotToken            = $token
@@ -1226,8 +1460,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLPhoto @sendTelegramURLPhotoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1236,8 +1470,10 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
-        } #context_Send-TelegramLocalPhoto
+
+        } #context_Send-TelegramURLPhoto
 
         Context 'Send-TelegramURLSticker' {
 
@@ -1245,7 +1481,7 @@ with MarkdownV2 style formatting'
                 $sendTelegramURLStickerSplat = @{
                     BotToken            = $token
                     ChatID              = $channel
-                    StickerURL          = $StickerURL
+                    StickerURL          = $stickerURL
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -1258,8 +1494,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1268,6 +1504,7 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
             #* doesn't seem to work for URLs yet
@@ -1288,8 +1525,8 @@ with MarkdownV2 style formatting'
             #         $backoffTime = $null
             #         $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
             #         if ($eval.error_code -eq 429) {
-            #             $backoffTime = $eval.parameters.retry_after + 20
-            #             Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+            #             $backoffTime = $eval.parameters.retry_after + 13
+            #             Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
             #             Start-Sleep -Seconds $backoffTime
             #         }
             #         else {
@@ -1317,8 +1554,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLSticker @sendTelegramURLStickerSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1327,11 +1564,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
 
         } #context_Send-TelegramURLSticker
 
         Context 'Send-TelegramURLVideo' {
+
             It 'Should return with ok:true when a URL video message is successfully sent' {
                 $sendTelegramURLVideoSplat = @{
                     BotToken            = $token
@@ -1351,8 +1590,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramURLVideo @sendTelegramURLVideoSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1361,10 +1600,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramURLVideo
 
         Context 'Send-TelegramVenue' {
+
             It 'Should return with ok:true when a venue is successfully sent' {
                 $sendTelegramVenueSplat = @{
                     BotToken            = $token
@@ -1385,8 +1627,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Send-TelegramVenue @sendTelegramVenueSplat
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1395,10 +1637,13 @@ with MarkdownV2 style formatting'
                 } while ($apiTest -eq $false -and $run -le 3)
 
                 $eval.ok | Should -Be 'True'
+
             } #it
+
         } #context_Send-TelegramVenue
 
         Context 'Test-BotToken' {
+
             It 'Should return with ok:true when a bot token is successfully validated' {
                 $apiTest = $false
                 $run = 0
@@ -1408,8 +1653,8 @@ with MarkdownV2 style formatting'
                     $backoffTime = $null
                     $eval = Test-BotToken -BotToken $token
                     if ($eval.error_code -eq 429) {
-                        $backoffTime = $eval.parameters.retry_after + 20
-                        Write-Warning ('Too many requests. Backing off for: {0}' -f $backoffTime)
+                        $backoffTime = $eval.parameters.retry_after + 13
+                        Write-Output ('Too many requests. Backing off for: {0}' -f $backoffTime)
                         Start-Sleep -Seconds $backoffTime
                     }
                     else {
@@ -1419,7 +1664,9 @@ with MarkdownV2 style formatting'
 
                 $eval.ok | Should -Be 'True'
             } #it
+
         } #context_Test-BotToken
 
-    } #describe_InfraTests
+    } #describe_IntegrationTests
+
 } #scope_PoshGram

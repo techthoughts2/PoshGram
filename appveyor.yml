@@ -4,16 +4,22 @@ version: 1.0.{build}
 # https://www.appveyor.com/docs/build-configuration/#specializing-matrix-job-configuration
 # https://www.appveyor.com/docs/appveyor-yml/
 
-image:
-  - macOS
+branches:
+  only:
+    - main
+    - Enhancements
+
+# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea)
+skip_tags: true
+
 skip_commits:
   files:
     - docs/*
     - media/*
   message: /updated readme.*|update readme.*s/
-build: off
 
-
+image:
+  - macOS
 
 init:
   - pwsh: $PSVersionTable

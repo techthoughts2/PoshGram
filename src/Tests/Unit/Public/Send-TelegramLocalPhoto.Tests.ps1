@@ -153,6 +153,7 @@ InModuleScope PoshGram {
                     PhotoPath           = 'c:\bs\diagvresults.jpg'
                     Caption             = 'Check out this photo'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     DisableNotification = $true
                     ProtectContent      = $true
                 }
@@ -167,6 +168,7 @@ InModuleScope PoshGram {
                     PhotoPath           = 'c:\bs\diagvresults.jpg'
                     Caption             = 'Check out this photo'
                     ParseMode           = 'MarkdownV2'
+                    HasSpoiler          = $true
                     DisableNotification = $true
                     ProtectContent      = $true
                 }

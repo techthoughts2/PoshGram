@@ -15,17 +15,22 @@ $modulesToInstall = [System.Collections.ArrayList]::new()
 # https://github.com/pester/Pester
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'Pester'
-            ModuleVersion = '5.3.3'
+            ModuleVersion = '5.5.0'
         }))
 # https://github.com/nightroman/Invoke-Build
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'InvokeBuild'
-            ModuleVersion = '5.9.10'
+            ModuleVersion = '5.10.4'
         }))
 # https://github.com/PowerShell/PSScriptAnalyzer
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'PSScriptAnalyzer'
-            ModuleVersion = '1.20.0'
+            ModuleVersion = '1.21.0'
+        }))
+# https://github.com/techthoughts2/pwshEmojiExplorer
+$null = $modulesToInstall.Add(([PSCustomObject]@{
+            ModuleName    = 'pwshEmojiExplorer'
+            ModuleVersion = '0.8.0'
         }))
 # https://github.com/PowerShell/platyPS
 # older version used due to: https://github.com/PowerShell/platyPS/issues/457

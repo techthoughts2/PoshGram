@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalSticker
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Sends Telegram sticker message via Bot API from locally sourced sticker image
 ## SYNTAX
 
 ```
-Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String>
+Send-TelegramLocalSticker [-BotToken] <String> [-ChatID] <String> [-StickerPath] <String> [[-Emoji] <String>]
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -26,9 +26,9 @@ The sticker will be sourced from the local device and uploaded to telegram.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'C:\stickers\sticker.webp'
-Send-TelegramLocalSticker -BotToken $botToken -ChatID $chat -StickerPath $sticker
+Send-TelegramLocalSticker -BotToken $botToken -ChatID $chatID -StickerPath $sticker
 ```
 
 Sends sticker message via Telegram API
@@ -36,12 +36,13 @@ Sends sticker message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'C:\stickers\sticker.webp'
 $sendTelegramLocalStickerSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     StickerPath         = $sticker
+    Emoji               = '😀'
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -98,6 +99,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Emoji
+Emoji associated with the sticker
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
@@ -144,14 +160,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 The following sticker types are supported:
 WEBP, TGS, WEBM
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalSticker.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalSticker](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalSticker)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

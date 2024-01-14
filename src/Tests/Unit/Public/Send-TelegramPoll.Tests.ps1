@@ -32,6 +32,7 @@ InModuleScope PoshGram {
                 'Star Trek: Picard',
                 'Star Trek: Lower Decks'
                 'Star Trek: Prodigy'
+                'Star Trek: Strange New Worlds'
             )
             $question2 = 'Who was the best Starfleet captain?'
             $opt2 = @(
@@ -40,6 +41,9 @@ InModuleScope PoshGram {
                 'Benjamin Sisko',
                 'Kathryn Janeway',
                 'Jonathan Archer'
+                'Michael Burnham'
+                'Carol Freeman'
+                'Christopher Pike'
             )
             $answer = 1
             $question3 = 'Which Star Trek captain has an artificial heart?'

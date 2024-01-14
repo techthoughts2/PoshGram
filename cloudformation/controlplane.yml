@@ -1,0 +1,112 @@
+# Master Control Plane cloudformation Template - Used to deploy the service to child AWS Accounts.
+# This control plane does the actual DEPLOYING, but it does so by referencing the child templates via AWS::cloudformation::Stack
+# Hi - you want a new parameter - great!
+# 1 - Update the parameter JSONS (ControlPlane-Parameters\*.json)
+# 2 - Update two locations in ControlPlane
+# 3 - Update two locations in ChildTemplates
+
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: "PoshGram: Control Plane"
+
+Parameters:
+
+  ServiceName:
+    Type: String
+    Description: The name of the service being deployed.
+
+  # LMFunctionS3KeypwshEEUnicodeVersionMonitor:
+  #   Type: String
+  #   Description: S3 Key for the PubXMLMonitor Lambda function(s) zip file
+
+  # LMFunctionHandlerpwshEEUnicodeVersionMonitor:
+  #   Type: String
+  #   Description: PubXMLMonitor Lambda HANDLER provided by New-AWSPowerShellLambdaPackage during build
+
+  ArtifactS3Bucket:
+    Type: String
+    Description: S3 Bucket for CodePipeline Artifacts
+
+  ArtifactS3KeyPrefix:
+    Type: String
+    Description: S3 Key Prefix for CodePipeline Artifacts
+
+  CodeBuildBadgeEnabled:
+    Type: String
+    Default: 'true'
+    Description: Selects whether to enable CodeBuild Build Badges.
+    AllowedValues:
+      - 'true'
+      - 'false'
+
+  RepositoryUrl:
+    Description: "HTTPS Clone URL of the repository in GitHub. Example: 'https://github.com/owner/repo.git'"
+    Type: String
+    Default: https://github.com/techthoughts2/PoshGram
+
+  CodeBuildTimeoutInMinutes:
+    Type: Number
+    Default: 30
+    Description: The number of minutes before a CodeBuild build will timeout.
+
+  GitHubRepositoryName:
+    Type: String
+    Description: The name of the GitHub repository that code-pipeline will source from
+
+  GitHubOwner:
+    Type: String
+    Description: The name of the GitHub user or organization who owns the GitHub repository.
+
+Resources:
+  # Logical ID should be the same as the (child) nested template name - not required, but makes it easy to line things up and read
+
+  # Deploys the CodePipeline infrastructure for CICD builds of PoshGram
+  PoshGramMediaBuckets:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./childtemplates/buckets.yml
+      TimeoutInMinutes: 25 #make sure it can actually complete in this time period
+      Parameters: #much match the parameters of nested template
+        ServiceName: !Ref ServiceName
+        ResourceType: prod
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+
+  PoshGramCodeBuild:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: PoshGramMediaBuckets
+    Properties:
+      TemplateURL: ./childtemplates/codebuild.yml
+      TimeoutInMinutes: 15 #make sure it can actually complete in this time period
+      Parameters: #much match the parameters of nested template
+        ServiceName: !Ref ServiceName
+        ResourceType: prod
+        CodeBuildBadgeEnabled: !Ref CodeBuildBadgeEnabled
+        RepositoryUrl: !Ref RepositoryUrl
+        CodeBuildTimeoutInMinutes: !Ref CodeBuildTimeoutInMinutes
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+
+  # PoshGramCodePipeline:
+  #   Type: AWS::CloudFormation::Stack
+  #   DependsOn: PoshGramCodeBuild
+  #   Properties:
+  #     TemplateURL: ./childtemplates/codepipeline.yml
+  #     TimeoutInMinutes: 25 #make sure it can actually complete in this time period
+  #     Parameters: #much match the parameters of nested template
+  #       ServiceName: !Ref ServiceName
+  #       ResourceType: prod
+  #       GitHubRepositoryName: !Ref GitHubRepositoryName
+  #       GitHubOwner: !Ref GitHubOwner
+  #     Tags:
+  #       - Key: ServiceName
+  #         Value: !Ref ServiceName
+  #       - Key: StackName
+  #         Value: !Ref AWS::StackName

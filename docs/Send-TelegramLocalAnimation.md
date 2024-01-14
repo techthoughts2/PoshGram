@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAnimation
 schema: 2.0.0
 ---
 
@@ -14,7 +14,8 @@ Sends Telegram animation message via Bot API from locally sourced animation
 
 ```
 Send-TelegramLocalAnimation [-BotToken] <String> [-ChatID] <String> [-AnimationPath] <String>
- [[-Caption] <String>] [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [[-Caption] <String>] [[-ParseMode] <String>] [-HasSpoiler] [-DisableNotification] [-ProtectContent]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,9 +28,9 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
-Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
+Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
 ```
 
 Sends AnimationPath message via Telegram API
@@ -37,14 +38,15 @@ Sends AnimationPath message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     AnimationPath       = $animation
     Caption             = 'Check out this animation'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -57,11 +59,11 @@ Sends animation message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $animation = 'C:\animation\animation.gif'
 $sendTelegramLocalAnimationSplat = @{
     BotToken      = $botToken
-    ChatID        = $chat
+    ChatID        = $chatID
     AnimationPath = $animation
     Caption       = 'Check out this __awesome__ animation\.'
     ParseMode     = 'MarkdownV2'
@@ -149,6 +151,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HasSpoiler
+Animation needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
@@ -195,16 +212,14 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 The following animation types are supported:
 GIF
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Get creative by sending Gifs with your bot!
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAnimation](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAnimation)
 
 [https://core.telegram.org/bots/api#sendanimation](https://core.telegram.org/bots/api#sendanimation)
 

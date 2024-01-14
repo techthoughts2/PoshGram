@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramURLPhoto
 schema: 2.0.0
 ---
 
@@ -27,9 +27,9 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
-Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
+Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photourl
 ```
 
 Sends photo message via Telegram API
@@ -37,11 +37,11 @@ Sends photo message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     PhotoURL            = $photourl
     Caption             = 'DSC is a great technology'
     ParseMode           = 'MarkdownV2'
@@ -57,11 +57,11 @@ Sends photo message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
 $sendTelegramURLPhotoSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     PhotoURL  = $photourl
     Caption   = "DSC is a __great__ technology\."
     ParseMode = 'MarkdownV2'
@@ -192,14 +192,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramURLPhoto](https://poshgram.readthedocs.io/en/latest/Send-TelegramURLPhoto)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
 

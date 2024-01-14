@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram sticker message via Bot API by file_id or sticker pack emoji.
 
 ### FileEmojiG
 ```
-Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-Shortcode <String>]
+Send-TelegramSticker [-BotToken <String>] [-ChatID <String>] [-StickerSetName <String>] [-ShortCode <String>]
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ Send-TelegramSticker -BotToken <String> -ChatID <String> -FileID <String> [-Disa
 
 ### BySPShortCode
 ```
-Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -Shortcode <String>
+Send-TelegramSticker -BotToken <String> -ChatID <String> -StickerSetName <String> -ShortCode <String>
  [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
@@ -49,9 +49,9 @@ See notes for details.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -FileID $sticker
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -FileID $sticker
 ```
 
 Sends sticker message via Telegram API
@@ -59,11 +59,11 @@ Sends sticker message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sticker = 'CAADAgADwQADECECEGEtCrI_kALvFgQ'
 $sendTelegramStickerSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     FileID              = $sticker
     DisableNotification = $true
     ProtectContent      = $true
@@ -77,8 +77,8 @@ Sends sticker message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
-Send-TelegramSticker -BotToken $botToken -ChatID $chat -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
+$chatID = '-nnnnnnnnn'
+Send-TelegramSticker -BotToken $botToken -ChatID $chatID -StickerSetName STPicard -Shortcode ':slightly_smiling_face:'
 ```
 
 Sends sticker message via Telegram API
@@ -86,10 +86,10 @@ Sends sticker message via Telegram API
 ### EXAMPLE 4
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $sendTelegramStickerSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     StickerSetName      = 'STPicard'
     Shortcode           = ':slightly_smiling_face:'
     DisableNotification = $true
@@ -212,8 +212,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Shortcode
-Emoji shortcode
+### -ShortCode
+Specifies the shortcode of the emoji to retrieve.
 
 ```yaml
 Type: String
@@ -282,10 +282,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 Sticker packs are controlled by their author
     Not every sticker has a corresponding emoji
@@ -294,7 +292,7 @@ This function will make a best attempt to look up the sticker pack you specify a
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramSticker.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker](https://poshgram.readthedocs.io/en/latest/Send-TelegramSticker)
 
 [https://core.telegram.org/bots/api#sendsticker](https://core.telegram.org/bots/api#sendsticker)
 

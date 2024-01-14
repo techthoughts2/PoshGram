@@ -12,11 +12,14 @@ Import-Module $PathToManifest -Force
 #-------------------------------------------------------------------------
 
 InModuleScope PoshGram {
+
     Describe 'Send-TelegramTextMessage' -Tag Unit {
+
         BeforeAll {
             $WarningPreference = 'SilentlyContinue'
             $ErrorActionPreference = 'SilentlyContinue'
         } #beforeAll
+
         BeforeEach {
             $inlineRow1 = @(
                 @{
@@ -51,7 +54,9 @@ InModuleScope PoshGram {
                 }
             } #endMock
         } #before_each
+
         Context 'Error' {
+
             It 'should throw if an error is encountered with no specific exception' {
                 Mock Invoke-RestMethod {
                     throw 'Fake Error'
@@ -105,8 +110,11 @@ InModuleScope PoshGram {
                 $eval.ok | Should -BeExactly 'False'
                 $eval.error_code | Should -BeExactly '429'
             } #it
+
         } #context_Error
+
         Context 'Success' {
+
             It 'should call the API with the expected parameters' {
                 Mock -CommandName Invoke-RestMethod {
                 } -Verifiable -ParameterFilter { $Uri -like 'https://api.telegram.org/bot*sendMessage*' }
@@ -136,7 +144,6 @@ InModuleScope PoshGram {
                     ChatID              = $chat
                     Message             = 'Hi there Pester'
                     ParseMode           = 'MarkdownV2'
-                    DisablePreview      = $true
                     DisableNotification = $true
                     ProtectContent      = $true
                     Keyboard            = $inlineKeyboard
@@ -145,6 +152,23 @@ InModuleScope PoshGram {
                 $eval | Should -BeOfType System.Management.Automation.PSCustomObject
                 $eval.ok | Should -BeExactly 'True'
             } #it
+
+            It 'should return a custom PSCustomObject if successful when sending a url link preview' {
+                $sendTelegramTextMessageSplat = @{
+                    BotToken             = $token
+                    ChatID               = $chat
+                    Message              = 'Sending a message with a link preview'
+                    LinkPreviewURL       = 'https://www.techthoughts.info'
+                    LinkPreviewOption    = 'Small'
+                    LinkPreviewAboveText = $true
+                }
+                $eval = Send-TelegramTextMessage @sendTelegramTextMessageSplat
+                $eval | Should -BeOfType System.Management.Automation.PSCustomObject
+                $eval.ok | Should -BeExactly 'True'
+            } #it
+
         } #context_success
+
     } #describe_Send-TelegramTextMessage
+
 } #inModule

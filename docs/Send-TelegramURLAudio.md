@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramURLAudio
 schema: 2.0.0
 ---
 
@@ -29,9 +29,9 @@ Only works for mp3 files.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
-Send-TelegramURLAudio -BotToken $botToken -ChatID $chat -AudioURL $audioURL
+Send-TelegramURLAudio -BotToken $botToken -ChatID $chatID -AudioURL $audioURL
 ```
 
 Sends audio message via Telegram API
@@ -39,11 +39,11 @@ Sends audio message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
 $sendTelegramURLAudioSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     AudioURL            = $audioURL
     Caption             = 'Check out this audio track'
     ParseMode           = 'MarkdownV2'
@@ -63,11 +63,11 @@ Sends audio message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $audioURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Tobu-_-Syndec-Dusk-_NCS-Release_-YouTube.mp3'
 $sendTelegramURLAudioSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     AudioURL            = $audioURL
     Title               = 'Halo On Fire'
     FileName            = 'halo_on_fire.mp3'
@@ -264,14 +264,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 Your audio must be in the .mp3 format.
 Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLAudio.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramURLAudio](https://poshgram.readthedocs.io/en/latest/Send-TelegramURLAudio)
 
 [https://core.telegram.org/bots/api#sendaudio](https://core.telegram.org/bots/api#sendaudio)
 

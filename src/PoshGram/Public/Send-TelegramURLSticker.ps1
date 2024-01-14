@@ -1,23 +1,23 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram sticker message via Bot API from URL sourced sticker image
 .DESCRIPTION
     Uses Telegram Bot API to send sticker message to specified Telegram chat. The sticker will be sourced from the provided URL and sent to Telegram.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
-    Send-TelegramURLSticker -BotToken $token -ChatID $channel -StickerURL $StickerURL
+    $chatID = '-nnnnnnnnn'
+    $stickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
+    Send-TelegramURLSticker -BotToken $botToken -ChatID $chatID -StickerURL $stickerURL
 
     Sends sticker message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
-    $StickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
+    $chatID = '-nnnnnnnnn'
+    $stickerURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.webp'
     $sendTelegramURLStickerSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
-        StickerURL          = $StickerURL
+        ChatID              = $chatID
+        StickerURL          = $stickerURL
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true
@@ -43,17 +43,17 @@
     The following sticker types are supported:
     WEBP, WEBM
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     sticker                 InputFile or String     Yes         Sticker to send.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLSticker.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramURLSticker
 .LINK
     https://core.telegram.org/bots/api#sendsticker
 .LINK

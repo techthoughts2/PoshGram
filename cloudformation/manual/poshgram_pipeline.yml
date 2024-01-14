@@ -1,0 +1,901 @@
+# This CloudFormation Template must be deployed to the AWS Account where
+# AWS CodePipeline will be running. It creates an AWS codepipeline that
+# pulls source changes from a specified GitHub repository.
+# This template uses GitHub version 2 Github app-based auth backed by
+# a CodeStarSourceConnection for Bitbucket, GitHub, and GitHub Enterprise Server actions resource.
+# You must have ALREADY created a GitHub account and created a connection to that account.
+# This connection enables AWS CodePipeline access to your GitHub repository.
+# This allows AWS CodePipeline to source commits from GitHub to your pipeline.
+
+# Stack Name: YourProjectName
+
+# READ THE DOCS!
+#CodeStarSourceConnection
+# Setting up a GitHub Connection
+# https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-github.html
+# Cloudformation CodestarConnectionSource
+# https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-CodestarConnectionSource.html
+# CodestarConnectionSource IAM Permissions:
+# https://docs.aws.amazon.com/dtconsole/latest/userguide/security-iam.html#permissions-reference-connections
+# Update GitHub Actions v1 to v2
+# https://docs.aws.amazon.com/codepipeline/latest/userguide/update-github-action-connections.html
+# CodePipeline
+# CodePipeline pipeline structure reference
+# https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html
+# Docker images provided by CodeBuild
+# https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+# full clone with GitHub pipeline source
+# https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-github-gitclone.html
+
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'MANUAL DEPLOYMENT: PoshGram - Deploys CodePipeline that uses CodestarConnectionSource arn to source specified GitHub repo.'
+
+Parameters:
+  ServiceName:
+    Type: String
+    Description: The name/purpose of the deployment - lowercase only
+    AllowedPattern: ^[a-z]*$
+
+  CodeStarSourceConnection:
+    Type: String
+    Description: arn of your codestar-connections for GitHub version 2 authentication
+    AllowedPattern: ^arn:aws:codestar-connections.*:connection\/.*$
+
+  GitHubRepositoryName:
+    Type: String
+    Description: The name of the GitHub repository that code-pipeline will source from
+
+  GitHubOwner:
+    Type: String
+    Description: The name of the GitHub user or organization who owns the GitHub repository.
+
+  BranchName:
+    Type: String
+    Default: pipeline
+    Description: The name of the branch where source changes are to be detected.
+
+  CodeBuildTimeoutInMinutes:
+    Type: Number
+    Default: 30
+    Description: The number of minutes before a CodeBuild build will timeout.
+
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  CodeBuildEnvironment:
+    Type: String
+    Default: LINUX_CONTAINER
+    Description: The type of build environment.
+    AllowedValues:
+      - WINDOWS_SERVER_2019_CONTAINER
+      - WINDOWS_CONTAINER
+      - LINUX_CONTAINER
+
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  CodeBuildComputeType:
+    Type: String
+    Default: BUILD_GENERAL1_SMALL
+    Description: The size of the CodeBuild instance. (Windows Containers do NOT support small)
+    AllowedValues:
+      - BUILD_GENERAL1_SMALL
+      - BUILD_GENERAL1_MEDIUM
+      - BUILD_GENERAL1_LARGE
+
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  CodeBuildImage:
+    Type: String
+    Default: aws/codebuild/standard:7.0
+    Description: AWS CodeBuild image selection
+    AllowedValues:
+      - aws/codebuild/standard:7.0
+      - aws/codebuild/amazonlinux2-x86_64-standard:4.0
+      - aws/codebuild/windows-base:2019-2.0
+
+  PathToUnitTestAndBuildBuildSpecTemplate:
+    Type: String
+    Description: 'The GitHub Repository path to the UnitTestAndBuild buildspec.yml'
+    Default: 'CodeBuild/UnitTestAndBuild/buildspec.yml'
+
+  PathToIntegrationTestBuildSpecTemplate:
+    Type: String
+    Description: 'The GitHub Repository path to the IntegrationTest buildspec.yml'
+    Default: 'CodeBuild/IntegrationTest/buildspec.yml'
+
+  PathToControlPlaneTemplate:
+    Type: String
+    Description: 'The GitHub Repository path to the Control Plane CloudFormation Template'
+    Default: 'cloudformation/controlplane-packaged.yml'
+
+  PathToControlPlaneParametersJson:
+    Type: String
+    Description: 'The GitHub Repository path to the Control Plane Parameters JSON file'
+    Default: cloudformation/control_plane_parameters/parameters.json
+
+  ResourceType:
+    Type: String
+    Default: prod
+    Description: Determine the type of resource that will be deployed
+    AllowedValues:
+      - core
+      - dev
+      - test
+      - prod
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Project Information
+        Parameters:
+          - ServiceName
+      - Label:
+          default: GitHub Information
+        Parameters:
+          - CodeStarSourceConnection
+          - GitHubRepositoryName
+          - GitHubOwner
+          - BranchName
+      - Label:
+          default: CodeBuild
+        Parameters:
+          # - PathToBuildSpecTemplate
+          - CodeBuildTimeoutInMinutes
+          - CodeBuildEnvironment
+          - CodeBuildComputeType
+          - CodeBuildImage
+      - Label:
+          default: Pipeline Configuration
+        Parameters:
+          - PathToUnitTestAndBuildBuildSpecTemplate
+          - PathToIntegrationTestBuildSpecTemplate
+          - PathToControlPlaneTemplate
+          - PathToControlPlaneParametersJson
+    ParameterLabels:
+      ServiceName:
+        default: Project Name
+      CodeStarSourceConnection:
+        default: Code Star Connection Arn
+      GitHubRepositoryName:
+        default: GitHub Repository Name
+      GitHubOwner:
+        default: GitHub User Name
+      BranchName:
+        default: GitHub Branch Name
+      CodeBuildTimeoutInMinutes:
+        default: CodeBuild Timeout in minutes
+      CodeBuildEnvironment:
+        default: CodeBuild Environment
+      CodeBuildComputeType:
+        default: CodeBuild Compute Type
+      CodeBuildImage:
+        default: CodeBuild Image
+
+Resources:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kms-key.html
+  KMSKey:
+    Type: AWS::KMS::Key
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Properties:
+      Description: 'Used to encrypt/decrypt all S3 build artifacts used in Code Pipeline deployment.'
+      # Enabled:
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id: !Ref AWS::StackName
+        Statement:
+          - Sid: Allows administration of the KMS Key
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Action:
+              - 'kms:CancelKeyDeletion'
+              - 'kms:Create*'
+              - 'kms:Delete*'
+              - 'kms:Decrypt'
+              - 'kms:Describe*'
+              - 'kms:Disable*'
+              - 'kms:Enable*'
+              - 'kms:Encrypt'
+              - 'kms:GenerateDataKey*'
+              - 'kms:Get*'
+              - 'kms:List*'
+              - 'kms:Put*'
+              - 'kms:ReEncrypt*'
+              - 'kms:Revoke*'
+              - 'kms:ScheduleKeyDeletion'
+              - 'kms:Update*'
+              - 'kms:TagResource'
+              - 'kms:UntagResource'
+            Resource: '*'
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Action:
+              - 'kms:Encrypt'
+              - 'kms:Decrypt'
+              - 'kms:ReEncrypt*'
+              - 'kms:GenerateDataKey*'
+              - 'kms:DescribeKey'
+            Resource: '*'
+      # KeySpec: String
+      # KeyUsage: String
+      # MultiRegion: Boolean
+      # PendingWindowInDays: Integer
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kms-alias.html
+  KMSAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub 'alias/${AWS::StackName}'
+      TargetKeyId: !Ref KMSKey
+
+  # AWS CodePipeline Infrastructure
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+  PoshGramArtifactS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+    Properties:
+      # AccelerateConfiguration: AccelerateConfiguration
+      AccessControl: BucketOwnerFullControl
+      # AnalyticsConfigurations:
+      #   - AnalyticsConfiguration
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      BucketName: !Sub ${ServiceName}-${AWS::AccountId}-artifacts
+      # CorsConfiguration:
+      #   CorsConfiguration
+      # InventoryConfigurations:
+      #   - InventoryConfiguration
+      # LifecycleConfiguration:
+      #   Rules:
+      #       -
+      #         AbortIncompleteMultipartUpload:
+      #           DaysAfterInitiation: 7
+      #         Status: Enabled
+      #         Transitions:
+      #           -
+      #             StorageClass: GLACIER
+      #             TransitionInDays: 30
+      # LoggingConfiguration:
+      #   DestinationBucketName: !Ref S3BucketLogs
+      #   LogFilePrefix: '/logs/project/'
+      # MetricsConfigurations:
+      #   - MetricsConfiguration
+      # NotificationConfiguration:
+      #   TopicConfigurations:
+      #     -
+      #       Event: s3:ObjectCreated:*
+      #       Topic: !Ref UpdateSNSTopic
+      # ObjectLockConfiguration:
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration:
+      #   ReplicationConfiguration
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # VersioningConfiguration:
+      #   VersioningConfiguration
+      # WebsiteConfiguration:
+      #   WebsiteConfiguration
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-policy.html
+  PoshGramArtifactS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PoshGramArtifactS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:*'
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root'
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}/*'
+          # - Sid: DenyUnEncryptedObjectUploads
+          #   Effect: Deny
+          #   Principal: '*'
+          #   Action: 's3:PutObject'
+          #   Resource: !Join
+          #     - ''
+          #     - - !GetAtt
+          #         - PoshGramArtifactS3Bucket
+          #         - Arn
+          #       - /*
+          #   Condition:
+          #     StringNotEquals:
+          #       's3:x-amz-server-side-encryption': 'aws:kms'
+          - Sid: DenyInsecureConnections
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: !Sub
+              - '${BucketArn}/*'
+              - { BucketArn: !GetAtt [PoshGramArtifactS3Bucket, Arn] }
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ServiceName}-CodeBuildRole'
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              AWS:
+                - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:root' # Allow assuming this role for local developer testing
+              Service:
+                - 'codebuild.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Description: IAM Role for CodeCommit CodeBuild project
+      # ManagedPolicyArns:
+      #   - String
+      # MaxSessionDuration: Integer
+      Path: /
+      # PermissionsBoundary: String
+      Policies:
+        - PolicyName: !Sub '${ServiceName}-CodeBuildNestedCFNAccessPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'cloudformation:ValidateTemplate'
+                Resource: '*'
+              - Effect: 'Allow'
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*
+                  - !GetAtt UnitTestAndBuildLogGroup.Arn
+                  - !GetAtt IntegrationTestProjectLogGroup.Arn
+              - Effect: 'Allow'
+                Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                  - 's3:GetObjectVersion'
+                  - 's3:ListBucket'
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:s3:::codepipeline-${AWS::Region}-*'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}/*'
+              - Effect: 'Allow'
+                Action:
+                  - 's3:GetObject'
+                  - 's3:GetObjectVersion'
+                  - 's3:ListBucket'
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - 'kms:*'
+                Resource: !GetAtt KMSKey.Arn
+        - PolicyName: !Sub 'IntegrationTestAccess-${ServiceName}'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'cloudformation:ListExports'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'ssm:GetParameters'
+                Resource:
+                  - '*'
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  UnitTestAndBuildLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Retain
+    Properties:
+      # DataProtectionPolicy: Json
+      # KmsKeyId: String
+      LogGroupName: !Sub ${ServiceName}-UnitTestAndBuildLogGroup
+      RetentionInDays: 7
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html
+  # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-source.html
+  UnitTestAndBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: S3
+        Location: !Ref PoshGramArtifactS3Bucket
+        Name: !Sub '${ServiceName}-UnitTestAndBuild'
+      # BadgeEnabled: Boolean
+      # BuildBatchConfig:
+      #   ProjectBuildBatchConfig
+      # Cache:
+      #   ProjectCache
+      # ConcurrentBuildLimit: Integer
+      Description: Unit Testing and Building
+      EncryptionKey: !GetAtt KMSKey.Arn
+      Environment:
+        # Certificate:
+        ComputeType: !Ref CodeBuildComputeType
+        Type: !Ref CodeBuildEnvironment
+        Image: !Ref CodeBuildImage
+        EnvironmentVariables:
+          - Name: ARTIFACT_S3_BUCKET
+            Value: !Ref PoshGramArtifactS3Bucket
+          - Name: S3_KEY_PREFIX
+            Value: 'SingleAccount'
+          - Name: GIT_REPO
+            Value: !Ref GitHubRepositoryName
+          - Name: AWS_ACCOUNTID
+            Value: !Ref 'AWS::AccountId'
+          - Name: SERVICE_NAME
+            Value: !Ref ServiceName
+          - Name: PROCESSOR_ARCHITEW6432
+            Value: 'AMD64'
+      # LogsConfig:
+      Name: !Sub '${ServiceName}-UnitTestAndBuild'
+      # QueuedTimeoutInMinutes: Integer
+      # SecondaryArtifacts:
+      #   - Artifacts
+      # SecondarySources:
+      #   - Source
+      # SecondarySourceVersions:
+      #   - ProjectSourceVersion
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref UnitTestAndBuildLogGroup
+          Status: ENABLED
+          # StreamName: String
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Source:
+        # Auth:
+        BuildSpec: !Ref PathToUnitTestAndBuildBuildSpecTemplate
+        # GitCloneDepth: Integer
+        # GitSubmodulesConfig:
+        #   GitSubmodulesConfig
+        # InsecureSsl: Boolean
+        Location: !Sub 'https://github.com/${GitHubOwner}/${GitHubRepositoryName}.git'
+        ReportBuildStatus: true
+        # SourceIdentifier:
+        Type: GITHUB
+      # SourceVersion:
+      TimeoutInMinutes: 30
+      # Triggers:
+      #   ProjectTriggers
+      # Visibility: String
+      # VpcConfig:
+      Tags:
+        - Key: Name
+          Value: !Sub '${ServiceName}-UnitTestAndBuild'
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html
+  IntegrationTestProjectLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Retain
+    Properties:
+      # DataProtectionPolicy: Json
+      # KmsKeyId: String
+      LogGroupName: !Sub ${ServiceName}-IntegrationTestProjectLogGroup
+      RetentionInDays: 7
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  IntegrationTestProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: NO_ARTIFACTS
+      # BadgeEnabled: Boolean
+      # BuildBatchConfig:
+      #   ProjectBuildBatchConfig
+      # Cache:
+      #   ProjectCache
+      # ConcurrentBuildLimit: Integer
+      Description: Integration Testing
+      EncryptionKey: !GetAtt KMSKey.Arn
+      Environment:
+        # Certificate:
+        ComputeType: !Ref CodeBuildComputeType
+        Type: !Ref CodeBuildEnvironment
+        Image: !Ref CodeBuildImage
+        EnvironmentVariables:
+          - Name: ARTIFACT_S3_BUCKET
+            Value: !Ref PoshGramArtifactS3Bucket
+          - Name: S3_KEY_PREFIX
+            Value: 'SingleAccount'
+          - Name: GIT_REPO
+            Value: !Ref GitHubRepositoryName
+          - Name: AWS_ACCOUNTID
+            Value: !Ref 'AWS::AccountId'
+          - Name: SERVICE_NAME
+            Value: !Ref ServiceName
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Ref IntegrationTestProjectLogGroup
+          Status: ENABLED
+          # StreamName: String
+      Name: !Sub '${ServiceName}-IntegrationTest'
+      # QueuedTimeoutInMinutes: Integer
+      # SecondaryArtifacts:
+      #   - Artifacts
+      # SecondarySources:
+      #   - Source
+      # SecondarySourceVersions:
+      #   - ProjectSourceVersion
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Source:
+        # Auth:
+        BuildSpec: !Ref PathToIntegrationTestBuildSpecTemplate
+        # GitCloneDepth: Integer
+        # GitSubmodulesConfig:
+        #   GitSubmodulesConfig
+        # InsecureSsl: Boolean
+        Location: !Sub https://github.com/${GitHubOwner}/${GitHubRepositoryName}.git
+        ReportBuildStatus: true
+        # SourceIdentifier:
+        Type: GITHUB
+      # SourceVersion:
+      TimeoutInMinutes: 45
+      # Triggers:
+      #   ProjectTriggers
+      # Visibility: String
+      # VpcConfig:
+      Tags:
+        - Key: Name
+          Value: !Sub '${ServiceName}-IntegrationTest'
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
+  PoshGramCodePipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ServiceName}-CodePipelineRole'
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codepipeline.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: IAM Role for CodePipeline GitHub project
+      # ManagedPolicyArns:
+      #   - String
+      # MaxSessionDuration: Integer
+      Path: /
+      # PermissionsBoundary: String
+      Policies:
+        - PolicyName: !Sub '${ServiceName}-CodePipelineNestedCFNAccessPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # -
+              #   Effect: Allow
+              #   Action:
+              #     - sns:Publish
+              #   Resource:
+              #     - !Ref PoshGramPipelineStatusUpdates
+              - Effect: Allow
+                Action:
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:CreateStack
+                  - cloudformation:CreateUploadBucket
+                  - cloudformation:DeleteStack
+                  - cloudformation:Describe*
+                  - cloudformation:List*
+                  - cloudformation:UpdateStack
+                  - cloudformation:ValidateTemplate
+                  - cloudformation:ExecuteChangeSet
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - s3:*
+                Resource:
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${PoshGramArtifactS3Bucket}/*'
+              - Effect: Allow
+                Action:
+                  - iam:ListRoles
+                  - iam:PassRole
+                  - sts:AssumeRole
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                Resource:
+                  - !Sub arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/${UnitTestAndBuildProject}
+                  - !Sub arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/${UnitTestAndBuildProject}:*
+                  - !Sub arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/${IntegrationTestProject}
+                  - !Sub arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/${IntegrationTestProject}:*
+              - Effect: Allow
+                Action:
+                  - kms:*
+                Resource: !GetAtt KMSKey.Arn
+              - Effect: Allow
+                Action:
+                  - codestar-connections:GetConnection
+                  - codestar-connections:ListConnections
+                  - codestar-connections:GetInstallationUrl
+                  - codestar-connections:GetIndividualAccessToken
+                  - codestar-connections:ListInstallationTargets
+                  - codestar-connections:StartOAuthHandshake
+                  - codestar-connections:UseConnection
+                Resource: !Ref CodeStarSourceConnection
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
+  CloudFormationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: cloudformation.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: IAM Role for CodePipeline Deploy action
+      # ManagedPolicyArns:
+      #   - String
+      # MaxSessionDuration: Integer
+      Path: /
+      # PermissionsBoundary: String
+      Policies:
+        - PolicyName: !Sub '${ServiceName}-CloudFormationDeploymentPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - '*'
+                Resource: '*'
+      RoleName: !Sub '${ServiceName}-Pipeline-CloudFormationRole'
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codepipeline-pipeline.html
+  PoshGramPipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      ArtifactStore:
+        Type: S3
+        Location: !Ref PoshGramArtifactS3Bucket
+      # ArtifactStores:
+      #   - ArtifactStoreMap
+      # DisableInboundStageTransitions:
+      #   - StageTransition
+      Name: !Sub '${GitHubRepositoryName}-CodePipeline'
+      RestartExecutionOnUpdate: false
+      RoleArn: !GetAtt PoshGramCodePipelineRole.Arn
+      Tags:
+        - Key: ServiceName
+          Value: !Ref ServiceName
+        - Key: StackName
+          Value: !Ref AWS::StackName
+        - Key: ResourceType
+          Value: !Ref ResourceType
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages.html
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages-actions.html
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codepipeline-pipeline-stages-actions-actiontypeid.html
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#actions-valid-providers
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-GitHub.html
+      # https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html#update-change-detection-cfn-github
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitHubSource
+              ActionTypeId:
+                Version: '1'
+                Owner: AWS
+                Category: Source
+                Provider: CodeStarSourceConnection
+              Configuration:
+                ConnectionArn: !Ref CodeStarSourceConnection
+                FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepositoryName}'
+                BranchName: !Ref BranchName
+              # InputArtifacts:
+              #   - InputArtifact
+              # Namespace: String
+              # OutputArtifactFormat: "CODE_ZIP"
+              OutputArtifacts:
+                - Name: GitHubSource
+              # Region: String
+              # RoleArn: String
+              RunOrder: 1
+        - Name: Build
+          Actions:
+            - Name: CodeBuild
+              InputArtifacts:
+                - Name: GitHubSource
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: '1'
+                Provider: CodeBuild
+              OutputArtifacts:
+                - Name: CFNTemplateArtifact
+              Configuration:
+                ProjectName:
+                  Ref: UnitTestAndBuildProject
+              # Namespace: String
+              # Region: String
+              # RoleArn: String
+              RunOrder: 1
+        - Name: Deploy
+          Actions:
+            - Name: DeployPrimaryControlPlane
+              InputArtifacts:
+                - Name: CFNTemplateArtifact
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: '1'
+                Provider: CloudFormation
+              OutputArtifacts:
+                - Name: CreatedPrimaryControlPlaneStack
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                RoleArn: !GetAtt CloudFormationRole.Arn
+                Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+                StackName: !Ref ServiceName
+                TemplateConfiguration: !Sub 'CFNTemplateArtifact::${PathToControlPlaneParametersJson}'
+                TemplatePath: !Sub 'CFNTemplateArtifact::${PathToControlPlaneTemplate}'
+              # Namespace: String
+              # Region: String
+              RoleArn: !GetAtt PoshGramCodePipelineRole.Arn
+              RunOrder: 1
+            - Name: ValidateStack
+              InputArtifacts:
+                - Name: GitHubSource
+              ActionTypeId:
+                Category: Test
+                Owner: AWS
+                Version: '1'
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref IntegrationTestProject
+              # Namespace: String
+              OutputArtifacts:
+                - Name: ValidatedStack
+              # Region: String
+              # RoleArn: String
+              RunOrder: 2
+
+Outputs:
+  KMSKeyID:
+    Description: KMS Key ID
+    Value: !Ref KMSKey
+
+  KMSKeyArn:
+    Description: KMS Key ARN
+    Value: !GetAtt KMSKey.Arn
+    Export:
+      Name: PoshGramKMSKeyArn
+
+  KMSKeyAliasName:
+    Description: KMS Key Alias Name
+    Value: !Ref KMSAlias
+    Export:
+      Name: PoshGramKMSKeyAliasName
+
+  ArtifactS3BucketName:
+    Description: Name of the PoshGramArtifactS3Bucket Amazon S3 bucket
+    Value: !Ref PoshGramArtifactS3Bucket
+    Export:
+      Name: PoshGramArtifactS3Bucket
+
+  ArtifactS3BucketARN:
+    Description: ARN of the PoshGramArtifactS3Bucket Amazon S3 bucket
+    Value: !GetAtt PoshGramArtifactS3Bucket.Arn
+
+  CodeBuildRoleArn:
+    Description: Arn of the CodeBuild IAM Role
+    Value: !GetAtt CodeBuildRole.Arn
+
+  UnitTestAndBuildProjectName:
+    Description: UnitTestAndBuildProject name
+    Value: !Ref UnitTestAndBuildProject
+
+  IntegrationTestProjectName:
+    Description: IntegrationTestProject name
+    Value: !Ref IntegrationTestProject
+
+  PoshGramCodePipelineRoleArn:
+    Description: Arn of the PoshGramCodePipelineRole IAM Role
+    Value: !GetAtt PoshGramCodePipelineRole.Arn
+
+  PoshGramCloudFormationRoleArn:
+    Description: Arn of the PoshGramCloudFormationRole IAM Role
+    Value: !GetAtt CloudFormationRole.Arn
+
+  PoshGramPipeline:
+    Description: Pipeline Name
+    Value: !Ref PoshGramPipeline
+    Export:
+      Name: PoshGramPipeline
+
+  UnitTestAndBuildProject:
+    Description: CodeBuild Unit Test And Build Project
+    Value: !Ref UnitTestAndBuildProject
+    Export:
+      Name: PoshGramUnitTestAndBuildProject

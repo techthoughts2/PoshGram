@@ -43,7 +43,7 @@ Describe -Name $ModuleName -Fixture {
                 $help = Get-Help -Name $command -Full
 
                 It -Name 'Includes a Synopsis' -Test {
-                    $help.Synopsis | Should -Not -BeNullOrEmpty
+                    $help.SYNOPSIS | Should -Not -BeNullOrEmpty
                 }
 
                 It -Name 'Includes a Description' -Test {

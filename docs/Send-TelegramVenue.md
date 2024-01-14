@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue
 schema: 2.0.0
 ---
 
@@ -25,12 +25,12 @@ Uses Telegram Bot API to send latitude, longitude, title, and address informatio
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $latitude = 37.621313
 $longitude = -122.378955
 $title = 'Star Fleet Headquarters'
 $address = 'San Francisco, CA 94128'
-Send-TelegramVenue -BotToken $botToken -ChatID $chat -Latitude $latitude -Longitude $longitude -Title $title -Address $address
+Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Longitude $longitude -Title $title -Address $address
 ```
 
 Sends venue information via Telegram API
@@ -38,14 +38,14 @@ Sends venue information via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $latitude = 37.621313
 $longitude = -122.378955
 $title = 'Star Fleet Headquarters'
 $address = 'San Francisco, CA 94128'
 $sendTelegramVenueSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     Latitude            = $latitude
     Longitude           = $longitude
     Title               = $title
@@ -194,14 +194,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramVenue.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue](https://poshgram.readthedocs.io/en/latest/Send-TelegramVenue)
 
 [https://core.telegram.org/bots/api#sendvenue](https://core.telegram.org/bots/api#sendvenue)
 

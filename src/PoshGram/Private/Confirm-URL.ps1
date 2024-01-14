@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Evaluates if the provided URL is reachable
 .DESCRIPTION
     Evaluates if the provided URL is reachable and returns a boolean based on results
@@ -14,7 +14,7 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 #>
 function Confirm-URL {
     [CmdletBinding()]

@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalPhoto.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalPhoto
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Sends Telegram photo message via Bot API from locally sourced photo image
 
 ```
 Send-TelegramLocalPhoto [-BotToken] <String> [-ChatID] <String> [-PhotoPath] <String> [[-Caption] <String>]
- [[-ParseMode] <String>] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
+ [[-ParseMode] <String>] [-HasSpoiler] [-DisableNotification] [-ProtectContent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,9 +27,9 @@ Several options can be specified to adjust message parameters.
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photo = 'C:\photos\aphoto.jpg'
-Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chat -PhotoPath $photo
+Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
 ```
 
 Sends photo message via Telegram API
@@ -37,14 +37,15 @@ Sends photo message via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photo = 'C:\photos\aphoto.jpg'
 $sendTelegramLocalPhotoSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     PhotoPath           = $photo
     Caption             = 'Check out this photo'
     ParseMode           = 'MarkdownV2'
+    HasSpoiler          = $true
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -57,11 +58,11 @@ Sends photo message via Telegram API
 ### EXAMPLE 3
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $photo = 'C:\photos\aphoto.jpg'
 $sendTelegramLocalPhotoSplat = @{
     BotToken  = $botToken
-    ChatID    = $chat
+    ChatID    = $chatID
     PhotoPath = $photo
     Caption   = 'Check out this __awesome__ photo\.'
     ParseMode = 'MarkdownV2'
@@ -149,6 +150,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HasSpoiler
+Photo needs to be covered with a spoiler animation
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableNotification
 Send the message silently.
 Users will receive a notification with no sound.
@@ -195,14 +211,12 @@ Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 The following photo types are supported:
 JPG, JPEG, PNG, GIF, BMP, WEBP, SVG, TIFF
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalPhoto.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalPhoto.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalPhoto](https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalPhoto)
 
 [https://core.telegram.org/bots/api#sendphoto](https://core.telegram.org/bots/api#sendphoto)
 

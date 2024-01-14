@@ -1,22 +1,22 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram document message via Bot API from URL sourced file
 .DESCRIPTION
     Uses Telegram Bot API to send document message to specified Telegram chat. The file will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters. Only works for gif, pdf and zip files.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
-    Send-TelegramURLDocument -BotToken $botToken -ChatID $chat -FileURL $fileURL
+    Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
 
     Sends document message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
     $sendTelegramURLDocumentSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         FileURL             = $fileURL
         Caption             = 'Log Files'
         ParseMode           = 'MarkdownV2'
@@ -29,11 +29,11 @@
     Sends document message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
     $sendTelegramURLDocumentSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         FileURL   = $fileURL
         Caption   = 'Here are the __important__ Log Files\.'
         ParseMode = 'MarkdownV2'
@@ -62,10 +62,10 @@
 
     In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters                      Type                    Required    Description
     chat_id                         Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -75,7 +75,7 @@
     disable_content_type_detection  Boolean                 Optional    Disables automatic server-side content type detection for files uploaded using multipart/form-data
     disable_notification            Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLDocument.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramURLDocument
 .LINK
     https://core.telegram.org/bots/api#senddocument
 .LINK

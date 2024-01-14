@@ -1,25 +1,26 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram animation message via Bot API from locally sourced animation
 .DESCRIPTION
     Uses Telegram Bot API to send animation message to specified Telegram chat. The animation will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
-    Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chat -AnimationPath $animation
+    Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
 
     Sends AnimationPath message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         AnimationPath       = $animation
         Caption             = 'Check out this animation'
         ParseMode           = 'MarkdownV2'
+        HasSpoiler          = $true
         DisableNotification = $true
         ProtectContent      = $true
         Verbose             = $true
@@ -29,11 +30,11 @@
     Sends animation message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $animation = 'C:\animation\animation.gif'
     $sendTelegramLocalAnimationSplat = @{
         BotToken      = $botToken
-        ChatID        = $chat
+        ChatID        = $chatID
         AnimationPath = $animation
         Caption       = 'Check out this __awesome__ animation\.'
         ParseMode     = 'MarkdownV2'
@@ -51,6 +52,8 @@
     Brief title or explanation for media
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
+.PARAMETER HasSpoiler
+    Animation needs to be covered with a spoiler animation
 .PARAMETER DisableNotification
     Send the message silently. Users will receive a notification with no sound.
 .PARAMETER ProtectContent
@@ -63,12 +66,12 @@
     The following animation types are supported:
     GIF
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
     Get creative by sending Gifs with your bot!
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -76,9 +79,11 @@
         pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More info on Sending Files
     caption                 String                  Optional    Animation caption (may also be used when resending animation by file_id), 0-1024 characters
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    has_spoiler             Boolean                 Optional    Pass True if the animation needs to be covered with a spoiler animation
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content         Boolean                 Optional    Protects the contents of the sent message from forwarding and saving
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalAnimation.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalAnimation
 .LINK
     https://core.telegram.org/bots/api#sendanimation
 .LINK
@@ -119,6 +124,10 @@ function Send-TelegramLocalAnimation {
             HelpMessage = 'HTML vs Markdown for message formatting')]
         [ValidateSet('Markdown', 'MarkdownV2', 'HTML')]
         [string]$ParseMode = 'HTML', #set to HTML by default
+
+        [Parameter(Mandatory = $false,
+            HelpMessage = 'Animation needs to be covered with a spoiler animation')]
+        [switch]$HasSpoiler,
 
         [Parameter(Mandatory = $false,
             HelpMessage = 'Send the message silently')]
@@ -171,6 +180,7 @@ function Send-TelegramLocalAnimation {
         animation            = $fileObject
         caption              = $Caption
         parse_mode           = $ParseMode
+        has_spoiler          = $HasSpoiler.IsPresent
         disable_notification = $DisableNotification.IsPresent
         protect_content      = $ProtectContent.IsPresent
     } #form

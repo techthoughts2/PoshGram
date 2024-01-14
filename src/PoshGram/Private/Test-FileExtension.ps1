@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
     Verifies that specified file is a supported Telegram extension type
 .DESCRIPTION
     Evaluates the specified file path to determine if the file is a supported extension type
@@ -40,7 +40,7 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 #>
 function Test-FileExtension {
     [CmdletBinding()]

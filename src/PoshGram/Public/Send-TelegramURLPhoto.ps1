@@ -1,22 +1,22 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram photo message via Bot API from URL sourced photo image
 .DESCRIPTION
     Uses Telegram Bot API to send photo message to specified Telegram chat. The photo will be sourced from the provided URL and sent to Telegram. Several options can be specified to adjust message parameters.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
-    Send-TelegramURLPhoto -BotToken $botToken -ChatID $chat -PhotoURL $photourl
+    Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photourl
 
     Sends photo message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         PhotoURL            = $photourl
         Caption             = 'DSC is a great technology'
         ParseMode           = 'MarkdownV2'
@@ -29,11 +29,11 @@
     Sends photo message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
     $sendTelegramURLPhotoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         PhotoURL  = $photourl
         Caption   = "DSC is a __great__ technology\."
         ParseMode = 'MarkdownV2'
@@ -60,10 +60,10 @@
 .NOTES
     Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -73,7 +73,7 @@
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramURLPhoto.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramURLPhoto
 .LINK
     https://core.telegram.org/bots/api#sendphoto
 .LINK
@@ -129,7 +129,7 @@ function Send-TelegramURLPhoto {
     Write-Verbose -Message 'Verifying URL leads to supported photo extension...'
     $fileTypeEval = Test-URLExtension -URL $PhotoURL -Type Photo
     if ($fileTypeEval -eq $false) {
-        throw ('The specified photo URL: {0} does not contain a supported extension.' -f $AnimationURL)
+        throw ('The specified photo URL: {0} does not contain a supported extension.' -f $PhotoURL)
     } #if_photoExtension
     else {
         Write-Verbose -Message 'Extension supported.'

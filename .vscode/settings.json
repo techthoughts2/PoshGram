@@ -1,12 +1,26 @@
 {
+    "markdownlint.config": {
+        "default": true,
+        "MD007": {
+            "indent": 4
+        },
+        "no-hard-tabs": false
+    },
+    // When enabled, will trim trailing whitespace when you save a file.
     "files.trimTrailingWhitespace": true,
+    // specifies the location of the explicity ScriptAnalyzer settings file
+    "powershell.scriptAnalysis.settingsPath": "PSScriptAnalyzerSettings.psd1",
+    // specifies the PowerShell coding style used in this project (https://github.com/PoshCode/PowerShellPracticeAndStyle/issues/81)
     "powershell.codeFormatting.preset": "Stroustrup",
     "cSpell.words": [
         "Allman",
+        "alphanum",
         "animatedsticker",
         "backoff",
+        "blockquote",
         "botname",
         "buildspec",
+        "Burnham",
         "Catesta",
         "channelusername",
         "cmdlets",
@@ -20,6 +34,7 @@
         "getidsbot",
         "Gifs",
         "hashtable",
+        "inlinekeyboardbutton",
         "jakemorrison",
         "Janeway",
         "markdownv",
@@ -31,6 +46,7 @@
         "poshgram",
         "psobject",
         "pwsh",
+        "replykeyboardmarkup",
         "riker",
         "shortcode",
         "shortlink",

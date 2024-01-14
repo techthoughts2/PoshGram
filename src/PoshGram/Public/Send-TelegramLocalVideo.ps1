@@ -1,22 +1,22 @@
 <#
-.Synopsis
+.SYNOPSIS
     Sends Telegram video message via Bot API from locally sourced file
 .DESCRIPTION
     Uses Telegram Bot API to send video message to specified Telegram chat. The video will be sourced from the local device and uploaded to telegram. Several options can be specified to adjust message parameters. Telegram only supports mp4 videos.
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $file = 'C:\videos\video.mp4'
-    Send-TelegramLocalVideo -BotToken $botToken -ChatID $chat -Video $video
+    Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
 
     Sends video message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken            = $botToken
-        ChatID              = $chat
+        ChatID              = $chatID
         Video               = $video
         Duration            = 10
         Width               = 250
@@ -24,6 +24,7 @@
         FileName            = 'video.mp4'
         Caption             = 'Check out this video'
         ParseMode           = 'MarkdownV2'
+        HasSpoiler          = $true
         Streaming           = $true
         DisableNotification = $true
         ProtectContent      = $true
@@ -34,11 +35,11 @@
     Sends video message via Telegram API
 .EXAMPLE
     $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    $chat = '-nnnnnnnnn'
+    $chatID = '-nnnnnnnnn'
     $video = 'C:\videos\video.mp4'
     $sendTelegramLocalVideoSplat = @{
         BotToken  = $botToken
-        ChatID    = $chat
+        ChatID    = $chatID
         Video     = $video
         Streaming = $true
         FileName  = 'video.mp4'
@@ -66,6 +67,8 @@
     Brief title or explanation for media
 .PARAMETER ParseMode
     Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message. Default is HTML.
+.PARAMETER HasSpoiler
+    Video needs to be covered with a spoiler animation
 .PARAMETER Streaming
     Use if the uploaded video is suitable for streaming
 .PARAMETER DisableNotification
@@ -80,10 +83,10 @@
     Telegram clients support mp4 videos (other formats may be sent as Document)
     Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 
-    How do I get my channel ID? Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-    How do I set up a bot and get a token? Use the BotFather https://t.me/BotFather
+    Questions on how to set up a bot, get a token, or get your channel ID?
+    Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 .COMPONENT
-    PoshGram - https://github.com/techthoughts2/PoshGram
+    PoshGram
 .FUNCTIONALITY
     Parameters              Type                    Required    Description
     chat_id                 Integer or String       Yes         Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -93,10 +96,12 @@
     height                  Integer                 Optional    Video height
     caption                 String                  Optional    Photo caption (may also be used when resending photos by file_id), 0-200 characters
     parse_mode              String                  Optional    Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+    has_spoiler             Boolean                 Optional    Pass True if the video needs to be covered with a spoiler animation
     supports_streaming      Boolean                 Optional    Pass True, if the uploaded video is suitable for streaming
     disable_notification    Boolean                 Optional    Sends the message silently. Users will receive a notification with no sound.
+    protect_content         Boolean                 Optional    Protects the contents of the sent message from forwarding and saving
 .LINK
-    https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramLocalVideo.md
+    https://poshgram.readthedocs.io/en/latest/Send-TelegramLocalVideo
 .LINK
     https://core.telegram.org/bots/api#sendvideo
 .LINK
@@ -161,6 +166,10 @@ function Send-TelegramLocalVideo {
         [string]$ParseMode = 'HTML', #set to HTML by default
 
         [Parameter(Mandatory = $false,
+            HelpMessage = 'Video needs to be covered with a spoiler animation')]
+        [switch]$HasSpoiler,
+
+        [Parameter(Mandatory = $false,
             HelpMessage = 'Use if the uploaded video is suitable for streaming')]
         [switch]$Streaming,
 
@@ -219,6 +228,7 @@ function Send-TelegramLocalVideo {
         file_name            = $FileName
         caption              = $Caption
         parse_mode           = $ParseMode
+        has_spoiler          = $HasSpoiler.IsPresent
         supports_streaming   = $Streaming.IsPresent
         disable_notification = $DisableNotification.IsPresent
         protect_content      = $ProtectContent.IsPresent

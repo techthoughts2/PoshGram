@@ -53,7 +53,7 @@ phases:
       - pwsh -command '$PSVersionTable'
   build:
     commands:
-      - pwsh -command 'Start-Sleep -Seconds 240'
+      - pwsh -command 'Start-Sleep -Seconds 630'
       - pwsh -command 'Invoke-Build -File .\src\PoshGram.build.ps1'
 artifacts:
   files:

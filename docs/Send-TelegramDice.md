@@ -1,7 +1,7 @@
 ---
 external help file: PoshGram-help.xml
 Module Name: PoshGram
-online version: https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md
+online version: https://poshgram.readthedocs.io/en/latest/Send-TelegramDice
 schema: 2.0.0
 ---
 
@@ -25,9 +25,9 @@ Uses Telegram Bot API to send animated emoji that will display a random value to
 ### EXAMPLE 1
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $emoji = 'basketball'
-Send-TelegramDice -BotToken $botToken -ChatID $chat -Emoji $emoji
+Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
 ```
 
 Sends animated basketball emoji that displays a random value via Telegram API
@@ -35,11 +35,11 @@ Sends animated basketball emoji that displays a random value via Telegram API
 ### EXAMPLE 2
 ```
 $botToken = 'nnnnnnnnn:xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-$chat = '-nnnnnnnnn'
+$chatID = '-nnnnnnnnn'
 $emoji = 'dice'
 $sendTelegramDiceSplat = @{
     BotToken            = $botToken
-    ChatID              = $chat
+    ChatID              = $chatID
     DisableNotification = $true
     ProtectContent      = $true
     Verbose             = $true
@@ -140,14 +140,12 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 Author: Jake Morrison - @jakemorrison - https://www.techthoughts.info/
 
-How do I get my channel ID?
-Use the getidsbot https://telegram.me/getidsbot  -or-  Use the Telegram web client and copy the channel ID in the address
-How do I set up a bot and get a token?
-Use the BotFather https://t.me/BotFather
+Questions on how to set up a bot, get a token, or get your channel ID?
+Answers on the PoshGram documentation: https://poshgram.readthedocs.io/en/latest/PoshGram-FAQ/
 
 ## RELATED LINKS
 
-[https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md](https://github.com/techthoughts2/PoshGram/blob/main/docs/Send-TelegramDice.md)
+[https://poshgram.readthedocs.io/en/latest/Send-TelegramDice](https://poshgram.readthedocs.io/en/latest/Send-TelegramDice)
 
 [https://core.telegram.org/bots/api#senddice](https://core.telegram.org/bots/api#senddice)
 
