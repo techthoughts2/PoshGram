@@ -191,7 +191,7 @@ function Send-TelegramMediaGroup {
         Write-Verbose -Message 'Media sent.'
     } #try_messageSend
     catch {
-        Write-Warning -Message 'An error was encountered sending the Telegram photo message:'
+        Write-Warning -Message 'An error was encountered sending the Telegram media message:'
         Write-Error $_
         if ($_.ErrorDetails) {
             $results = $_.ErrorDetails | ConvertFrom-Json -ErrorAction SilentlyContinue
