@@ -4,7 +4,7 @@
 
 ### I want to start using this, but how do I create a Telegram Bot and get a token?
 
-See [Setting Up Telegram Bot](PoshGram-Telegram-API.md)
+See [Setting Up Telegram Bot](PoshGram-Telegram-API.md).
 
 ### How do I determine what Chat ID my bot is a part of?
 
@@ -12,7 +12,7 @@ See [How do I determine my chat ID number?](PoshGram-Telegram-API.md#how-do-i-de
 
 ### How can I use PoshGram to have my bot send stickers?
 
-[PoshGram-Sticker-Info](PoshGram-Sticker-Info.md)
+See [PoshGram-Sticker-Info](PoshGram-Sticker-Info.md).
 
 ### How can I properly engage formatting text in messages?
 

@@ -23,7 +23,7 @@ If you want more resources here are some links and a video guide below.
 
 The easiest way is to login to the [Telegram Web Client](https://web.telegram.org/#/login) and find your channel on the left. When you select it the address in your URL bar will change.
 
-1. Go to [(https://web.telegram.org](https://web.telegram.org/#/login)
+1. Go to [https://web.telegram.org](https://web.telegram.org/#/login)
 2. Click on your channel
 3. Look at the url, and copy the channel ID in your browser's address bar
     - It may look something like the below examples:

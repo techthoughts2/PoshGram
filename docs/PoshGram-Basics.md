@@ -24,6 +24,8 @@ Nearly all functions support the following parameters:
 
 ## Token Test
 
+Easy way to validate your Telegram bot token.
+
 ```powershell
 Test-BotToken -BotToken $botToken
 
@@ -34,6 +36,8 @@ True @{id=111111111; is_bot=True; first_name=botname; username=botname_bot; can_
 
 ## Messages
 
+Send a basic Telegram message using PoshGram.
+
 ```powershell
 Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message 'Hello'
 ```
@@ -41,6 +45,8 @@ Send-TelegramTextMessage -BotToken $botToken -ChatID $chatID -Message 'Hello'
 ### Formatting
 
 #### HTML Formatting (*Default*)
+
+This Telegram message example illustrates how to apply various HTML tags like bold, italic, underline, strikethrough, and more to create richly formatted messages.
 
 ```powershell
 $message = 'This is how to use:
@@ -64,6 +70,8 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 ```
 
 #### Markdown Formatting
+
+This example showcases the use of various MarkdownV2 formatting options, such as bold, italic, underline, strikethrough, and more, to create richly formatted messages.
 
 ````powershell
 $message = 'This is how to use:
@@ -95,6 +103,8 @@ Send-TelegramTextMessage @sendTelegramTextMessageSplat
 
 ## Contact
 
+Sends Telegram phone contact message.
+
 ```powershell
 $phone = '1-222-222-2222'
 $firstName = 'Jean-Luc'
@@ -103,7 +113,8 @@ Send-TelegramContact -BotToken $botToken -ChatID $chatID -PhoneNumber $phone -Fi
 
 ## Dice
 
-'dice', 'dart', 'basketball', 'football', 'slotmachine', 'bowling'
+Sends Telegram animated emoji that will display a random value.
+You can choose between: 'dice', 'dart', 'basketball', 'football', 'slotmachine', 'bowling'
 
 ```powershell
 $emoji = 'basketball'
@@ -113,6 +124,9 @@ Send-TelegramDice -BotToken $botToken -ChatID $chatID -Emoji $emoji
 ## Polls
 
 ### Poll
+
+Send regular poll.
+If you want your poll to be anonymous, don't forget to include the `IsAnonymous` switch.
 
 ```powershell
 $question = 'What is your favorite Star Trek series?'
@@ -133,6 +147,8 @@ Send-TelegramPoll -BotToken $botToken -ChatID $chatID -Question $question -Optio
 ```
 
 ### Quiz
+
+Send quiz type poll. Answer choice starts at [0]. So the correct answer in this example is the second option, making the `$answer = 1`.
 
 ```powershell
 $question = 'Which Star Trek captain has an artificial heart?'
@@ -162,6 +178,8 @@ Send-TelegramPoll @sendTelegramPollSplat
 
 ## Location
 
+Sends Telegram location to indicate point on map.
+
 ```powershell
 $latitude = 37.621313
 $longitude = -122.378955
@@ -169,6 +187,8 @@ Send-TelegramLocation -BotToken $botToken -ChatID $chatID -Latitude $latitude -L
 ```
 
 ## Venue
+
+Sends Telegram information about a venue.
 
 ```powershell
 $latitude = 37.621313
@@ -181,6 +201,8 @@ Send-TelegramVenue -BotToken $botToken -ChatID $chatID -Latitude $latitude -Long
 ## Media
 
 ### Media Group
+
+Sends Telegram a group of media as an album from locally sourced media
 
 *Note: This function only supports sending one media type per send (Photo | Video | Documents | Audio).*
 
@@ -196,10 +218,16 @@ Send-TelegramMediaGroup @sendTelegramMediaGroupSplat
 
 ### Animation
 
+*Note: Only GIF files are supported.*
+
+Sends Telegram animation message from local source.
+
 ```powershell
 $animation = 'C:\animation\animation.gif'
 Send-TelegramLocalAnimation -BotToken $botToken -ChatID $chatID -AnimationPath $animation
 ```
+
+Sends Telegram animation message from URL source.
 
 ```powershell
 $animationURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/jean.gif'
@@ -208,10 +236,14 @@ Send-TelegramURLAnimation -BotToken $botToken -ChatID $chatID -AnimationURL $ani
 
 ### Document
 
+Sends Telegram document message from local source.
+
 ```powershell
 $file = 'C:\Logs\Log1.txt'
 Send-TelegramLocalDocument -BotToken $botToken -ChatID $chatID -File $file
 ```
+
+Sends Telegram document message from URL source.
 
 ```powershell
 $fileURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/LogExample.zip'
@@ -220,10 +252,16 @@ Send-TelegramURLDocument -BotToken $botToken -ChatID $chatID -FileURL $fileURL
 
 ### Photo
 
+*Note: Only 'JPG', 'JPEG', 'PNG', 'GIF', 'BMP', 'WEBP', 'SVG', 'TIFF' files are supported.*
+
+Sends Telegram photo message from local source.
+
 ```powershell
 $photo = 'C:\photos\aphoto.jpg'
 Send-TelegramLocalPhoto -BotToken $botToken -ChatID $chatID -PhotoPath $photo
 ```
+
+Sends Telegram photo message from URL source.
 
 ```powershell
 $photoURL = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/techthoughts.png'
@@ -232,10 +270,16 @@ Send-TelegramURLPhoto -BotToken $botToken -ChatID $chatID -PhotoURL $photourl
 
 ### Video
 
+*Note: Only 'MP4' files are supported.*
+
+Sends Telegram video message from local source.
+
 ```powershell
 $file = 'C:\videos\video.mp4'
 Send-TelegramLocalVideo -BotToken $botToken -ChatID $chatID -Video $video
 ```
+
+Sends Telegram video message from URL source.
 
 ```powershell
 $videourl = 'https://github.com/techthoughts2/PoshGram/raw/main/test/SourceFiles/Intro.mp4'
