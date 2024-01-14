@@ -4,6 +4,24 @@
 
 ## Messages
 
+### Link Previews
+
+Take further control over how a link preview is displayed.
+When 'LinkPreview' is set to Small, it will generate a small link preview for the provided url.
+When 'LinkPreviewAboveText' is set to $true, it will display the link preview above the message text.
+
+```powershell
+$sendTelegramTextMessageSplat = @{
+    BotToken             = $botToken
+    ChatID               = $chatID
+    Message              = 'Sending a message with a link preview'
+    LinkPreviewURL       = 'https://www.techthoughts.info'
+    LinkPreviewOption    = 'Small'
+    LinkPreviewAboveText = $true
+}
+Send-TelegramTextMessage @sendTelegramTextMessageSplat
+```
+
 ### Escaping Characters
 
 ```powershell

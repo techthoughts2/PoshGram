@@ -35,11 +35,9 @@ PoshGram is designed to make Telegram communication via PowerShell a seamless pa
 - [PowerShell](https://github.com/PowerShell/PowerShell) 6.1.0 (or higher version)
 - Telegram requirements
     - A Telegram Account
-    - [Telegram Bot created](https://core.telegram.org/bots#how-do-i-create-a-bot)
+    - [Telegram Bot created](PoshGram-Telegram-API.md)
     - Chat ID number
     - Bot must be a member of the specified chat
-
-*Note: See the [PoshGram - FAQ](PoshGram-FAQ.md) for more info on how to get some of these prerequisites.*
 
 ### Installation
 
