@@ -12,7 +12,7 @@
     RootModule        = 'PoshGram.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '3.0.0'
+    ModuleVersion     = '3.0.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -54,7 +54,7 @@
     RequiredModules   = @(
         @{
             ModuleName    = 'pwshEmojiExplorer';
-            ModuleVersion = '0.8.0'
+            ModuleVersion = '0.8.2'
         }
     )
 
