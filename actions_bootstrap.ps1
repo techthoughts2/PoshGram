@@ -30,7 +30,7 @@ $null = $modulesToInstall.Add(([PSCustomObject]@{
 # https://github.com/techthoughts2/pwshEmojiExplorer
 $null = $modulesToInstall.Add(([PSCustomObject]@{
             ModuleName    = 'pwshEmojiExplorer'
-            ModuleVersion = '0.8.0'
+            ModuleVersion = '0.8.2'
         }))
 # https://github.com/PowerShell/platyPS
 # older version used due to: https://github.com/PowerShell/platyPS/issues/457
